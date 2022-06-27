@@ -4,7 +4,7 @@
  * @ts-check # 取消忽略全文
  */
 import "katex/dist/katex.min.css";
-import React from "react";
+import React, { ReactNode } from "react";
 import classname from "classname";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -21,11 +21,43 @@ interface IProps {
 }
 
 const Preview: React.FC<IProps> = ({ mackdown, className: classProps }) => {
+  const createA = (children: ReactNode) => (
+    <a id={`${children}`} href={`#${children}`}>
+      {children}
+    </a>
+  );
+
+  const renderH = ({
+    children,
+    level,
+    ...props
+  }: {
+    children: ReactNode;
+    level: number;
+  }) => {
+    switch (level) {
+      case 1:
+        return <h1 {...props}>{createA(children)}</h1>;
+      case 2:
+        return <h2 {...props}>{createA(children)}</h2>;
+      case 3:
+        return <h3 {...props}>{createA(children)}</h3>;
+      case 4:
+        return <h4 {...props}>{createA(children)}</h4>;
+      case 5:
+        return <h5 {...props}>{createA(children)}</h5>;
+      case 6:
+        return <h6 {...props}>{createA(children)}</h6>;
+      default:
+        return <h3 {...props}>{createA(children)}</h3>;
+    }
+  };
+
   return (
     <div className={classname(styles.container, classProps)}>
       <ReactMarkdown
         children={mackdown}
-        // children={`The lift coefficient ${markdownJS} is a dimensionless coefficient.`} // remarkMath 及 rehypeKatex 插件的作用
+        // remarkMath 及 rehypeKatex 插件的作用
         remarkPlugins={[[remarkGfm, { singleTilde: false }], remarkMath]}
         rehypePlugins={[rehypeKatex, rehypeRaw]}
         components={{
@@ -45,18 +77,10 @@ const Preview: React.FC<IProps> = ({ mackdown, className: classProps }) => {
               </code>
             );
           },
-          h3: ({ node, children, ...props }) => {
-            console.log(children, "children");
-            console.log(props, "props");
-            console.log(node, "node");
-            return (
-              <h1 {...props}>
-                <a id={`${children}`} href={`#${children}`}>
-                  {children}
-                </a>
-              </h1>
-            );
-          },
+          h2: ({ node, children, level, ...props }) =>
+            renderH({ children, level, ...props }) as any,
+          h3: ({ node, children, level, ...props }) =>
+            renderH({ children, level, ...props }) as any,
           blockquote: ({ node, ...props }) => (
             <blockquote className={styles.blockquote} {...props} />
           ),
@@ -65,5 +89,4 @@ const Preview: React.FC<IProps> = ({ mackdown, className: classProps }) => {
     </div>
   );
 };
-
 export default Preview;
