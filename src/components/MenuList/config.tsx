@@ -10,7 +10,7 @@ export const items = [
   {
     key: "home",
     icon: <HomeOutlined />,
-    label: "home",
+    label: "文章列表",
   },
   {
     key: "about",

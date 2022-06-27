@@ -1,3 +1,6 @@
+#### JSON
+
+```json
 {
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -25,3 +28,4 @@
   "include": ["./src/**/*", "./src/styles/**/*", "react-app-env.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
+```

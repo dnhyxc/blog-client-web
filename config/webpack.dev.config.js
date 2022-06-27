@@ -110,7 +110,7 @@ module.exports = merge(common, {
    *  compress: 为每个静态文件开启gzip压缩
    */
   devServer: {
-    port: 9000,
+    port: 9012,
     compress: true,
     // 设置 browserHistory 路由模式时，防止出现404的情况
     historyApiFallback: true,

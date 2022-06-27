@@ -5,6 +5,7 @@
  */
 import "katex/dist/katex.min.css";
 import React from "react";
+import classname from "classname";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -16,11 +17,12 @@ import styles from "./index.less";
 
 interface IProps {
   mackdown: string;
+  className?: string;
 }
 
-const Preview: React.FC<IProps> = ({ mackdown }) => {
+const Preview: React.FC<IProps> = ({ mackdown, className: classProps }) => {
   return (
-    <div className={styles.container}>
+    <div className={classname(styles.container, classProps)}>
       <ReactMarkdown
         children={mackdown}
         // children={`The lift coefficient ${markdownJS} is a dimensionless coefficient.`} // remarkMath 及 rehypeKatex 插件的作用
@@ -43,7 +45,18 @@ const Preview: React.FC<IProps> = ({ mackdown }) => {
               </code>
             );
           },
-          // h1: "h2",
+          h3: ({ node, children, ...props }) => {
+            console.log(children, "children");
+            console.log(props, "props");
+            console.log(node, "node");
+            return (
+              <h1 {...props}>
+                <a id={`${children}`} href={`#${children}`}>
+                  {children}
+                </a>
+              </h1>
+            );
+          },
           blockquote: ({ node, ...props }) => (
             <blockquote className={styles.blockquote} {...props} />
           ),

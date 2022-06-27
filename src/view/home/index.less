@@ -1,14 +1,77 @@
 .container {
+  .content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+
+    .rightbar{
+      margin-right: 5px;
+    }
+  }
+
   .wrap {
-    padding: 8px 12px;
-    width: 100%;
+    padding: 9px 0 9px 9px;
+    width: calc(100% - 260px);
 
     .item {
+      flex: 1;
+      height: 150px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #ddd;
+      padding: 10px 10px;
+      border: 1px solid #efefef;
+      box-shadow: 0px 8px 12px -8px #ccc;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+
+      .img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50%;
+        max-width: 200px;
+        height: 100%;
+        margin-right: 20px;
+        border: 1px solid #efefef;
+        background-color: #efefef;
+        border-radius: 5px;
+      }
+
+      .info {
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        width: 0;
+        height: 100%;
+
+        .name {
+          font-size: 16px;
+          font-weight: 600;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .desc {
+          text-overflow: -o-ellipsis-lastline;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          line-clamp: 3;
+          -webkit-box-orient: vertical;
+        }
+
+        .date {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
     }
   }
 }

@@ -1,12 +1,22 @@
 @import "~@styles/layout.less";
 
 .container {
-  .noScroll {
-    height: 100%;
-  }
+  width: 100%;
+  height: calc(100vh - 100px);
 
-  .scrollContent {
+  .wrap {
     height: 100%;
-    margin-right: 10px;
+    width: 100%;
+    background-color: #efefef;
+
+    .scrollWrap {
+      display: flex;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      background-color: #fff;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
   }
 }

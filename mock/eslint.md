@@ -1,3 +1,6 @@
+### eslint
+
+```json
 {
   "env": {
     "browser": true,
@@ -48,8 +51,7 @@
     "react/no-children-prop": 0,
     "react/jsx-props-no-spreading": 0,
     "react/no-unstable-nested-components": 0,
-    "no-nested-ternary": 0,
-    "jsx-a11y/control-has-associated-label": 0
+    "no-nested-ternary": 0
   },
   "settings": {
     "import/parsers": {
@@ -62,3 +64,4 @@
     }
   }
 }
+```

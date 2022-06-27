@@ -40,7 +40,7 @@ const CreateContent: React.FC = () => {
   return (
     <div className={styles.container}>
       <Header right={headerRight()}>Create</Header>
-      <Content needScroll={false}>
+      <Content>
         <WangEditor getHtmlCode={getHtmlCode} />
       </Content>
       <CreateModel
