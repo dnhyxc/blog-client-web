@@ -23,7 +23,7 @@ interface DetailParams {
   img: string;
 }
 
-const CreateMackdown: React.FC = () => {
+const ArticleDetail: React.FC = () => {
   const [detail, setDetail] = useState<DetailParams>({
     name: "",
     desc: "",
@@ -48,11 +48,11 @@ const CreateMackdown: React.FC = () => {
   );
 
   return (
-    <div className={styles.detailContainer}>
+    <div className={styles.detailContainer} id="DETAIL_CONTAINER">
       <div className={styles.headerWrap}>
         <Header>detail</Header>
       </div>
-      <div className={styles.content}>
+      <div className={styles.content} id="DETAIL_CONTENT">
         <Preview
           className={styles.preview}
           mackdown={detail?.mackdown}
@@ -88,4 +88,4 @@ const CreateMackdown: React.FC = () => {
   );
 };
 
-export default CreateMackdown;
+export default ArticleDetail;

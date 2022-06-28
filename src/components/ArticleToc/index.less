@@ -2,10 +2,15 @@
 
 .tocWrap {
   width: 260px;
+  max-height: calc(100vh - 70px);
   margin-top: 10px;
   margin-left: 10px;
   background-color: #fff;
   border-radius: 5px;
+
+  .mackNav {
+    height: calc(100vh - 115px);
+  }
 
   .tocText {
     font-weight: 500;
@@ -20,7 +25,7 @@
   }
 
   :global(.markdown-navigation .title-anchor) {
-    padding: 0 10px;
+    padding: 0 5px 0 10px;
     font-size: 14px;
     overflow: hidden;
     text-overflow: ellipsis;
