@@ -1,0 +1,66 @@
+.wrap {
+  width: calc(100% - 260px);
+
+  :not(:last-child) {
+    margin-bottom: 10px;
+  }
+
+  .item {
+    flex: 1;
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    box-shadow: 0 -3px 3px -3px #ccc inset;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+
+    .img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      max-width: 200px;
+      height: 100%;
+      margin-right: 20px;
+      border: 1px solid #efefef;
+      background-color: #efefef;
+      border-radius: 5px;
+    }
+
+    .info {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      width: 0;
+      height: 100%;
+
+      .name {
+        font-size: 16px;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .desc {
+        text-overflow: -o-ellipsis-lastline;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        -webkit-box-orient: vertical;
+      }
+
+      .date {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}

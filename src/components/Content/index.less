@@ -1,4 +1,5 @@
 @import "~@styles/layout.less";
+@import "~@styles/common.less";
 
 .container {
   width: 100%;
@@ -7,14 +8,14 @@
   .wrap {
     height: 100%;
     width: 100%;
-    background-color: #efefef;
+    background-color: @content-padding;
 
     .scrollWrap {
       display: flex;
       justify-content: center;
       height: 100%;
       width: 100%;
-      background-color: #fff;
+      background-color: @background;
       overflow-y: auto;
       overflow-x: hidden;
     }

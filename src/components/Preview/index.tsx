@@ -18,9 +18,16 @@ import styles from "./index.less";
 interface IProps {
   mackdown: string;
   className?: string;
+  children?: ReactNode;
+  coverImg?: ReactNode;
 }
 
-const Preview: React.FC<IProps> = ({ mackdown, className: classProps }) => {
+const Preview: React.FC<IProps> = ({
+  mackdown,
+  className: classProps,
+  children: childNode,
+  coverImg,
+}) => {
   const createA = (children: ReactNode) => (
     <a id={`${children}`} href={`#${children}`}>
       {children}
@@ -55,6 +62,7 @@ const Preview: React.FC<IProps> = ({ mackdown, className: classProps }) => {
 
   return (
     <div className={classname(styles.container, classProps)}>
+      <div className={styles.coverImg}>{coverImg}</div>
       <ReactMarkdown
         children={mackdown}
         // remarkMath 及 rehypeKatex 插件的作用
@@ -86,6 +94,7 @@ const Preview: React.FC<IProps> = ({ mackdown, className: classProps }) => {
           ),
         }}
       />
+      {childNode}
     </div>
   );
 };

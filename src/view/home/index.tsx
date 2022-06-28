@@ -10,6 +10,7 @@ import { Input } from "antd";
 import Content from "@/components/Content";
 import Header from "@/components/Header";
 import RightBar from "@/components/RightBar";
+import Card from "@/components/Card";
 import { list } from "../../../mock";
 import styles from "./index.less";
 
@@ -19,7 +20,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const toDetail = (id: string) => {
-    navigate(`detail/${id}`);
+    navigate(`/detail/${id}`);
   };
 
   const onSearch = (value: string) => {
@@ -37,24 +38,11 @@ const Home = () => {
   return (
     <div className={styles.container}>
       <Header right={rightNode()}>文章列表</Header>
-      <Content className={styles.content}>
-        <div className={styles.wrap}>
-          {list.map((i) => (
-            <div
-              className={styles.item}
-              key={i.id}
-              onClick={() => toDetail(i.id)}
-            >
-              <div className={styles.img}>{i.name}</div>
-              <div className={styles.info}>
-                <div className={styles.name}>{i.name}</div>
-                <div className={styles.desc}>{i.desc}</div>
-                <div className={styles.date}>{i.date}</div>
-              </div>
-            </div>
-          ))}
+      <Content className={styles.contentWrap}>
+        <div className={styles.content}>
+          <Card list={list} toDetail={toDetail} />
+          <RightBar className={styles.rightbar} />
         </div>
-        <RightBar className={styles.rightbar} />
       </Content>
     </div>
   );

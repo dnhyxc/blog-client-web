@@ -2,7 +2,7 @@ import React from "react";
 import useStore from "@/store";
 import Header from "@/components/Header";
 import Content from "@/components/Content";
-import Preview from "@/components/Preview";
+import ReactMackdown from "@/components/ReactMackdown";
 
 const CreateMackdown: React.FC = () => {
   const { create } = useStore();
@@ -10,7 +10,7 @@ const CreateMackdown: React.FC = () => {
     <div>
       <Header>Preview mackdown</Header>
       <Content>
-        <Preview mackdown={create.mackdown} />
+        <ReactMackdown mackdown={create.mackdown} />
       </Content>
     </div>
   );

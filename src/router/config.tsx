@@ -88,6 +88,10 @@ const routes: RouteObject[] = [
     ],
   },
   {
+    path: "detail/:id",
+    element: lazyLoad(<Detail />),
+  },
+  {
     path: "login",
     element: lazyLoad(<Login />),
   },
