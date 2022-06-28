@@ -15,7 +15,9 @@ const Content: React.FC<IProps> = ({ children, className, wrapClassName }) => {
     <div className={styles.container}>
       <div className={classname(styles.wrap, wrapClassName)}>
         <div className={classname(styles.scrollWrap, className)}>
-          <Scrollbars autoHide>{children}</Scrollbars>
+          <Scrollbars autoHide className={styles.scrollBar}>
+            {children}
+          </Scrollbars>
         </div>
       </div>
     </div>

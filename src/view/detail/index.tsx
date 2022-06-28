@@ -48,11 +48,11 @@ const ArticleDetail: React.FC = () => {
   );
 
   return (
-    <div className={styles.detailContainer} id="DETAIL_CONTAINER">
+    <div className={styles.detailContainer}>
       <div className={styles.headerWrap}>
         <Header>detail</Header>
       </div>
-      <div className={styles.content} id="DETAIL_CONTENT">
+      <div className={styles.content}>
         <Preview
           className={styles.preview}
           mackdown={detail?.mackdown}

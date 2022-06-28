@@ -46,6 +46,7 @@ const WangEditor: React.FC<IProps> = ({ getHtmlCode }) => {
           onCreated={setEditor}
           onChange={(value) => onEditValueChange(value)}
           mode="default"
+          style={{ height: "100%" }}
         />
       </Scrollbars>
     </div>

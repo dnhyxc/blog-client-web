@@ -83,26 +83,20 @@
   }
 }
 
+/*整个滚动条*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+}
 
-  /*整个滚动条*/
-  :global(.root) {
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 5px;
-    }
-  }
+/*定义滚动条轨道*/
+::-webkit-scrollbar-track {
+  height: 6px;
+}
 
-  /*定义滚动条轨道*/
-  :global(.root) {
-    ::-webkit-scrollbar-track {
-      background-color: @tagBgc;
-    }
-  }
-
-  /*定义滑块*/
-  :global(.root) {
-    ::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.2);
-      border-radius: 5px;
-    }
-  }
+/*定义滑块*/
+::-webkit-scrollbar-thumb {
+  background-color: red;
+  border-radius: 5px;
+}
