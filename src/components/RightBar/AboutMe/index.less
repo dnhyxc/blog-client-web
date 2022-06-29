@@ -1,0 +1,41 @@
+.about_me {
+  width: 260px;
+  padding: 0 10px;
+  background-color: #fff;
+  border-radius: 5px;
+
+  .title {
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .card {
+    margin-top: 5px;
+
+    .image {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .name {
+    font-weight: 600;
+  }
+
+  .skill_wrap {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    .skill {
+      text-overflow: -o-ellipsis-lastline;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  }
+}

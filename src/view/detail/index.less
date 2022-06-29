@@ -13,7 +13,7 @@
     justify-content: flex-start;
     background-color: #fff;
     align-items: center;
-    padding: 0 30px;
+    z-index: 99;
   }
 
   .content {
@@ -85,8 +85,8 @@
 
 /*整个滚动条*/
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   background-color: transparent;
 }
 
@@ -97,6 +97,6 @@
 
 /*定义滑块*/
 ::-webkit-scrollbar-thumb {
-  background-color: red;
+  background-color: @shade-1;
   border-radius: 5px;
 }

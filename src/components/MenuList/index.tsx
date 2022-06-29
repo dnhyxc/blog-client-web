@@ -50,7 +50,7 @@ const MenuList: React.FC = () => {
       width={180}
       className={styles.siderWrap}
     >
-      <div className={styles.logo}>React Template</div>
+      <div className={styles.logo}>知识管理</div>
       <Menu
         mode="inline"
         defaultSelectedKeys={["home"]}

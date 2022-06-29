@@ -1,0 +1,84 @@
+@import "~@styles/common.less";
+
+.introductionWrap {
+  width: 260px;
+  padding: 0 10px;
+  background-color: #fff;
+  border-radius: 5px;
+
+  .card {
+    display: flex;
+    justify-content: center;
+
+    .image {
+      margin-top: 20px;
+      height: 126px;
+      width: 126px;
+      border-radius: 126px;
+    }
+  }
+
+  .nameInfo {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 15px;
+
+    .name {
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    .desc {
+      font-size: 16px;
+    }
+  }
+
+  .articleInfo {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 25px;
+    margin-bottom: 10px;
+
+    .statistical {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+  }
+
+  .socialWrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px;
+    text-align: center;
+
+    .github {
+      border-radius: 5px;
+      width: 120px;
+    }
+
+    .socialList {
+      display: flex;
+      justify-content: center;
+      margin: 10px 0 20px 0;
+
+      span {
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        border-radius: 5px;
+        background-color: @content-padding;
+        line-height: 36px;
+        text-align: center;
+        cursor: pointer;
+
+        &:not(:last-child) {
+          margin-right: 25px;
+        }
+      }
+    }
+  }
+}

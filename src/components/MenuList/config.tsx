@@ -4,6 +4,9 @@ import {
   FormOutlined,
   ReadOutlined,
   CodeOutlined,
+  TagsOutlined,
+  MenuOutlined,
+  NodeExpandOutlined,
 } from "@ant-design/icons";
 
 export const items = [
@@ -11,6 +14,38 @@ export const items = [
     key: "home",
     icon: <HomeOutlined />,
     label: "文章列表",
+  },
+  {
+    key: "classify",
+    icon: <MenuOutlined />,
+    label: "文章分类",
+  },
+  {
+    key: "tag",
+    icon: <TagsOutlined />,
+    label: "文章标签",
+  },
+  {
+    key: "timeline",
+    icon: <NodeExpandOutlined />,
+    label: (
+      <div>
+        <span style={{ marginRight: "7px" }}>时</span>
+        <span style={{ marginRight: "7px" }}>间</span>
+        <span>轴</span>
+      </div>
+    ),
+  },
+  {
+    key: "aboutme",
+    icon: <HomeOutlined />,
+    label: (
+      <div>
+        <span style={{ marginRight: "7px" }}>关</span>
+        <span style={{ marginRight: "7px" }}>于</span>
+        <span>我</span>
+      </div>
+    ),
   },
   {
     key: "about",
