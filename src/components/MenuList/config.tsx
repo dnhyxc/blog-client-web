@@ -1,8 +1,5 @@
 import {
-  DesktopOutlined,
   HomeOutlined,
-  FormOutlined,
-  ReadOutlined,
   CodeOutlined,
   TagsOutlined,
   MenuOutlined,
@@ -28,43 +25,16 @@ export const items = [
   {
     key: "timeline",
     icon: <NodeExpandOutlined />,
-    label: (
-      <div>
-        <span style={{ marginRight: "7px" }}>时</span>
-        <span style={{ marginRight: "7px" }}>间</span>
-        <span>轴</span>
-      </div>
-    ),
-  },
-  {
-    key: "aboutme",
-    icon: <HomeOutlined />,
-    label: (
-      <div>
-        <span style={{ marginRight: "7px" }}>关</span>
-        <span style={{ marginRight: "7px" }}>于</span>
-        <span>我</span>
-      </div>
-    ),
+    label: "时间轴线",
   },
   {
     key: "about",
-    icon: <DesktopOutlined />,
-    label: "about",
+    icon: <HomeOutlined />,
+    label: "关于我的",
   },
   {
     key: "create",
-    icon: <FormOutlined />,
-    label: "create",
-  },
-  {
-    key: "preview",
-    icon: <ReadOutlined />,
-    label: "preview",
-  },
-  {
-    key: "mackdown",
     icon: <CodeOutlined />,
-    label: "mackdown",
+    label: "发布文章",
   },
 ];

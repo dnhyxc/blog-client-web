@@ -9,19 +9,16 @@ import { lazy, Suspense, ReactNode } from "react";
 import { Navigate, RouteObject } from "react-router-dom";
 import { Spin } from "antd";
 import AppLayout from "@/layout";
-import Access from "@/components/Access";
 import styles from "./index.less";
 
 const Home = lazy(() => import("@/view/home"));
-const Message = lazy(() => import("@/view/message"));
-const About = lazy(() => import("@/view/about"));
+const AboutMe = lazy(() => import("@/view/about"));
 const Detail = lazy(() => import("@/view/detail"));
 const Login = lazy(() => import("@/view/login"));
-const News = lazy(() => import("@/view/news"));
-const CreateContent = lazy(() => import("@/view/create"));
-const PreviewMackdown = lazy(() => import("@/view/preview"));
 const Mackdown = lazy(() => import("@/view/mackdown"));
 const Classify = lazy(() => import("@/view/classify"));
+const Timeline = lazy(() => import("@/view/timeline"));
+const Tag = lazy(() => import("@/view/tag"));
 
 const lazyLoad = (children: ReactNode, needSpin = true): ReactNode => {
   return (
@@ -45,50 +42,24 @@ const routes: RouteObject[] = [
         element: lazyLoad(<Classify />),
       },
       {
+        path: "tag",
+        element: lazyLoad(<Tag />),
+      },
+      {
+        path: "timeline",
+        element: lazyLoad(<Timeline />),
+      },
+      {
         path: "about",
-        element: lazyLoad(<About />),
-        children: [
-          {
-            path: "message",
-            element: lazyLoad(<Message />, false),
-          },
-          {
-            path: "news",
-            element: lazyLoad(<News />, false),
-          },
-        ],
+        element: lazyLoad(<AboutMe />),
       },
       {
         path: "create",
-        element: lazyLoad(<CreateContent />),
-      },
-      {
-        path: "preview",
-        element: lazyLoad(<PreviewMackdown />),
-      },
-      {
-        path: "mackdown",
         element: lazyLoad(<Mackdown />),
       },
       {
         path: "home/detail/:id",
         element: lazyLoad(<Detail />),
-      },
-      {
-        path: "about/news/detail",
-        element: lazyLoad(
-          <Access allow>
-            <Detail />
-          </Access>
-        ),
-      },
-      {
-        path: "about/message/detail",
-        element: lazyLoad(
-          <Access allow={false}>
-            <Detail />
-          </Access>
-        ),
       },
     ],
   },

@@ -7,7 +7,7 @@
  */
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Affix } from "antd";
+import { Affix, BackTop } from "antd";
 import Preview from "@/components/Preview";
 import Header from "@/components/Header";
 import { getMackdownById } from "@/controller/index";
@@ -48,43 +48,48 @@ const ArticleDetail: React.FC = () => {
   );
 
   return (
-    <div className={styles.detailContainer}>
-      <div className={styles.headerWrap}>
-        <Header>detail</Header>
-      </div>
-      <div className={styles.content}>
-        <Preview
-          className={styles.preview}
-          mackdown={detail?.mackdown}
-          coverImg={renderCoverImg(detail!)}
-        >
-          <div className={styles.tagWrap}>
-            <div className={styles.tagList}>
-              分类：
-              {["前端", "后端"].map((i) => (
-                <span className={styles.tag} key={i}>
-                  {i}
-                </span>
-              ))}
+    <>
+      <div className={styles.detailContainer}>
+        <div className={styles.headerWrap}>
+          <Header>detail</Header>
+        </div>
+        <div className={styles.content}>
+          <Preview
+            className={styles.preview}
+            mackdown={detail?.mackdown}
+            coverImg={renderCoverImg(detail!)}
+          >
+            <div className={styles.tagWrap}>
+              <div className={styles.tagList}>
+                分类：
+                {["前端", "后端"].map((i) => (
+                  <span className={styles.tag} key={i}>
+                    {i}
+                  </span>
+                ))}
+              </div>
+              <div className={styles.tagList}>
+                标签：
+                {["标签1", "标签2", "标签3"].map((i) => (
+                  <span className={styles.tag} key={i}>
+                    {i}
+                  </span>
+                ))}
+              </div>
             </div>
-            <div className={styles.tagList}>
-              标签：
-              {["标签1", "标签2", "标签3"].map((i) => (
-                <span className={styles.tag} key={i}>
-                  {i}
-                </span>
-              ))}
-            </div>
+          </Preview>
+          <div className={styles.rightBar}>
+            <RightBar />
+            <Affix offsetTop={50}>
+              <Toc mackdown={detail?.mackdown} />
+            </Affix>
           </div>
-        </Preview>
-        <div className={styles.rightBar}>
-          <RightBar />
-          <Affix offsetTop={50}>
-            <Toc mackdown={detail?.mackdown} />
-          </Affix>
         </div>
       </div>
-    </div>
+      <BackTop className={styles.backTopWrap}>
+        <div className={styles.backTop}>UP</div>
+      </BackTop>
+    </>
   );
 };
 

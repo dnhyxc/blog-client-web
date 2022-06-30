@@ -37,7 +37,9 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <Header right={rightNode()}>文章列表</Header>
+      <Header needLeft={false} right={rightNode()}>
+        文章列表
+      </Header>
       <Content className={styles.contentWrap}>
         <div className={styles.content}>
           <Card list={list} toDetail={toDetail} />

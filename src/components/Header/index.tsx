@@ -21,7 +21,7 @@ const Header: React.FC<IProps> = ({
   children,
   left,
   right,
-  needLeft = true,
+  needLeft = false,
 }) => {
   const navigate = useNavigate();
 
