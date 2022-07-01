@@ -97,20 +97,26 @@ const ArticleDetail: React.FC = () => {
           >
             <div className={styles.tagWrap}>
               <div className={styles.tagList}>
-                分类：
-                {["前端", "后端"].map((i) => (
-                  <span className={styles.tag} key={i}>
-                    {i}
-                  </span>
-                ))}
+                <span className={styles.label}>分类：</span>
+                <div className={styles.tagItemWrap}>
+                  {["前端", "后端"].map((i) => (
+                    <span className={styles.tag} key={i}>
+                      {i}
+                    </span>
+                  ))}
+                </div>
               </div>
               <div className={styles.tagList}>
-                标签：
-                {["标签1", "标签2", "标签3"].map((i) => (
-                  <span className={styles.tag} key={i}>
-                    {i}
-                  </span>
-                ))}
+                <span className={styles.label}>标签：</span>
+                <div className={styles.tagItemWrap}>
+                  {["标签1", "标签2", "标签3", "标签4", "标签5", "标签6"].map(
+                    (i) => (
+                      <span className={styles.tag} key={i}>
+                        {i}
+                      </span>
+                    )
+                  )}
+                </div>
               </div>
             </div>
           </Preview>

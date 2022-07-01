@@ -19,6 +19,26 @@
   user-select: none;
 }
 
+.webkitScrollbarStyle {
+  /*整个滚动条*/
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+  }
+
+  /*定义滚动条轨道*/
+  ::-webkit-scrollbar-track {
+    height: 6px;
+  }
+
+  /*定义滑块*/
+  ::-webkit-scrollbar-thumb {
+    background-color: @font-4;
+    border-radius: 5px;
+  }
+}
+
 @btnColor: linear-gradient(to left, #c8e4f0, #bad0f3);
 @btnHoverColor: linear-gradient(to right, #39dfeb, #8cb4f5);
 @menubgc: linear-gradient(to right, #9cd7f1, #8cb4f5);
@@ -94,4 +114,7 @@
 @popover: rgba(0, 0, 0, 0.8);
 @sheets: #f7f8fa;
 @content-padding: #d8e6df;
-@menu-active: #1DA57A;
+@menu-active: #1da57a;
+
+// 媒体查询配置
+@max-width: 960px;

@@ -1,5 +1,7 @@
 @import "~@styles/common.less";
 
+.webkitScrollbarStyle();
+
 .detailContainer {
   position: relative;
 
@@ -39,8 +41,14 @@
         align-items: center;
 
         .tagList {
-          margin-right: 30px;
+          display: flex;
+          justify-content: flex-start;
           line-height: 32px;
+          margin-right: 30px;
+
+          .label {
+            min-width: 44px;
+          }
 
           .tag {
             display: inline-block;
@@ -51,6 +59,7 @@
             margin-right: 10px;
             background-color: @tagBgc;
             border-radius: 5px;
+            margin-bottom: 10px;
           }
         }
       }
@@ -86,6 +95,7 @@
     border: 1px solid red;
     display: flex;
     justify-content: flex-start;
+    min-width: 300px;
 
     .menuList {
       margin-left: 30px;
@@ -101,34 +111,55 @@
 }
 
 .backTopWrap {
-  right: 50px;
+  right: 20px;
+  bottom: 20px;
+
+  .backTop {
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    background-color: @menu-active;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+  }
 }
 
-.backTop {
-  height: 40px;
-  width: 40px;
-  line-height: 40px;
-  border-radius: 5px;
-  background-color: @menu-active;
-  color: #fff;
-  text-align: center;
-  font-size: 14px;
-}
+@media screen and (max-width: 960px) {
+  .detailContainer {
+    max-width: 960px;
+    border: 1px solid red;
+    height: 100vh;
 
-/*整个滚动条*/
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-  background-color: transparent;
-}
+    .herderWrap {
+      width: 100%;
+      max-width: 960px;
+    }
 
-/*定义滚动条轨道*/
-::-webkit-scrollbar-track {
-  height: 6px;
-}
+    .content {
+      width: 100%;
 
-/*定义滑块*/
-::-webkit-scrollbar-thumb {
-  background-color: @shade-1;
-  border-radius: 5px;
+      .preview {
+        width: 100%;
+        min-width: 0;
+        max-width: 960px;
+
+        .tagWrap {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: space-between;
+
+          .tagList {
+            margin-right: 0;
+          }
+        }
+      }
+
+      .rightBar {
+        display: none;
+      }
+    }
+  }
 }

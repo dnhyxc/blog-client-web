@@ -7,4 +7,13 @@ body {
   :global(#root) {
     height: 100vh;
   }
+
+  @media screen and (max-width: 960px) {
+    :global(#root) {
+      max-width: 960px;
+      min-width: 350px;
+      border: 1px solid red;
+      height: 100vh;
+    }
+  }
 }
