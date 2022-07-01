@@ -8,6 +8,7 @@
 import React, { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { LeftOutlined } from "@ant-design/icons";
+import MenuList from "./MenuList";
 import styles from "./index.less";
 
 interface IProps {
@@ -15,6 +16,7 @@ interface IProps {
   left?: ReactNode;
   right?: ReactNode;
   needLeft?: boolean;
+  needMenu?: boolean;
 }
 
 const Header: React.FC<IProps> = ({
@@ -22,6 +24,7 @@ const Header: React.FC<IProps> = ({
   left,
   right,
   needLeft = false,
+  needMenu = false,
 }) => {
   const navigate = useNavigate();
 
@@ -39,6 +42,7 @@ const Header: React.FC<IProps> = ({
             </div>
           ))}
         <div className={styles.child}>{children}</div>
+        {needMenu && <MenuList />}
       </div>
       {right && <div className={styles.right}>{right}</div>}
     </div>

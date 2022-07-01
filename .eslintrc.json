@@ -50,7 +50,8 @@
     "react/no-unstable-nested-components": 0,
     "no-nested-ternary": 0,
     "jsx-a11y/control-has-associated-label": 0,
-    "consistent-return": 0
+    "consistent-return": 0,
+    "react/jsx-fragments": 0
   },
   "settings": {
     "import/parsers": {

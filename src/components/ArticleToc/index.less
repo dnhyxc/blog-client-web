@@ -43,6 +43,8 @@
 
   :global(.markdown-navigation .title-anchor.active) {
     position: relative;
+    color: @menu-active;
+
     &::after {
       position: absolute;
       left: 0;
@@ -53,7 +55,7 @@
       height: 18px;
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
-      background-color: @brand-4-active;
+      background-color: @menu-active;
     }
   }
 }

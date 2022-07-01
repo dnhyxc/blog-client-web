@@ -47,45 +47,13 @@ const ArticleDetail: React.FC = () => {
     </div>
   );
 
-  const menu = [
-    {
-      name: "主页",
-      path: "/home",
-    },
-    {
-      name: "分类",
-      path: "/home",
-    },
-    {
-      name: "标签",
-      path: "/home",
-    },
-    {
-      name: "时间轴",
-      path: "/home",
-    },
-    {
-      name: "关于我",
-      path: "/about",
-    },
-    {
-      name: "发布文章",
-      path: "/mackdown",
-    },
-  ];
-
   return (
     <>
       <div className={styles.detailContainer}>
         <div className={styles.headerWrap}>
-          <Header needLeft>
+          <Header needLeft needMenu>
             <div className={styles.headerContent}>
               <div>DETAIL</div>
-              <div className={styles.menuList}>
-                {menu.map((i) => {
-                  return <span key={i.name}>{i.name}</span>;
-                })}
-              </div>
             </div>
           </Header>
         </div>
