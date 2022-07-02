@@ -1,3 +1,4 @@
+import "amfe-flexible";
 import ReactDOM from "react-dom/client";
 import App from "./router";
 import "./index.less";
