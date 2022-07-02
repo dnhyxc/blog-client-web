@@ -8,6 +8,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Menu, Layout } from "antd";
+import Image from "@/components/Image";
+import ICON from "@/assets/images/about_me.jpg";
 import { items } from "./config";
 import styles from "./index.less";
 
@@ -50,7 +52,11 @@ const MenuList: React.FC = () => {
       width={180}
       className={styles.siderWrap}
     >
-      <div className={styles.logo}>知识管理</div>
+      <div className={styles.logo}>
+        {/* <img src={ICON} alt="" className={styles.icon} /> */}
+        <Image url={ICON} className={styles.icon} />
+        <span>DNHYXC</span>
+      </div>
       <Menu
         mode="inline"
         defaultSelectedKeys={["home"]}

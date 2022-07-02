@@ -1,40 +1,42 @@
 import {
   HomeOutlined,
-  CodeOutlined,
+  ReadOutlined,
   TagsOutlined,
-  MenuOutlined,
-  NodeExpandOutlined,
+  UserOutlined,
+  FolderOpenOutlined,
+  FieldTimeOutlined,
 } from "@ant-design/icons";
+import styles from "./index.less";
 
 export const items = [
   {
     key: "home",
-    icon: <HomeOutlined />,
+    icon: <HomeOutlined className={styles.menu_icon} />,
     label: "文章列表",
   },
   {
     key: "classify",
-    icon: <MenuOutlined />,
+    icon: <FolderOpenOutlined className={styles.menu_icon} />,
     label: "文章分类",
   },
   {
     key: "tag",
-    icon: <TagsOutlined />,
+    icon: <TagsOutlined className={styles.menu_icon} />,
     label: "文章标签",
   },
   {
     key: "timeline",
-    icon: <NodeExpandOutlined />,
+    icon: <FieldTimeOutlined className={styles.menu_icon} />,
     label: "时间轴线",
   },
   {
     key: "about",
-    icon: <HomeOutlined />,
+    icon: <UserOutlined className={styles.menu_icon} />,
     label: "关于我的",
   },
   {
     key: "create",
-    icon: <CodeOutlined />,
+    icon: <ReadOutlined className={styles.menu_icon} />,
     label: "发布文章",
   },
 ];

@@ -129,9 +129,11 @@ module.exports = merge(common, {
     minimizer: [
       new CssMinimizerPlugin(),
       new TerserPlugin({
+        parallel: true, // 多进程
+        extractComments: false, // 删除注释
         terserOptions: {
           compress: {
-            drop_console: true, // 屏蔽log
+            drop_console: true, // 去除log
           },
         },
       }),

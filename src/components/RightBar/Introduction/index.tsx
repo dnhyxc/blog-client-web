@@ -1,6 +1,7 @@
 import React from "react";
 import ABOUTME from "@/assets/images/about_me.jpg";
 import { Button } from "antd";
+import Image from "@/components/Image";
 import styles from "./index.less";
 
 interface IProps {
@@ -47,7 +48,7 @@ const Introduction: React.FC<IProps> = () => {
   return (
     <div className={styles.introductionWrap}>
       <div className={styles.card}>
-        <img className={styles.image} src={ABOUTME} alt="关于我" />
+        <Image url={ABOUTME} className={styles.image} />
       </div>
       <div className={styles.nameInfo}>
         <div className={styles.name}>dnhyxc</div>

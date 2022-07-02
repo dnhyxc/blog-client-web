@@ -4,7 +4,10 @@
   margin-left: 30px;
   font-weight: 400;
   font-size: 16px;
-  min-width: 320px;
+  // min-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   .item {
     box-sizing: border-box;
@@ -38,6 +41,10 @@
 
 .selectMenu {
   color: @menu-active;
+
+  .menuIcon {
+    font-size: 18px;
+  }
 }
 
 .activeMenu {

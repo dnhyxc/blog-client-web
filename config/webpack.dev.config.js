@@ -100,6 +100,8 @@ module.exports = merge(common, {
   plugins: [
     new HtmlWebpackPlugin({
       template: "public/index.html",
+      // 配置浏览器标签图标
+      favicon: "public/favicon.png",
       inject: "body",
       hash: false,
     }),

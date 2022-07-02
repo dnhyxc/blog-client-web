@@ -8,8 +8,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Affix, BackTop } from "antd";
+import { ArrowUpOutlined } from "@ant-design/icons";
 import Preview from "@/components/Preview";
 import Header from "@/components/Header";
+import Image from "@/components/Image";
 import { getMackdownById } from "@/controller/index";
 import RightBar from "@/components/RightBar";
 import Toc from "@/components/ArticleToc";
@@ -39,13 +41,15 @@ const ArticleDetail: React.FC = () => {
     setDetail(res?.detail!);
   }, [id]);
 
-  const renderCoverImg = (data: DetailParams) => (
-    <div className={styles.titleWrap}>
-      <div className={styles.title}>{data.name}</div>
-      <img alt="封面" src={data.img} />
-      <p className={styles.desc}>{data.desc}</p>
-    </div>
-  );
+  const renderCoverImg = (data: DetailParams) => {
+    return (
+      <div className={styles.titleWrap}>
+        <div className={styles.title}>{data.name}</div>
+        {data.img && <Image url={data.img} className={styles.image} />}
+        <p className={styles.desc}>{data.desc}</p>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -97,7 +101,9 @@ const ArticleDetail: React.FC = () => {
         </div>
       </div>
       <BackTop className={styles.backTopWrap}>
-        <div className={styles.backTop}>UP</div>
+        <div className={styles.backTop}>
+          <ArrowUpOutlined className={styles.topIcon} />
+        </div>
       </BackTop>
     </>
   );

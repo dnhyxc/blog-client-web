@@ -10,6 +10,13 @@
     align-items: center;
     font-size: 20px;
     font-weight: 600;
+
+    .icon {
+      width: 50px;
+      height: auto;
+      margin-right: 12px;
+      border-radius: 5px;
+    }
   }
 
   :global(.ant-menu-inline) {
@@ -19,5 +26,15 @@
     border-left: 3px solid @menu-active;
     border-right: none;
     left: 0;
+  }
+
+  .menu_icon {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .siderWrap {
+    display: none;
   }
 }
