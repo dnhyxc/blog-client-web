@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Content from "@/components/Content";
 import Header from "@/components/Header";
+import WordCloud from "@/components/wordCloud";
 import { tagList } from "../../../mock";
 import { TAG_STYLES } from "./style";
 import styles from "./index.less";
@@ -33,6 +34,7 @@ const Tag: React.FC<IProps> = () => {
                 </span>
               );
             })}
+            <WordCloud />
           </div>
         </div>
       </Content>
