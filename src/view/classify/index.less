@@ -1,3 +1,5 @@
+@import "~@styles/common.less";
+
 .Classify {
   width: 100%;
 
@@ -5,19 +7,62 @@
     cursor: pointer;
   }
 
-  .wrap {
-    width: 100%;
+  .contentWrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
     height: 100%;
-    padding: 8px 12px;
-    text-align: center;
-    background-color: #fff;
+    padding: 9px 0 9px 9px;
 
-    .timelineTitle {
-      border: 1px solid #ccc;
-    }
+    .wrap {
+      width: 100%;
+      padding-right: 9px;
+      text-align: center;
 
-    .timelineWrap {
-      border: 1px solid rgb(144, 0, 255);
+      .tagListWrap {
+        display: flex;
+        margin-bottom: 10px;
+        min-height: 100px;
+        border-radius: 5px;
+        background-color: #fff;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .tagName {
+          width: 120px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: @menu-hover;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+        }
+
+        .tagList {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          flex-wrap: wrap;
+          width: 100%;
+          padding-top: 10px;
+          padding-left: 10px;
+
+          .tagItem {
+            padding: 5px 10px;
+            background-color: @tagBgc;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+
+            &:hover {
+              background-color: @menu-hover;
+            }
+          }
+        }
+      }
     }
   }
 

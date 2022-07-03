@@ -2,7 +2,7 @@
   width: calc(100% - 260px);
 
   :not(:last-child) {
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
 
   .item {
@@ -17,7 +17,15 @@
     border-radius: 5px;
     cursor: pointer;
 
-    .img {
+    &:hover {
+      .imgWrap {
+        background-size: 250px 180px !important;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+
+    .imgWrap {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -25,10 +33,16 @@
       max-width: 200px;
       height: 100%;
       margin-right: 20px;
-      margin-top: 10px;
+      margin-top: 5px;
       border: 1px solid #efefef;
       background-color: #efefef;
       border-radius: 5px;
+
+      .text {
+        position: relative;
+        z-index: 1;
+        color: #fff;
+      }
     }
 
     .info {

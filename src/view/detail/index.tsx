@@ -7,7 +7,7 @@
  */
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Affix, BackTop } from "antd";
+import { Affix, BackTop, Spin } from "antd";
 import { ArrowUpOutlined } from "@ant-design/icons";
 import Preview from "@/components/Preview";
 import Header from "@/components/Header";
@@ -62,36 +62,42 @@ const ArticleDetail: React.FC = () => {
           </Header>
         </div>
         <div className={styles.content}>
-          <Preview
-            className={styles.preview}
-            mackdown={detail?.mackdown}
-            coverImg={renderCoverImg(detail!)}
-          >
-            <div className={styles.tagWrap}>
-              <div className={styles.tagList}>
-                <span className={styles.label}>分类：</span>
-                <div className={styles.tagItemWrap}>
-                  {["前端", "后端"].map((i) => (
-                    <span className={styles.tag} key={i}>
-                      {i}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className={styles.tagList}>
-                <span className={styles.label}>标签：</span>
-                <div className={styles.tagItemWrap}>
-                  {["标签1", "标签2", "标签3", "标签4", "标签5", "标签6"].map(
-                    (i) => (
+          {detail.mackdown ? (
+            <Preview
+              className={styles.preview}
+              mackdown={detail?.mackdown}
+              coverImg={renderCoverImg(detail!)}
+            >
+              <div className={styles.tagWrap}>
+                <div className={styles.tagList}>
+                  <span className={styles.label}>分类：</span>
+                  <div className={styles.tagItemWrap}>
+                    {["前端", "后端"].map((i) => (
                       <span className={styles.tag} key={i}>
                         {i}
                       </span>
-                    )
-                  )}
+                    ))}
+                  </div>
+                </div>
+                <div className={styles.tagList}>
+                  <span className={styles.label}>标签：</span>
+                  <div className={styles.tagItemWrap}>
+                    {["标签1", "标签2", "标签3", "标签4", "标签5", "标签6"].map(
+                      (i) => (
+                        <span className={styles.tag} key={i}>
+                          {i}
+                        </span>
+                      )
+                    )}
+                  </div>
                 </div>
               </div>
+            </Preview>
+          ) : (
+            <div className={styles.preview}>
+              <Spin className={styles.spin} />
             </div>
-          </Preview>
+          )}
           <div className={styles.rightBar}>
             <RightBar />
             <Affix offsetTop={50}>

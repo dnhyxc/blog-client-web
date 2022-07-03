@@ -52,7 +52,14 @@ const Introduction: React.FC<IProps> = () => {
       </div>
       <div className={styles.nameInfo}>
         <div className={styles.name}>dnhyxc</div>
-        <div className={styles.desc}>行到水穷处，坐看云起时</div>
+        {/* contentEditable="true"设置当前元素可编辑。suppressContentEditableWarning解决react报错 */}
+        <div
+          suppressContentEditableWarning
+          contentEditable="true"
+          className={styles.desc}
+        >
+          行到水穷处，坐看云起时
+        </div>
       </div>
       <div className={styles.articleInfo}>
         {tagList.map((i) => {

@@ -17,6 +17,8 @@ const Detail = lazy(() => import("@/view/detail"));
 const Login = lazy(() => import("@/view/login"));
 const Mackdown = lazy(() => import("@/view/mackdown"));
 const Classify = lazy(() => import("@/view/classify"));
+const ClassifyList = lazy(() => import("@/view/classify/list"));
+const TagList = lazy(() => import("@/view/tag/list"));
 const Timeline = lazy(() => import("@/view/timeline"));
 const Tag = lazy(() => import("@/view/tag"));
 
@@ -42,8 +44,16 @@ const routes: RouteObject[] = [
         element: lazyLoad(<Classify />),
       },
       {
+        path: "classify/list",
+        element: lazyLoad(<ClassifyList />),
+      },
+      {
         path: "tag",
         element: lazyLoad(<Tag />),
+      },
+      {
+        path: "tag/list",
+        element: lazyLoad(<TagList />),
       },
       {
         path: "timeline",
