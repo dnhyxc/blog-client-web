@@ -17,7 +17,7 @@ const Tag: React.FC<IProps> = () => {
 
   return (
     <div className={styles.Tag}>
-      <Header>文章标签</Header>
+      <Header needMenu>文章标签</Header>
       <Content>
         <div className={styles.wrap}>
           <WordCloud data={tagList} callback={toTagList} />

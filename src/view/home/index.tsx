@@ -11,7 +11,6 @@ import Content from "@/components/Content";
 import Header from "@/components/Header";
 import RightBar from "@/components/RightBar";
 import Card from "@/components/Card";
-import { useHtmlWidth } from "@/hooks";
 import { list } from "../../../mock";
 import styles from "./index.less";
 
@@ -19,7 +18,6 @@ const { Search } = Input;
 
 const Home = () => {
   const navigate = useNavigate();
-  const { htmlWidth } = useHtmlWidth();
 
   const toDetail = (id: string) => {
     navigate(`/detail/${id}`);
@@ -39,7 +37,7 @@ const Home = () => {
 
   return (
     <div className={styles.container}>
-      <Header needMenu={htmlWidth <= 960} needLeft={false} right={rightNode()}>
+      <Header needMenu needLeft={false} right={rightNode()}>
         文章列表
       </Header>
       <Content className={styles.contentWrap}>

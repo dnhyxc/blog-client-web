@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --config ./config/webpack.dev.config.js",
+    "dev": "webpack serve --config ./config/webpack.dev.config.js",
     "build": "rimraf dist && webpack --config ./config/webpack.prod.config.js",
     "eject": "react-scripts eject",
     "prepare": "husky install",

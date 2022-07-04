@@ -18,7 +18,7 @@ const CreateArticle: React.FC<IProps> = () => {
 
   return (
     <div className={styles.container}>
-      <Header>Create Article</Header>
+      <Header needMenu>发布文章</Header>
       <Content>
         <TuiEditor onGetMackdown={onGetMackdown} />
       </Content>

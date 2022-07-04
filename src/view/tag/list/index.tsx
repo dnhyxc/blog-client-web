@@ -56,7 +56,9 @@ const TagList: React.FC<IProps> = () => {
 
   return (
     <div className={styles.TagList}>
-      <Header needLeft>{name} 标签</Header>
+      <Header needLeft needMenu>
+        {name} 标签
+      </Header>
       <Content className={styles.contentWrap}>
         <div className={styles.content}>
           <Card list={data} toDetail={toDetail} />
