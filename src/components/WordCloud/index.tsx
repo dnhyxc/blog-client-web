@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import * as echarts from "echarts";
 import "echarts-wordcloud";
-import { BIRD_BASE64 } from "./base64";
+import { BIRD_BASE64 } from "@/constant";
 import styles from "./index.less";
 
 interface IProps {
