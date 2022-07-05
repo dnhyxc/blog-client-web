@@ -1,9 +1,9 @@
 export const toolbars = [
   ["heading", "bold", "italic"],
-  ["hr", "quote", "strike"],
-  ["ul", "ol", "task", "indent", "outdent"],
-  ["table", "image", "link"],
   ["code", "codeblock"],
+  ["hr", "quote", "strike"],
+  ["table", "image", "link"],
+  ["ul", "ol", "indent", "outdent", "task"],
   ["scrollSync"],
   [
     {
