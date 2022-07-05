@@ -8,6 +8,7 @@
 import React, { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { LeftOutlined } from "@ant-design/icons";
+import { useHtmlWidth } from "@/hooks";
 import MenuList from "./MenuList";
 import styles from "./index.less";
 
@@ -27,6 +28,7 @@ const Header: React.FC<IProps> = ({
   needMenu = false,
 }) => {
   const navigate = useNavigate();
+  const { htmlWidth } = useHtmlWidth();
 
   const goBack = () => {
     navigate(-1);
@@ -42,7 +44,7 @@ const Header: React.FC<IProps> = ({
             </div>
           ))}
         <div className={styles.child}>{children}</div>
-        {needMenu && <MenuList />}
+        {needMenu && htmlWidth <= 960 && <MenuList />}
       </div>
       {right && <div className={styles.right}>{right}</div>}
     </div>

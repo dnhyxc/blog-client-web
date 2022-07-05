@@ -56,7 +56,9 @@ const ClassifyList: React.FC<IProps> = () => {
 
   return (
     <div className={styles.ClassifyList}>
-      <Header needLeft>{name} 分类</Header>
+      <Header needLeft needMenu>
+        {name} 分类
+      </Header>
       <Content className={styles.contentWrap}>
         <div className={styles.content}>
           <Card list={data} toDetail={toDetail} />

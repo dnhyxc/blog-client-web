@@ -2,8 +2,8 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Content from "@/components/Content";
 import Header from "@/components/Header";
+import WordCloud from "@/components/WordCloud";
 import { tagList } from "../../../mock";
-import { TAG_STYLES } from "./style";
 import styles from "./index.less";
 
 interface IProps {}
@@ -17,23 +17,10 @@ const Tag: React.FC<IProps> = () => {
 
   return (
     <div className={styles.Tag}>
-      <Header>文章标签</Header>
+      <Header needMenu>文章标签</Header>
       <Content>
         <div className={styles.wrap}>
-          <div className={styles.tagList}>
-            {tagList.map((i) => {
-              return (
-                <span
-                  key={i.id}
-                  className={styles.tag}
-                  style={TAG_STYLES[i.count] || TAG_STYLES[20]}
-                  onClick={() => toTagList(i.name)}
-                >
-                  {i.name}
-                </span>
-              );
-            })}
-          </div>
+          <WordCloud data={tagList} callback={toTagList} />
         </div>
       </Content>
     </div>

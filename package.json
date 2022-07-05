@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "webpack serve --config ./config/webpack.dev.config.js",
+    "dev": "webpack serve --config ./config/webpack.dev.config.js",
     "build": "rimraf dist && webpack --config ./config/webpack.prod.config.js",
     "eject": "react-scripts eject",
     "prepare": "husky install",
@@ -28,6 +29,8 @@
     "antd": "^4.21.0",
     "classname": "^0.0.0",
     "cross-env": "^7.0.3",
+    "echarts": "^5.3.3",
+    "echarts-wordcloud": "^2.1.0-beta",
     "markdown-navbar": "^1.4.3",
     "mobx": "^6.6.0",
     "mobx-react": "^7.5.0",
