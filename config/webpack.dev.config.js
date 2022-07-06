@@ -6,9 +6,7 @@
  * @FilePath: \example\react\mobx\config\webpack.dev.config.js
  * @LastEditTime: 2022-06-10 19:23:53
  */
-const path = require("path");
 const { merge } = require("webpack-merge");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const common = require("./webpack.common.config");
 
 module.exports = merge(common, {
