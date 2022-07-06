@@ -6,6 +6,7 @@
     "start": "webpack serve --config ./config/webpack.dev.config.js",
     "dev": "webpack serve --config ./config/webpack.dev.config.js",
     "build": "rimraf dist && webpack --config ./config/webpack.prod.config.js",
+    "build:dev": "rimraf dist && webpack --config ./config/webpack.dev.config.js",
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "test": "npx eslint ./src --ext ts,tsx --fix"

@@ -7,12 +7,19 @@
  * @LastEditTime: 2022-06-13 11:40:24
  */
 const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const WebpackBar = require("webpackbar");
 
 module.exports = {
   entry: {
     index: "./src/index.tsx",
+  },
+  output: {
+    filename: "js/[name]-bundle-[contenthash:6].js",
+    path: path.resolve(__dirname, "../dist"),
+    // 防止刷新页面后出现页面丢失报错！GET http://localhost:9000/home/js/bundle.js net::ERR_ABORTED 404 (Not Found)
+    publicPath: "/",
   },
   module: {
     rules: [
@@ -69,7 +76,29 @@ module.exports = {
       },
     ],
   },
-  plugins: [new ESLintPlugin(), new WebpackBar()],
+  plugins: [
+    /**
+     * HtmlWebpackPlugin 配置说明：
+     *  template：基于我们自己定义的 html 文件为模板生成 html 文件
+     *  filename：打包之后的 html 文件名字
+     *  inject：将 js 文件注入到 body 最底部
+     *  minify：压缩 html 文件时的配置
+     *   - removeComments：去除注释
+     */
+    new HtmlWebpackPlugin({
+      template: "public/index.html",
+      filename: "index.html",
+      // 配置浏览器标签图标
+      favicon: "public/favicon.png",
+      inject: "body",
+      hash: false,
+      minify: {
+        removeComments: true,
+      },
+    }),
+    new ESLintPlugin(),
+    new WebpackBar(),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "../src"),
@@ -93,6 +122,7 @@ module.exports = {
  *  @babel/preset-react：转译 react 的 JSX
  *  @babel/plugin-proposal-class-properties：用来编译类(class)
  *  @babel/plugin-transform-runtime：防止污染全局，代码复用和减少打包体积
+ *  babel-plugin-import 能够帮助我们在引入组件的时候自动加载相关样式。
  *
  * file-loader url-loader 说明：
  *  后缀为 jpg,png,gif 的文件，使用 url-loader 进行预处理；

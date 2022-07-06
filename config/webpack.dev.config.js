@@ -13,12 +13,6 @@ const common = require("./webpack.common.config");
 
 module.exports = merge(common, {
   mode: "development",
-  output: {
-    filename: "js/[name]-bundle-[hash:6].js",
-    path: path.resolve(__dirname, "../dist"),
-    // 防止刷新页面后出现页面丢失报错！GET http://localhost:9000/home/js/bundle.js net::ERR_ABORTED 404 (Not Found)
-    publicPath: "/",
-  },
   module: {
     rules: [
       {
@@ -96,15 +90,6 @@ module.exports = merge(common, {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: "public/index.html",
-      // 配置浏览器标签图标
-      favicon: "public/favicon.png",
-      inject: "body",
-      hash: false,
-    }),
-  ],
   /**
    * devServer 配置说明：
    *  port: 端口号
