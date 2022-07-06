@@ -53,7 +53,7 @@ yarn add webpack-merge html-webpack-plugin -D
 
 ### webpack 初始配置
 
-webpack.common.js 文件初始内容：
+webpack.common.config.js 文件初始内容：
 
 ```js
 const path = require("path");
@@ -136,4 +136,37 @@ module.exports = merge(common, {
 },
 ```
 
-使用 `npm start` 命令启动项目。
+使用 `npm start` 命令启动项目，以及使用 `npm run build` 打包，看是否能正常运行。
+
+### 安装相关 babel 插件
+
+**@babel/core**：是 Babel 的核心库，所有的核心 Api 都在这个库里，这些 Api 供 babel-loader 调用。
+
+**babel-loader**：@babel/core 在做 es6 的语法转换和弥补缺失的功能，但是在使用 webpack 打包 js 时，webpack 并不知道应该怎么去调用这些规则去编译 js。这时就需要 babel-loader 了，它作为一个中间桥梁，通过调用 babel/core 中的 api 来告诉 webpack 要如何处理 js。
+
+**@babel/preset-react**：预设了一些 Babel 插件，主要负责编译 React 语法。
+
+```json
+yarn add babel-loader @babel/core @babel/preset-react -D
+```
+
+### 更新 webpack.common.config.js
+
+增加编译 js 及 jsx 的配置：
+
+```js
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+
+module.exports = {
+  // ...
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)/,
+        loader: "babel-loader",
+      },
+    ],
+  },
+};
+```

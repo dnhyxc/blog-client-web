@@ -9,6 +9,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 const WebpackBar = require("webpackbar");
 
 module.exports = {
@@ -98,6 +99,7 @@ module.exports = {
     }),
     new ESLintPlugin(),
     new WebpackBar(),
+    new FriendlyErrorsWebpackPlugin(),
   ],
   resolve: {
     alias: {
@@ -107,12 +109,13 @@ module.exports = {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".less", ".scss"],
   },
   // 精简控制台编译输出信息
-  stats: {
-    modules: false,
-    children: false,
-    chunks: false,
-    chunkModules: false,
-  },
+  // stats: {
+  //   modules: false,
+  //   children: false,
+  //   chunks: false,
+  //   chunkModules: false,
+  // },
+  stats: "errors-only",
 };
 
 /**
