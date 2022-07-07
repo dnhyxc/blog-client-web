@@ -63,13 +63,25 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(bmp|png|jpe?g|gif)$/,
         loader: "url-loader",
         options: {
-          name: "[name].[ext]",
-          outputPath: "images",
+          name: "[name].[contenthash:8].[ext]",
+          outputPath: "assets/images",
           limit: 8192,
         },
+      },
+      {
+        test: /\.(ttf|woff|woff2|eot|otf)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              name: "[name].[contenthash:8].[ext]",
+              outputPath: "assets/fonts",
+            },
+          },
+        ],
       },
       {
         test: /\.md$/,

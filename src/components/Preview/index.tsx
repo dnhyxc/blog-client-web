@@ -28,12 +28,6 @@ const Preview: React.FC<IProps> = ({
   children: childNode,
   coverImg,
 }) => {
-  const createA = (children: ReactNode) => (
-    <a id={`${children}`} href={`#${children}`}>
-      {children}
-    </a>
-  );
-
   const renderH = ({
     children,
     level,
@@ -44,19 +38,47 @@ const Preview: React.FC<IProps> = ({
   }) => {
     switch (level) {
       case 1:
-        return <h1 {...props}>{createA(children)}</h1>;
+        return (
+          <h1 {...props} className={styles.header_H}>
+            {children}
+          </h1>
+        );
       case 2:
-        return <h2 {...props}>{createA(children)}</h2>;
+        return (
+          <h2 {...props} className={styles.header_H}>
+            {children}
+          </h2>
+        );
       case 3:
-        return <h3 {...props}>{createA(children)}</h3>;
+        return (
+          <h3 {...props} className={styles.header_H}>
+            {children}
+          </h3>
+        );
       case 4:
-        return <h4 {...props}>{createA(children)}</h4>;
+        return (
+          <h4 {...props} className={styles.header_H}>
+            {children}
+          </h4>
+        );
       case 5:
-        return <h5 {...props}>{createA(children)}</h5>;
+        return (
+          <h5 {...props} className={styles.header_H}>
+            {children}
+          </h5>
+        );
       case 6:
-        return <h6 {...props}>{createA(children)}</h6>;
+        return (
+          <h6 {...props} className={styles.header_H}>
+            {children}
+          </h6>
+        );
       default:
-        return <h3 {...props}>{createA(children)}</h3>;
+        return (
+          <h3 {...props} className={styles.header_H}>
+            {children}
+          </h3>
+        );
     }
   };
 
@@ -88,6 +110,12 @@ const Preview: React.FC<IProps> = ({
           h2: ({ node, children, level, ...props }) =>
             renderH({ children, level, ...props }) as any,
           h3: ({ node, children, level, ...props }) =>
+            renderH({ children, level, ...props }) as any,
+          h4: ({ node, children, level, ...props }) =>
+            renderH({ children, level, ...props }) as any,
+          h5: ({ node, children, level, ...props }) =>
+            renderH({ children, level, ...props }) as any,
+          h6: ({ node, children, level, ...props }) =>
             renderH({ children, level, ...props }) as any,
           blockquote: ({ node, ...props }) => (
             <blockquote className={styles.blockquote} {...props} />

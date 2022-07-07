@@ -27,7 +27,9 @@ const AboutMe = () => {
     <div className={styles.AboutMe}>
       <Header right={headerRight()}>About</Header>
       <Content>
-        <div className={styles.wrap}>关于我的</div>
+        <div className={styles.wrap}>
+          <div className={styles.test}>关于我的</div>
+        </div>
       </Content>
     </div>
   );

@@ -3,8 +3,15 @@ import reactTemplate from "./react-template.md";
 import JSON from "./test.md";
 import eslint from "./eslint.md";
 import react from "./react.md";
+import webpackConfig from "./webpack-config.md";
 
 export const list = [
+  {
+    id: "6",
+    name: "webpackConfig",
+    desc: "react + webpack + typescript + eslint 项目搭建",
+    date: "2020-09-02",
+  },
   {
     id: "1",
     name: "react template",
@@ -38,6 +45,16 @@ export const list = [
 ];
 
 export const detail = [
+  {
+    id: "6",
+    detail: {
+      name: "webpackConfig",
+      desc: "react + webpack + typescript + eslint 项目搭建",
+      mackdown: webpackConfig,
+      date: "2020-09-02",
+      img: COVERIMG,
+    },
+  },
   {
     id: "1",
     detail: {
