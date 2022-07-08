@@ -12,11 +12,11 @@ yarn add webpack webpack-cli webpack-dev-server -D
 
 在根目录创建 `config` 文件夹，并在其中创建如下文件：
 
-- `webpack.common.js`：用于编写 webpack 公共配置。
+- `webpack.common.config.js`：用于编写 webpack 公共配置。
 
-- `webpack.dev.js`：用于配置 webpack 开发环境配置。
+- `webpack.dev.config.js`：用于配置 webpack 开发环境配置。
 
-- `webpack.prod.js`：用于 webpack 打包配置。
+- `webpack.prod.config.js`：用于 webpack 打包配置。
 
 #### 创建 public 文件夹
 
@@ -43,7 +43,7 @@ yarn add webpack webpack-cli webpack-dev-server -D
 
 #### 安装初始化所需插件
 
-**webpack-merge**：用于合并两个 webpack 配置，如下用于在 webpack.dev.js 中合并 webpack.common.js 中的配置。
+**webpack-merge**：用于合并两个 webpack 配置，如下用于在 webpack.dev.config.js 中合并 webpack.common.config.js 中的配置。
 
 **html-webpack-plugin**：用于在指定的 html 模板文件中自动导入打包出来的 js 文件。
 
@@ -105,7 +105,7 @@ root.textContent = 'hello word';
 
 #### 生产打包配置
 
-webpack.prod.js 文件初始内容：
+webpack.prod.config.js 文件初始内容：
 
 ```js
 const { merge } = require('webpack-merge');
@@ -118,7 +118,7 @@ module.exports = merge(common, {
 
 #### 开发打包配置
 
-webpack.dev.js 文件初始内容：
+webpack.dev.config.js 文件初始内容：
 
 ```js
 const { merge } = require('webpack-merge');
