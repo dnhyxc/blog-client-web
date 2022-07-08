@@ -193,7 +193,7 @@ npx husky add .husky/pre-commit "npm test"
   "scripts": {
     // ...
 +   "prepare": "husky install",
-+   "test": "npx eslint ./src"
++   "test": "npx eslint ./src --ext ts,tsx"
   }
 }
 ```

@@ -34,6 +34,25 @@ module.exports = merge(common, {
       },
       {
         test: /\.less$/,
+        exclude: [/node_modules/],
+        use: [
+          MiniCssExtractPlugin.loader,
+          // 配置less模块化导入
+          {
+            loader: "css-loader",
+            options: {
+              modules: {
+                localIdentName: "[name]__[local]--[hash:base64:5]",
+              },
+              importLoaders: 1,
+            },
+          },
+          "postcss-loader",
+          "less-loader",
+        ],
+      },
+      {
+        test: /\.less$/,
         include: [/node_modules/],
         use: [
           MiniCssExtractPlugin.loader,
@@ -56,26 +75,8 @@ module.exports = merge(common, {
         ],
       },
       {
-        test: /\.less$/,
-        exclude: [/node_modules/],
-        use: [
-          MiniCssExtractPlugin.loader,
-          // 配置less模块化导入
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                localIdentName: "[name]__[local]--[hash:base64:5]",
-              },
-              importLoaders: 1,
-            },
-          },
-          "postcss-loader",
-          "less-loader",
-        ],
-      },
-      {
         test: /\.(sass|scss)$/,
+        exclude: /node_modules/,
         use: [
           MiniCssExtractPlugin.loader,
           // 配置scss模块化导入

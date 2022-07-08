@@ -64,6 +64,7 @@ module.exports = {
       },
       {
         test: /\.(bmp|png|jpe?g|gif)$/,
+        exclude: /node_modules/,
         loader: "url-loader",
         options: {
           name: "[name].[contenthash:8].[ext]",
@@ -73,6 +74,7 @@ module.exports = {
       },
       {
         test: /\.(ttf|woff|woff2|eot|otf)$/,
+        exclude: /node_modules/,
         use: [
           {
             loader: "url-loader",
@@ -85,6 +87,7 @@ module.exports = {
       },
       {
         test: /\.md$/,
+        exclude: /node_modules/,
         use: "raw-loader",
       },
     ],
@@ -121,13 +124,28 @@ module.exports = {
     extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".less", ".scss"],
   },
   // 精简控制台编译输出信息
-  // stats: {
-  //   modules: false,
-  //   children: false,
-  //   chunks: false,
-  //   chunkModules: false,
-  // },
-  stats: "errors-only",
+  stats: {
+    modules: false,
+    children: false,
+    chunks: false,
+    chunkModules: false,
+  },
+  // stats: "errors-only",
+  externals: {
+    react: "React",
+    "react-dom": "ReactDOM",
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "vendor",
+          chunks: "all",
+        },
+      },
+    },
+  },
 };
 
 /**
