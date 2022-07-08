@@ -1,4 +1,5 @@
 import React from "react";
+import { Skeleton } from "antd";
 import classname from "classname";
 import IMAGE from "@/assets/images/about_me.jpg";
 import styles from "./index.less";
@@ -41,25 +42,31 @@ const Card: React.FC<IProps> = ({
   };
   return (
     <div className={classname(styles.wrap, wrapClass)}>
-      {list.map((i) => (
-        <div
-          className={classname(styles.item, itemClass)}
-          key={i.id}
-          onClick={() => toDetail && toDetail(i.id)}
-        >
+      {list && list.length < 0 ? (
+        list.map((i) => (
           <div
-            className={classname(styles.imgWrap, imgWrapClass)}
-            style={bgcStyle(IMAGE)}
+            className={classname(styles.item, itemClass)}
+            key={i.id}
+            onClick={() => toDetail && toDetail(i.id)}
           >
-            <div className={styles.text}>{i.name}</div>
+            <div
+              className={classname(styles.imgWrap, imgWrapClass)}
+              style={bgcStyle(IMAGE)}
+            >
+              <div className={styles.text}>{i.name}</div>
+            </div>
+            <div className={styles.info}>
+              <div className={styles.name}>{i.name}</div>
+              <div className={descClass || styles.desc}>{i.desc}</div>
+              <div className={styles.date}>{i.date}</div>
+            </div>
           </div>
-          <div className={styles.info}>
-            <div className={styles.name}>{i.name}</div>
-            <div className={descClass || styles.desc}>{i.desc}</div>
-            <div className={styles.date}>{i.date}</div>
-          </div>
+        ))
+      ) : (
+        <div className={classname(styles.item, itemClass, styles.skeletonWrap)}>
+          <Skeleton active paragraph={{ rows: 1 }} />
         </div>
-      ))}
+      )}
     </div>
   );
 };

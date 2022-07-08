@@ -18,6 +18,7 @@ interface IProps {
   right?: ReactNode;
   needLeft?: boolean;
   needMenu?: boolean;
+  excludesWidth?: boolean;
 }
 
 const Header: React.FC<IProps> = ({
@@ -26,6 +27,7 @@ const Header: React.FC<IProps> = ({
   right,
   needLeft = false,
   needMenu = false,
+  excludesWidth = false,
 }) => {
   const navigate = useNavigate();
   const { htmlWidth } = useHtmlWidth();
@@ -44,7 +46,9 @@ const Header: React.FC<IProps> = ({
             </div>
           ))}
         <div className={styles.child}>{children}</div>
-        {needMenu && htmlWidth <= 960 && <MenuList />}
+        {excludesWidth
+          ? needMenu && <MenuList />
+          : needMenu && htmlWidth <= 960 && <MenuList />}
       </div>
       {right && <div className={styles.right}>{right}</div>}
     </div>

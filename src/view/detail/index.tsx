@@ -55,7 +55,7 @@ const ArticleDetail: React.FC = () => {
     <>
       <div className={styles.detailContainer}>
         <div className={styles.headerWrap}>
-          <Header needLeft needMenu>
+          <Header needLeft needMenu excludesWidth>
             <div className={styles.headerContent}>
               <div>DETAIL</div>
             </div>
