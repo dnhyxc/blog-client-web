@@ -114,6 +114,8 @@ const TimeLine: React.FC<IProps> = () => {
                         descClass={styles.descClass}
                         imgBgcSize="100% 100px"
                         toDetail={toDetail}
+                        skeletonRows={2}
+                        skeletonAvatar={styles.skeletonAvatar}
                       />
                     )}
                   </div>

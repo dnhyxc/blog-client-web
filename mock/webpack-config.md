@@ -58,19 +58,19 @@ yarn add webpack-merge html-webpack-plugin -D
 webpack.common.config.js 文件初始内容：
 
 ```js
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
-    index: './src/index.js',
+    index: "./src/index.js",
   },
   output: {
     // 设置打包出来的 js 文件放置在 js 目录下
-    filename: 'js/[name]-bundle-[contenthash:6].js',
-    path: path.resolve(__dirname, '../dist'),
+    filename: "js/[name]-bundle-[contenthash:6].js",
+    path: path.resolve(__dirname, "../dist"),
     // 防止刷新页面后出现页面丢失报错！GET http://localhost:9000/home/js/bundle.js net::ERR_ABORTED 404 (Not Found)
-    publicPath: '/',
+    publicPath: "/",
   },
   plugins: [
     /**
@@ -82,11 +82,11 @@ module.exports = {
      *   - removeComments：去除注释
      */
     new HtmlWebpackPlugin({
-      template: 'public/index.html',
-      filename: 'index.html',
+      template: "public/index.html",
+      filename: "index.html",
       // 配置浏览器标签图标
-      favicon: 'public/favicon.png',
-      inject: 'body',
+      favicon: "public/favicon.png",
+      inject: "body",
       minify: {
         removeComments: true,
       },
@@ -98,9 +98,9 @@ module.exports = {
 - 在根目录中创建 src 文件夹，并在其中创建 `index.js` 文件：
 
 ```js
-const root = document.getElementById('root');
+const root = document.getElementById("root");
 console.log(root);
-root.textContent = 'hello word';
+root.textContent = "hello word";
 ```
 
 #### 生产打包配置
@@ -108,11 +108,11 @@ root.textContent = 'hello word';
 webpack.prod.config.js 文件初始内容：
 
 ```js
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.config.js');
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.config.js");
 
 module.exports = merge(common, {
-  mode: 'production',
+  mode: "production",
 });
 ```
 
@@ -121,10 +121,10 @@ module.exports = merge(common, {
 webpack.dev.config.js 文件初始内容：
 
 ```js
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.config.js');
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.config.js");
 module.exports = merge(common, {
-  mode: 'development',
+  mode: "development",
   devServer: {
     port: 9102,
     compress: true,
@@ -174,8 +174,8 @@ yarn add babel-loader @babel/core @babel/preset-env @babel/preset-react @babel/p
 在 `module {}` 中的 `rules []` 配置中增加编译 js 及 jsx 的配置：
 
 ```js
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   // ...
@@ -186,12 +186,12 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
             options: {
-              presets: ['@babel/preset-env', '@babel/preset-react'],
+              presets: ["@babel/preset-env", "@babel/preset-react"],
               plugins: [
-                '@babel/plugin-transform-runtime',
-                '@babel/plugin-proposal-class-properties',
+                "@babel/plugin-transform-runtime",
+                "@babel/plugin-proposal-class-properties",
               ],
             },
           },
@@ -226,7 +226,7 @@ module.exports = {
       {
         test: /\.js(x?)$/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: ["babel-loader"],
       },
     ],
   },
@@ -244,8 +244,8 @@ yarn add react react-dom
 在 src/index.js 文件中加入 react 相关内容：
 
 ```js
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
 
 const App = () => {
   return (
@@ -255,7 +255,7 @@ const App = () => {
   );
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<App />);
 ```
 
@@ -340,7 +340,7 @@ root.render(<App />);
 在 src 中新增 `App.tsx` 文件，内容如下：
 
 ```js
-import React from 'react';
+import React from "react";
 
 const App = () => {
   return (
@@ -360,7 +360,7 @@ export default App;
 ```js
 module.exports = {
   entry: {
-    index: './src/index.tsx',
+    index: "./src/index.tsx",
   },
   // ...
   module: {
@@ -368,7 +368,7 @@ module.exports = {
       {
         test: /\.(js|jsx|ts|tsx)/,
         exclude: /node_modules/,
-        use: ['babel-loader'],
+        use: ["babel-loader"],
       },
     ],
   },
@@ -378,19 +378,19 @@ module.exports = {
 在与 plugins 配置同级配置下增加 **resolve** 配置，增加了该配置，在引入文件时就不需要写后缀了。就如上述 `src/index.tsx` 中导入 `./App` 文件一样，可以将 `.tsx` 后缀省略。
 
 ```js
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
-    index: './src/index.tsx',
+    index: "./src/index.tsx",
   },
   // ...
   plugins: [
     // ...
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.less', '.scss'],
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".less", ".scss"],
   },
 };
 ```
@@ -414,26 +414,26 @@ yarn add style-loader css-loader less less-loader sass sass-loader -D
 在 webpack.common.config.js 文件中增加编译 css 的配置，如下：
 
 ```js
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.config.js');
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.config.js");
 module.exports = merge(common, {
-  mode: 'development',
+  mode: "development",
   module: {
     rules: [
       {
         test: /\.(css)$/,
         exclude: [/node_modules/],
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
       {
         test: /\.(less)$/,
         exclude: [/node_modules/],
-        use: ['style-loader', 'css-loader', 'less-loader', 'postcss-loader'],
+        use: ["style-loader", "css-loader", "less-loader", "postcss-loader"],
       },
       {
         test: /\.(scss)$/,
         exclude: [/node_modules/],
-        use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader'],
+        use: ["style-loader", "css-loader", "sass-loader", "postcss-loader"],
       },
     ],
   },
@@ -457,8 +457,8 @@ module.exports = merge(common, {
 - Home.tsx 文件内容如下：
 
 ```js
-import React from 'react';
-import './Home.css';
+import React from "react";
+import "./Home.css";
 
 interface IProps {}
 
@@ -497,9 +497,9 @@ export default Home;
 - App.tsx 内容：
 
 ```js
-import React from 'react';
-import Home from './Home';
-import './App.less';
+import React from "react";
+import Home from "./Home";
+import "./App.less";
 
 const App = () => {
   return (
@@ -574,23 +574,23 @@ yarn add postcss-loader autoprefixer -D
 
 ```js
 module.exports = merge(common, {
-  mode: 'development',
+  mode: "development",
   module: {
     rules: [
       {
         test: /\.(css)$/,
         exclude: [/node_modules/],
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: ["style-loader", "css-loader", "postcss-loader"],
       },
       {
         test: /\.(less)$/,
         exclude: [/node_modules/],
-        use: ['style-loader', 'css-loader', 'less-loader', 'postcss-loader'],
+        use: ["style-loader", "css-loader", "less-loader", "postcss-loader"],
       },
       {
         test: /\.(scss)$/,
         exclude: [/node_modules/],
-        use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader'],
+        use: ["style-loader", "css-loader", "sass-loader", "postcss-loader"],
       },
     ],
   },
@@ -618,11 +618,11 @@ module.exports = {
   plugins: {
     autoprefixer: {
       overrideBrowserslist: [
-        'Android 4.1',
-        'iOS 7.1',
-        'Chrome > 31',
-        'ff > 31',
-        'ie >= 8',
+        "Android 4.1",
+        "iOS 7.1",
+        "Chrome > 31",
+        "ff > 31",
+        "ie >= 8",
       ],
     },
   },
@@ -692,9 +692,9 @@ module: {
 将样式的引入方式由原来的 `import "./App.less"` 改为：`import styles from "./App.less"`
 
 ```js
-import React from 'react';
-import Home from './Home';
-import styles from './App.less';
+import React from "react";
+import Home from "./Home";
+import styles from "./App.less";
 
 const App = () => {
   return (
@@ -740,10 +740,10 @@ yarn add file-loader url-loader -D
 在 `assets/images` 文件夹下放入一张本地不图片，并在 `App.tsx` 中导入：
 
 ```js
-import React from 'react';
-import Home from './Home';
-import styles from './App.less';
-import TEST_IMG from './assets/images/test.jpg';
+import React from "react";
+import Home from "./Home";
+import styles from "./App.less";
+import TEST_IMG from "./assets/images/test.jpg";
 
 const App = () => {
   return (
@@ -776,11 +776,11 @@ yarn add mini-css-extract-plugin -D
 在生产打包配置中增加导入 `"mini-css-extract-plugin`：
 
 ```js
-const { merge } = require('webpack-merge');
-const common = require('./webpack.common.config.js');
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.config.js");
 
 module.exports = merge(common, {
-  mode: 'production',
+  mode: "production",
   module: {
     rules: [
       {
@@ -789,15 +789,15 @@ module.exports = merge(common, {
         use: [
           MiniCssExtractPlugin.loader,
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]',
+                localIdentName: "[name]__[local]--[hash:base64:5]",
               },
               importLoaders: 1,
             },
           },
-          'postcss-loader',
+          "postcss-loader",
         ],
       },
       {
@@ -807,16 +807,16 @@ module.exports = merge(common, {
           MiniCssExtractPlugin.loader,
           // 配置less模块化导入
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]',
+                localIdentName: "[name]__[local]--[hash:base64:5]",
               },
               importLoaders: 1,
             },
           },
-          'postcss-loader',
-          'less-loader',
+          "postcss-loader",
+          "less-loader",
         ],
       },
       {
@@ -826,17 +826,17 @@ module.exports = merge(common, {
           MiniCssExtractPlugin.loader,
           // 配置scss模块化导入
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               modules: {
-                mode: 'local',
-                localIdentName: '[name]__[local]--[hash:base64:5]',
+                mode: "local",
+                localIdentName: "[name]__[local]--[hash:base64:5]",
               },
               importLoaders: 1,
             },
           },
-          'postcss-loader',
-          'sass-loader',
+          "postcss-loader",
+          "sass-loader",
         ],
       },
     ],
@@ -884,14 +884,14 @@ yarn add css-minimizer-webpack-plugin -D
 在 `webpack.prod.config.js` 文件中导入 css-minimizer-webpack-plugin：
 
 ```js
-const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
+const CssMinimizerWebpackPlugin = require("css-minimizer-webpack-plugin");
 
 module.exports = merge(common, {
-  mode: 'production',
+  mode: "production",
   // ...
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'style/[name].[hash:6].css',
+      filename: "style/[name].[hash:6].css",
     }),
     new CssMinimizerWebpackPlugin(),
   ],
@@ -915,7 +915,7 @@ yarn add terser-webpack-plugin -D
 在 `webpack.prod.config.js` 文件中与 `plugins []` 同层级下增加 `optimization` 配置，具体如下：
 
 ```js
-const TerserPlugin = require('terser-webpack-plugin');
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   optimization: {
@@ -951,8 +951,8 @@ module.exports = {
 module.exports = {
   // ...
   externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
+    react: "React",
+    "react-dom": "ReactDOM",
   },
 };
 ```
@@ -1000,8 +1000,8 @@ module.exports = {
 ```js
 module.exports = {
   externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
+    react: "React",
+    "react-dom": "ReactDOM",
   },
   // 缓存配置
   optimization: {
@@ -1009,8 +1009,8 @@ module.exports = {
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendor',
-          chunks: 'all',
+          name: "vendor",
+          chunks: "all",
         },
       },
     },
@@ -1062,7 +1062,7 @@ yarn add antd
 
 ```js
 module.exports = merge(common, {
-  mode: 'development',
+  mode: "development",
   module: {
     rules: [
       // ...
@@ -1073,37 +1073,37 @@ module.exports = merge(common, {
         test: /\.(less)$/,
         exclude: [/node_modules/],
         use: [
-          'style-loader',
+          "style-loader",
           // 配置less模块化导入
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]',
+                localIdentName: "[name]__[local]--[hash:base64:5]",
               },
               importLoaders: 1,
             },
           },
-          'postcss-loader',
-          'less-loader',
+          "postcss-loader",
+          "less-loader",
         ],
       },
       {
         test: /\.less$/,
         include: [/node_modules/],
         use: [
-          'style-loader',
-          'css-loader',
-          'postcss-loader',
+          "style-loader",
+          "css-loader",
+          "postcss-loader",
           {
-            loader: 'less-loader',
+            loader: "less-loader",
             options: {
               lessOptions: {
                 sourceMap: true,
                 modifyVars: {
-                  'primary-color': '#1DA57A',
-                  'link-color': '#1DA57A',
-                  'border-radius-base': '2px',
+                  "primary-color": "#1DA57A",
+                  "link-color": "#1DA57A",
+                  "border-radius-base": "2px",
                 },
                 javascriptEnabled: true,
               },
@@ -1125,7 +1125,7 @@ module.exports = merge(common, {
 
 ```js
 module.exports = merge(common, {
-  mode: 'development',
+  mode: "development",
   module: {
     rules: [
       // ...
@@ -1139,16 +1139,16 @@ module.exports = merge(common, {
           MiniCssExtractPlugin.loader,
           // 配置less模块化导入
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               modules: {
-                localIdentName: '[name]__[local]--[hash:base64:5]',
+                localIdentName: "[name]__[local]--[hash:base64:5]",
               },
               importLoaders: 1,
             },
           },
-          'postcss-loader',
-          'less-loader',
+          "postcss-loader",
+          "less-loader",
         ],
       },
       {
@@ -1156,17 +1156,17 @@ module.exports = merge(common, {
         include: [/node_modules/],
         use: [
           MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
+          "css-loader",
+          "postcss-loader",
           {
-            loader: 'less-loader',
+            loader: "less-loader",
             options: {
               lessOptions: {
                 sourceMap: true,
                 modifyVars: {
-                  'primary-color': '#1DA57A',
-                  'link-color': '#1DA57A',
-                  'border-radius-base': '2px',
+                  "primary-color": "#1DA57A",
+                  "link-color": "#1DA57A",
+                  "border-radius-base": "2px",
                 },
                 javascriptEnabled: true,
               },
@@ -1183,9 +1183,9 @@ module.exports = merge(common, {
 以上 antd 相关配置全部配置完毕之后，即可在 `Home.tsx` 中导入 antd 相关组件进行验证了：
 
 ```js
-import React from 'react';
-import { Button } from 'antd';
-import './Home.css';
+import React from "react";
+import { Button } from "antd";
+import "./Home.css";
 
 interface IProps {}
 
@@ -1213,10 +1213,10 @@ module.exports = {
   // ...
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, '../src'),
-      '@styles': path.resolve(__dirname, '../src/styles'),
+      "@": path.resolve(__dirname, "../src"),
+      "@styles": path.resolve(__dirname, "../src/styles"),
     },
-    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.less', '.scss'],
+    extensions: [".js", ".jsx", ".ts", ".tsx", ".json", ".less", ".scss"],
   },
 };
 ```
@@ -1226,8 +1226,8 @@ module.exports = {
 在 src 目录下 创建 `components` 文件，并在其中创建一个 `Test` 文件夹，在 Test 文件夹下新建一个 `index.tsx` 文件，文件内容如下：
 
 ```js
-import React from 'react';
-import { Button } from 'antd';
+import React from "react";
+import { Button } from "antd";
 
 interface IProps {}
 
@@ -1241,12 +1241,12 @@ export default Test;
 在 `App.tsx` 中导入 `Test` 组件：
 
 ```js
-import React from 'react';
+import React from "react";
 // 通过路径别名导入 Test 组件
-import Test from '@/components/Test';
-import Home from './Home';
-import styles from './App.less';
-import TEST_IMG from './assets/images/test.jpg';
+import Test from "@/components/Test";
+import Home from "./Home";
+import styles from "./App.less";
+import TEST_IMG from "./assets/images/test.jpg";
 
 const App = () => {
   return (
@@ -1278,7 +1278,7 @@ yarn add eslint@latest eslint-loader eslint-webpack-plugin -D
 在 webpack.common.config.js 增加 `ESLintPlugin`：
 
 ```js
-const ESLintPlugin = require('eslint-webpack-plugin');
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 module.exports = {
   // ...
@@ -1456,7 +1456,7 @@ yarn add friendly-errors-webpack-plugin -D
 修改 webpack.common.config.js 文件，增加 `FriendlyErrorsWebpackPlugin` 配置：
 
 ```js
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
 
 module.exports = {
   plugins: [
@@ -1474,7 +1474,31 @@ module.exports = {
 };
 ```
 
-#### webpack 编译进度条
+#### webpack 编译百分比进度条
+
+该配置不需要安装任何插件，只需要修改 `webpack.common.config.js`，增加如下 `plugins` 配置即可：
+
+```js
+const webpack = require("webpack");
+
+module.exports = {
+  plugins: [
+    // ...
+    new webpack.ProgressPlugin({
+      activeModules: false,
+      entries: true,
+      modules: true,
+      modulesCount: 5000,
+      profile: false,
+      dependencies: true,
+      dependenciesCount: 10000,
+      percentBy: "entries",
+    }),
+  ],
+};
+```
+
+#### webpack 编译条形进度条
 
 安装如插件：
 
@@ -1485,7 +1509,7 @@ yarn add webpackbar -D
 修改 webpack.common.config.js 文件，增加 `WebpackBar` plugins 配置：
 
 ```js
-const WebpackBar = require('webpackbar');
+const WebpackBar = require("webpackbar");
 
 module.exports = {
   plugins: [
@@ -1494,3 +1518,5 @@ module.exports = {
   ],
 };
 ```
+
+> 相比条形进度条，个人更推荐百分比进度条。

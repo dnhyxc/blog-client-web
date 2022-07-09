@@ -19,6 +19,8 @@ interface IProps {
   imgWrapClass?: string;
   imgBgcSize?: string;
   descClass?: string;
+  skeletonRows?: number;
+  skeletonAvatar?: string;
 }
 
 const Card: React.FC<IProps> = ({
@@ -29,6 +31,8 @@ const Card: React.FC<IProps> = ({
   imgWrapClass,
   imgBgcSize = "100% 150px",
   descClass,
+  skeletonRows = 3,
+  skeletonAvatar,
 }) => {
   const bgcStyle = (bgc: string) => {
     return {
@@ -42,7 +46,7 @@ const Card: React.FC<IProps> = ({
   };
   return (
     <div className={classname(styles.wrap, wrapClass)}>
-      {list && list.length < 0 ? (
+      {list && list.length > 0 ? (
         list.map((i) => (
           <div
             className={classname(styles.item, itemClass)}
@@ -64,7 +68,10 @@ const Card: React.FC<IProps> = ({
         ))
       ) : (
         <div className={classname(styles.item, itemClass, styles.skeletonWrap)}>
-          <Skeleton active paragraph={{ rows: 1 }} />
+          <Skeleton.Image
+            className={classname(styles.skeletonAvatar, skeletonAvatar)}
+          />
+          <Skeleton active paragraph={{ rows: skeletonRows }} />
         </div>
       )}
     </div>

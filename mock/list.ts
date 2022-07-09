@@ -3,6 +3,7 @@ import reactTemplate from "./react-template.md";
 import JSON from "./test.md";
 import eslint from "./eslint.md";
 import react from "./react.md";
+import jsModal from "./js-modal.md";
 import webpackConfig from "./webpack-config.md";
 
 export const list = [
@@ -40,6 +41,12 @@ export const list = [
     id: "5",
     name: "react18",
     desc: "react18 配置",
+    date: "2020-06-17",
+  },
+  {
+    id: "7",
+    name: "jsModal",
+    desc: "jsModal 配置",
     date: "2020-06-17",
   },
 ];
@@ -101,6 +108,16 @@ export const detail = [
       name: "react18",
       desc: "react18 配置",
       mackdown: react,
+      date: "2020-06-17",
+      img: COVERIMG,
+    },
+  },
+  {
+    id: "7",
+    detail: {
+      name: "jsModal",
+      desc: "jsModal 配置",
+      mackdown: jsModal,
       date: "2020-06-17",
       img: COVERIMG,
     },

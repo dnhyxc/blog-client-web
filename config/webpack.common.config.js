@@ -7,10 +7,11 @@
  * @LastEditTime: 2022-06-13 11:40:24
  */
 const path = require("path");
+const webpack = require("webpack");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
 const FriendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
-const WebpackBar = require("webpackbar");
+// const WebpackBar = require("webpackbar");
 
 module.exports = {
   entry: {
@@ -113,8 +114,18 @@ module.exports = {
       },
     }),
     new ESLintPlugin(),
-    new WebpackBar(),
     new FriendlyErrorsWebpackPlugin(),
+    // new WebpackBar(),
+    new webpack.ProgressPlugin({
+      activeModules: false,
+      entries: true,
+      modules: true,
+      modulesCount: 5000,
+      profile: false,
+      dependencies: true,
+      dependenciesCount: 10000,
+      percentBy: "entries",
+    }),
   ],
   resolve: {
     alias: {
