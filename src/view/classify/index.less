@@ -1,0 +1,81 @@
+@import '~@styles/common.less';
+
+.Classify {
+  width: 100%;
+
+  .left {
+    cursor: pointer;
+  }
+
+  .contentWrap {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+    padding: 9px 0 9px 9px;
+
+    .segmentedWrap {
+      position: fixed;
+      top: 65px;
+      left: 195px;
+      width: calc(100% - 492px);
+      padding-right: 8px;
+      padding-bottom: 10px;
+      text-align: center;
+      background: @background;
+      z-index: 1;
+
+      .segmented {
+        background: @menu-hover;
+      }
+    }
+
+    .content {
+      display: flex;
+      justify-content: center;
+      padding-top: 40px;
+    }
+
+    .rightbar {
+      margin-top: -40px;
+      margin-right: 9px;
+      height: 100%;
+    }
+  }
+
+  .btn {
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .Classify {
+    .contentWrap {
+      padding: 0;
+
+      .segmentedWrap {
+        position: fixed;
+        top: 55px;
+        left: 6px;
+        width: calc(100% - 12px);
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-right: 0;
+        background: @background;
+        z-index: 1;
+
+        .segmented {
+          background: @menu-hover;
+        }
+      }
+
+      .content {
+        display: flex;
+        justify-content: center;
+        padding-top: 35px;
+      }
+    }
+  }
+}

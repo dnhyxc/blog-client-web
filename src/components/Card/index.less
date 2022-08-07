@@ -1,0 +1,166 @@
+@import '~@styles/common.less';
+
+.wrap {
+  width: calc(100% - 260px);
+
+  .item {
+    flex: 1;
+    height: 150px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 10px;
+    margin-bottom: 6px;
+    box-shadow: 0 -3px 3px -3px #ccc inset;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      .imgWrap {
+        background-size: 250px 180px !important;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+
+    .imgWrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 50%;
+      max-width: 200px;
+      height: 100%;
+      margin-right: 20px;
+      border-radius: 5px;
+
+      .text {
+        position: relative;
+        z-index: 1;
+        color: #fff;
+      }
+    }
+
+    .info {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      flex-direction: column;
+      width: 0;
+      height: 100%;
+
+      .classifyInfo {
+        font-size: 12px;
+
+        span {
+          padding: 0 10px;
+          color: @font-4;
+
+          &:first-child {
+            padding-left: 0;
+          }
+        }
+
+        .classify {
+          border-left: 2px solid @layer-3-border;
+          border-right: 2px solid @layer-3-border;
+        }
+      }
+
+      .name {
+        font-size: 16px;
+        font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .desc {
+        text-overflow: -o-ellipsis-lastline;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+        // white-space: nowrap;
+      }
+
+      .date {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .action {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .icons {
+          margin-bottom: 0;
+          .clickNoSelectText();
+
+          .isLike {
+            color: @menu-active;
+          }
+        }
+      }
+    }
+  }
+
+  .skeletonWrap {
+    display: flex;
+    align-items: center;
+    padding-top: 15px;
+    height: 170px;
+    padding-bottom: 0;
+
+    .skeletonAvatar {
+      height: 130px;
+      width: 200px;
+      margin-right: 10px;
+      margin-bottom: 16px;
+      border-radius: 5px;
+    }
+  }
+
+  .noMore {
+    text-align: center;
+    padding: 5px 0;
+  }
+}
+
+.btn {
+  display: inline-block;
+  cursor: pointer;
+
+  &:hover {
+    color: @menu-active;
+  }
+}
+
+.edit {
+  margin-right: 10px;
+}
+
+.iconMore {
+  margin-right: 0;
+}
+
+.iconWrap {
+  margin-right: 20px;
+}
+
+@media screen and (max-width: 960px) {
+  .wrap {
+    width: 100%;
+
+    .noMore {
+      text-align: center;
+      padding: 5px 0 15px 0;
+    }
+  }
+}

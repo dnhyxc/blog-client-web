@@ -1,0 +1,85 @@
+@import '~@styles/common.less';
+
+.tag {
+  background-color: @background;
+  width: calc(25% - 4px);
+  margin-top: 5px;
+  margin-right: 5px;
+  text-align: center;
+  border: none;
+  border-radius: 3px;
+
+  &:not(:first-child)::before {
+    background-color: transparent !important;
+  }
+
+  &:first-child {
+    border: none;
+    border-radius: 3px;
+  }
+
+  &:nth-child(-n + 4) {
+    margin-top: 0;
+  }
+
+  &:nth-child(4n) {
+    margin-right: 0;
+  }
+}
+
+.uploadImgWrap {
+  position: relative;
+  width: 200px;
+
+  &:hover {
+    .mark {
+      display: flex;
+    }
+  }
+
+  .mark {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: -23px;
+    right: 0;
+    width: 200px;
+    height: 112px;
+    background: rgba(0, 0, 0, 0.2);
+    display: none;
+
+    & > span:last-child {
+      margin-right: 0;
+    }
+
+    .iconWrap {
+      font-size: 20px;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .iconLeft {
+      margin-right: 20px;
+    }
+  }
+
+  .uploadImg {
+    width: 200px;
+    height: auto;
+    margin-top: -23px;
+    border-radius: 5px;
+  }
+}
+
+.datePicker {
+  width: 100%;
+}
+
+:global {
+  .ant-upload.ant-upload-select-picture-card {
+    width: 200px;
+    height: 112px;
+    margin-bottom: 0;
+  }
+}

@@ -1,0 +1,178 @@
+@import '~@styles/common.less';
+
+.Comments {
+  background-color: #fff;
+  padding: 0 20px 20px 20px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  .draftInputWrap {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background-color: #fff;
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 40px 20px 0 0;
+    background-color: #fff;
+  }
+
+  .commentWrap {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+
+    .avatar {
+      margin-right: 20px;
+
+      .image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+      }
+    }
+
+    .iconWrap {
+      margin-right: 20px;
+      &:hover {
+        color: @menu-active;
+      }
+      cursor: pointer;
+      .clickNoSelectText();
+    }
+
+    .isLike {
+      color: @menu-active;
+    }
+
+    .commentContent {
+      flex: 1;
+
+      .commentMain {
+        &:hover {
+          .deleteComment {
+            display: block;
+          }
+        }
+      }
+
+      .userInfo {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+
+        .name {
+          font-size: 16px;
+          font-weight: 600;
+
+          .isAuthor {
+            margin-left: 10px;
+            font-weight: 400;
+            font-size: 14px;
+          }
+
+          .replyInfo {
+            font-weight: 400;
+            font-size: 14px;
+            margin-left: 10px;
+
+            .fromUsername {
+              font-size: 16px;
+              margin-left: 10px;
+              font-weight: 600;
+            }
+          }
+        }
+
+        .date {
+          color: @font-4;
+        }
+      }
+
+      .formContent {
+        margin-top: 10px;
+        border: 1px solid @layer-3-border;
+        padding: 5px 20px 6px 20px;
+        background-color: @background;
+        border-radius: 5px;
+      }
+
+      .deleteComment {
+        display: none;
+        padding: 0;
+      }
+
+      .action {
+        margin-top: 10px;
+
+        .actionContent {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .likeAndReplay {
+            height: 32px;
+            line-height: 32px;
+          }
+        }
+
+        .draftContent {
+          padding-left: 0;
+        }
+
+        .cancelReplay {
+          color: @menu-active;
+        }
+      }
+
+      .commentChild {
+        background-color: @layer-2-2;
+        margin-top: 15px;
+        padding: 15px;
+        border-radius: 5px;
+
+        .commentChildItem {
+          display: flex;
+          margin-bottom: 20px;
+
+          .commentChildItemContent {
+            width: 100%;
+
+            &:hover {
+              .deleteComment {
+                display: block;
+              }
+            }
+          }
+
+          .avatar {
+            width: 35px;
+            height: 35px;
+
+            .image {
+              width: 35px;
+              height: 35px;
+            }
+          }
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+
+        .viewMore {
+          margin-top: 10px;
+          cursor: pointer;
+          .clickNoSelectText();
+
+          .viewText {
+            margin-right: 5px;
+            padding-left: 55px;
+          }
+        }
+      }
+    }
+  }
+}

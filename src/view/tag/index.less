@@ -1,0 +1,40 @@
+@import "~@styles/common.less";
+
+.Tag {
+  width: 100%;
+
+  .left {
+    cursor: pointer;
+  }
+
+  .wrap {
+    width: 100%;
+    height: 100%;
+    padding: 8px 12px;
+    text-align: center;
+    background-color: #fff;
+
+    .tagList {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      .tag {
+        padding: 0 15px;
+        line-height: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.3);
+          transition: all 0.3s ease-in-out;
+        }
+      }
+    }
+  }
+
+  .btn {
+    margin-bottom: 20px;
+    margin-right: 20px;
+  }
+}

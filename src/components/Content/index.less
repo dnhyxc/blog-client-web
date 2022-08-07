@@ -1,0 +1,42 @@
+@import "~@styles/layout.less";
+@import "~@styles/common.less";
+
+.container {
+  width: 100%;
+  height: calc(100vh - 100px);
+  .wrap {
+    height: 100%;
+    width: 100%;
+    background-color: @content-padding;
+
+    .scrollWrap {
+      display: flex;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+      background-color: @background;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .scrollBar {
+        & > div:first-child {
+          margin-right: 0 !important;
+          margin-bottom: 0 !important;
+
+          /*整个滚动条*/
+          &::-webkit-scrollbar {
+            width: 6px;
+            height: 5px;
+          }
+
+          &::-webkit-scrollbar-corner {
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+}

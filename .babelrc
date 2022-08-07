@@ -1,0 +1,20 @@
+{
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react",
+    "@babel/preset-typescript"
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-class-properties",
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        // 使用 lib 会增加打包时间及文件大小
+        "libraryDirectory": "es", // libraryDirectory 默认为 lib
+        "style": true
+      }
+    ]
+  ]
+}

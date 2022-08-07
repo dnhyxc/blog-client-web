@@ -1,0 +1,82 @@
+@import "~@styles/common.less";
+
+.tocWrap {
+  width: 260px;
+  max-height: calc(100vh - 70px);
+  margin-top: 10px;
+  margin-left: 10px;
+  background-color: #fff;
+  border-radius: 5px;
+
+  .mackNav {
+    height: calc(100vh - 115px);
+    background-color: @background;
+  }
+
+  .tocText {
+    font-weight: 500;
+    font-size: 16px;
+    color: #1d2129;
+    border-bottom: 1px solid #e4e6eb;
+    padding: 10px;
+  }
+
+  .tocList {
+    text-align: left;
+    background-color: #fff;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+
+  :global(.markdown-navigation .title-anchor) {
+    padding: 0 5px 0 10px;
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.markdown-navigation .title-anchor small) {
+    font-size: 14px;
+    margin: 0 0.8em 0 0;
+  }
+
+  :global(.markdown-navigation .title-anchor.active) {
+    position: relative;
+    color: @menu-active;
+
+    &::after {
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      content: "";
+      width: 4px;
+      height: 18px;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      background-color: @menu-active;
+    }
+  }
+
+  :global(.markdown-navigation) {
+    :global(.title-level4) {
+      color: @font-2;
+      padding-left: 20px;
+    }
+    :global(.title-level5) {
+      color: @font-2;
+      padding-left: 20px;
+    }
+    :global(.title-level6) {
+      color: @font-2;
+      padding-left: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .tocWrap {
+    display: none;
+  }
+}

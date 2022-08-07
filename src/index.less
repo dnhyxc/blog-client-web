@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+
+  :global(#root) {
+    height: 100vh;
+  }
+
+  :global(.timeModel) {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translatex(-50%);
+    border: 1px solid #b7eb8f;
+    background-color: #f6ffed;
+    padding: 8px 15px;
+    border-radius: 5px;
+  }
+
+  @media screen and (max-width: 960px) {
+    :global(#root) {
+      max-width: 960px;
+      min-width: 350px;
+      height: 100vh;
+    }
+  }
+}

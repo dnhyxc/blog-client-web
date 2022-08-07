@@ -1,0 +1,76 @@
+@import '~@styles/common.less';
+
+.TimeLine {
+  position: relative;
+  width: 100%;
+
+  .contentWrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 100%;
+    padding: 9px 0 9px 9px;
+
+    .wrap {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      padding-right: 9px;
+
+      .timelineContent {
+        flex: 1;
+        padding: 10px 0 0 5px;
+
+        .timelineItem {
+          &:last-child {
+            padding-bottom: 0;
+          }
+          .date {
+            height: 35px;
+            font-size: 25px;
+            font-weight: 600;
+            line-height: 26px;
+          }
+        }
+      }
+
+      .wrapClass {
+        width: 100%;
+      }
+
+      .itemClass {
+        height: 128px;
+        padding-bottom: 15px;
+      }
+
+      .imgWrapClass {
+        max-width: 150px;
+        margin-top: 4px;
+      }
+
+      .skeletonAvatar {
+        width: 150px;
+        height: 95px;
+        margin-bottom: 2px;
+      }
+
+      .descClass {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .rightbar {
+    margin-top: 38px;
+  }
+
+  :global(.ant-timeline-item-tail) {
+    border-left: 2px solid @menu-hover;
+  }
+
+  :global(.ant-timeline-item-head) {
+    background-color: transparent;
+  }
+}

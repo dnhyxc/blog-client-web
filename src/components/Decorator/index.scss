@@ -1,0 +1,11 @@
+.container {
+  width: 20px;
+  height: 100%;
+  background-color: #fff;
+}
+
+@media screen and (max-width: 960px) {
+  .container {
+    display: none;
+  }
+}
