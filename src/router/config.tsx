@@ -13,7 +13,7 @@ import AppLayout from '@/layout';
 import styles from './index.less';
 
 const Home = lazy(() => import('@/view/home'));
-const AboutMe = lazy(() => import('@/view/about'));
+const AboutMe = lazy(() => import('@/view/aboutme'));
 const Detail = lazy(() => import('@/view/detail'));
 const Login = lazy(() => import('@/view/login'));
 const Mackdown = lazy(() => import('@/view/create'));
