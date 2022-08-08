@@ -43,12 +43,12 @@ const TimeLine: React.FC<IProps> = () => {
   };
 
   // 文章点赞
-  const { likeArticle } = useLikeArticle(
+  const { likeArticle } = useLikeArticle({
     setAlertStatus,
-    timelineList as any,
-    setTimelineList,
-    true
-  );
+    articleList: timelineList,
+    updateList: setTimelineList,
+    isTimeLine: true,
+  });
 
   const toDetail = (id: string, needScroll: boolean): void => {
     if (needScroll) {

@@ -1,3 +1,5 @@
+import * as API from '@/service/api';
+
 // 每页数量
 export const PAGESIZE = 20;
 
@@ -27,6 +29,11 @@ export const ABOUT_ME_TABS = [
     value: '2',
   },
 ];
+
+export const ABOUT_ME_API_PATH = {
+  1: API.GET_MY_ARTICLE_LIST,
+  2: API.GET_LIKE_ARTICLE_LIST,
+};
 
 export const ICONLINKS = [
   {

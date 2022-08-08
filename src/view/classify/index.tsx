@@ -14,7 +14,7 @@ import { ARTICLE_CLASSIFY, PAGESIZE } from '@/constant';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Classify: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -80,10 +80,19 @@ const Classify: React.FC<IProps> = () => {
   };
 
   // 删除文章
-  const { deleteArticle } = useDeleteArticle({ articleList: classifyList, setArticleList: setClassifyList, getArticleList: getClassifyList, setAlertStatus });
+  const { deleteArticle } = useDeleteArticle({
+    articleList: classifyList,
+    setArticleList: setClassifyList,
+    getArticleList: getClassifyList,
+    setAlertStatus,
+  });
 
   // 文章点赞
-  const { likeArticle } = useLikeArticle(setAlertStatus, classifyList, setClassifyList);
+  const { likeArticle } = useLikeArticle({
+    setAlertStatus,
+    articleList: classifyList,
+    updateList: setClassifyList,
+  });
 
   const toDetail = (id: string, needScroll: boolean): void => {
     if (needScroll) {

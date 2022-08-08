@@ -101,7 +101,11 @@ const Home: React.FC<IProps> = () => {
   });
 
   // 文章点赞
-  const { likeArticle } = useLikeArticle(setAlertStatus, articleList, setArticleList);
+  const { likeArticle } = useLikeArticle({
+    setAlertStatus,
+    articleList,
+    updateList: setArticleList,
+  });
 
   // 文章搜索
   const onSearchArticle = async (value: string) => {

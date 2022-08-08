@@ -14,7 +14,7 @@ import { normalizeResult } from '@/utils/tools';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const TagList: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -69,10 +69,19 @@ const TagList: React.FC<IProps> = () => {
   };
 
   // 删除文章
-  const { deleteArticle } = useDeleteArticle({ articleList, setArticleList, getArticleList: onGetArticleByTagName, setAlertStatus });
+  const { deleteArticle } = useDeleteArticle({
+    articleList,
+    setArticleList,
+    getArticleList: onGetArticleByTagName,
+    setAlertStatus,
+  });
 
   // 文章点赞
-  const { likeArticle } = useLikeArticle(setAlertStatus, articleList, setArticleList);
+  const { likeArticle } = useLikeArticle({
+    setAlertStatus,
+    articleList,
+    updateList: setArticleList,
+  });
 
   // 跳转详情
   const toDetail = (id: string, needScroll: boolean): void => {

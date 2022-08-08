@@ -113,13 +113,22 @@ export const useGetArticleDetail = (id: string | null | undefined) => {
   return { detail };
 };
 
+interface useLikeArticleParams {
+  setAlertStatus: (status: boolean) => void;
+  articleList: any;
+  updateList: Function;
+  isTimeLine?: boolean;
+  isAboutMe?: boolean;
+}
+
 // 点赞hooks
-export const useLikeArticle = (
-  setAlertStatus: (status: boolean) => void,
-  articleList: any,
-  updateList: Function,
-  isTimeLine?: boolean
-) => {
+export const useLikeArticle = ({
+  setAlertStatus,
+  articleList,
+  updateList,
+  isTimeLine,
+  isAboutMe,
+}: useLikeArticleParams) => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
@@ -137,6 +146,9 @@ export const useLikeArticle = (
 
     if (res.success) {
       const { id, isLike } = res.data;
+      if (isAboutMe) {
+        console.log('aaaaaa');
+      }
       // 时间轴点赞
       if (isTimeLine) {
         const cloneArticles: TimelineResult[] = JSON.parse(JSON.stringify(articleList));
@@ -208,7 +220,12 @@ export const useScrollLoad = ({ data, loading, pageSize }: useScrollLoadParams<a
 };
 
 // 删除文章hooks
-export const useDeleteArticle = ({ articleList, setArticleList, getArticleList, setAlertStatus }: useDeleteArticleParams) => {
+export const useDeleteArticle = ({
+  articleList,
+  setArticleList,
+  getArticleList,
+  setAlertStatus,
+}: useDeleteArticleParams) => {
   const deleteArticle = (articleId: string) => {
     Modal.confirm(modalConfig(articleId));
   };

@@ -18,8 +18,7 @@ import Header from '@/components/Header';
 import * as Service from '@/service';
 import useStore from '@/store';
 import { normalizeResult } from '@/utils/tools';
-import { ABOUT_ME_TABS, PAGESIZE, ICONLINKS } from '@/constant';
-import * as API from '@/service/api';
+import { ABOUT_ME_TABS, PAGESIZE, ICONLINKS, ABOUT_ME_API_PATH } from '@/constant';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
@@ -51,11 +50,6 @@ const AboutMe = () => {
     getMyArticleList();
   }, [selectKey, pageNo]);
 
-  const API_PATH = {
-    1: API.GET_MY_ARTICLE_LIST,
-    2: API.GET_LIKE_ARTICLE_LIST,
-  };
-
   const getMyArticleList = async () => {
     setLoading(true);
     const res = normalizeResult<ArticleListResult>(
@@ -65,7 +59,7 @@ const AboutMe = () => {
           pageSize: PAGESIZE,
           userId: getUserInfo?.userId,
         },
-        API_PATH[selectKey]
+        ABOUT_ME_API_PATH[selectKey]
       )
     );
     setLoading(false);
@@ -82,7 +76,12 @@ const AboutMe = () => {
   };
 
   // 文章点赞
-  const { likeArticle } = useLikeArticle(setAlertStatus, articleList, setArticleList);
+  const { likeArticle } = useLikeArticle({
+    setAlertStatus,
+    articleList,
+    updateList: setArticleList,
+    isAboutMe: true,
+  });
 
   // 删除文章
   const { deleteArticle } = useDeleteArticle({
