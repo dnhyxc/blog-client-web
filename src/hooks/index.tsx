@@ -146,10 +146,6 @@ export const useLikeArticle = ({
 
     if (res.success) {
       const { id, isLike } = res.data;
-      if (isAboutMe) {
-        console.log('aaaaaa');
-      }
-      // 时间轴点赞
       if (isTimeLine) {
         const cloneArticles: TimelineResult[] = JSON.parse(JSON.stringify(articleList));
 
@@ -183,10 +179,19 @@ export const useLikeArticle = ({
           return i;
         });
 
-        updateList({
-          ...articleList,
-          list,
-        });
+        if (isAboutMe) {
+          const likes = list.filter((i) => i.isLike);
+          updateList({
+            ...articleList,
+            total: likes.length,
+            list: likes,
+          });
+        } else {
+          updateList({
+            ...articleList,
+            list,
+          });
+        }
       }
     }
     if (!res.success && res.code === 409) {

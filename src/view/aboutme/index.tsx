@@ -80,7 +80,7 @@ const AboutMe = () => {
     setAlertStatus,
     articleList,
     updateList: setArticleList,
-    isAboutMe: true,
+    isAboutMe: selectKey === '2',
   });
 
   // 删除文章
