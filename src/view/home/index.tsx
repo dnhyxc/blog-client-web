@@ -24,7 +24,7 @@ import styles from './index.less';
 
 const { Search } = Input;
 
-interface IProps { }
+interface IProps {}
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -93,7 +93,12 @@ const Home: React.FC<IProps> = () => {
   };
 
   // 删除文章
-  const { deleteArticle } = useDeleteArticle({ articleList, setArticleList, getArticleList, setAlertStatus });
+  const { deleteArticle } = useDeleteArticle({
+    articleList,
+    setArticleList,
+    getArticleList,
+    setAlertStatus,
+  });
 
   // 文章点赞
   const { likeArticle } = useLikeArticle(setAlertStatus, articleList, setArticleList);
