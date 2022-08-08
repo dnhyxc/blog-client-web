@@ -25,7 +25,7 @@ const Header: React.FC<IProps> = ({
   children,
   left,
   right,
-  needLeft = false,
+  needLeft = true,
   needMenu = false,
   excludesWidth = false,
 }) => {
@@ -46,9 +46,7 @@ const Header: React.FC<IProps> = ({
             </div>
           ))}
         <div className={styles.child}>{children}</div>
-        {excludesWidth
-          ? needMenu && <Menu />
-          : needMenu && htmlWidth <= 960 && <Menu />}
+        {excludesWidth ? needMenu && <Menu /> : needMenu && htmlWidth <= 960 && <Menu />}
       </div>
       {right && <div className={styles.right}>{right}</div>}
     </div>

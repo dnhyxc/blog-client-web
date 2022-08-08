@@ -41,7 +41,7 @@ const Home: React.FC<IProps> = () => {
   const listRef = useRef<ArticleItem[]>([]);
 
   const navigate = useNavigate();
-  const { showAlert, toLogin, onCloseAlert, setAlertStatus, setResult } = useLoginStatus();
+  const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
@@ -192,7 +192,7 @@ const Home: React.FC<IProps> = () => {
   return (
     <div className={styles.container}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header needMenu needLeft={false} right={rightNode()}>
+      <Header needMenu right={rightNode()}>
         文章列表
       </Header>
       {articleList && (

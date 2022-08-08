@@ -11,7 +11,7 @@ import ReleaseModel from './ReleaseModel';
 
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -32,7 +32,12 @@ const CreateArticle: React.FC<IProps> = () => {
 
   const renderRight = () => {
     return (
-      <Button type="link" className={styles.release} disabled={!create?.mackdown} onClick={() => setVisible(true)}>
+      <Button
+        type="link"
+        className={styles.release}
+        disabled={!create?.mackdown}
+        onClick={() => setVisible(true)}
+      >
         发布文章
       </Button>
     );
@@ -50,7 +55,12 @@ const CreateArticle: React.FC<IProps> = () => {
       <Content>
         <TuiEditor onGetMackdown={onGetMackdown} initialValue={detail?.content} />
       </Content>
-      <ReleaseModel visible={visible} onCancel={onCancel} initialValue={detail} articleId={id} />
+      <ReleaseModel
+        visible={visible}
+        onCancel={onCancel}
+        initialValue={detail}
+        articleId={id}
+      />
     </div>
   );
 };

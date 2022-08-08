@@ -61,7 +61,7 @@ const TimeLine: React.FC<IProps> = () => {
   return (
     <div className={styles.TimeLine}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header needMenu>TimeLine</Header>
+      <Header needMenu>时间轴</Header>
       <Content className={styles.contentWrap}>
         <div className={styles.wrap}>
           <Timeline className={styles.timelineContent}>

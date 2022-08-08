@@ -39,6 +39,12 @@ const GET_TAG_LIST = '/api/getTagList';
 // 获取文章分类
 const GET_TIMELINE_LIST = '/api/getTimelineList';
 
+// 获取我发布的文章列表
+const GET_MY_ARTICLE_LIST = '/api/getMyArticleList';
+
+// 获取我点赞的文章列表
+const GET_LIKE_ARTICLE_LIST = '/api/getLikeArticleList';
+
 export {
   REGISTER,
   LOGIN,
@@ -58,4 +64,6 @@ export {
   GET_CLASSIFY_LIST,
   GET_TAG_LIST,
   GET_TIMELINE_LIST,
+  GET_MY_ARTICLE_LIST,
+  GET_LIKE_ARTICLE_LIST,
 };

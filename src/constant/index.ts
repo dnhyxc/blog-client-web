@@ -17,6 +17,40 @@ export const enum LOGIN_STATUS {
 
 export const FILETYPE = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
 
+export const ABOUT_ME_TABS = [
+  {
+    name: '我的文章',
+    value: '1',
+  },
+  {
+    name: '点赞文章',
+    value: '2',
+  },
+];
+
+export const ICONLINKS = [
+  {
+    name: 'icon-juejin',
+    className: 'juejin',
+    title: '掘金',
+  },
+  {
+    name: 'icon-github-fill',
+    className: 'adsIcon',
+    title: 'github',
+  },
+  {
+    name: 'icon-zhihu-circle-fill',
+    className: 'adsIcon',
+    title: '知乎',
+  },
+  {
+    name: 'icon-wangzhi',
+    className: 'wangzhiIcon',
+    title: '其它',
+  },
+];
+
 export const ARTICLE_CLASSIFY = [
   '前端',
   '后端',

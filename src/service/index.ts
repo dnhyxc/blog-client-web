@@ -16,6 +16,8 @@ import {
   getTimelineList,
 } from './article';
 
+import { getMyArticleList } from './userInfo';
+
 export {
   register,
   login,
@@ -34,6 +36,7 @@ export {
   getClassifyList,
   getTagList,
   getTimelineList,
+  getMyArticleList,
 };
 
 export const upload = (params: any) => {
