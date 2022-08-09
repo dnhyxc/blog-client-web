@@ -1,4 +1,4 @@
-import { register, login, updateInfo } from './user';
+import { register, login, updateInfo, getUserInfo } from './user';
 import {
   getArticleList,
   createArticle,
@@ -22,6 +22,7 @@ export {
   register,
   login,
   updateInfo,
+  getUserInfo,
   getArticleList,
   createArticle,
   updateArticle,

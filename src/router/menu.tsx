@@ -43,8 +43,8 @@ const menuList = [
   {
     key: 'about',
     icon: <UserOutlined className={styles.menu_icon} />,
-    label: '关于我的',
-    name: '关于我',
+    label: '我的主页',
+    name: '我的主页',
     path: '/about',
   },
 ];

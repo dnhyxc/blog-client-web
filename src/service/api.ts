@@ -7,6 +7,8 @@ const REGISTER = '/api/register';
 const LOGIN = '/api/login';
 // 更新用户信息
 const UPDATE_INFO = '/api/updateInfo';
+// 获取用户信息
+const GET_USER_INFO = '/api/getUserInfo';
 
 // 创建文章
 const CREATE_ARTICLE = '/api/createArticle';
@@ -66,4 +68,5 @@ export {
   GET_TIMELINE_LIST,
   GET_MY_ARTICLE_LIST,
   GET_LIKE_ARTICLE_LIST,
+  GET_USER_INFO
 };

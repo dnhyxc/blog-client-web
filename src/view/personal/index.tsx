@@ -25,7 +25,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-const AboutMe = () => {
+const Personal = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectKey, setSelectKey] = useState<string>('1');
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -121,9 +121,9 @@ const AboutMe = () => {
   };
 
   return (
-    <div className={styles.AboutMe}>
+    <div className={styles.Personal}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header needMenu>关于我</Header>
+      <Header needMenu>我的主页</Header>
       <Content className={styles.contentWrap} onScroll={onScroll}>
         <div className={styles.content}>
           <div className={styles.wrap}>
@@ -180,4 +180,4 @@ const AboutMe = () => {
   );
 };
 
-export default AboutMe;
+export default Personal;

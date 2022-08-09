@@ -15,7 +15,7 @@ import styles from './index.less';
 
 const Login = lazy(() => import('@/view/login'));
 const Home = lazy(() => import('@/view/home'));
-const AboutMe = lazy(() => import('@/view/aboutme'));
+const Personal = lazy(() => import('@/view/personal'));
 const Detail = lazy(() => import('@/view/detail'));
 const Mackdown = lazy(() => import('@/view/create'));
 const Classify = lazy(() => import('@/view/classify'));
@@ -58,7 +58,7 @@ const children = [
   },
   {
     path: 'about',
-    element: lazyLoad(<AboutMe />),
+    element: lazyLoad(<Personal />),
   },
   {
     path: 'home/detail/:id',

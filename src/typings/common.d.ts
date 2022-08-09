@@ -9,6 +9,23 @@ export interface LoginData {
   avatar?: string;
 }
 
+export interface LoginParams {
+  username?: string;
+  password?: string;
+}
+
+export interface UserInfoParams {
+  username?: string;
+  job?: string;
+  motto?: string;
+  introduce?: string;
+  headUrl?: string;
+  github?: string;
+  juejin?: string;
+  zhihu?: string;
+  blog?: string;
+}
+
 export interface UpdateData {
   id: string;
 }

@@ -1,14 +1,56 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Button, Form, Input } from 'antd';
+import useStore from '@/store';
+import * as Service from '@/service';
+import { normalizeResult, useCookies, encrypt, decrypt } from '@/utils';
 import Content from '@/components/Content';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const { TextArea } = Input;
 
 const Profile: React.FC<IProps> = () => {
   const [form] = Form.useForm();
+  const {
+    userInfoStore: { getUserInfo },
+  } = useStore();
+
+  useEffect(() => {
+    getAccountInfo();
+  }, []);
+
+  /**
+   *  job: String,
+  motto: String,
+  headUrl: String,
+  github: String,
+  juejin: String,
+  zhihu: String,
+  blog: String,
+  introduce: String,
+   */
+
+  // 获取用户信息
+  const getAccountInfo = async () => {
+    const res = await Service.getUserInfo({ userId: getUserInfo.userId });
+    console.log(res);
+  };
+
+  // 修改用户信息
+  const onUpdateUserInfo = async () => {
+    const values = await form.validateFields();
+    const info = {
+      ...values,
+      username: encrypt(values.username)
+    };
+    const res = await Service.updateInfo({
+      ...info,
+      userId: getUserInfo.userId
+    });
+    console.log(res);
+  };
+
   return (
     <div className={styles.Profile}>
       <Content
@@ -38,7 +80,7 @@ const Profile: React.FC<IProps> = () => {
             >
               <Form.Item
                 label="用户名"
-                name="title"
+                name="username"
                 rules={[{ required: true, message: '请先输入用户名' }]}
               >
                 <Input placeholder="请输入用户名" maxLength={50} />
@@ -71,7 +113,7 @@ const Profile: React.FC<IProps> = () => {
                 />
               </Form.Item>
               <Form.Item wrapperCol={{ offset: 6, span: 13 }}>
-                <Button type="primary" className={styles.submit}>
+                <Button type="primary" className={styles.submit} onClick={onUpdateUserInfo}>
                   保存修改
                 </Button>
               </Form.Item>
