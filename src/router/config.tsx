@@ -10,6 +10,7 @@ import { Navigate, RouteObject } from 'react-router-dom';
 import userInfoParams from '@/store/user';
 import { Spin } from 'antd';
 import AppLayout from '@/layout';
+import Setting from '@/view/setting';
 import styles from './index.less';
 
 const Login = lazy(() => import('@/view/login'));
@@ -21,7 +22,6 @@ const Classify = lazy(() => import('@/view/classify'));
 const TagList = lazy(() => import('@/view/tag/List'));
 const Timeline = lazy(() => import('@/view/timeline'));
 const Tag = lazy(() => import('@/view/tag'));
-const Setting = lazy(() => import('@/view/setting'));
 const Profile = lazy(() => import('@/view/setting/profile'));
 const Account = lazy(() => import('@/view/setting/account'));
 

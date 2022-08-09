@@ -7,7 +7,7 @@ import styles from './index.less';
 
 const { Content } = Layout;
 
-interface IProps {}
+interface IProps { }
 
 const Setting: React.FC<IProps> = () => {
   return (
@@ -20,7 +20,7 @@ const Setting: React.FC<IProps> = () => {
         </Header>
       </div>
       <Layout className={styles.layout}>
-        <MenuList type="setting" />
+        <MenuList type="setting" width={200} />
         <Content>
           <Outlet />
         </Content>
