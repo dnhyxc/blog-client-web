@@ -7,13 +7,20 @@ import styles from './index.less';
 interface IProps {
   children: ReactNode;
   className?: string;
+  containerClassName?: string;
   wrapClassName?: string;
   onScroll?: Function;
 }
 
-const Content: React.FC<IProps> = ({ children, className, wrapClassName, onScroll }) => {
+const Content: React.FC<IProps> = ({
+  children,
+  className,
+  containerClassName,
+  wrapClassName,
+  onScroll,
+}) => {
   return (
-    <div className={styles.container}>
+    <div className={classname(styles.container, containerClassName)}>
       <div className={classname(styles.wrap, wrapClassName)}>
         <div className={classname(styles.scrollWrap, className)}>
           <Scrollbars autoHide className={styles.scrollBar} onScrollFrame={onScroll}>

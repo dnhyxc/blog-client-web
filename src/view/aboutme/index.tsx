@@ -116,6 +116,10 @@ const AboutMe = () => {
     });
   };
 
+  const toSetting = () => {
+    navigate('/setting/profile');
+  };
+
   return (
     <div className={styles.AboutMe}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
@@ -142,7 +146,7 @@ const AboutMe = () => {
                     />
                   ))}
                 </div>
-                <Button type="primary" ghost>
+                <Button type="primary" ghost onClick={toSetting}>
                   修改个人资料
                 </Button>
               </div>

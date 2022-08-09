@@ -59,4 +59,21 @@ if (getUserInfo?.username !== 'cx') {
   });
 }
 
-export { menuList };
+const settingList = [
+  {
+    key: 'profile',
+    icon: <HomeOutlined className={styles.menu_icon} />,
+    label: '个人资料',
+    name: '个人资料',
+    path: '/profile',
+  },
+  {
+    key: 'account',
+    icon: <HomeOutlined className={styles.menu_icon} />,
+    label: '账号设置',
+    name: '账号设置',
+    path: '/account',
+  },
+];
+
+export { menuList, settingList };

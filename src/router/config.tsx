@@ -12,15 +12,18 @@ import { Spin } from 'antd';
 import AppLayout from '@/layout';
 import styles from './index.less';
 
+const Login = lazy(() => import('@/view/login'));
 const Home = lazy(() => import('@/view/home'));
 const AboutMe = lazy(() => import('@/view/aboutme'));
 const Detail = lazy(() => import('@/view/detail'));
-const Login = lazy(() => import('@/view/login'));
 const Mackdown = lazy(() => import('@/view/create'));
 const Classify = lazy(() => import('@/view/classify'));
 const TagList = lazy(() => import('@/view/tag/List'));
 const Timeline = lazy(() => import('@/view/timeline'));
 const Tag = lazy(() => import('@/view/tag'));
+const Setting = lazy(() => import('@/view/setting'));
+const Profile = lazy(() => import('@/view/setting/profile'));
+const Account = lazy(() => import('@/view/setting/account'));
 
 const { getUserInfo } = userInfoParams;
 
@@ -79,6 +82,20 @@ const routes: RouteObject[] = [
   {
     path: 'detail/:id',
     element: lazyLoad(<Detail />),
+  },
+  {
+    path: 'setting',
+    element: <Setting />,
+    children: [
+      {
+        path: 'profile',
+        element: lazyLoad(<Profile />),
+      },
+      {
+        path: 'account',
+        element: lazyLoad(<Account />),
+      },
+    ],
   },
   {
     path: 'login',

@@ -1,0 +1,89 @@
+@import '~@styles/common.less';
+
+.Profile {
+  height: 100%;
+  margin-left: 9px;
+  padding: 0 20px;
+
+  .containerClassName {
+    height: calc(100vh - 68px);
+  }
+
+  .wrapClassName {
+    padding: 0;
+  }
+
+  .header {
+    position: relative;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: #fff;
+    background-image: url('../../../assets/images/about_me.jpg');
+    background-position: center;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    height: 260px;
+
+    .title {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 20px;
+      margin-bottom: 130px;
+
+      .changeCover {
+        border: 1px solid @border-gray;
+        color: @font-3;
+
+        &:hover {
+          background-color: @hover-gray;
+        }
+      }
+    }
+
+    .headerWrap {
+      display: flex;
+      align-items: flex-end;
+      margin-left: 20px;
+
+      .username {
+        margin-left: 30px;
+      }
+
+      .uploadWrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 130px;
+        height: 130px;
+        background-color: @background;
+        border: 5px solid #fff;
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: calc(100% - 260px);
+    padding-top: 80px;
+    background-color: #fff;
+
+    .formWrap {
+      flex: 1;
+
+      .submit {
+        float: right;
+        margin-top: 25px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .Profile {
+    margin-left: 0;
+    padding: 0;
+  }
+}

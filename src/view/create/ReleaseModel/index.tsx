@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Form,
+  Input,
   Drawer,
   Select,
   Upload,
   Modal,
   message,
-  Input,
   Button,
   Radio,
   DatePicker,
@@ -27,13 +27,14 @@ import { CreateArticleParams, CreateResult } from '@/typings/common';
 
 import styles from './index.less';
 
-const { TextArea } = Input;
 interface IProps {
   visible: boolean;
   onCancel: Function;
   initialValue?: CreateArticleParams;
   articleId?: string | null;
 }
+
+const { TextArea } = Input;
 
 const ReleaseModel: React.FC<IProps> = ({
   visible = true,
