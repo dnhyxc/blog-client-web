@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, encrypt } from '@/utils';
 import Content from '@/components/Content';
+import UploadFile from '@/components/Upload';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
@@ -12,6 +13,8 @@ interface IProps {}
 const { TextArea } = Input;
 
 const Profile: React.FC<IProps> = () => {
+  const [filePath, setFilePath] = useState<string>();
+
   const [form] = Form.useForm();
   const { userInfoStore } = useStore();
 
@@ -52,6 +55,7 @@ const Profile: React.FC<IProps> = () => {
             </Button>
           </div>
           <div className={styles.headerWrap}>
+            <UploadFile form={form} filePath={filePath} setFilePath={setFilePath} />
             <div className={styles.uploadWrap}>upload</div>
             <div className={styles.username}>DNHYXC</div>
           </div>

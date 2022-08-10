@@ -12,17 +12,14 @@ import {
   Radio,
   DatePicker,
 } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import type { RcFile, UploadProps } from 'antd/es/upload';
-import classname from 'classname';
 import moment from 'moment';
+import UploadFile from '@/components/Upload';
 import MAlert from '@/components/Alert';
-import MIcons from '@/components/Icons';
 import useStore from '@/store';
 import { useLoginStatus } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult } from '@/utils/tools';
-import { FILETYPE, ARTICLE_CLASSIFY, ARTICLE_TAG, UPLOADURL } from '@/constant';
+import { ARTICLE_CLASSIFY, ARTICLE_TAG } from '@/constant';
 import { CreateArticleParams, CreateResult } from '@/typings/common';
 
 import styles from './index.less';
@@ -63,39 +60,8 @@ const ReleaseModel: React.FC<IProps> = ({
     onCancel && onCancel();
   };
 
-  const beforeUpload = (file: RcFile) => {
-    const fileType = file.type;
-    const isLt20M = file.size / 1024 / 1024 < 20;
-    if (!FILETYPE.includes(fileType)) {
-      message.error('请上传 png、jpg、jpeg、gif 格式的图片');
-    }
-    if (!isLt20M) {
-      message.error('请上传小于20M的图片');
-    }
-    return FILETYPE.includes(fileType) && isLt20M;
-  };
-
-  const onUploadFile: UploadProps['onChange'] = ({ file }) => {
-    if (file.status === 'done') {
-      const path = file.response.data.filePath;
-      setFilePath(path);
-      form.setFieldsValue({ coverImage: path });
-      message.success(file.response.message);
-    }
-  };
-
-  // 预览图片
-  const onPreview = () => {
-    setPreviewVisible(true);
-  };
-
   const handleCancel = () => {
     setPreviewVisible(false);
-  };
-
-  // 删除图片
-  const onDeleteFile = () => {
-    setFilePath('');
   };
 
   // 调用创建文章的接口
@@ -241,36 +207,12 @@ const ReleaseModel: React.FC<IProps> = ({
             name="coverImage"
             initialValue={initialValue?.coverImage}
           >
-            <>
-              <Upload
-                name="file"
-                action={UPLOADURL}
-                listType="picture-card"
-                showUploadList={false}
-                beforeUpload={beforeUpload}
-                onChange={onUploadFile}
-                className={styles.upload}
-              >
-                {!filePath && <PlusOutlined />}
-              </Upload>
-              {filePath && (
-                <div className={styles.uploadImgWrap}>
-                  <div className={styles.mark}>
-                    <MIcons
-                      name="icon-browse"
-                      className={classname(styles.iconWrap, styles.iconLeft)}
-                      onClick={onPreview}
-                    />
-                    <MIcons
-                      name="icon-shanchu"
-                      className={styles.iconWrap}
-                      onClick={onDeleteFile}
-                    />
-                  </div>
-                  <img className={styles.uploadImg} src={filePath} alt="" />
-                </div>
-              )}
-            </>
+            <UploadFile
+              filePath={filePath}
+              setFilePath={setFilePath}
+              form={form}
+              showPreview={setPreviewVisible}
+            />
           </Form.Item>
           <Form.Item
             label="摘要"

@@ -1,0 +1,48 @@
+@import '~@styles/common.less';
+
+.Upload {
+  .uploadImgWrap {
+    position: relative;
+    width: 200px;
+
+    &:hover {
+      .mark {
+        display: flex;
+      }
+    }
+
+    .mark {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: -23px;
+      right: 0;
+      width: 200px;
+      height: 112px;
+      background: rgba(0, 0, 0, 0.2);
+      display: none;
+
+      & > span:last-child {
+        margin-right: 0;
+      }
+
+      .iconWrap {
+        font-size: 20px;
+        color: #fff;
+        cursor: pointer;
+      }
+
+      .iconLeft {
+        margin-right: 20px;
+      }
+    }
+
+    .uploadImg {
+      width: 200px;
+      height: auto;
+      margin-top: -23px;
+      border-radius: 5px;
+    }
+  }
+}

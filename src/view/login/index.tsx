@@ -62,8 +62,6 @@ const Login = () => {
             initialValues={{ remember: true }}
             className={styles.form}
             form={form}
-            // onFinish={onFinish}
-            // onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
             <Form.Item
@@ -76,7 +74,6 @@ const Login = () => {
             >
               <Input placeholder="请输入用户名" />
             </Form.Item>
-
             <Form.Item
               label={<div className={styles.userInfo}>密码</div>}
               name="password"
@@ -87,11 +84,9 @@ const Login = () => {
             >
               <Input.Password placeholder="请输入密码" />
             </Form.Item>
-
             <Form.Item name="remember" valuePropName="checked" className={styles.remember}>
               <Checkbox>记住本次登录密码</Checkbox>
             </Form.Item>
-
             <Form.Item className={styles.actions}>
               <Button
                 type="primary"
@@ -106,14 +101,6 @@ const Login = () => {
               </Button>
             </Form.Item>
           </Form>
-          {/* <div className={styles.list}>
-            <Button type="primary" onClick={onLogin}>
-              登陆
-            </Button>
-            <Button type="primary" onClick={updateUserInfo}>
-              修改用户信息
-            </Button>
-          </div> */}
         </div>
       </div>
     </div>
