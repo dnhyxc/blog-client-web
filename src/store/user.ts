@@ -1,11 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 import { decrypt } from '@/utils';
-
-interface UserInfoParams {
-  userId: string;
-  username: string;
-  avatar?: string;
-}
+import { LoginData } from '@/typings/common';
 
 class UserInfo {
   constructor() {
@@ -15,9 +10,17 @@ class UserInfo {
   userInfo = {
     userId: '',
     username: '',
+    job: '',
+    motto: '',
+    introduce: '',
+    headUrl: '',
+    github: '',
+    juejin: '',
+    zhihu: '',
+    blog: '',
   };
 
-  setUserInfo(values: UserInfoParams) {
+  setUserInfo(values: LoginData) {
     localStorage.setItem('userInfo', JSON.stringify(values));
     this.userInfo = { ...this.userInfo, ...values };
   }
@@ -27,7 +30,7 @@ class UserInfo {
     const userInfo = storageInfo && JSON.parse(storageInfo);
     const decryptInfo = {
       ...userInfo,
-      username: decrypt(userInfo.username) || userInfo.useranme,
+      username: (userInfo?.username && decrypt(userInfo?.username)) || userInfo?.useranme,
     };
     this.userInfo = decryptInfo;
     return this.userInfo;

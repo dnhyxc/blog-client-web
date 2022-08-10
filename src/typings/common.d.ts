@@ -4,9 +4,16 @@ export { ScrollEvent };
 
 export interface LoginData {
   username: string;
-  token: string;
-  id: string;
-  avatar?: string;
+  token?: string;
+  userId: string;
+  job?: string;
+  motto?: string;
+  introduce?: string;
+  headUrl?: string;
+  github?: string;
+  juejin?: string;
+  zhihu?: string;
+  blog?: string;
 }
 
 export interface LoginParams {
@@ -15,6 +22,8 @@ export interface LoginParams {
 }
 
 export interface UserInfoParams {
+  userId: string;
+  token?: string;
   username?: string;
   job?: string;
   motto?: string;

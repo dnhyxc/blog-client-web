@@ -1,54 +1,41 @@
-import React, { useEffect } from 'react';
-import { Button, Form, Input } from 'antd';
+import React from 'react';
+import { Button, Form, Input, message } from 'antd';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult, useCookies, encrypt, decrypt } from '@/utils';
+import { normalizeResult, encrypt } from '@/utils';
 import Content from '@/components/Content';
+import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const { TextArea } = Input;
 
 const Profile: React.FC<IProps> = () => {
   const [form] = Form.useForm();
-  const {
-    userInfoStore: { getUserInfo },
-  } = useStore();
-
-  useEffect(() => {
-    getAccountInfo();
-  }, []);
-
-  /**
-   *  job: String,
-  motto: String,
-  headUrl: String,
-  github: String,
-  juejin: String,
-  zhihu: String,
-  blog: String,
-  introduce: String,
-   */
-
-  // 获取用户信息
-  const getAccountInfo = async () => {
-    const res = await Service.getUserInfo({ userId: getUserInfo.userId });
-    console.log(res);
-  };
+  const { userInfoStore } = useStore();
 
   // 修改用户信息
   const onUpdateUserInfo = async () => {
     const values = await form.validateFields();
     const info = {
       ...values,
-      username: encrypt(values.username)
+      username: encrypt(values.username),
     };
-    const res = await Service.updateInfo({
-      ...info,
-      userId: getUserInfo.userId
-    });
-    console.log(res);
+    const res = normalizeResult<LoginData>(
+      await Service.updateInfo({
+        ...info,
+        userId: userInfoStore?.getUserInfo?.userId,
+      })
+    );
+    if (res.success) {
+      userInfoStore.setUserInfo({
+        ...res.data,
+      });
+      message.success(res.message);
+    } else {
+      message.error(res.message);
+    }
   };
 
   return (
@@ -81,6 +68,7 @@ const Profile: React.FC<IProps> = () => {
               <Form.Item
                 label="用户名"
                 name="username"
+                initialValue={userInfoStore?.getUserInfo?.username}
                 rules={[{ required: true, message: '请先输入用户名' }]}
               >
                 <Input placeholder="请输入用户名" maxLength={50} />
@@ -88,6 +76,7 @@ const Profile: React.FC<IProps> = () => {
               <Form.Item
                 label="职位"
                 name="job"
+                initialValue={userInfoStore?.getUserInfo?.job}
                 rules={[{ required: true, message: '请先输入职位' }]}
               >
                 <Input placeholder="请输入职位" maxLength={50} />
@@ -95,6 +84,7 @@ const Profile: React.FC<IProps> = () => {
               <Form.Item
                 label="座右铭"
                 name="motto"
+                initialValue={userInfoStore?.getUserInfo?.motto}
                 rules={[{ required: true, message: '请先输入座右铭' }]}
               >
                 <Input placeholder="请输入座右铭" maxLength={50} />
@@ -102,6 +92,7 @@ const Profile: React.FC<IProps> = () => {
               <Form.Item
                 label="个人介绍"
                 name="introduce"
+                initialValue={userInfoStore?.getUserInfo?.introduce}
                 rules={[{ required: true, message: '请先输入个人介绍' }]}
               >
                 <TextArea
