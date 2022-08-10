@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
 import useStore from '@/store';
+import { useLoginStatus } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, encrypt } from '@/utils';
+import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const { TextArea } = Input;
 
 const Profile: React.FC<IProps> = () => {
-  const [filePath, setFilePath] = useState<string>();
+  const [filePath, setFilePath] = useState<string>('http://localhost:9112/6f147dff8fabb62e91abdf606.png');
 
   const [form] = Form.useForm();
   const { userInfoStore } = useStore();
+  const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
 
   // 修改用户信息
   const onUpdateUserInfo = async () => {
@@ -43,6 +46,7 @@ const Profile: React.FC<IProps> = () => {
 
   return (
     <div className={styles.Profile}>
+      {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Content
         containerClassName={styles.containerClassName}
         wrapClassName={styles.wrapClassName}
@@ -55,8 +59,7 @@ const Profile: React.FC<IProps> = () => {
             </Button>
           </div>
           <div className={styles.headerWrap}>
-            <UploadFile form={form} filePath={filePath} setFilePath={setFilePath} />
-            <div className={styles.uploadWrap}>upload</div>
+            <UploadFile form={form} filePath={filePath} setFilePath={setFilePath} setAlertStatus={setAlertStatus} imgStyle={styles.uploadImg} markStyle={styles.markStyle} uploadWrapStyle={styles.uploadWrapStyle} needPreview={false} />
             <div className={styles.username}>DNHYXC</div>
           </div>
         </div>

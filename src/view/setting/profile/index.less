@@ -44,9 +44,33 @@
       display: flex;
       align-items: flex-end;
       margin-left: 20px;
+      padding-top: 28px;
+
+      .uploadWrapStyle {
+        width: 130px;
+        height: 130px;
+        top: -30px;
+        margin-right: 8px;
+      }
+
+      .uploadImg {
+        box-sizing: border-box;
+        width: 130px;
+        height: 130px;
+        border-radius: 5px;
+        border: 5px solid #fff;
+      }
+
+      .markStyle {
+        width: 130px;
+        height: 130px;
+        top: 0;
+        left: 0;
+      }
 
       .username {
         margin-left: 30px;
+        padding-bottom: 25px;
       }
 
       .uploadWrap {
@@ -77,6 +101,11 @@
         margin-top: 25px;
       }
     }
+  }
+
+  :global(.ant-upload.ant-upload-select-picture-card) {
+    width: 130px;
+    height: 130px;
   }
 }
 

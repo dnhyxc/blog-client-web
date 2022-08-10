@@ -1,5 +1,5 @@
-import React from 'react';
-import { Upload, message } from 'antd';
+import React, { useState } from 'react';
+import { Upload, message, Modal } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import classname from 'classname';
 import type { RcFile, UploadProps } from 'antd/es/upload';
@@ -10,11 +10,17 @@ import styles from './index.less';
 interface IProps {
   filePath: string | undefined;
   form: any;
-  showPreview?: (visible: boolean) => void;
   setFilePath?: (url: string) => void;
+  imgStyle?: string
+  markStyle?: string
+  uploadWrapStyle?: string
+  needPreview?: boolean
+  setAlertStatus?: Function
 }
 
-const UploadFile: React.FC<IProps> = ({ filePath, form, showPreview, setFilePath }) => {
+const UploadFile: React.FC<IProps> = ({ needPreview = true, filePath, form, setFilePath, imgStyle, markStyle, uploadWrapStyle, setAlertStatus }) => {
+  const [previewVisible, setPreviewVisible] = useState<boolean>(false);
+
   const beforeUpload = (file: RcFile) => {
     const fileType = file.type;
     const isLt20M = file.size / 1024 / 1024 < 20;
@@ -35,11 +41,18 @@ const UploadFile: React.FC<IProps> = ({ filePath, form, showPreview, setFilePath
       form.setFieldsValue({ coverImage: path });
       message.success(file.response.message);
     }
+    if (file.status === 'error') {
+      setAlertStatus && setAlertStatus(true);
+    }
+  };
+
+  const handleCancel = () => {
+    setPreviewVisible(false);
   };
 
   // 预览图片
   const onPreview = () => {
-    showPreview && showPreview(true);
+    setPreviewVisible(true);
   };
 
   // 删除图片
@@ -52,6 +65,7 @@ const UploadFile: React.FC<IProps> = ({ filePath, form, showPreview, setFilePath
       <Upload
         name="file"
         action={UPLOADURL}
+        headers={{ Authorization: `Bearer ${localStorage.getItem('token')}` }}
         listType="picture-card"
         showUploadList={false}
         beforeUpload={beforeUpload}
@@ -59,23 +73,35 @@ const UploadFile: React.FC<IProps> = ({ filePath, form, showPreview, setFilePath
       >
         {!filePath && <PlusOutlined />}
       </Upload>
-      {filePath && (
-        <div className={styles.uploadImgWrap}>
-          <div className={styles.mark}>
-            <MIcons
-              name="icon-browse"
-              className={classname(styles.iconWrap, styles.iconLeft)}
-              onClick={onPreview}
-            />
-            <MIcons
-              name="icon-shanchu"
-              className={styles.iconWrap}
-              onClick={onDeleteFile}
-            />
+      {
+        filePath && (
+          <div className={classname(uploadWrapStyle, styles.uploadImgWrap)}>
+            <div className={classname(markStyle, styles.mark)}>
+              <MIcons
+                name="icon-browse"
+                className={classname(styles.iconWrap, styles.iconLeft)}
+                onClick={onPreview}
+              />
+              <MIcons
+                name="icon-shanchu"
+                className={styles.iconWrap}
+                onClick={onDeleteFile}
+              />
+            </div>
+            <img className={imgStyle} src={filePath} alt="" />
           </div>
-          <img className={styles.uploadImg} src={filePath} alt="" />
-        </div>
-      )}
+        )
+      }
+      <Modal
+        visible={previewVisible}
+        centered
+        closable={false}
+        width={600}
+        footer={null}
+        onCancel={handleCancel}
+      >
+        <img alt="" style={{ width: '100%' }} src={filePath} />
+      </Modal>
     </div>
   );
 };

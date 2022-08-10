@@ -5,8 +5,6 @@ import {
   Input,
   Drawer,
   Select,
-  Upload,
-  Modal,
   message,
   Button,
   Radio,
@@ -40,7 +38,6 @@ const ReleaseModel: React.FC<IProps> = ({
   onCancel,
 }) => {
   const [filePath, setFilePath] = useState<string>();
-  const [previewVisible, setPreviewVisible] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -58,10 +55,6 @@ const ReleaseModel: React.FC<IProps> = ({
 
   const onClose = () => {
     onCancel && onCancel();
-  };
-
-  const handleCancel = () => {
-    setPreviewVisible(false);
   };
 
   // 调用创建文章的接口
@@ -140,106 +133,99 @@ const ReleaseModel: React.FC<IProps> = ({
           </Button>
         }
       >
-        <Form
-          labelCol={{ span: 3 }}
-          wrapperCol={{ span: 22 }}
-          layout="horizontal"
-          form={form}
-          name="form"
-        >
-          <Form.Item
-            label="标题"
-            name="title"
-            initialValue={initialValue?.title}
-            rules={[
-              { required: true, message: '请先输入文章标题' },
-              {
-                validator: checkTitle,
-              },
-            ]}
+        <div className={styles.ReleaseModel}>
+          <Form
+            labelCol={{ span: 3 }}
+            wrapperCol={{ span: 22 }}
+            layout="horizontal"
+            form={form}
+            name="form"
           >
-            <Input placeholder="请输入文章标题" maxLength={50} />
-          </Form.Item>
-          <Form.Item
-            label="分类"
-            name="classify"
-            initialValue={initialValue?.classify}
-            rules={[{ required: true, message: '请选择分类' }]}
-          >
-            <Radio.Group buttonStyle="solid">
-              {ARTICLE_CLASSIFY.map((i) => {
-                return (
-                  <Radio.Button className={styles.tag} key={i} value={i}>
+            <Form.Item
+              label="标题"
+              name="title"
+              initialValue={initialValue?.title}
+              rules={[
+                { required: true, message: '请先输入文章标题' },
+                {
+                  validator: checkTitle,
+                },
+              ]}
+            >
+              <Input placeholder="请输入文章标题" maxLength={50} />
+            </Form.Item>
+            <Form.Item
+              label="分类"
+              name="classify"
+              initialValue={initialValue?.classify}
+              rules={[{ required: true, message: '请选择分类' }]}
+            >
+              <Radio.Group buttonStyle="solid">
+                {ARTICLE_CLASSIFY.map((i) => {
+                  return (
+                    <Radio.Button className={styles.tag} key={i} value={i}>
+                      {i}
+                    </Radio.Button>
+                  );
+                })}
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item
+              label="标签"
+              name="tag"
+              initialValue={initialValue?.tag}
+              rules={[{ required: true, message: '请选择一个标签' }]}
+            >
+              <Select placeholder="请选择标签">
+                {ARTICLE_TAG.map((i) => (
+                  <Select.Option value={i} key={i}>
                     {i}
-                  </Radio.Button>
-                );
-              })}
-            </Radio.Group>
-          </Form.Item>
-          <Form.Item
-            label="标签"
-            name="tag"
-            initialValue={initialValue?.tag}
-            rules={[{ required: true, message: '请选择一个标签' }]}
-          >
-            <Select placeholder="请选择标签">
-              {ARTICLE_TAG.map((i) => (
-                <Select.Option value={i} key={i}>
-                  {i}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="时间"
-            name="createTime"
-            initialValue={moment(initialValue?.createTime)}
-          >
-            <DatePicker
-              className={styles.datePicker}
-              format="YYYY/MM/DD HH:mm:ss"
-              showTime
-            />
-          </Form.Item>
-          <Form.Item
-            label="封面"
-            valuePropName="fileList"
-            name="coverImage"
-            initialValue={initialValue?.coverImage}
-          >
-            <UploadFile
-              filePath={filePath}
-              setFilePath={setFilePath}
-              form={form}
-              showPreview={setPreviewVisible}
-            />
-          </Form.Item>
-          <Form.Item
-            label="摘要"
-            name="abstract"
-            initialValue={initialValue?.abstract}
-            rules={[{ required: true, message: '请先输入文章摘要！' }]}
-          >
-            <TextArea
-              placeholder="请输入文章摘要"
-              rows={3}
-              autoSize={{ minRows: 3, maxRows: 10 }}
-              maxLength={100}
-              showCount
-            />
-          </Form.Item>
-        </Form>
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="时间"
+              name="createTime"
+              initialValue={moment(initialValue?.createTime)}
+            >
+              <DatePicker
+                className={styles.datePicker}
+                format="YYYY/MM/DD HH:mm:ss"
+                showTime
+              />
+            </Form.Item>
+            <Form.Item
+              label="封面"
+              valuePropName="fileList"
+              name="coverImage"
+              initialValue={initialValue?.coverImage}
+            >
+              <UploadFile
+                filePath={filePath}
+                setFilePath={setFilePath}
+                form={form}
+                imgStyle={styles.uploadImg}
+                setAlertStatus={setAlertStatus}
+              />
+            </Form.Item>
+            <Form.Item
+              label="摘要"
+              name="abstract"
+              initialValue={initialValue?.abstract}
+              rules={[{ required: true, message: '请先输入文章摘要！' }]}
+            >
+              <TextArea
+                placeholder="请输入文章摘要"
+                rows={3}
+                autoSize={{ minRows: 3, maxRows: 10 }}
+                maxLength={100}
+                showCount
+              />
+            </Form.Item>
+          </Form>
+        </div>
       </Drawer>
-      <Modal
-        visible={previewVisible}
-        centered
-        closable={false}
-        width={600}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <img alt="" style={{ width: '100%' }} src={filePath} />
-      </Modal>
     </div>
   );
 };
