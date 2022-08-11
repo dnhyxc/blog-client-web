@@ -41,6 +41,5 @@ export {
 };
 
 export const upload = (params: any) => {
-  console.log(params, 'params');
   return 'https://dnhyxc.gitee.io/img/dnhyxc.jpg';
 };
