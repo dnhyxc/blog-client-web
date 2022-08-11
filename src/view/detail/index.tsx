@@ -6,8 +6,8 @@
  * @FilePath: \src\view\detail\index.tsx
  */
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Affix, BackTop, Spin } from 'antd';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Affix, BackTop, Spin, Button } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import Preview from '@/components/Preview';
 import Header from '@/components/Header';
@@ -16,18 +16,46 @@ import RightBar from '@/components/RightBar';
 import Toc from '@/components/ArticleToc';
 import Comments from '@/components/Comments';
 import { useGetArticleDetail } from '@/hooks';
+import useStore from '@/store';
+import { formatDate, decrypt } from '@/utils';
+import { ArticleDetailParams } from '@/typings/common';
 import styles from './index.less';
 
 const ArticleDetail: React.FC = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { detail } = useGetArticleDetail(id);
+  const {
+    userInfoStore: { getUserInfo },
+  } = useStore();
 
-  const renderCoverImg = (title: string, url: string, desc: string) => {
+  // 编辑文章
+  const onEditArticle = () => {
+    navigate(`/create?id=${id}`);
+  };
+
+  const renderCoverImg = (detail: ArticleDetailParams) => {
     return (
       <div className={styles.titleWrap}>
-        <div className={styles.title}>{title}</div>
-        {url && <Image url={url} className={styles.image} />}
-        <p className={styles.desc}>{desc}</p>
+        <div className={styles.title}>{detail?.title}</div>
+        <div className={styles.userInfo}>
+          <Image url={detail?.coverImage} className={styles.herdImg} id="IMAGE" />
+          <div className={styles.createInfo}>
+            <div className={styles.username}>
+              {(detail?.authorName && decrypt(detail?.authorName)) || detail?.authorName}
+            </div>
+            <div>
+              <span>{formatDate(detail?.createTime)}</span>
+              {getUserInfo?.userId === detail?.authorId && (
+                <Button type="link" onClick={onEditArticle}>
+                  编辑
+                </Button>
+              )}
+            </div>
+          </div>
+        </div>
+        {detail?.coverImage && <Image url={detail?.coverImage} className={styles.image} />}
+        <p className={styles.desc}>{detail.abstract}</p>
       </div>
     );
   };
@@ -38,7 +66,7 @@ const ArticleDetail: React.FC = () => {
         <div className={styles.headerWrap}>
           <Header needLeft needMenu excludesWidth>
             <div className={styles.headerContent}>
-              <div>DETAIL</div>
+              <div>文章详情</div>
             </div>
           </Header>
         </div>
@@ -48,7 +76,7 @@ const ArticleDetail: React.FC = () => {
               <Preview
                 className={styles.previewContent}
                 mackdown={detail.content}
-                coverImg={renderCoverImg(detail.title, detail.coverImage, detail.abstract)}
+                coverImg={renderCoverImg(detail)}
               >
                 <div className={styles.tagWrap}>
                   <div className={styles.tagList}>

@@ -98,6 +98,7 @@ export interface ArticleDetailParams {
   abstract: string;
   createTime: number;
   comments: CommentParams[];
+  authorName: string;
   authorId: string;
 }
 
