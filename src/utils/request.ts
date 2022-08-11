@@ -1,4 +1,5 @@
 import commonStore, { Auth } from '@/store/common';
+import { message } from 'antd';
 import fetch from 'isomorphic-fetch';
 import { stringify } from 'query-string';
 import { addGatewayPattern } from './urlTool';
@@ -30,7 +31,7 @@ function checkRedirection(response: Response): boolean {
       return true;
     }
   } catch (err) {
-    console.log('redirect url error');
+    message.error('redirect url error');
   }
 
   return false;
