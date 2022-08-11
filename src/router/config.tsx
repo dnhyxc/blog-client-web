@@ -57,7 +57,7 @@ const children = [
     element: lazyLoad(<Timeline />),
   },
   {
-    path: 'about',
+    path: 'personal',
     element: lazyLoad(<Personal />),
   },
   {

@@ -41,11 +41,11 @@ const menuList = [
     path: '/timeline',
   },
   {
-    key: 'about',
+    key: 'personal',
     icon: <UserOutlined className={styles.menu_icon} />,
     label: '我的主页',
     name: '我的主页',
-    path: '/about',
+    path: '/personal',
   },
 ];
 

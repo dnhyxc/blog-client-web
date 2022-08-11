@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
 import useStore from '@/store';
 import { useLoginStatus } from '@/hooks';
@@ -10,16 +10,20 @@ import UploadFile from '@/components/Upload';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const { TextArea } = Input;
 
 const Profile: React.FC<IProps> = () => {
-  const [filePath, setFilePath] = useState<string>('http://localhost:9112/6f147dff8fabb62e91abdf606.png');
+  const [filePath, setFilePath] = useState<string>();
 
   const [form] = Form.useForm();
   const { userInfoStore } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
+
+  useEffect(() => {
+    setFilePath(userInfoStore?.getUserInfo?.headUrl);
+  }, [userInfoStore?.getUserInfo?.headUrl]);
 
   // 修改用户信息
   const onUpdateUserInfo = async () => {
@@ -31,6 +35,7 @@ const Profile: React.FC<IProps> = () => {
     const res = normalizeResult<LoginData>(
       await Service.updateInfo({
         ...info,
+        headUrl: filePath,
         userId: userInfoStore?.getUserInfo?.userId,
       })
     );
@@ -59,7 +64,16 @@ const Profile: React.FC<IProps> = () => {
             </Button>
           </div>
           <div className={styles.headerWrap}>
-            <UploadFile form={form} filePath={filePath} setFilePath={setFilePath} setAlertStatus={setAlertStatus} imgStyle={styles.uploadImg} markStyle={styles.markStyle} uploadWrapStyle={styles.uploadWrapStyle} needPreview={false} />
+            <UploadFile
+              form={form}
+              filePath={filePath}
+              setFilePath={setFilePath}
+              setAlertStatus={setAlertStatus}
+              imgStyle={styles.uploadImg}
+              markStyle={styles.markStyle}
+              uploadWrapStyle={styles.uploadWrapStyle}
+              needPreview={false}
+            />
             <div className={styles.username}>DNHYXC</div>
           </div>
         </div>

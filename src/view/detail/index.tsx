@@ -34,12 +34,21 @@ const ArticleDetail: React.FC = () => {
     navigate(`/create?id=${id}`);
   };
 
+  // 去我的主页
+  const toSetting = (authorId: string) => {
+    navigate(`/personal?id=${authorId}`);
+  };
+
   const renderCoverImg = (detail: ArticleDetailParams) => {
     return (
       <div className={styles.titleWrap}>
         <div className={styles.title}>{detail?.title}</div>
         <div className={styles.userInfo}>
-          <Image url={detail?.coverImage} className={styles.herdImg} id="IMAGE" />
+          <Image
+            url={detail?.headUrl}
+            className={styles.herdImg}
+            onClick={() => toSetting(detail?.authorId)}
+          />
           <div className={styles.createInfo}>
             <div className={styles.username}>
               {(detail?.authorName && decrypt(detail?.authorName)) || detail?.authorName}

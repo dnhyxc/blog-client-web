@@ -3,10 +3,10 @@
  * @Author: dnh
  * @Date: 2022-06-13 09:41:39
  * @LastEditors: dnh
- * @FilePath: \src\view\about\index.tsx
+ * @FilePath: \src\view\personal\index.tsx
  */
 import { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Tabs } from 'antd';
 import Content from '@/components/Content';
 import Image from '@/components/Image';
@@ -35,6 +35,9 @@ const Personal = () => {
   });
 
   const navigate = useNavigate();
+  const [search] = useSearchParams();
+  const authorId: string | null = search.get('id');
+
   const listRef = useRef<ArticleItem[]>([]);
   const {
     userInfoStore: { getUserInfo },
@@ -50,6 +53,7 @@ const Personal = () => {
     getMyArticleList();
   }, [selectKey, pageNo]);
 
+  // 获取我的文章及点赞文章列表
   const getMyArticleList = async () => {
     setLoading(true);
     const res = normalizeResult<ArticleListResult>(
@@ -105,6 +109,7 @@ const Personal = () => {
     }
   };
 
+  // 切换tab事件
   const onChange = (key: string) => {
     setSelectKey(key);
     listRef.current = [];
@@ -146,9 +151,11 @@ const Personal = () => {
                     />
                   ))}
                 </div>
-                <Button type="primary" ghost onClick={toSetting}>
-                  修改个人资料
-                </Button>
+                {authorId === getUserInfo.userId && (
+                  <Button type="primary" ghost onClick={toSetting}>
+                    修改个人资料
+                  </Button>
+                )}
               </div>
             </div>
             <div className={styles.tabsWrap}>

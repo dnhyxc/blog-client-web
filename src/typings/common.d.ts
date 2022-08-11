@@ -95,6 +95,7 @@ export interface ArticleDetailParams {
   classify: string;
   tag: string;
   coverImage: string;
+  headUrl: string;
   abstract: string;
   createTime: number;
   comments: CommentParams[];
