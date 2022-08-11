@@ -4,7 +4,6 @@ import { Button } from 'antd';
 import { observer } from 'mobx-react';
 import useStore from '@/store';
 import Header from '@/components/Header';
-import Content from '@/components/Content';
 import TuiEditor from '@/components/TuiEditor';
 import { useGetArticleDetail } from '@/hooks';
 import ReleaseModel from './ReleaseModel';
@@ -52,9 +51,9 @@ const CreateArticle: React.FC<IProps> = () => {
       <Header needMenu right={renderRight()}>
         发布文章
       </Header>
-      <Content>
+      <div className={styles.tuiEditorWrap}>
         <TuiEditor onGetMackdown={onGetMackdown} initialValue={detail?.content} />
-      </Content>
+      </div>
       <ReleaseModel
         visible={visible}
         onCancel={onCancel}

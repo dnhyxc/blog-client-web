@@ -87,3 +87,21 @@ kill -9  pm2项目对应的进程
 
 pm2 update
 ```
+
+### 安装 Mongodb
+
+首先到官网根据自己的服务器下载对应的 Mongodb 压缩包。
+
+`cd /usr/local`目录下，使用`mkdir mongodb`创建 mongodb 文件夹。
+
+`cd /`到根目录，使用命令`mkdir -p /data/db`创建 db 文件夹。再使用`mkdir -p /data/log`创建 log 文件夹。
+
+`cd mongodb`文件夹下，使用`rz`命令将我下载好的压缩包通过了`tar -vxf mongodb-xxx.tgz`进行解压。
+
+`cd mongodb-linux-xxx/bin`目录，在使用`./mongod`启动 mongodb。
+
+### 配置 mongodb 环境变量
+
+首先在 mongodb/mongodb-xxx/bin 目录执行`pwd`获取 mongodb 的所在路径。
+
+`cs etc`到 etc 目录下。执行`vi profile`命令。接着输入`export PATH=/usr/local/mongodb/mongodb-xxx/bin:$PATH`，设置完毕后保存。之后输入`source profile`让配置生效。

@@ -1,48 +1,66 @@
-.editContainer {
-  :global(.ProseMirror) {
-    height: 100%;
-  }
-  :global(.toastui-editor-defaultUI-toolbar) {
-    flex-wrap: wrap;
-    height: 100%;
-  }
-  :global(.toastui-editor-contents h3) {
-    margin: 18px 0 18px;
-  }
-  :global(.toastui-editor-contents h4) {
-    margin: 10px 0 10px;
-  }
-  :global(.toastui-editor-contents h5) {
-    margin: 9px 0 9px;
-  }
-  :global(.toastui-editor-contents h6) {
-    margin: 9px 0 9px;
-  }
-  :global(.toastui-editor-contents blockquote) {
-    background: #eee;
-  }
-  :global(.toastui-editor-defaultUI) {
-    border: none;
-    :global(.ProseMirror) {
-      padding: 10px 10px;
-      background: #fff;
-    }
-  }
-  :global(.toastui-editor-md-container .toastui-editor-md-preview) {
-    padding: 0 10px;
-    background: #fff;
+@import '~@styles/common.less';
 
-    :global(.toastui-editor-contents) {
-      padding-top: 0;
+.editContainer {
+  padding: 6px;
+  background-color: @menu-hover;
+
+  :global {
+    .ProseMirror {
+      height: 100%;
+      font-size: 14px;
     }
-  }
-  :global(.toastui-editor-popup-body
-      input[type="text"].tui-colorpicker-palette-hex) {
-    width: 100px;
-  }
-  :global(.toastui-editor-popup-color
+    .toastui-editor-defaultUI-toolbar {
+      flex-wrap: wrap;
+      height: 100%;
+    }
+    .toastui-editor-contents {
+      h3 {
+        margin: 18px 0 18px;
+      }
+      h4 {
+        margin: 10px 0 10px;
+      }
+      h5,
+      h6 {
+        margin: 9px 0 9px;
+      }
+      blockquote {
+        background: #eee;
+      }
+      code {
+        color: @menu-active;
+      }
+    }
+    .toastui-editor-md-code.toastui-editor-md-marked-text {
+      color: @menu-active;
+    }
+    .toastui-editor-defaultUI {
+      border: none;
+
+      .ProseMirror {
+        padding: 10px 1px 10px 10px;
+        background: #fff;
+      }
+    }
+    .toastui-editor-md-container .toastui-editor-md-preview {
+      padding: 0 1px 0 10px;
+      background: #fff;
+
+      .toastui-editor-contents {
+        padding-top: 0;
+        font-size: 14px;
+      }
+    }
+    .toastui-editor-popup-body input[type='text'].tui-colorpicker-palette-hex {
+      width: 100px;
+    }
+    .toastui-editor-popup-color
       .tui-colorpicker-container
-      .tui-colorpicker-palette-preview) {
-    margin-top: 3px;
+      .tui-colorpicker-palette-preview {
+      margin-top: 3px;
+    }
+    .toastui-editor-md-delimiter {
+      color: @menu-active;
+    }
   }
 }
