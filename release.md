@@ -104,4 +104,18 @@ pm2 update
 
 首先在 mongodb/mongodb-xxx/bin 目录执行`pwd`获取 mongodb 的所在路径。
 
-`cs etc`到 etc 目录下。执行`vi profile`命令。接着输入`export PATH=/usr/local/mongodb/mongodb-xxx/bin:$PATH`，设置完毕后保存。之后输入`source profile`让配置生效。
+`cs etc`到 etc 目录下。执行`vi profile`命令。接着输入`export PATH=/usr/local/mongodb/mongodb-linux-x86_64-rhel80-5.0.10/bin:$PATH`，设置完毕后保存。之后输入`source profile`让配置生效。
+
+### 启动 mongodb
+
+```
+cd mongodb/bin
+./mongod --dbpath /usr/local/mongodb/mongodb-linux-x86_64-rhel80-5.0.10/data/
+```
+
+### 链接数据库
+
+```
+cd mongodb/bin
+./mongo
+```

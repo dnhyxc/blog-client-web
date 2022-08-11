@@ -18,6 +18,7 @@ import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
 import uml from '@toast-ui/editor-plugin-uml';
 import Prism from 'prismjs';
 import * as Service from '@/service';
+import { normalizeResult } from '@/utils';
 import { toolbars } from './toobars';
 import styles from './index.less';
 
@@ -55,7 +56,6 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown }) => {
       },
       hooks: {
         addImageBlobHook: (fileOrBlob, callback) => {
-          console.log(fileOrBlob, 'fileOrBlob');
           uploadImage(fileOrBlob, callback);
         },
       },
@@ -78,16 +78,10 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown }) => {
       button.innerHTML = '<i>BB</i>';
       button.addEventListener('click', () => {
         console.log(editor, '========');
-
         const wwSelection = editor.getSelection();
-
         console.log(wwSelection, 'wwSelection');
-
         editor.insertText('```js\n\n```');
-
         editor.moveCursorToStart(0);
-
-        console.log('11111');
         // editor.exec("code");
       });
 
@@ -96,10 +90,12 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown }) => {
   }, [initialValue]);
 
   const uploadImage = async (file: Blob, callback: Function) => {
-    const res = await Service.upload(file);
-    console.log(res, 'res');
-    callback(res);
-    console.log(callback, 'callbackcallbackcallbackcallback');
+    const formData = new FormData();
+    formData.append('file', file);
+    const res = normalizeResult<{ filePath: string }>(await Service.uploadFile(formData));
+    if (res.success) {
+      callback(res.data.filePath);
+    }
   };
 
   return <div className={styles.editContainer} id="editor" />;

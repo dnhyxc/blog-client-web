@@ -15,6 +15,7 @@ import {
   getTagList,
   getTimelineList,
 } from './article';
+import { uploadFile } from './upload';
 
 import { getMyArticleList } from './userInfo';
 
@@ -38,6 +39,7 @@ export {
   getTagList,
   getTimelineList,
   getMyArticleList,
+  uploadFile,
 };
 
 export const upload = (params: any) => {
