@@ -119,3 +119,15 @@ cd mongodb/bin
 cd mongodb/bin
 ./mongo
 ```
+
+### nginx 上传报错
+
+413 Request Entity Too Large：这是由于请求实体过大，需要在 nginx 的 http 配置中增加如下设置：
+
+```js
+http {
+  client_max_body_size 10m;
+}
+```
+
+上述设置设置完成之后， 在 nginx 下的 sbin 目录下执行 `./nginx -s reload` 重启 nginx 服务即可。
