@@ -123,7 +123,7 @@ export interface CommentParams {
   fromUserId?: string;
   likeCount?: number;
   replyCount?: number;
-  // replyContent?: string;
+  headUrl?: string;
   fromUsername?: string;
   formContent?: string;
   replyList?: CommentParams[];

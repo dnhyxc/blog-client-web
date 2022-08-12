@@ -105,7 +105,8 @@ const DraftInput: React.FC<IProps> = ({
       return;
     }
     const params = {
-      ...getUserInfo,
+      userId: getUserInfo?.userId,
+      username: getUserInfo?.username,
       articleId: id || '',
       date: new Date().valueOf(),
       content: keyword,
@@ -152,7 +153,11 @@ const DraftInput: React.FC<IProps> = ({
       <div className={classname(className, styles.content)} id="CONTENT">
         {showAvatar && (
           <div className={styles.avatar} id="AVATAR">
-            <Image url={ABOUTME} className={styles.image} id="IMAGE" />
+            <Image
+              url={getUserInfo?.headUrl || ABOUTME}
+              className={styles.image}
+              id="IMAGE"
+            />
           </div>
         )}
         <div className={styles.input} id="INPUT">

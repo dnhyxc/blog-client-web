@@ -159,7 +159,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
           return (
             <div className={styles.commentWrap} key={i.commentId}>
               <div className={styles.avatar}>
-                <Image url={ABOUTME} className={styles.image} />
+                <Image url={i.headUrl || ABOUTME} className={styles.image} />
               </div>
               <div className={styles.commentContent}>
                 <div className={styles.commentMain}>
@@ -231,7 +231,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
                       return (
                         <div className={styles.commentChildItem} key={j.commentId}>
                           <div className={styles.avatar}>
-                            <Image url={ABOUTME} className={styles.image} />
+                            <Image url={j.headUrl || ABOUTME} className={styles.image} />
                           </div>
                           <div className={styles.commentChildItemContent}>
                             <div className={styles.userInfo}>

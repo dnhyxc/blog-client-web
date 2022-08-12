@@ -133,7 +133,7 @@ const Personal = () => {
         <div className={styles.content}>
           <div className={styles.wrap}>
             <div className={styles.userInfo}>
-              <Image url={ABOUTME} className={styles.image} />
+              <Image url={getUserInfo?.headUrl || ABOUTME} className={styles.image} />
               <div className={styles.user}>
                 <div className={styles.userName}>dnhyxc</div>
                 <div>职位: 前端工程师</div>
@@ -151,7 +151,7 @@ const Personal = () => {
                     />
                   ))}
                 </div>
-                {authorId === getUserInfo.userId && (
+                {(authorId === getUserInfo.userId || !authorId) && (
                   <Button type="primary" ghost onClick={toSetting}>
                     修改个人资料
                   </Button>

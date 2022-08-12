@@ -5,7 +5,6 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 // const PurgeCSSPlugin = require('purgecss-webpack-plugin'); // css优化去重复无效代码
 // const glob = require('glob');
-// const WebpackBar = require('webpackbar');
 
 module.exports = {
   entry: {
@@ -72,13 +71,13 @@ module.exports = {
       template: 'public/index.html',
       filename: 'index.html',
       inject: 'body',
+      favicon: path.resolve(__dirname, '../public/favicon.png'),
       minify: {
         removeComments: true,
       },
     }),
     new ESLintPlugin(),
     new FriendlyErrorsWebpackPlugin(),
-    // new WebpackBar(),
     new webpack.ProgressPlugin({
       activeModules: false,
       entries: true,
