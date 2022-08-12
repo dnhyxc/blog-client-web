@@ -18,9 +18,15 @@ import Header from '@/components/Header';
 import * as Service from '@/service';
 import useStore from '@/store';
 import { normalizeResult } from '@/utils/tools';
-import { ABOUT_ME_TABS, PAGESIZE, ICONLINKS, ABOUT_ME_API_PATH } from '@/constant';
+import {
+  ABOUT_ME_TABS,
+  ABOUT_TABS,
+  PAGESIZE,
+  ICONLINKS,
+  ABOUT_ME_API_PATH,
+} from '@/constant';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
-import { ArticleListResult, ArticleItem } from '@/typings/common';
+import { ArticleListResult, ArticleItem, UserInfoParams } from '@/typings/common';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -32,6 +38,9 @@ const Personal = () => {
     list: [],
     total: 0,
     count: 0,
+  });
+  const [personalInfo, setPersonalInfo] = useState<UserInfoParams>({
+    userId: '',
   });
 
   const navigate = useNavigate();
@@ -53,6 +62,11 @@ const Personal = () => {
     getMyArticleList();
   }, [selectKey, pageNo]);
 
+  useEffect(() => {
+    if (!authorId) return;
+    onGetPersonalInfo();
+  }, [authorId]);
+
   // 获取我的文章及点赞文章列表
   const getMyArticleList = async () => {
     setLoading(true);
@@ -61,7 +75,8 @@ const Personal = () => {
         {
           pageNo: 1,
           pageSize: PAGESIZE,
-          userId: getUserInfo?.userId,
+          userId: authorId || getUserInfo?.userId,
+          accessUserId: getUserInfo?.userId,
         },
         ABOUT_ME_API_PATH[selectKey]
       )
@@ -76,6 +91,18 @@ const Personal = () => {
         total,
         count: list.length,
       });
+    }
+  };
+
+  // 获取用户信息
+  const onGetPersonalInfo = async () => {
+    const res = normalizeResult<UserInfoParams>(
+      await Service.getUserInfo({
+        userId: authorId,
+      })
+    );
+    if (res.success) {
+      setPersonalInfo(res.data);
     }
   };
 
@@ -125,6 +152,14 @@ const Personal = () => {
     navigate('/setting/profile');
   };
 
+  // 根据authorId获取对应的tabs
+  const getTabList = () => {
+    if (authorId) {
+      return ABOUT_TABS;
+    }
+    return ABOUT_ME_TABS;
+  };
+
   return (
     <div className={styles.Personal}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
@@ -133,7 +168,10 @@ const Personal = () => {
         <div className={styles.content}>
           <div className={styles.wrap}>
             <div className={styles.userInfo}>
-              <Image url={getUserInfo?.headUrl || ABOUTME} className={styles.image} />
+              <Image
+                url={(authorId ? personalInfo.headUrl : getUserInfo?.headUrl) || ABOUTME}
+                className={styles.image}
+              />
               <div className={styles.user}>
                 <div className={styles.userName}>dnhyxc</div>
                 <div>职位: 前端工程师</div>
@@ -160,7 +198,7 @@ const Personal = () => {
             </div>
             <div className={styles.tabsWrap}>
               <Tabs defaultActiveKey="1" onChange={onChange}>
-                {ABOUT_ME_TABS.map((i) => {
+                {getTabList().map((i) => {
                   return (
                     <TabPane tab={i.name} key={i.value}>
                       <Card

@@ -30,6 +30,13 @@ export const ABOUT_ME_TABS = [
   },
 ];
 
+export const ABOUT_TABS = [
+  {
+    name: '他的文章',
+    value: '1',
+  },
+];
+
 export const ABOUT_ME_API_PATH = {
   1: API.GET_MY_ARTICLE_LIST,
   2: API.GET_LIKE_ARTICLE_LIST,

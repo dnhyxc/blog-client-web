@@ -17,7 +17,7 @@ export async function updateInfo(params: UserInfoParams) {
   return res;
 }
 
-export async function getUserInfo(params: { userId: string }) {
+export async function getUserInfo(params: { userId: string | null }) {
   const res = await post(API.GET_USER_INFO, params);
   return res;
 }

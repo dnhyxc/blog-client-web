@@ -27,7 +27,11 @@ export async function deleteArticle(params: { articleId: string }) {
   return res;
 }
 
-export async function likeArticle(params: { id: string; userId: string }) {
+export async function likeArticle(params: {
+  id: string;
+  userId: string;
+  authorId?: string | null | undefined;
+}) {
   const res = await post(API.LIKE_ARTICLE, params);
   return res;
 }

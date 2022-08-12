@@ -62,7 +62,8 @@
     "react/jsx-wrap-multilines": 0,
     "react/jsx-curly-newline": 0,
     "prefer-promise-reject-errors": 0,
-    "class-methods-use-this": 0
+    "class-methods-use-this": 0,
+    "react/jsx-one-expression-per-line": 0
   },
   "settings": {
     "import/parsers": {
