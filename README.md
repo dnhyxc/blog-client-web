@@ -1631,9 +1631,9 @@ npx eslint ./src --ext ts,tsx,js,jsx --fix
 
 ### webpack 其它配置
 
-#### [代码分割](https://webpack.docschina.org/configuration/optimization/#optimizationsplitchunks)
+#### 
 
-将第三方库进行代码分割，防止重复导入，从而减小打包体积，基本配置如下：
+[代码分割](https://webpack.docschina.org/configuration/optimization/#optimizationsplitchunks)可将第三方库的代码进行分割，防止重复导入，从而减小打包体积，基本配置如下：
 
 ```js
 // 缓存配置
