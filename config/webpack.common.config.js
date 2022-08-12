@@ -3,8 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const PurgeCSSPlugin = require('purgecss-webpack-plugin'); // css优化去重复无效代码
-const glob = require('glob');
+// const PurgeCSSPlugin = require('purgecss-webpack-plugin'); // css优化去重复无效代码
+// const glob = require('glob');
 // const WebpackBar = require('webpackbar');
 
 module.exports = {
@@ -89,10 +89,10 @@ module.exports = {
       dependenciesCount: 10000,
       percentBy: 'entries',
     }),
-    // 打包时排除没有用到的 css 代码
-    new PurgeCSSPlugin({
-      paths: glob.sync(path.join(__dirname, 'index.html')),
-    }),
+    // 打包时排除没有用到的 css 代码，这个需要谨慎使用，用的不好会导致打包出的css没有内容
+    // new PurgeCSSPlugin({
+    //   paths: glob.sync(path.join(__dirname, 'index.html')),
+    // }),
   ],
   // 精简控制台编译输出信息
   stats: {

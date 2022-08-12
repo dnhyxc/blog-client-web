@@ -29,10 +29,7 @@ yarn add webpack webpack-cli webpack-dev-server -D
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <title>dnhyxc</title>
   </head>
   <body translate="no">
@@ -617,13 +614,7 @@ module.exports = merge(common, {
 module.exports = {
   plugins: {
     autoprefixer: {
-      overrideBrowserslist: [
-        'Android 4.1',
-        'iOS 7.1',
-        'Chrome > 31',
-        'ff > 31',
-        'ie >= 8',
-      ],
+      overrideBrowserslist: ['Android 4.1', 'iOS 7.1', 'Chrome > 31', 'ff > 31', 'ie >= 8'],
     },
   },
 };
@@ -1138,10 +1129,7 @@ module.exports = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="description" content="Web site created using create-react-app" />
     <title>dnhyxc</title>
     <% if (process.env.NODE_ENV === 'development') { %>
     <script src="https://cdn.staticfile.org/react/18.2.0/umd/react.development.js"></script>
@@ -1593,12 +1581,7 @@ eslint 在代码编写时，默认不会对 ts 代码进行校验，如果需要
 ```json
 {
   // ...
-  "eslint.validate": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact"
-  ]
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"]
 }
 ```
 
@@ -1647,6 +1630,25 @@ npx eslint ./src --ext ts,tsx,js,jsx --fix
 ```
 
 ### webpack 其它配置
+
+#### [代码分割](https://webpack.docschina.org/configuration/optimization/#optimizationsplitchunks)
+
+将第三方库进行代码分割，防止重复导入，从而减小打包体积，基本配置如下：
+
+```js
+// 缓存配置
+optimization: {
+  splitChunks: {
+    cacheGroups: {
+      vendor: {
+        test: /node_modules/,
+        name: 'vendor',
+        chunks: 'all',
+      },
+    },
+  },
+},
+```
 
 #### 设置 webpack 控制台输出友好提示
 
