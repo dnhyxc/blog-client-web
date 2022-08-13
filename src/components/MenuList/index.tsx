@@ -56,16 +56,31 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
       }
     }
     return () => {
-      // console.log(pathname, "后置路由守卫");
+      // console.log(pathname, '后置路由守卫');
     };
   }, [pathname, type]);
+
+  // 设置路由守卫
+  useEffect(() => {
+    if (
+      !userId &&
+      (pathname === '/personal' ||
+        pathname === '/create' ||
+        pathname.includes('setting') ||
+        pathname === '/timeline')
+    ) {
+      navigate('home');
+    }
+  }, [pathname, userId]);
 
   const filterMenus = useMemo(() => {
     if (userId) {
       return menuList;
     }
-    return menuList.filter((i) => i.key !== 'personal');
-  }, []);
+    return menuList.filter(
+      (i) => i.key !== 'personal' && i.key !== 'create' && i.key !== 'timeline'
+    );
+  }, [userId]);
 
   const onSelectMenu = (value: { key: string }) => {
     setSelectMenu(value.key);
