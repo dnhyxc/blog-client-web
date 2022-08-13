@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  Form,
-  Input,
-  Drawer,
-  Select,
-  message,
-  Button,
-  Radio,
-  DatePicker,
-} from 'antd';
+import { Form, Input, Drawer, Select, message, Button, Radio, DatePicker } from 'antd';
 import moment from 'moment';
 import UploadFile from '@/components/Upload';
 import MAlert from '@/components/Alert';
@@ -48,6 +39,7 @@ const ReleaseModel: React.FC<IProps> = ({
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
 
   useEffect(() => {
+    console.log(initialValue, 'initValue');
     if (initialValue?.coverImage) {
       setFilePath(initialValue?.coverImage);
     }
@@ -207,6 +199,7 @@ const ReleaseModel: React.FC<IProps> = ({
                 form={form}
                 imgStyle={styles.uploadImg}
                 setAlertStatus={setAlertStatus}
+                aspectRatio={198 / 110}
               />
             </Form.Item>
             <Form.Item

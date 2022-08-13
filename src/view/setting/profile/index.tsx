@@ -7,6 +7,7 @@ import { normalizeResult, encrypt } from '@/utils';
 import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
+import { ABOUTME } from '@/constant';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
@@ -16,6 +17,7 @@ const { TextArea } = Input;
 
 const Profile: React.FC<IProps> = () => {
   const [filePath, setFilePath] = useState<string>();
+  const [mainCoverPath, setMainCoverPath] = useState<string>(ABOUTME);
 
   const [form] = Form.useForm();
   const { userInfoStore } = useStore();
@@ -23,7 +25,8 @@ const Profile: React.FC<IProps> = () => {
 
   useEffect(() => {
     setFilePath(userInfoStore?.getUserInfo?.headUrl);
-  }, [userInfoStore?.getUserInfo?.headUrl]);
+    setMainCoverPath(userInfoStore?.getUserInfo?.mainCover);
+  }, []);
 
   // 修改用户信息
   const onUpdateUserInfo = async () => {
@@ -36,6 +39,7 @@ const Profile: React.FC<IProps> = () => {
       await Service.updateInfo({
         ...info,
         headUrl: filePath,
+        mainCover: mainCoverPath,
         userId: userInfoStore?.getUserInfo?.userId,
       })
     );
@@ -56,12 +60,26 @@ const Profile: React.FC<IProps> = () => {
         containerClassName={styles.containerClassName}
         wrapClassName={styles.wrapClassName}
       >
-        <div className={styles.header}>
+        <div className={styles.header} style={{ backgroundImage: `url(${mainCoverPath})` }}>
           <div className={styles.title}>
             <span>个人资料</span>
-            <Button ghost className={styles.changeCover}>
-              编辑封面图片
-            </Button>
+            <UploadFile
+              formLabel="mainCover"
+              form={form}
+              filePath={mainCoverPath}
+              setFilePath={setMainCoverPath}
+              setAlertStatus={setAlertStatus}
+              uploadWrapStyle={styles.uploadWrapStyle}
+              aspectRatio={888 / 260}
+              needPreview={false}
+              uploadStyle={styles.uploadStyle}
+              listType="text"
+              uploadNode={
+                <Button ghost className={styles.changeCover}>
+                  编辑封面图片
+                </Button>
+              }
+            />
           </div>
           <div className={styles.headerWrap}>
             <UploadFile
@@ -72,7 +90,6 @@ const Profile: React.FC<IProps> = () => {
               imgStyle={styles.uploadImg}
               markStyle={styles.markStyle}
               uploadWrapStyle={styles.uploadWrapStyle}
-              needPreview={false}
             />
             <div className={styles.username}>DNHYXC</div>
           </div>

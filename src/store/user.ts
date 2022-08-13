@@ -18,6 +18,7 @@ class UserInfo {
     juejin: '',
     zhihu: '',
     blog: '',
+    mainCover: '',
   };
 
   setUserInfo(values: LoginData) {

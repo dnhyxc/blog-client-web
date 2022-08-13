@@ -14,6 +14,7 @@ export interface LoginData {
   juejin?: string;
   zhihu?: string;
   blog?: string;
+  mainCover?: string;
 }
 
 export interface LoginParams {
@@ -33,6 +34,7 @@ export interface UserInfoParams {
   juejin?: string;
   zhihu?: string;
   blog?: string;
+  mainCover?: string;
 }
 
 export interface UpdateData {

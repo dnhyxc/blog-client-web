@@ -1,6 +1,7 @@
 import 'cropperjs/dist/cropper.css';
-import React, { useRef, useState } from 'react';
+import React, { ReactNode, useRef, useState } from 'react';
 import { Upload, message, Modal } from 'antd';
+import { UploadListType } from 'antd/lib/upload/interface';
 import Cropper from 'react-cropper';
 import { PlusOutlined } from '@ant-design/icons';
 import classname from 'classname';
@@ -12,6 +13,7 @@ import { FILETYPE, UPLOADURL } from '@/constant';
 import styles from './index.less';
 
 interface IProps {
+  formLabel?: string;
   filePath: string | undefined;
   form: any;
   setFilePath?: (url: string) => void;
@@ -20,9 +22,14 @@ interface IProps {
   uploadWrapStyle?: string;
   needPreview?: boolean;
   setAlertStatus?: Function;
+  aspectRatio?: number;
+  uploadStyle?: string;
+  uploadNode?: ReactNode;
+  listType?: UploadListType;
 }
 
 const UploadFile: React.FC<IProps> = ({
+  formLabel,
   needPreview = true,
   filePath,
   form,
@@ -31,6 +38,10 @@ const UploadFile: React.FC<IProps> = ({
   markStyle,
   uploadWrapStyle,
   setAlertStatus,
+  aspectRatio = 1 / 1,
+  uploadStyle,
+  uploadNode,
+  listType = 'picture-card',
 }) => {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false);
   const [showCropper, setShowCropper] = useState<boolean>(false);
@@ -71,20 +82,20 @@ const UploadFile: React.FC<IProps> = ({
 
   const onUpload = () => {
     if (cropperRef.current) {
-      console.log(cropperRef.current, 'cropperRef.current');
-      // 然后调用浏览器原生的toBlob方法将canvas数据转换成blob数据
       cropperRef.current.getCroppedCanvas().toBlob(async (blob: string | Blob) => {
         const formData = new FormData();
-        // 第三个参数为文件名，可选填. formData.append(name, value, filename);vlaue只支持blob string File
         formData.append('file', blob, cropperUrl.filename);
         const res = normalizeResult<{ filePath: string }>(
           await Service.uploadFile(formData)
         );
         setShowCropper(false);
         if (res.success) {
-          console.log(res, '>>>>>>>res');
           setFilePath && setFilePath(res?.data?.filePath);
-          form.setFieldsValue({ coverImage: res?.data?.filePath });
+          form.setFieldsValue(
+            formLabel
+              ? { mainCover: res?.data?.filePath }
+              : { coverImage: res?.data?.filePath }
+          );
           message.success('上传成功');
         } else {
           setAlertStatus && setAlertStatus(true);
@@ -95,19 +106,6 @@ const UploadFile: React.FC<IProps> = ({
 
   const onCropperInit = (cropper: any) => {
     cropperRef.current = cropper;
-  };
-
-  const onUploadFile: UploadProps['onChange'] = ({ file }) => {
-    if (file.status === 'done') {
-      const path = file.response.data.filePath;
-      // 获取filePath
-      setFilePath && setFilePath(path);
-      form.setFieldsValue({ coverImage: path });
-      message.success(file.response.message);
-    }
-    if (file.status === 'error') {
-      setAlertStatus && setAlertStatus(true);
-    }
   };
 
   const handleCancel = () => {
@@ -125,54 +123,57 @@ const UploadFile: React.FC<IProps> = ({
   };
 
   return (
-    <div className={styles.Upload}>
-      <Modal
-        title="请选择剪裁区域"
-        className={styles.cropperModalWrap}
-        visible={showCropper}
-        width={820}
-        onCancel={() => setShowCropper(false)}
-        onOk={onUpload}
-      >
-        <Cropper
-          src={cropperUrl.url} // 图片路径，即是base64的值，在Upload上传的时候获取到的
-          ref={cropperRef}
-          onInitialized={onCropperInit}
-          preview=".uploadCrop"
-          viewMode={1} // 定义cropper的视图模式
-          zoomable={false} // 是否允许放大图像
-          // movable
-          guides={false} // 显示在裁剪框上方的虚线
-          background={false} // 是否显示背景的马赛克
-          rotatable={false} // 是否旋转
-          autoCropArea={1} // 默认值0.8（图片的80%）。--0-1之间的数值，定义自动剪裁区域的大小
-          style={{ width: 'auto', height: '100%' }}
-          aspectRatio={130 / 130} // 固定为1:1  可以自己设置比例, 默认情况为自由比例
-          // cropBoxResizable={false} // 默认true ,是否允许拖动 改变裁剪框大小
-          // cropBoxMovable  // 是否可以拖拽裁剪框 默认true
-          dragMode="move" // 拖动模式, 默认crop当鼠标 点击一处时根据这个点重新生成一个 裁剪框，move可以拖动图片，none:图片不能拖动
-          center
-        />
-      </Modal>
+    <div className={classname(uploadStyle, styles.Upload)}>
+      {showCropper && (
+        <Modal
+          title="请选择剪裁区域"
+          className={styles.cropperModalWrap}
+          visible={showCropper}
+          width={820}
+          onCancel={() => setShowCropper(false)}
+          onOk={onUpload}
+        >
+          <Cropper
+            src={cropperUrl.url} // 图片路径，即是base64的值，在Upload上传的时候获取到的
+            ref={cropperRef}
+            onInitialized={onCropperInit}
+            preview=".uploadCrop"
+            viewMode={1} // 定义cropper的视图模式
+            zoomable // 是否允许放大图像
+            // movable
+            guides={false} // 显示在裁剪框上方的虚线
+            background={false} // 是否显示背景的马赛克
+            rotatable={false} // 是否旋转
+            autoCropArea={1} // 默认值0.8（图片的80%）。--0-1之间的数值，定义自动剪裁区域的大小
+            style={{ width: 'auto', height: '100%' }}
+            aspectRatio={aspectRatio} // 固定为1:1  可以自己设置比例, 默认情况为自由比例
+            cropBoxResizable // 默认true ,是否允许拖动 改变裁剪框大小
+            cropBoxMovable // 是否可以拖拽裁剪框 默认true
+            dragMode="move" // 拖动模式, 默认crop当鼠标 点击一处时根据这个点重新生成一个 裁剪框，move可以拖动图片，none:图片不能拖动
+            center
+          />
+        </Modal>
+      )}
       <Upload
         name="file"
-        action={UPLOADURL}
         headers={{ Authorization: `Bearer ${localStorage.getItem('token')}` }}
-        listType="picture-card"
+        listType={listType!}
         showUploadList={false}
         beforeUpload={beforeUpload}
-        // onChange={onUploadFile}
+        customRequest={() => {}} // 覆盖upload action默认的上传行为，改为自定义上传
       >
-        {!filePath && <PlusOutlined />}
+        {uploadNode || (!filePath && <PlusOutlined />)}
       </Upload>
-      {filePath && (
+      {!uploadNode && filePath && (
         <div className={classname(uploadWrapStyle, styles.uploadImgWrap)}>
           <div className={classname(markStyle, styles.mark)}>
-            <MIcons
-              name="icon-browse"
-              className={classname(styles.iconWrap, styles.iconLeft)}
-              onClick={onPreview}
-            />
+            {needPreview && (
+              <MIcons
+                name="icon-browse"
+                className={classname(styles.iconWrap, styles.iconLeft)}
+                onClick={onPreview}
+              />
+            )}
             <MIcons
               name="icon-shanchu"
               className={styles.iconWrap}
@@ -182,16 +183,18 @@ const UploadFile: React.FC<IProps> = ({
           <img className={imgStyle} src={filePath} alt="" />
         </div>
       )}
-      <Modal
-        visible={previewVisible}
-        centered
-        closable={false}
-        width={600}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <img alt="" style={{ width: '100%' }} src={filePath} />
-      </Modal>
+      {needPreview && (
+        <Modal
+          visible={previewVisible}
+          centered
+          closable={false}
+          width={600}
+          footer={null}
+          onCancel={handleCancel}
+        >
+          <img alt="" style={{ width: '100%' }} src={filePath} />
+        </Modal>
+      )}
     </div>
   );
 };

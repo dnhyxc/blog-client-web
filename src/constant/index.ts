@@ -1,4 +1,7 @@
 import * as API from '@/service/api';
+import ABOUTME from '@/assets/images/about_me.jpg';
+
+export { ABOUTME };
 
 // 每页数量
 export const PAGESIZE = 20;
