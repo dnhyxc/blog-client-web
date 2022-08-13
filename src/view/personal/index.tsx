@@ -13,7 +13,6 @@ import Image from '@/components/Image';
 import Card from '@/components/Card';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/Alert';
-import ABOUTME from '@/assets/images/about_me.jpg';
 import Header from '@/components/Header';
 import * as Service from '@/service';
 import useStore from '@/store';
@@ -24,6 +23,7 @@ import {
   PAGESIZE,
   ICONLINKS,
   ABOUT_ME_API_PATH,
+  ABOUTME,
 } from '@/constant';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import { ArticleListResult, ArticleItem, UserInfoParams } from '@/typings/common';

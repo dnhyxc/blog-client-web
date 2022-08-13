@@ -1,5 +1,5 @@
 import React from 'react';
-import ABOUTME from '@/assets/images/about_me.jpg';
+import { ABOUTME } from '@/constant';
 import styles from './index.less';
 
 interface IProps {

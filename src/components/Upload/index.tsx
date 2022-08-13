@@ -5,11 +5,11 @@ import { UploadListType } from 'antd/lib/upload/interface';
 import Cropper from 'react-cropper';
 import { PlusOutlined } from '@ant-design/icons';
 import classname from 'classname';
-import type { RcFile, UploadProps } from 'antd/es/upload';
+import type { RcFile } from 'antd/es/upload';
 import MIcons from '@/components/Icons';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils';
-import { FILETYPE, UPLOADURL } from '@/constant';
+import { FILETYPE } from '@/constant';
 import styles from './index.less';
 
 interface IProps {

@@ -39,7 +39,6 @@ const ReleaseModel: React.FC<IProps> = ({
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
 
   useEffect(() => {
-    console.log(initialValue, 'initValue');
     if (initialValue?.coverImage) {
       setFilePath(initialValue?.coverImage);
     }

@@ -1,5 +1,5 @@
 import React from 'react';
-import ABOUTME from '@/assets/images/about_me.jpg';
+import { ABOUTME } from '@/constant';
 import { Button } from 'antd';
 import Image from '@/components/Image';
 import styles from './index.less';

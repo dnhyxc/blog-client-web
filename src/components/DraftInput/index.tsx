@@ -6,7 +6,7 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import Image from '@/components/Image';
-import ABOUTME from '@/assets/images/about_me.jpg';
+import { ABOUTME } from '@/constant';
 import { CommentParams, ReplayCommentResult } from '@/typings/common';
 import styles from './index.less';
 
