@@ -162,6 +162,12 @@ export default function request(_url: string, options?: any): FetchResult {
                 code: err.response.status,
               };
             }
+            if (err.response.status === 406) {
+              return {
+                err: new Error(data.message || '系统异常'),
+                code: err.response.status,
+              };
+            }
             if (err.response.status === 200) {
               return null;
             }

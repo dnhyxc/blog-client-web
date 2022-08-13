@@ -7,7 +7,7 @@
  */
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Button, Tabs } from 'antd';
+import { Button, message, Tabs } from 'antd';
 import Content from '@/components/Content';
 import Image from '@/components/Image';
 import Card from '@/components/Card';
@@ -16,6 +16,7 @@ import MAlert from '@/components/Alert';
 import Header from '@/components/Header';
 import * as Service from '@/service';
 import useStore from '@/store';
+import { decrypt } from '@/utils';
 import { normalizeResult } from '@/utils/tools';
 import {
   ABOUT_ME_TABS,
@@ -103,6 +104,11 @@ const Personal = () => {
     );
     if (res.success) {
       setPersonalInfo(res.data);
+      return;
+    }
+    if (res.code === 406) {
+      message.error(res.message);
+      navigate('home');
     }
   };
 
@@ -169,13 +175,16 @@ const Personal = () => {
           <div className={styles.wrap}>
             <div className={styles.userInfo}>
               <Image
-                url={(authorId ? personalInfo.headUrl : getUserInfo?.headUrl) || HEAD_UEL}
+                url={(authorId ? personalInfo?.headUrl : getUserInfo?.headUrl) || HEAD_UEL}
                 className={styles.image}
               />
               <div className={styles.user}>
-                <div className={styles.userName}>dnhyxc</div>
-                <div>职位: 前端工程师</div>
-                <div>行到水穷处，坐看云起时</div>
+                <div className={styles.userName}>
+                  {(personalInfo?.username && decrypt(personalInfo?.username)) ||
+                    getUserInfo?.username}
+                </div>
+                <div>{personalInfo?.job || getUserInfo?.job}</div>
+                <div>{personalInfo?.motto || getUserInfo?.motto}</div>
               </div>
               <div className={styles.actions}>
                 <div className={styles.icons}>

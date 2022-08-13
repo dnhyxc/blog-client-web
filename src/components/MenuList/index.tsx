@@ -6,7 +6,7 @@
  * @FilePath: \src\components\MenuList\index.tsx
  */
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { Menu, Layout } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
@@ -26,6 +26,8 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
   const [selectMenu, setSelectMenu] = useState<string>('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [search] = useSearchParams();
+  const id = search.get('id');
   const {
     userInfoStore: {
       getUserInfo: { userId },
@@ -36,6 +38,9 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
     const sliceName = pathname !== '/' ? pathname.slice(1) : pathname;
     // type 有值说明是setting
     if (type) {
+      if (sliceName === 'setting') {
+        navigate('/setting/profile');
+      }
       if (sliceName.includes('setting/')) {
         const path = sliceName.replace('setting/', '');
         setSelectMenu(path);
@@ -64,10 +69,10 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
   useEffect(() => {
     if (
       !userId &&
-      (pathname === '/personal' ||
-        pathname === '/create' ||
+      (pathname === '/create' ||
         pathname.includes('setting') ||
-        pathname === '/timeline')
+        pathname === '/timeline' ||
+        ((!id || id.length !== 24) && pathname === '/personal'))
     ) {
       navigate('home');
     }
