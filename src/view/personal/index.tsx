@@ -23,7 +23,7 @@ import {
   PAGESIZE,
   ICONLINKS,
   ABOUT_ME_API_PATH,
-  ABOUTME,
+  HEAD_UEL,
 } from '@/constant';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import { ArticleListResult, ArticleItem, UserInfoParams } from '@/typings/common';
@@ -169,7 +169,7 @@ const Personal = () => {
           <div className={styles.wrap}>
             <div className={styles.userInfo}>
               <Image
-                url={(authorId ? personalInfo.headUrl : getUserInfo?.headUrl) || ABOUTME}
+                url={(authorId ? personalInfo.headUrl : getUserInfo?.headUrl) || HEAD_UEL}
                 className={styles.image}
               />
               <div className={styles.user}>

@@ -4,7 +4,7 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
 import { formatDate } from '@/utils';
 import useStore from '@/store';
-import IMAGE from '@/assets/images/about_me.jpg';
+import { CARD_URL } from '@/constant';
 import MIcons from '@/components/Icons';
 import { ArticleItemResult } from '@/typings/common';
 import styles from './index.less';
@@ -93,7 +93,7 @@ const Card: React.FC<IProps> = ({
           >
             <div
               className={classname(styles.imgWrap, imgWrapClass)}
-              style={i.coverImage ? bgcStyle(i.coverImage) : bgcStyle(IMAGE)}
+              style={i.coverImage ? bgcStyle(i.coverImage) : bgcStyle(CARD_URL)}
             >
               <div className={styles.text}>{i.title}</div>
             </div>

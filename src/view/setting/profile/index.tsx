@@ -7,26 +7,31 @@ import { normalizeResult, encrypt } from '@/utils';
 import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
-import { ABOUTME } from '@/constant';
+import { MAIN_URL, HEAD_UEL } from '@/constant';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const { TextArea } = Input;
 
 const Profile: React.FC<IProps> = () => {
-  const [filePath, setFilePath] = useState<string>();
-  const [mainCoverPath, setMainCoverPath] = useState<string>(ABOUTME);
+  const [filePath, setFilePath] = useState<string>(HEAD_UEL);
+  const [mainCoverPath, setMainCoverPath] = useState<string>(MAIN_URL);
 
   const [form] = Form.useForm();
   const { userInfoStore } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
+  const { getUserInfo: { headUrl, mainCover, username, userId, job, motto, introduce } } = userInfoStore;
 
   useEffect(() => {
-    setFilePath(userInfoStore?.getUserInfo?.headUrl);
-    setMainCoverPath(userInfoStore?.getUserInfo?.mainCover);
-  }, []);
+    if (mainCover) {
+      setMainCoverPath(mainCover);
+    }
+    if (headUrl) {
+      setFilePath(headUrl);
+    }
+  }, [mainCover, headUrl]);
 
   // 修改用户信息
   const onUpdateUserInfo = async () => {
@@ -40,7 +45,7 @@ const Profile: React.FC<IProps> = () => {
         ...info,
         headUrl: filePath,
         mainCover: mainCoverPath,
-        userId: userInfoStore?.getUserInfo?.userId,
+        userId,
       })
     );
     if (res.success) {
@@ -106,7 +111,7 @@ const Profile: React.FC<IProps> = () => {
               <Form.Item
                 label="用户名"
                 name="username"
-                initialValue={userInfoStore?.getUserInfo?.username}
+                initialValue={username}
                 rules={[{ required: true, message: '请先输入用户名' }]}
               >
                 <Input placeholder="请输入用户名" maxLength={50} />
@@ -114,7 +119,7 @@ const Profile: React.FC<IProps> = () => {
               <Form.Item
                 label="职位"
                 name="job"
-                initialValue={userInfoStore?.getUserInfo?.job}
+                initialValue={job}
                 rules={[{ required: true, message: '请先输入职位' }]}
               >
                 <Input placeholder="请输入职位" maxLength={50} />
@@ -122,7 +127,7 @@ const Profile: React.FC<IProps> = () => {
               <Form.Item
                 label="座右铭"
                 name="motto"
-                initialValue={userInfoStore?.getUserInfo?.motto}
+                initialValue={motto}
                 rules={[{ required: true, message: '请先输入座右铭' }]}
               >
                 <Input placeholder="请输入座右铭" maxLength={50} />
@@ -130,7 +135,7 @@ const Profile: React.FC<IProps> = () => {
               <Form.Item
                 label="个人介绍"
                 name="introduce"
-                initialValue={userInfoStore?.getUserInfo?.introduce}
+                initialValue={introduce}
                 rules={[{ required: true, message: '请先输入个人介绍' }]}
               >
                 <TextArea

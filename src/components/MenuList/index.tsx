@@ -11,7 +11,7 @@ import { Menu, Layout } from 'antd';
 import classname from 'classname';
 import Image from '@/components/Image';
 import { menuList, settingList } from '@/router/menu';
-import ICON from '@/assets/images/about_me.jpg';
+import { CARD_URL } from '@/constant';
 import styles from './index.less';
 
 const { Sider } = Layout;
@@ -69,7 +69,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
     >
       {!type && (
         <div className={styles.logo}>
-          <Image url={ICON} className={styles.icon} />
+          <Image url={CARD_URL} className={styles.icon} />
           <span>DNHYXC</span>
         </div>
       )}

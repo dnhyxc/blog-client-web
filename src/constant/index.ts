@@ -1,7 +1,10 @@
 import * as API from '@/service/api';
 import ABOUTME from '@/assets/images/about_me.jpg';
+import HEAD_UEL from '@/assets/images/header.jpg';
+import MAIN_URL from '@/assets/images/main.jpg';
+import CARD_URL from '@/assets/images/card.jpg';
 
-export { ABOUTME };
+export { ABOUTME, HEAD_UEL, MAIN_URL, CARD_URL };
 
 // 每页数量
 export const PAGESIZE = 20;

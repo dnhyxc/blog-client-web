@@ -1,5 +1,5 @@
 import React from 'react';
-import { ABOUTME } from '@/constant';
+import { HEAD_UEL } from '@/constant';
 import { Button } from 'antd';
 import Image from '@/components/Image';
 import styles from './index.less';
@@ -48,7 +48,7 @@ const Introduction: React.FC<IProps> = () => {
   return (
     <div className={styles.introductionWrap}>
       <div className={styles.card}>
-        <Image url={ABOUTME} className={styles.image} />
+        <Image url={HEAD_UEL} className={styles.image} />
       </div>
       <div className={styles.nameInfo}>
         <div className={styles.name}>dnhyxc</div>
