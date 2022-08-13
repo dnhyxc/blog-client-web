@@ -33,8 +33,6 @@ const Profile: React.FC<IProps> = () => {
     }
   }, [mainCover, headUrl]);
 
-  console.log(mainCoverPath, 'mainCoverPath', userInfoStore.getUserInfo);
-
   // 修改用户信息
   const onUpdateUserInfo = async () => {
     const values = await form.validateFields();
