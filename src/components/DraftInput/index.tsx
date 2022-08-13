@@ -6,7 +6,7 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import Image from '@/components/Image';
-import { ABOUTME } from '@/constant';
+import { HEAD_UEL } from '@/constant';
 import { CommentParams, ReplayCommentResult } from '@/typings/common';
 import styles from './index.less';
 
@@ -154,7 +154,7 @@ const DraftInput: React.FC<IProps> = ({
         {showAvatar && (
           <div className={styles.avatar} id="AVATAR">
             <Image
-              url={getUserInfo?.headUrl || ABOUTME}
+              url={getUserInfo?.headUrl || HEAD_UEL}
               className={styles.image}
               id="IMAGE"
             />

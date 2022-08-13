@@ -1,5 +1,5 @@
 import React from 'react';
-import { ABOUTME } from '@/constant';
+import { HEAD_UEL } from '@/constant';
 import styles from './index.less';
 
 interface IProps {
@@ -11,7 +11,7 @@ const AboutMe: React.FC<IProps> = () => {
     <div className={styles.about_me}>
       <div className={styles.title}>个人名片</div>
       <div className={styles.card}>
-        <img className={styles.image} src={ABOUTME} alt="我的主页" />
+        <img className={styles.image} src={HEAD_UEL} alt="我的主页" />
       </div>
       <div>
         name：
