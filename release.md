@@ -131,3 +131,19 @@ http {
 ```
 
 上述设置设置完成之后， 在 nginx 下的 sbin 目录下执行 `./nginx -s reload` 重启 nginx 服务即可。
+
+### 部署前端项目
+
+进入 `/usr/local/nginx/html`，之后将打包好的前端资源包 dist.zip 使用 `rz` 命令上传到 html 文件夹中，接着使用 `unzip dist.zip` 将 dist.zip 解压即可。
+
+### 部署后端项目
+
+进入 `/usr/local/server` 文件夹下，使用 `rz` 命令将压缩好的后端资源上传到 server 文件夹中，接着使用 `unzip dist.zip` 将 dist.zip 解压。解压完成之后，在 server 文件目录下执行 `yarn` 下载项目依赖。
+
+### 重启服务
+
+使用 `pm2 list` 查看项目是否在启动状态，如果在启动状态的化，使用 `pm2 delete 项目启动id` 关闭原本启动的项目。接着使用 `pm2 ./src/main.js` 重新启动项目。
+
+### 重启 nginx
+
+前端资源部署完成之后，需要重启 nginx 使部署的资源生效。进入 `/usr/local/nginx/sbin` 目录下，执行 `./nginx -s reload` 即可重启项目。此时即可去浏览器中查看资源是否生效了。
