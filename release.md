@@ -147,3 +147,17 @@ http {
 ### 重启 nginx
 
 前端资源部署完成之后，需要重启 nginx 使部署的资源生效。进入 `/usr/local/nginx/sbin` 目录下，执行 `./nginx -s reload` 即可重启项目。此时即可去浏览器中查看资源是否生效了。
+
+### 复制 upload 资源
+
+将 upload 资源复制到 server 中：
+
+```
+cp -r /usr/local/server/src/upload /usr/local/server/
+```
+
+将 upload 资源从 server 复制到 src 中：
+
+```
+cp -r /usr/local/server/upload /usr/local/server/src/
+```
