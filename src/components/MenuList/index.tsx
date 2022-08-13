@@ -5,10 +5,11 @@
  * @LastEditors: dnh
  * @FilePath: \src\components\MenuList\index.tsx
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, Layout } from 'antd';
 import classname from 'classname';
+import useStore from '@/store';
 import Image from '@/components/Image';
 import { menuList, settingList } from '@/router/menu';
 import { CARD_URL } from '@/constant';
@@ -18,13 +19,18 @@ const { Sider } = Layout;
 
 interface IProps {
   type?: string; // type 有值说明是setting
-  width?: number
+  width?: number;
 }
 
 const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
   const [selectMenu, setSelectMenu] = useState<string>('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const {
+    userInfoStore: {
+      getUserInfo: { userId },
+    },
+  } = useStore();
 
   useEffect(() => {
     const sliceName = pathname !== '/' ? pathname.slice(1) : pathname;
@@ -54,6 +60,13 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
     };
   }, [pathname, type]);
 
+  const filterMenus = useMemo(() => {
+    if (userId) {
+      return menuList;
+    }
+    return menuList.filter((i) => i.key !== 'personal');
+  }, []);
+
   const onSelectMenu = (value: { key: string }) => {
     setSelectMenu(value.key);
     navigate(value.key);
@@ -77,7 +90,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
         mode="inline"
         defaultSelectedKeys={type ? ['home'] : ['profile']}
         selectedKeys={[selectMenu]}
-        items={type ? settingList : menuList}
+        items={type ? settingList : filterMenus}
         onClick={(e) => onSelectMenu(e)}
       />
     </Sider>

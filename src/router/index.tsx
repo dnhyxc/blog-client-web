@@ -15,11 +15,7 @@ const RouterConfig = () => {
   return useRoutes(routeConfig);
 };
 
-interface IProps {
-  children?: any;
-}
-
-const App: React.FC<IProps> = () => {
+const App: React.FC = () => {
   return (
     <ConfigProvider locale={zhCN}>
       <BrowserRouter>
