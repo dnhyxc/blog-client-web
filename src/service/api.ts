@@ -9,6 +9,8 @@ const LOGIN = '/api/login';
 const UPDATE_INFO = '/api/updateInfo';
 // 获取用户信息
 const GET_USER_INFO = '/api/getUserInfo';
+// 更改密码
+const UPDATE_PASSWORD = '/api/updatePassword';
 
 // 创建文章
 const CREATE_ARTICLE = '/api/createArticle';
@@ -68,5 +70,6 @@ export {
   GET_TIMELINE_LIST,
   GET_MY_ARTICLE_LIST,
   GET_LIKE_ARTICLE_LIST,
-  GET_USER_INFO
+  GET_USER_INFO,
+  UPDATE_PASSWORD,
 };

@@ -16,6 +16,45 @@ interface NumberKey {
   [key: number]: any;
 }
 
+// 账号设置配置
+export const SET_ITEM_CONFIG = [
+  {
+    name: '个人掘金',
+    label: 'juejin',
+    action: '设置',
+  },
+  {
+    name: '个人知乎',
+    label: 'zhihu',
+    action: '设置',
+  },
+  {
+    name: 'github',
+    label: 'github',
+    action: '设置',
+  },
+  {
+    name: '个人网站',
+    label: 'blog',
+    action: '设置',
+  },
+  {
+    name: '密码',
+    label: 'password',
+    action: '重置',
+  },
+  {
+    name: '账号注销',
+    label: 'account',
+    action: '注销',
+  },
+  {
+    name: '设置管理员权限',
+    label: 'auth',
+    action: '设置',
+  },
+];
+
 export const enum LOGIN_STATUS {
   WAITING,
   LOGGED,
@@ -48,25 +87,34 @@ export const ABOUT_ME_API_PATH = {
   2: API.GET_LIKE_ARTICLE_LIST,
 };
 
+export const UPDATE_INFO_API_PATH = {
+  1: API.UPDATE_INFO,
+  2: API.UPDATE_PASSWORD,
+};
+
 export const ICONLINKS = [
   {
     name: 'icon-juejin',
     className: 'juejin',
+    label: 'juejin',
     title: '掘金',
   },
   {
     name: 'icon-github-fill',
     className: 'adsIcon',
+    label: 'github',
     title: 'github',
   },
   {
     name: 'icon-zhihu-circle-fill',
     className: 'adsIcon',
+    label: 'zhihu',
     title: '知乎',
   },
   {
     name: 'icon-wangzhi',
     className: 'wangzhiIcon',
+    label: 'blog',
     title: '其它',
   },
 ];

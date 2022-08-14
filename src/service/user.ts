@@ -12,8 +12,14 @@ export async function login(params: LoginParams) {
   return res;
 }
 
-export async function updateInfo(params: UserInfoParams) {
-  const res = await put(API.UPDATE_INFO, params);
+export async function updateInfo(params: UserInfoParams, path: string) {
+  const res = await put(path, params);
+  // const res = await put(API.UPDATE_INFO, params);
+  return res;
+}
+
+export async function updatePassword(params: UserInfoParams) {
+  const res = await put(API.UPDATE_PASSWORD, params);
   return res;
 }
 

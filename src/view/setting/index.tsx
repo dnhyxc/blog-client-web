@@ -7,7 +7,7 @@ import styles from './index.less';
 
 const { Content } = Layout;
 
-interface IProps { }
+interface IProps {}
 
 const Setting: React.FC<IProps> = () => {
   return (

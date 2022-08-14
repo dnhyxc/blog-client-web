@@ -7,22 +7,22 @@ import { normalizeResult, encrypt } from '@/utils';
 import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
-import { MAIN_URL, HEAD_UEL } from '@/constant';
+import { MAIN_URL, HEAD_UEL, UPDATE_INFO_API_PATH } from '@/constant';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
-
 const { TextArea } = Input;
 
-const Profile: React.FC<IProps> = () => {
+const Profile: React.FC = () => {
   const [filePath, setFilePath] = useState<string>(HEAD_UEL);
   const [mainCoverPath, setMainCoverPath] = useState<string>(MAIN_URL);
 
   const [form] = Form.useForm();
   const { userInfoStore } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
-  const { getUserInfo: { headUrl, mainCover, username, userId, job, motto, introduce } } = userInfoStore;
+  const {
+    getUserInfo: { headUrl, mainCover, username, userId, job, motto, introduce },
+  } = userInfoStore;
 
   useEffect(() => {
     if (mainCover) {
@@ -41,12 +41,15 @@ const Profile: React.FC<IProps> = () => {
       username: encrypt(values.username),
     };
     const res = normalizeResult<LoginData>(
-      await Service.updateInfo({
-        ...info,
-        headUrl: filePath,
-        mainCover: mainCoverPath,
-        userId,
-      })
+      await Service.updateInfo(
+        {
+          ...info,
+          headUrl: filePath,
+          mainCover: mainCoverPath,
+          userId,
+        },
+        UPDATE_INFO_API_PATH[1]
+      )
     );
     if (res.success) {
       userInfoStore.setUserInfo({

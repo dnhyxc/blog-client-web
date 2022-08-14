@@ -189,13 +189,20 @@ const Personal = () => {
               <div className={styles.actions}>
                 <div className={styles.icons}>
                   {ICONLINKS.map((i) => (
-                    <MIcons
+                    <a
+                      href={getUserInfo?.[i.label]}
+                      target="_blank"
+                      rel="noreferrer"
                       key={i.name}
-                      name={i.name}
-                      className={styles[i.className]}
-                      iconWrapClass={styles.iconWrap}
-                      title={i.title}
-                    />
+                      className={styles.link}
+                    >
+                      <MIcons
+                        name={i.name}
+                        className={styles[i.className]}
+                        iconWrapClass={styles.iconWrap}
+                        title={i.title}
+                      />
+                    </a>
                   ))}
                 </div>
                 {(authorId === getUserInfo.userId || !authorId) && (
