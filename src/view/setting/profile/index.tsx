@@ -67,6 +67,7 @@ const Profile: React.FC = () => {
       <Content
         containerClassName={styles.containerClassName}
         wrapClassName={styles.wrapClassName}
+        className={styles.scrollWrap}
       >
         <div className={styles.header} style={{ backgroundImage: `url(${mainCoverPath})` }}>
           <div className={styles.title}>
@@ -99,7 +100,7 @@ const Profile: React.FC = () => {
               markStyle={styles.markStyle}
               uploadWrapStyle={styles.uploadWrapStyle}
             />
-            <div className={styles.username}>DNHYXC</div>
+            <div className={styles.username}>{username}</div>
           </div>
         </div>
         <div className={styles.content}>

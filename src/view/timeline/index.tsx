@@ -7,6 +7,7 @@ import RightBar from '@/components/RightBar';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import MAlert from '@/components/Alert';
+import Empty from '@/components/Empty';
 import { useLoginStatus, useLikeArticle } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -64,36 +65,42 @@ const TimeLine: React.FC<IProps> = () => {
       <Header needMenu>时间轴</Header>
       <Content className={styles.contentWrap}>
         <div className={styles.wrap}>
-          <Timeline className={styles.timelineContent}>
-            {timelineList.map((i) => {
-              return (
-                <Timeline.Item
-                  className={styles.timelineItem}
-                  key={i.date}
-                  color="green"
-                  dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />}
-                >
-                  <div className={styles.cardList}>
-                    <div className={styles.date}>{i.date}</div>
-                    {i.articles && i.articles.length > 0 && (
-                      <Card
-                        list={i.articles}
-                        wrapClass={styles.wrapClass}
-                        itemClass={styles.itemClass}
-                        imgWrapClass={styles.imgWrapClass}
-                        descClass={styles.descClass}
-                        imgBgcSize="100% 100px"
-                        toDetail={toDetail}
-                        skeletonRows={2}
-                        skeletonAvatar={styles.skeletonAvatar}
-                        likeArticle={likeArticle}
-                      />
-                    )}
-                  </div>
-                </Timeline.Item>
-              );
-            })}
-          </Timeline>
+          {timelineList.length > 0 ? (
+            <Timeline className={styles.timelineContent}>
+              {timelineList.map((i) => {
+                return (
+                  <Timeline.Item
+                    className={styles.timelineItem}
+                    key={i.date}
+                    color="green"
+                    dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />}
+                  >
+                    <div className={styles.cardList}>
+                      <div className={styles.date}>{i.date}</div>
+                      {i.articles && i.articles.length > 0 && (
+                        <Card
+                          list={i.articles}
+                          wrapClass={styles.wrapClass}
+                          itemClass={styles.itemClass}
+                          imgWrapClass={styles.imgWrapClass}
+                          descClass={styles.descClass}
+                          imgBgcSize="100% 100px"
+                          toDetail={toDetail}
+                          skeletonRows={2}
+                          skeletonAvatar={styles.skeletonAvatar}
+                          likeArticle={likeArticle}
+                        />
+                      )}
+                    </div>
+                  </Timeline.Item>
+                );
+              })}
+            </Timeline>
+          ) : (
+            <div className={styles.emptyWrap}>
+              <Empty />
+            </div>
+          )}
           <RightBar className={styles.rightbar} />
         </div>
       </Content>

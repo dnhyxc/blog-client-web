@@ -3,8 +3,9 @@ import ABOUTME from '@/assets/images/about_me.jpg';
 import HEAD_UEL from '@/assets/images/header.jpg';
 import MAIN_URL from '@/assets/images/main.jpg';
 import CARD_URL from '@/assets/images/card.jpg';
+import EMPTY_URL from '@/assets/images/empty.jpg';
 
-export { ABOUTME, HEAD_UEL, MAIN_URL, CARD_URL };
+export { ABOUTME, HEAD_UEL, MAIN_URL, CARD_URL, EMPTY_URL };
 
 // 每页数量
 export const PAGESIZE = 20;

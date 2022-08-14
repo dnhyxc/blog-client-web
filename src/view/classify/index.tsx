@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { message, Segmented, Affix } from 'antd';
+import { message, Segmented } from 'antd';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import RightBar from '@/components/RightBar';
 import Card from '@/components/Card';
 import MAlert from '@/components/Alert';
+import Empty from '@/components/Empty';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -122,17 +123,23 @@ const Classify: React.FC<IProps> = () => {
           />
         </div>
         <div className={styles.content}>
-          <Card
-            list={classifyList.list}
-            toDetail={toDetail}
-            likeArticle={likeArticle}
-            deleteArticle={deleteArticle}
-            onEditArticle={onEditArticle}
-            showInfo={
-              classifyList.list.length > 0 &&
-              classifyList.list.length === classifyList.total
-            }
-          />
+          {classifyList.list.length > 0 ? (
+            <Card
+              list={classifyList.list}
+              toDetail={toDetail}
+              likeArticle={likeArticle}
+              deleteArticle={deleteArticle}
+              onEditArticle={onEditArticle}
+              showInfo={
+                classifyList.list.length > 0 &&
+                classifyList.list.length === classifyList.total
+              }
+            />
+          ) : (
+            <div className={styles.emptyWrap}>
+              <Empty />
+            </div>
+          )}
           <RightBar className={styles.rightbar} />
         </div>
       </Content>

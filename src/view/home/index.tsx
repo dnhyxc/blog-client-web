@@ -14,6 +14,7 @@ import RightBar from '@/components/RightBar';
 import Card from '@/components/Card';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/Alert';
+import Empty from '@/components/Empty';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -202,16 +203,23 @@ const Home: React.FC<IProps> = () => {
       {articleList && (
         <Content className={styles.contentWrap} onScroll={onScroll}>
           <div className={styles.content}>
-            <Card
-              list={articleList.list}
-              toDetail={toDetail}
-              deleteArticle={deleteArticle}
-              likeArticle={likeArticle}
-              onEditArticle={onEditArticle}
-              showInfo={
-                articleList.list.length > 0 && articleList.list.length === articleList.total
-              }
-            />
+            {articleList.list.length > 0 ? (
+              <Card
+                list={articleList.list}
+                toDetail={toDetail}
+                deleteArticle={deleteArticle}
+                likeArticle={likeArticle}
+                onEditArticle={onEditArticle}
+                showInfo={
+                  articleList.list.length > 0 &&
+                  articleList.list.length === articleList.total
+                }
+              />
+            ) : (
+              <div className={styles.emptyWrap}>
+                <Empty />
+              </div>
+            )}
             <RightBar className={styles.rightbar} />
           </div>
         </Content>

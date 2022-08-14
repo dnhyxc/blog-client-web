@@ -14,6 +14,7 @@ import Card from '@/components/Card';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/Alert';
 import Header from '@/components/Header';
+import Empty from '@/components/Empty';
 import * as Service from '@/service';
 import useStore from '@/store';
 import { decrypt } from '@/utils';
@@ -195,6 +196,11 @@ const Personal = () => {
                       rel="noreferrer"
                       key={i.name}
                       className={styles.link}
+                      style={
+                        getUserInfo?.[i.label]
+                          ? { display: 'inline-block' }
+                          : { display: 'none' }
+                      }
                     >
                       <MIcons
                         name={i.name}
@@ -217,18 +223,24 @@ const Personal = () => {
                 {getTabList().map((i) => {
                   return (
                     <TabPane tab={i.name} key={i.value}>
-                      <Card
-                        list={articleList.list}
-                        wrapClass={styles.wrapClass}
-                        toDetail={toDetail}
-                        deleteArticle={deleteArticle}
-                        likeArticle={likeArticle}
-                        onEditArticle={onEditArticle}
-                        showInfo={
-                          articleList.list.length > 0 &&
-                          articleList.list.length === articleList.total
-                        }
-                      />
+                      {articleList.list.length > 0 ? (
+                        <Card
+                          list={articleList.list}
+                          wrapClass={styles.wrapClass}
+                          toDetail={toDetail}
+                          deleteArticle={deleteArticle}
+                          likeArticle={likeArticle}
+                          onEditArticle={onEditArticle}
+                          showInfo={
+                            articleList.list.length > 0 &&
+                            articleList.list.length === articleList.total
+                          }
+                        />
+                      ) : (
+                        <div className={styles.emptyWrap}>
+                          <Empty />
+                        </div>
+                      )}
                     </TabPane>
                   );
                 })}

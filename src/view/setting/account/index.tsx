@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Input, message } from 'antd';
 import Content from '@/components/Content';
 import useStore from '@/store';
@@ -13,7 +14,8 @@ interface IProps {}
 const Account: React.FC<IProps> = () => {
   const [selectItem, setSelectItem] = useState<string>('');
 
-  const inputRef = useRef<any>();
+  const navigate = useNavigate();
+  const inputRef = useRef<any>(null);
   const { userInfoStore } = useStore();
   const { userId, zhihu, juejin, github, blog } = userInfoStore.getUserInfo;
 
@@ -49,6 +51,9 @@ const Account: React.FC<IProps> = () => {
         ...res.data,
       });
       message.success(res.message);
+      if (selectItem === 'password') {
+        navigate('/login');
+      }
     } else {
       message.error(res.message);
     }
