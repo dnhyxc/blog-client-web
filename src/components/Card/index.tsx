@@ -49,10 +49,7 @@ const Card: React.FC<IProps> = ({
   const bgcStyle = (bgc: string) => {
     return {
       backgroundImage: `url(${bgc})`,
-      backgroundPosition: 'center',
       backgroundSize: imgBgcSize,
-      backgroundRepeat: 'no-repeat',
-      transition: 'all 0.3s ease-in-out',
     };
   };
 
