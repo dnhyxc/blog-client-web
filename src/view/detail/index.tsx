@@ -111,7 +111,7 @@ const ArticleDetail: React.FC = () => {
                 </div>
               </Preview>
             ) : (
-              <div className={styles.preview}>
+              <div className={styles.previewSpin}>
                 <Spin className={styles.spin} />
               </div>
             )}
