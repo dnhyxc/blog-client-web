@@ -46,9 +46,18 @@
       max-width: 820px;
 
       .previewSpin {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         height: calc(100vh - 70px);
         width: 100%;
         background-color: #fff;
+
+        .loadText {
+          margin-top: 10px;
+          color: @menu-active;
+        }
       }
 
       .previewContent {
