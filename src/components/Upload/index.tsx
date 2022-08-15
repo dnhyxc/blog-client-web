@@ -7,6 +7,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import classname from 'classname';
 import type { RcFile } from 'antd/es/upload';
 import MIcons from '@/components/Icons';
+import MImage from '@/components/Image';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils';
 import { FILETYPE } from '@/constant';
@@ -24,6 +25,7 @@ interface IProps {
   setAlertStatus?: Function;
   aspectRatio?: number;
   uploadStyle?: string;
+  transitionImg?: string;
   uploadNode?: ReactNode;
   listType?: UploadListType;
 }
@@ -32,6 +34,7 @@ const UploadFile: React.FC<IProps> = ({
   formLabel,
   needPreview = true,
   filePath,
+  transitionImg,
   form,
   setFilePath,
   imgStyle,
@@ -180,10 +183,10 @@ const UploadFile: React.FC<IProps> = ({
               onClick={onDeleteFile}
             />
           </div>
-          <img className={imgStyle} src={filePath} alt="" />
+          <MImage url={filePath} transitionImg={transitionImg} className={imgStyle} />
         </div>
       )}
-      {needPreview && (
+      {needPreview && filePath && (
         <Modal
           visible={previewVisible}
           centered
@@ -192,7 +195,11 @@ const UploadFile: React.FC<IProps> = ({
           footer={null}
           onCancel={handleCancel}
         >
-          <img alt="" style={{ width: '100%' }} src={filePath} />
+          <MImage
+            url={filePath}
+            transitionImg={transitionImg}
+            className={styles.imgStyle}
+          />
         </Modal>
       )}
     </div>

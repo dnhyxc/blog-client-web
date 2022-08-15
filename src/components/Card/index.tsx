@@ -150,15 +150,18 @@ const Card: React.FC<IProps> = ({
       ) : (
         <div className={classname(styles.item, itemClass, styles.skeletonWrap)}>
           <Skeleton.Image className={classname(styles.skeletonAvatar, skeletonAvatar)} />
-          <Skeleton active paragraph={{ rows: skeletonRows }} />
+          <Skeleton active title paragraph={{ rows: skeletonRows }} />
         </div>
       )}
       {showInfo && (
         <div className={styles.noMore}>
-          共
-          {` (${list.length}) `}
-          篇，已是全部家当～～～
-        </div>)}
+          {list.length > 0
+            ? `共(${list.length})
+          篇，已是全部家当～～～`
+            : `共(${list.length})
+            篇，空空如也～～～`}
+        </div>
+      )}
     </div>
   );
 };

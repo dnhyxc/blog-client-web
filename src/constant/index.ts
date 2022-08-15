@@ -1,7 +1,7 @@
 import * as API from '@/service/api';
 import ABOUTME from '@/assets/images/about_me.jpg';
 import HEAD_UEL from '@/assets/images/header.jpg';
-import CARD_URL from '@/assets/images/card.jpg';
+import CARD_URL from '@/assets/images/card.png';
 import EMPTY_URL from '@/assets/images/empty.jpg';
 import MAIN_COVER from '@/assets/images/mainCover.png';
 

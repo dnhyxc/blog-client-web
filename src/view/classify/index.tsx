@@ -123,23 +123,14 @@ const Classify: React.FC<IProps> = () => {
           />
         </div>
         <div className={styles.content}>
-          {classifyList.list.length > 0 ? (
-            <Card
-              list={classifyList.list}
-              toDetail={toDetail}
-              likeArticle={likeArticle}
-              deleteArticle={deleteArticle}
-              onEditArticle={onEditArticle}
-              showInfo={
-                classifyList.list.length > 0 &&
-                classifyList.list.length === classifyList.total
-              }
-            />
-          ) : (
-            <div className={styles.emptyWrap}>
-              <Empty />
-            </div>
-          )}
+          <Card
+            list={classifyList.list}
+            toDetail={toDetail}
+            likeArticle={likeArticle}
+            deleteArticle={deleteArticle}
+            onEditArticle={onEditArticle}
+            showInfo={classifyList.list.length === classifyList.total}
+          />
           <RightBar className={styles.rightbar} />
         </div>
       </Content>

@@ -198,7 +198,7 @@ const ReleaseModel: React.FC<IProps> = ({
                 form={form}
                 imgStyle={styles.uploadImg}
                 setAlertStatus={setAlertStatus}
-                aspectRatio={198 / 110}
+                aspectRatio={780 / 443}
               />
             </Form.Item>
             <Form.Item

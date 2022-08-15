@@ -203,23 +203,14 @@ const Home: React.FC<IProps> = () => {
       {articleList && (
         <Content className={styles.contentWrap} onScroll={onScroll}>
           <div className={styles.content}>
-            {articleList.list.length > 0 ? (
-              <Card
-                list={articleList.list}
-                toDetail={toDetail}
-                deleteArticle={deleteArticle}
-                likeArticle={likeArticle}
-                onEditArticle={onEditArticle}
-                showInfo={
-                  articleList.list.length > 0 &&
-                  articleList.list.length === articleList.total
-                }
-              />
-            ) : (
-              <div className={styles.emptyWrap}>
-                <Empty />
-              </div>
-            )}
+            <Card
+              list={articleList.list}
+              toDetail={toDetail}
+              deleteArticle={deleteArticle}
+              likeArticle={likeArticle}
+              onEditArticle={onEditArticle}
+              showInfo={articleList.list.length === articleList.total}
+            />
             <RightBar className={styles.rightbar} />
           </div>
         </Content>

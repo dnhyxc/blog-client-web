@@ -224,24 +224,15 @@ const Personal = () => {
                 {getTabList().map((i) => {
                   return (
                     <TabPane tab={i.name} key={i.value}>
-                      {articleList.list.length > 0 ? (
-                        <Card
-                          list={articleList.list}
-                          wrapClass={styles.wrapClass}
-                          toDetail={toDetail}
-                          deleteArticle={deleteArticle}
-                          likeArticle={likeArticle}
-                          onEditArticle={onEditArticle}
-                          showInfo={
-                            articleList.list.length > 0 &&
-                            articleList.list.length === articleList.total
-                          }
-                        />
-                      ) : (
-                        <div className={styles.emptyWrap}>
-                          <Empty />
-                        </div>
-                      )}
+                      <Card
+                        list={articleList.list}
+                        wrapClass={styles.wrapClass}
+                        toDetail={toDetail}
+                        deleteArticle={deleteArticle}
+                        likeArticle={likeArticle}
+                        onEditArticle={onEditArticle}
+                        showInfo={articleList.list.length === articleList.total}
+                      />
                     </TabPane>
                   );
                 })}

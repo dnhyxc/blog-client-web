@@ -107,6 +107,7 @@ const Profile: React.FC = () => {
               imgStyle={styles.uploadImg}
               markStyle={styles.markStyle}
               uploadWrapStyle={styles.uploadWrapStyle}
+              transitionImg={HEAD_UEL}
             />
             <div className={styles.username}>{username}</div>
           </div>

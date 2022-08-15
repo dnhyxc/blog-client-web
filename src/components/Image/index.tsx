@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import classname from 'classname';
@@ -21,16 +21,26 @@ const Image: React.FC<IProps> = ({
   onClick,
   transitionImg,
 }) => {
+  const [loadUrl, setLoadUrl] = useState<string | undefined>('');
   const [loaded, setLoaded] = useState<boolean>(false);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 20 }} spin />;
 
-  const onLoad = (e: any) => {
-    setLoaded(true);
-  };
+  useEffect(() => {
+    loadImage();
+  }, [url]);
 
-  const onError = () => {
-    setLoaded(false);
+  const loadImage = () => {
+    const img = new window.Image();
+    if (img.complete) {
+      setLoaded(true);
+      setLoadUrl(transitionImg);
+    }
+    img.onload = () => {
+      setLoaded(true);
+      setLoadUrl(url);
+    };
+    img.src = url;
   };
 
   return (
@@ -38,11 +48,9 @@ const Image: React.FC<IProps> = ({
       {url ? (
         <img
           id={id}
-          src={loaded ? url : transitionImg}
+          src={loaded ? loadUrl : transitionImg}
           alt=""
           className={classname(styles.imageItem, className)}
-          onLoad={onLoad}
-          onError={onError}
         />
       ) : (
         <div className={classname(styles.loadingImg, className)}>
