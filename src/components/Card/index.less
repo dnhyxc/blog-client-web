@@ -17,9 +17,11 @@
     cursor: pointer;
 
     &:hover {
-      .imgWrap {
-        background-size: 250px 180px !important;
-        transition: all 0.3s ease-in-out;
+      .cardImgWrap {
+        .image {
+          transform: rotateX(180deg);
+          transition: all 0.5s ease-in-out;
+        }
       }
     }
 
@@ -29,14 +31,23 @@
       align-items: center;
       justify-content: center;
       width: 50%;
-      max-width: 200px;
+      max-width: 230px;
       height: 100%;
       margin-right: 20px;
       border-radius: 5px;
-      background-position: center;
-      background-size: 100% 150px;
-      background-repeat: no-repeat;
-      transition: all 0.3s ease-in-out;
+
+      .cardImgWrap {
+        position: absolute;
+        width: 230px;
+        height: 132px;
+
+        .image {
+          width: 100%;
+          min-height: 130px;
+          border-radius: 5px;
+          transition: all 0.5s ease-in-out;
+        }
+      }
 
       .text {
         position: relative;

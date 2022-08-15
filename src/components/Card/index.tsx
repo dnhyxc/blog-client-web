@@ -4,6 +4,7 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
 import { formatDate } from '@/utils';
 import useStore from '@/store';
+import Image from '@/components/Image';
 import { CARD_URL } from '@/constant';
 import MIcons from '@/components/Icons';
 import { ArticleItemResult } from '@/typings/common';
@@ -14,7 +15,9 @@ interface IProps {
   toDetail?: Function;
   wrapClass?: string;
   itemClass?: string;
+  imgWrapStyle?: string;
   imgWrapClass?: string;
+  cardImgWrapStyle?: string;
   imgBgcSize?: string;
   descClass?: string;
   skeletonRows?: number;
@@ -31,7 +34,9 @@ const Card: React.FC<IProps> = ({
   toDetail,
   wrapClass,
   itemClass,
+  imgWrapStyle,
   imgWrapClass,
+  cardImgWrapStyle,
   imgBgcSize = '100% 150px',
   descClass,
   skeletonRows = 3,
@@ -88,11 +93,15 @@ const Card: React.FC<IProps> = ({
             key={i.id}
             onClick={() => toDetail && toDetail(i.id)}
           >
-            <div
-              className={classname(styles.imgWrap, imgWrapClass)}
-              style={i.coverImage ? bgcStyle(i.coverImage) : bgcStyle(CARD_URL)}
-            >
+            <div className={classname(imgWrapStyle, styles.imgWrap)}>
               <div className={styles.text}>{i.title}</div>
+              <div className={classname(styles.cardImgWrap, cardImgWrapStyle)}>
+                <Image
+                  url={i.coverImage || CARD_URL}
+                  transitionImg={CARD_URL}
+                  className={classname(styles.image, imgWrapClass)}
+                />
+              </div>
             </div>
             <div className={styles.info}>
               <div className={styles.name}>{i.title}</div>

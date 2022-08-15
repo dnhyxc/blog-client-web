@@ -81,8 +81,10 @@ const TimeLine: React.FC<IProps> = () => {
                         <Card
                           list={i.articles}
                           wrapClass={styles.wrapClass}
+                          imgWrapStyle={styles.imgWrapStyle}
                           itemClass={styles.itemClass}
                           imgWrapClass={styles.imgWrapClass}
+                          cardImgWrapStyle={styles.cardImgWrapStyle}
                           descClass={styles.descClass}
                           imgBgcSize="100% 100px"
                           toDetail={toDetail}
