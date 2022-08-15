@@ -1,11 +1,11 @@
 import * as API from '@/service/api';
 import ABOUTME from '@/assets/images/about_me.jpg';
 import HEAD_UEL from '@/assets/images/header.jpg';
-import MAIN_URL from '@/assets/images/main.jpg';
 import CARD_URL from '@/assets/images/card.jpg';
 import EMPTY_URL from '@/assets/images/empty.jpg';
+import MAIN_COVER from '@/assets/images/mainCover.png';
 
-export { ABOUTME, HEAD_UEL, MAIN_URL, CARD_URL, EMPTY_URL };
+export { ABOUTME, HEAD_UEL, CARD_URL, EMPTY_URL, MAIN_COVER };
 
 // 每页数量
 export const PAGESIZE = 20;

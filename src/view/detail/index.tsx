@@ -12,6 +12,7 @@ import { ArrowUpOutlined } from '@ant-design/icons';
 import Preview from '@/components/Preview';
 import Header from '@/components/Header';
 import Image from '@/components/Image';
+import { HEAD_UEL, CARD_URL } from '@/constant';
 import RightBar from '@/components/RightBar';
 import Toc from '@/components/ArticleToc';
 import Comments from '@/components/Comments';
@@ -45,7 +46,8 @@ const ArticleDetail: React.FC = () => {
         <div className={styles.title}>{detail?.title}</div>
         <div className={styles.userInfo}>
           <Image
-            url={detail?.headUrl}
+            url={detail?.headUrl || HEAD_UEL}
+            transitionImg={HEAD_UEL}
             className={styles.herdImg}
             onClick={() => toSetting(detail?.authorId)}
           />
@@ -63,7 +65,13 @@ const ArticleDetail: React.FC = () => {
             </div>
           </div>
         </div>
-        {detail?.coverImage && <Image url={detail?.coverImage} className={styles.image} />}
+        {detail?.coverImage && (
+          <Image
+            url={detail?.coverImage || CARD_URL}
+            transitionImg={CARD_URL}
+            className={styles.image}
+          />
+        )}
         <p className={styles.desc}>{detail.abstract}</p>
       </div>
     );

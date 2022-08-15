@@ -48,16 +48,12 @@ const Introduction: React.FC<IProps> = () => {
   return (
     <div className={styles.introductionWrap}>
       <div className={styles.card}>
-        <Image url={HEAD_UEL} className={styles.image} />
+        <Image url={HEAD_UEL} transitionImg={HEAD_UEL} className={styles.image} />
       </div>
       <div className={styles.nameInfo}>
         <div className={styles.name}>dnhyxc</div>
         {/* contentEditable="true"设置当前元素可编辑。suppressContentEditableWarning解决react报错 */}
-        <div
-          suppressContentEditableWarning
-          contentEditable="true"
-          className={styles.desc}
-        >
+        <div suppressContentEditableWarning contentEditable="true" className={styles.desc}>
           行到水穷处，坐看云起时
         </div>
       </div>

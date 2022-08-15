@@ -102,7 +102,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
     >
       {!type && (
         <div className={styles.logo}>
-          <Image url={CARD_URL} className={styles.icon} />
+          <Image url={CARD_URL} transitionImg={CARD_URL} className={styles.icon} />
           <span>DNHYXC</span>
         </div>
       )}

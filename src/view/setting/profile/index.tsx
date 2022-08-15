@@ -7,7 +7,8 @@ import { normalizeResult, encrypt } from '@/utils';
 import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
-import { MAIN_URL, HEAD_UEL, UPDATE_INFO_API_PATH } from '@/constant';
+import Image from '@/components/Image';
+import { HEAD_UEL, UPDATE_INFO_API_PATH, MAIN_COVER } from '@/constant';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
@@ -15,7 +16,7 @@ const { TextArea } = Input;
 
 const Profile: React.FC = () => {
   const [filePath, setFilePath] = useState<string>(HEAD_UEL);
-  const [mainCoverPath, setMainCoverPath] = useState<string>(MAIN_URL);
+  const [mainCoverPath, setMainCoverPath] = useState<string>(MAIN_COVER);
 
   const [form] = Form.useForm();
   const { userInfoStore } = useStore();
@@ -69,9 +70,16 @@ const Profile: React.FC = () => {
         wrapClassName={styles.wrapClassName}
         className={styles.scrollWrap}
       >
-        <div className={styles.header} style={{ backgroundImage: `url(${mainCoverPath})` }}>
+        <div className={styles.header}>
           <div className={styles.title}>
             <span>个人资料</span>
+            <div className={styles.mainCover}>
+              <Image
+                url={mainCoverPath || MAIN_COVER}
+                transitionImg={MAIN_COVER}
+                className={styles.image}
+              />
+            </div>
             <UploadFile
               formLabel="mainCover"
               form={form}
@@ -79,7 +87,7 @@ const Profile: React.FC = () => {
               setFilePath={setMainCoverPath}
               setAlertStatus={setAlertStatus}
               uploadWrapStyle={styles.uploadWrapStyle}
-              aspectRatio={888 / 260}
+              aspectRatio={888 / 228}
               needPreview={false}
               uploadStyle={styles.uploadStyle}
               listType="text"

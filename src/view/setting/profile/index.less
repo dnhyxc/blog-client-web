@@ -25,13 +25,28 @@
     background-position: center;
     background-size: 100% auto;
     background-repeat: no-repeat;
-    height: 260px;
+    height: 265px;
 
     .title {
+      position: relative;
       display: flex;
       justify-content: space-between;
       padding: 10px 20px;
       margin-bottom: 130px;
+
+      .mainCover {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+
+        .image {
+          width: 100%;
+          height: auto;
+          max-height: 265px;
+          min-height: 265px;
+        }
+      }
 
       .changeCover {
         border: 1px solid rgba(225, 225, 225, 0.4);
@@ -53,10 +68,11 @@
     }
 
     .headerWrap {
+      position: absolute;
+      top: 75%;
+      left: 20px;
       display: flex;
       align-items: flex-end;
-      margin-left: 20px;
-      padding-top: 28px;
 
       .uploadWrapStyle {
         width: 130px;
@@ -82,7 +98,6 @@
 
       .username {
         margin-left: 30px;
-        padding-bottom: 25px;
       }
 
       .uploadWrap {
@@ -102,7 +117,7 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding-top: 95px;
+    margin-top: 82px;
     background-color: #fff;
 
     .formWrap {

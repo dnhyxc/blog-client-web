@@ -177,6 +177,7 @@ const Personal = () => {
             <div className={styles.userInfo}>
               <Image
                 url={(authorId ? personalInfo?.headUrl : getUserInfo?.headUrl) || HEAD_UEL}
+                transitionImg={HEAD_UEL}
                 className={styles.image}
               />
               <div className={styles.user}>

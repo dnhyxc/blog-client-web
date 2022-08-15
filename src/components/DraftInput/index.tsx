@@ -155,6 +155,7 @@ const DraftInput: React.FC<IProps> = ({
           <div className={styles.avatar} id="AVATAR">
             <Image
               url={getUserInfo?.headUrl || HEAD_UEL}
+              transitionImg={HEAD_UEL}
               className={styles.image}
               id="IMAGE"
             />
