@@ -131,7 +131,7 @@ const Classify: React.FC<IProps> = () => {
             onEditArticle={onEditArticle}
             showInfo={classifyList.list.length === classifyList.total}
           />
-          <RightBar className={styles.rightbar} />
+          <RightBar className={styles.rightbar} showRecommendArticle />
         </div>
       </Content>
     </div>

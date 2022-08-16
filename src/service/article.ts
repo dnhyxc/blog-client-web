@@ -99,3 +99,8 @@ export async function getTimelineList(params: {
   const res = await post(API.GET_TIMELINE_LIST, params);
   return res;
 }
+
+export async function getArticleByRandom(params: { userId?: string }) {
+  const res = await post(API.GET_ARTICLE_BY_RANDOM, params);
+  return res;
+}

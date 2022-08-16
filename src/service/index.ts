@@ -1,4 +1,3 @@
-import { register, login, updateInfo, getUserInfo, updatePassword } from './user';
 import {
   getArticleList,
   createArticle,
@@ -14,10 +13,11 @@ import {
   getClassifyList,
   getTagList,
   getTimelineList,
+  getArticleByRandom,
 } from './article';
 import { uploadFile } from './upload';
-
 import { getMyArticleList } from './userInfo';
+import { register, login, updateInfo, getUserInfo, updatePassword } from './user';
 
 export {
   register,
@@ -41,4 +41,5 @@ export {
   getMyArticleList,
   uploadFile,
   updatePassword,
+  getArticleByRandom,
 };

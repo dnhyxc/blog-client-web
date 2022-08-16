@@ -37,6 +37,7 @@ const Home: React.FC<IProps> = () => {
   const [keyword, setKeyword] = useState<string>('');
   const [isSearch, setIsSearch] = useState<boolean>(false);
 
+  const scrollRef = useRef<any>(null);
   const inputRef = useRef<any>(null);
   const listRef = useRef<ArticleItem[]>([]);
 
@@ -50,6 +51,9 @@ const Home: React.FC<IProps> = () => {
     loading,
     pageSize: PAGESIZE,
   });
+  const [container, setContainer] = useState<any>(null);
+
+  console.log(container, 'container');
 
   useEffect(() => {
     if (isSearch) {
@@ -210,7 +214,7 @@ const Home: React.FC<IProps> = () => {
               onEditArticle={onEditArticle}
               showInfo={articleList.list.length === articleList.total}
             />
-            <RightBar className={styles.rightbar} />
+            <RightBar className={styles.rightbar} showRecommendArticle />
           </div>
         </Content>
       )}

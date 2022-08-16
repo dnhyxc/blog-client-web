@@ -26,6 +26,8 @@ const DELETE_ARTICLE = '/api/deleteArticle';
 const LIKE_ARTICLE = '/api/likeArticle';
 // 文章搜索
 const SEARCH_ARTICLE = '/api/searchArticle';
+// 文章搜索
+const GET_ARTICLE_BY_RANDOM = '/api/getArticleByRandom';
 
 // 评论
 const COMMENTS = '/api/comments';
@@ -72,4 +74,5 @@ export {
   GET_LIKE_ARTICLE_LIST,
   GET_USER_INFO,
   UPDATE_PASSWORD,
+  GET_ARTICLE_BY_RANDOM,
 };

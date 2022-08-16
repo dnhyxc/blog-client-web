@@ -1,0 +1,50 @@
+@import '~@styles/common.less';
+
+.ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.NewArticles {
+  margin-top: 10px;
+  padding: 10px 10px;
+  background-color: #fff;
+  border-radius: 5px;
+
+  .header {
+    font-size: 18px;
+    margin-bottom: 10px;
+    padding: 0 6px;
+  }
+
+  .item {
+    margin-bottom: 5px;
+    border-radius: 5px;
+    padding: 3px 6px 4px 6px;
+
+    &:hover {
+      box-shadow: 0 0 10px @menu-hover;
+      cursor: pointer;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .title {
+      font-size: 16px;
+      word-wrap: break-word;
+      word-break: break-all;
+    }
+
+    .abstract {
+      color: @font-4;
+      .ellipsis();
+
+      .likeCount {
+        margin-right: 10px;
+      }
+    }
+  }
+}

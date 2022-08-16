@@ -116,7 +116,7 @@ const TagList: React.FC<IProps> = () => {
               articleList.list.length > 0 && articleList.list.length === articleList.total
             }
           />
-          <RightBar className={styles.rightbar} />
+          <RightBar className={styles.rightbar} showRecommendArticle />
         </div>
       </Content>
     </div>
