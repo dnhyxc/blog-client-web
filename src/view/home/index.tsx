@@ -14,7 +14,6 @@ import RightBar from '@/components/RightBar';
 import Card from '@/components/Card';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/Alert';
-import Empty from '@/components/Empty';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';

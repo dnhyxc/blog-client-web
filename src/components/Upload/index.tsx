@@ -183,7 +183,12 @@ const UploadFile: React.FC<IProps> = ({
               onClick={onDeleteFile}
             />
           </div>
-          <MImage url={filePath} transitionImg={transitionImg} className={imgStyle} />
+          <MImage
+            url={filePath}
+            transitionImg={transitionImg}
+            className={imgStyle}
+            imageWrapStyle={styles.imageWrapStyle}
+          />
         </div>
       )}
       {needPreview && filePath && (

@@ -86,7 +86,6 @@ const TimeLine: React.FC<IProps> = () => {
                           imgWrapClass={styles.imgWrapClass}
                           cardImgWrapStyle={styles.cardImgWrapStyle}
                           descClass={styles.descClass}
-                          imgBgcSize="100% 100px"
                           toDetail={toDetail}
                           skeletonRows={2}
                           skeletonAvatar={styles.skeletonAvatar}

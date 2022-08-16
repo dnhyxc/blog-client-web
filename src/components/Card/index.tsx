@@ -18,7 +18,6 @@ interface IProps {
   imgWrapStyle?: string;
   imgWrapClass?: string;
   cardImgWrapStyle?: string;
-  imgBgcSize?: string;
   descClass?: string;
   skeletonRows?: number;
   skeletonAvatar?: string;
@@ -37,7 +36,6 @@ const Card: React.FC<IProps> = ({
   imgWrapStyle,
   imgWrapClass,
   cardImgWrapStyle,
-  imgBgcSize = '100% 150px',
   descClass,
   skeletonRows = 3,
   skeletonAvatar,
@@ -50,13 +48,6 @@ const Card: React.FC<IProps> = ({
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-
-  const bgcStyle = (bgc: string) => {
-    return {
-      backgroundImage: `url(${bgc})`,
-      backgroundSize: imgBgcSize,
-    };
-  };
 
   const content = (item: ArticleItemResult) => {
     return (
@@ -100,6 +91,7 @@ const Card: React.FC<IProps> = ({
                   url={i.coverImage || CARD_URL}
                   transitionImg={CARD_URL}
                   className={classname(styles.image, imgWrapClass)}
+                  imageScaleStyle={styles.imageScaleStyle}
                 />
               </div>
             </div>

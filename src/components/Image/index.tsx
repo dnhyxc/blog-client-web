@@ -8,9 +8,11 @@ interface IProps {
   url: string;
   urls?: string[];
   className?: string;
+  imageWrapStyle?: string;
   id?: string;
   onClick?: Function;
   transitionImg?: string;
+  imageScaleStyle?: string;
 }
 
 const Image: React.FC<IProps> = ({
@@ -18,8 +20,10 @@ const Image: React.FC<IProps> = ({
   url,
   urls = [],
   className,
+  imageWrapStyle,
   onClick,
   transitionImg,
+  imageScaleStyle,
 }) => {
   const [loadUrl, setLoadUrl] = useState<string | undefined>('');
   const [loaded, setLoaded] = useState<boolean>(false);
@@ -44,13 +48,17 @@ const Image: React.FC<IProps> = ({
   };
 
   return (
-    <div className={styles.Image} id={id} onClick={() => onClick && onClick()}>
+    <div
+      className={classname(imageWrapStyle, styles.Image)}
+      id={id}
+      onClick={() => onClick && onClick()}
+    >
       {url ? (
         <img
           id={id}
           src={loaded ? loadUrl : transitionImg}
           alt=""
-          className={classname(styles.imageItem, className)}
+          className={classname(styles.imageItem, className, imageScaleStyle)}
         />
       ) : (
         <div className={classname(styles.loadingImg, className)}>
