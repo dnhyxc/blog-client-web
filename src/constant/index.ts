@@ -46,7 +46,7 @@ export const SET_ITEM_CONFIG = [
   },
   {
     name: '账号注销',
-    label: 'account',
+    label: 'logout',
     action: '注销',
   },
   {

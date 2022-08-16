@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, message } from 'antd';
+import { Button, Input, message, Modal } from 'antd';
 import Content from '@/components/Content';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -35,12 +35,12 @@ const Account: React.FC<IProps> = () => {
   }, [inputRef, selectItem]);
 
   // 修改用户信息
-  const onUpdateUserInfo = async (value: string) => {
+  const onUpdateUserInfo = async (value: string, selectKey?: string) => {
     if (!value) return;
     const res = normalizeResult<LoginData>(
       await Service.updateInfo(
         {
-          [selectItem]: selectItem === 'password' ? encrypt(value) : value,
+          [selectKey || selectItem]: selectItem === 'password' ? encrypt(value) : value,
           userId,
         },
         UPDATE_INFO_API_PATH[selectItem === 'password' ? 2 : 1]
@@ -59,8 +59,20 @@ const Account: React.FC<IProps> = () => {
     }
   };
 
+  const showSetAuthConfirm = (key: string) => {
+    Modal.confirm({
+      title: '确定设置为管理员权限吗？',
+      onOk: () => {
+        onUpdateUserInfo('1', key);
+      },
+    });
+  };
+
   const onSetVisible = (name: string) => {
     setSelectItem(name);
+    if (name === 'auth') {
+      showSetAuthConfirm('auth');
+    }
   };
 
   const onSearch = (value: string) => {
@@ -85,22 +97,26 @@ const Account: React.FC<IProps> = () => {
               return (
                 <div className={styles.setItem} key={i.label}>
                   <span className={styles.name}>{i.name}</span>
-                  {selectItem !== i.label && (
+                  {(selectItem !== i.label ||
+                    selectItem === 'auth' ||
+                    selectItem === 'logout') && (
                     <Button type="link" onClick={() => onSetVisible(i.label)}>
                       {i.action}
                     </Button>
                   )}
-                  {selectItem === i.label && (
-                    <Input.Search
-                      ref={inputRef}
-                      placeholder={`请输入${i.name}`}
-                      defaultValue={INPUT_INIT_VALUE[i.label]}
-                      className={styles.input}
-                      enterButton={<span>确定</span>}
-                      onSearch={onSearch}
-                      onBlur={onBlur}
-                    />
-                  )}
+                  {selectItem === i.label &&
+                    selectItem !== 'auth' &&
+                    selectItem !== 'logout' && (
+                      <Input.Search
+                        ref={inputRef}
+                        placeholder={`请输入${i.name}`}
+                        defaultValue={INPUT_INIT_VALUE[i.label]}
+                        className={styles.input}
+                        enterButton={<span>确定</span>}
+                        onSearch={onSearch}
+                        onBlur={onBlur}
+                      />
+                    )}
                 </div>
               );
             })}
