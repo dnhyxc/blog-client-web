@@ -6,8 +6,8 @@
   "scripts": {
     "start": "webpack serve --config ./config/webpack.dev.config.js",
     "start:prod": "webpack serve --config ./config/webpack.prod.config.js",
-    "build": "rimraf dist && webpack --config ./config/webpack.prod.config.js",
-    "build:dev": "rimraf dist && webpack --config ./config/webpack.dev.config.js",
+    "build": "rimraf dist dist.zip && webpack --config ./config/webpack.prod.config.js",
+    "build:dev": "rimraf dist dist.zip && webpack --config ./config/webpack.dev.config.js",
     "prepare": "husky install",
     "test": "npx eslint ./src --ext ts,tsx,js,jsx --fix"
   },
@@ -45,6 +45,7 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-webpack-plugin": "^3.2.0",
     "file-loader": "^6.2.0",
+    "filemanager-webpack-plugin": "^7.0.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "glob": "^8.0.3",
     "html-webpack-plugin": "^5.5.0",
