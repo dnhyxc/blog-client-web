@@ -1,9 +1,10 @@
-import React, { useState, Fragment, ReactNode } from 'react';
+import React, { useState, Fragment, ReactNode, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Menu, Dropdown, Space } from 'antd';
+import classname from 'classname';
 import { CaretUpOutlined, CaretDownOutlined, AppstoreOutlined } from '@ant-design/icons';
 import { menuList } from '@/router/menu';
-import classname from 'classname';
+import useStore from '@/store';
 import { useHtmlWidth } from '@/hooks';
 
 import styles from './index.less';
@@ -18,14 +19,29 @@ const MenuList: React.FC<IProps> = ({ className, children }) => {
   const { htmlWidth } = useHtmlWidth();
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
 
+  const {
+    userInfoStore: {
+      getUserInfo: { userId },
+    },
+  } = useStore();
+
   const toOtherPage = (e: any, path: string) => {
     e.preventDefault();
     navigate(path);
   };
 
+  const filterMenus = useMemo(() => {
+    if (userId) {
+      return menuList;
+    }
+    return menuList.filter(
+      (i) => i.key !== 'personal' && i.key !== 'create' && i.key !== 'timeline'
+    );
+  }, [userId]);
+
   const menu = (
     <Menu
-      items={menuList.map((i) => ({
+      items={filterMenus.map((i) => ({
         key: i.key,
         label: (
           <Link to={i.path} className={styles.menu_label}>
@@ -63,7 +79,7 @@ const MenuList: React.FC<IProps> = ({ className, children }) => {
           </Dropdown>
         </span>
       ) : (
-        menuList.map((i) => {
+        filterMenus.map((i) => {
           return (
             <Fragment key={i.name}>
               <span className={styles.item} onClick={(e) => toOtherPage(e, i.path)}>
