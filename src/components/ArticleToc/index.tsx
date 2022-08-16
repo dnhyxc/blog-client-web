@@ -28,6 +28,8 @@ const Toc: React.FC<IProps> = ({ mackdown }) => {
     scrollRef.current.scrollTop(needScrollTop);
   };
 
+  console.log(mackdown.includes('#'), 'mackdown');
+
   const renderThumb = () => {
     // renderThumb 改变样式时被调用的函数，必须是函数
     const thumbStyle = {
@@ -37,25 +39,23 @@ const Toc: React.FC<IProps> = ({ mackdown }) => {
     return <div style={{ ...thumbStyle }} />;
   };
 
-  return (
+  return mackdown.includes('#') ? (
     <div className={styles.tocWrap}>
       <div className={styles.tocText}>文章目录</div>
       <div className={styles.mackNav}>
         {/* renderThumbVertical 用于更改滚动条样式 */}
         <Scrollbars autoHide ref={scrollRef} renderThumbVertical={renderThumb}>
-          {mackdown && (
-            <MarkNav
-              className={styles.tocList}
-              source={mackdown}
-              headingTopOffset={60}
-              declarative={false}
-              ordered
-            />
-          )}
+          <MarkNav
+            className={styles.tocList}
+            source={mackdown}
+            headingTopOffset={60}
+            declarative={false}
+            ordered
+          />
         </Scrollbars>
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default Toc;

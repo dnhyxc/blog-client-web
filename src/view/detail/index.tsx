@@ -8,6 +8,7 @@
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Affix, BackTop, Spin, Button } from 'antd';
+import classname from 'classname';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import Preview from '@/components/Preview';
 import Header from '@/components/Header';
@@ -79,7 +80,12 @@ const ArticleDetail: React.FC = () => {
 
   return (
     <div>
-      <div className={styles.detailContainer}>
+      <div
+        className={classname(
+          styles.detailContainer,
+          detail?.content.includes('#') && styles.hanToc
+        )}
+      >
         <div className={styles.headerWrap}>
           <Header needLeft needMenu excludesWidth>
             <div className={styles.headerContent}>

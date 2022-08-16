@@ -51,7 +51,9 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
           <div key={i.id} className={styles.item} onClick={() => toDetail(i.id)}>
             <div className={styles.title}>{i.title}</div>
             <div className={styles.abstract}>
-              {i.likeCount && <span className={styles.likeCount}>{i.likeCount} 点赞</span>}
+              {i?.likeCount > 0 && (
+                <span className={styles.likeCount}>{i.likeCount} 点赞</span>
+              )}
               <span>{formatDate(i.createTime)}</span>
             </div>
           </div>
