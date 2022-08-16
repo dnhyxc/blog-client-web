@@ -175,7 +175,7 @@ export default function request(_url: string, options?: any): FetchResult {
               err: new Error(data.message || '系统异常'),
             };
           })
-          .catch((err: any) => {
+          .catch(() => {
             return {
               err: new Error('系统异常'),
             };

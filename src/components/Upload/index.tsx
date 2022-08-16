@@ -17,6 +17,7 @@ interface IProps {
   formLabel?: string;
   filePath: string | undefined;
   form: any;
+  // eslint-disable-next-line no-unused-vars
   setFilePath?: (url: string) => void;
   imgStyle?: string;
   markStyle?: string;

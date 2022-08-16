@@ -98,7 +98,7 @@ const ReleaseModel: React.FC<IProps> = ({
   };
 
   // 校验标题是否包含特殊字符
-  const checkTitle = (rule: any, value: string, callback: Function) => {
+  const checkTitle = (rule: any, value: string) => {
     const titleReg = /([*.?+$^(){}|\\/])/;
     if (value && titleReg.test(value)) {
       // 此处使用callback('标题不能包含特殊字符')控制台会报错

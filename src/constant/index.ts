@@ -56,13 +56,6 @@ export const SET_ITEM_CONFIG = [
   },
 ];
 
-export const enum LOGIN_STATUS {
-  WAITING,
-  LOGGED,
-  NOAUTH,
-  FORBIDDEN,
-}
-
 export const FILETYPE = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
 
 export const ABOUT_ME_TABS = [

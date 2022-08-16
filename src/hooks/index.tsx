@@ -114,6 +114,7 @@ export const useGetArticleDetail = (id: string | null | undefined) => {
 };
 
 interface useLikeArticleParams {
+  // eslint-disable-next-line no-unused-vars
   setAlertStatus: (status: boolean) => void;
   articleList: any;
   updateList: Function;
