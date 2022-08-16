@@ -107,6 +107,8 @@ const Preview: React.FC<IProps> = ({
               </code>
             );
           },
+          h1: ({ node, children, level, ...props }) =>
+            renderH({ children, level, ...props }) as any,
           h2: ({ node, children, level, ...props }) =>
             renderH({ children, level, ...props }) as any,
           h3: ({ node, children, level, ...props }) =>

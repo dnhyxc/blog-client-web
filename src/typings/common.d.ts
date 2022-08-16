@@ -204,9 +204,10 @@ export interface LikeArticleList<T> {
 }
 
 export interface useScrollLoadParams<T> {
-  data: T;
-  loading: boolean;
-  pageSize: number;
+  data?: T;
+  loading?: boolean;
+  pageSize?: number;
+  scrollStyle?: string;
 }
 
 export interface useDeleteArticleParams {

@@ -33,10 +33,11 @@ const TagList: React.FC<IProps> = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  const { pageNo, onScroll } = useScrollLoad({
+  const { pageNo, onScroll, scrollRef } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
+    scrollStyle: styles.scrollStyle,
   });
 
   useEffect(() => {
@@ -116,7 +117,11 @@ const TagList: React.FC<IProps> = () => {
               articleList.list.length > 0 && articleList.list.length === articleList.total
             }
           />
-          <RightBar className={styles.rightbar} showRecommendArticle />
+          <RightBar
+            className={styles.rightbar}
+            showRecommendArticle
+            scrollRef={scrollRef}
+          />
         </div>
       </Content>
     </div>

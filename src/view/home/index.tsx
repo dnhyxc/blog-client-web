@@ -45,10 +45,11 @@ const Home: React.FC<IProps> = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  const { pageNo, setPageNo, onScroll } = useScrollLoad({
+  const { pageNo, setPageNo, onScroll, scrollRef } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
+    scrollStyle: styles.scrollStyle,
   });
 
   useEffect(() => {
@@ -210,7 +211,11 @@ const Home: React.FC<IProps> = () => {
               onEditArticle={onEditArticle}
               showInfo={articleList.list.length === articleList.total}
             />
-            <RightBar className={styles.rightbar} showRecommendArticle />
+            <RightBar
+              className={styles.rightbar}
+              showRecommendArticle
+              scrollRef={scrollRef}
+            />
           </div>
         </Content>
       )}

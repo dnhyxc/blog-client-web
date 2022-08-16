@@ -43,13 +43,15 @@ const Toc: React.FC<IProps> = ({ mackdown }) => {
       <div className={styles.mackNav}>
         {/* renderThumbVertical 用于更改滚动条样式 */}
         <Scrollbars autoHide ref={scrollRef} renderThumbVertical={renderThumb}>
-          <MarkNav
-            className={styles.tocList}
-            source={mackdown}
-            headingTopOffset={60}
-            declarative={false}
-            ordered
-          />
+          {mackdown && (
+            <MarkNav
+              className={styles.tocList}
+              source={mackdown}
+              headingTopOffset={60}
+              declarative={false}
+              ordered
+            />
+          )}
         </Scrollbars>
       </div>
     </div>

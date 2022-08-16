@@ -207,22 +207,44 @@ export const useLikeArticle = ({
 };
 
 // 滚动加载自定义hooks
-export const useScrollLoad = ({ data, loading, pageSize }: useScrollLoadParams<any>) => {
+export const useScrollLoad = ({
+  data,
+  loading,
+  pageSize,
+  scrollStyle,
+}: useScrollLoadParams<any>) => {
   const [pageNo, setPageNo] = useState<number>(1);
+  const [suckTop, setSuckTop] = useState<boolean>(false);
+
+  const scrollRef = useRef<any>(null);
+
+  const addClassName = (scrollTop: number, scrollRef: any) => {
+    if (!scrollStyle) return;
+    if (scrollTop >= scrollRef?.current?.offsetTop) {
+      setSuckTop(true);
+      scrollRef?.current?.classList?.add(scrollStyle);
+    } else {
+      setSuckTop(false);
+      scrollRef?.current?.classList?.remove(scrollStyle);
+    }
+  };
+
   // 滚动加载
   const onScroll = (event: ScrollEvent) => {
     const { scrollTop, scrollHeight, clientHeight } = event;
+    // 元素吸顶控制器
+    addClassName(scrollTop, scrollRef);
     if (
       !loading &&
-      data.count === pageSize &&
-      data.list.length < data.total &&
+      data?.count === pageSize &&
+      data?.list?.length < data?.total &&
       Math.round(scrollTop) + clientHeight + 1 >= scrollHeight
     ) {
       setPageNo(pageNo + 1);
     }
   };
 
-  return { pageNo, setPageNo, onScroll };
+  return { pageNo, setPageNo, onScroll, scrollRef, suckTop };
 };
 
 // 删除文章hooks

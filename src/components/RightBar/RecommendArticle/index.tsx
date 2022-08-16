@@ -8,7 +8,11 @@ import { ArticleItem } from '@/typings/common';
 
 import styles from './index.less';
 
-const RecommendArticle: React.FC = () => {
+interface IProps {
+  scrollRef?: any;
+}
+
+const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
   const [recommendList, setRecommendList] = useState<ArticleItem[]>([]);
   const {
     userInfoStore: { getUserInfo },
@@ -33,7 +37,7 @@ const RecommendArticle: React.FC = () => {
   };
 
   return (
-    <div className={styles.NewArticles}>
+    <div className={styles.NewArticles} ref={scrollRef}>
       <div className={styles.header}>文章推荐</div>
       {recommendList.length > 0 &&
         recommendList.map((i) => (

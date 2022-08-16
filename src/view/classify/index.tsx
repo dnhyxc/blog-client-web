@@ -27,10 +27,11 @@ const Classify: React.FC<IProps> = () => {
 
   const navigate = useNavigate();
   const listRef = useRef<ArticleItem[]>([]);
-  const { pageNo, setPageNo, onScroll } = useScrollLoad({
+  const { pageNo, setPageNo, onScroll, scrollRef } = useScrollLoad({
     data: classifyList,
     loading,
     pageSize: PAGESIZE,
+    scrollStyle: styles.scrollStyle,
   });
   const {
     userInfoStore: { getUserInfo },
@@ -130,7 +131,11 @@ const Classify: React.FC<IProps> = () => {
             onEditArticle={onEditArticle}
             showInfo={classifyList.list.length === classifyList.total}
           />
-          <RightBar className={styles.rightbar} showRecommendArticle />
+          <RightBar
+            className={styles.rightbar}
+            showRecommendArticle
+            scrollRef={scrollRef}
+          />
         </div>
       </Content>
     </div>

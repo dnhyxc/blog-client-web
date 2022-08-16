@@ -8,7 +8,7 @@ import Content from '@/components/Content';
 import Header from '@/components/Header';
 import MAlert from '@/components/Alert';
 import Empty from '@/components/Empty';
-import { useLoginStatus, useLikeArticle } from '@/hooks';
+import { useLoginStatus, useLikeArticle, useScrollLoad } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
@@ -22,6 +22,9 @@ const TimeLine: React.FC<IProps> = () => {
   const navigate = useNavigate();
 
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
+  const { onScroll, scrollRef } = useScrollLoad({
+    scrollStyle: styles.scrollStyle,
+  });
 
   const {
     userInfoStore: { getUserInfo },
@@ -63,7 +66,7 @@ const TimeLine: React.FC<IProps> = () => {
     <div className={styles.TimeLine}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header needMenu>时间轴</Header>
-      <Content className={styles.contentWrap}>
+      <Content className={styles.contentWrap} onScroll={onScroll}>
         <div className={styles.wrap}>
           {timelineList.length > 0 ? (
             <Timeline className={styles.timelineContent}>
@@ -102,7 +105,11 @@ const TimeLine: React.FC<IProps> = () => {
               <Empty />
             </div>
           )}
-          <RightBar className={styles.rightbar} />
+          <RightBar
+            className={styles.rightbar}
+            showRecommendArticle
+            scrollRef={scrollRef}
+          />
         </div>
       </Content>
     </div>
