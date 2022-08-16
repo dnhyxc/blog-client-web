@@ -4,6 +4,17 @@
 
 .detailContainer {
   position: relative;
+  padding: 0 0 0 6px;
+
+  &::after {
+    content: '';
+    width: 100%;
+    height: 6px;
+    position: fixed;
+    background-color: #fff;
+    bottom: 0;
+    left: 0;
+  }
 
   .toLogin {
     padding: 0;

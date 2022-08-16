@@ -13,7 +13,7 @@ interface IProps {
 }
 
 const Footer: React.FC<IProps> = ({ children }) => {
-  return <div className={styles.footerWrap}>{children || 'Footer'}</div>;
+  return <div className={styles.footerWrap}>{children}</div>;
 };
 
 export default Footer;
