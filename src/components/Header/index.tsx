@@ -9,6 +9,7 @@ import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LeftOutlined } from '@ant-design/icons';
 import { useHtmlWidth } from '@/hooks';
+import MIcons from '../Icons';
 import Menu from './Menu';
 import styles from './index.less';
 
@@ -36,6 +37,10 @@ const Header: React.FC<IProps> = ({
     navigate(-1);
   };
 
+  const goHome = () => {
+    navigate('/home');
+  };
+
   return (
     <div className={styles.herderWrap}>
       <div className={styles.left}>
@@ -43,6 +48,7 @@ const Header: React.FC<IProps> = ({
           (left || (
             <div className={styles.back} onClick={goBack}>
               <LeftOutlined />
+              <MIcons name="icon-haidao_" className={styles.iconWrap} onClick={goHome} />
             </div>
           ))}
         <div className={styles.child}>{children}</div>

@@ -1,4 +1,4 @@
-@import "~@styles/common.less";
+@import '~@styles/common.less';
 
 .herderWrap {
   display: flex;
@@ -24,9 +24,18 @@
     }
 
     .back {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
       cursor: pointer;
-      width: 22px;
+      width: auto;
       .clickNoSelectText();
+
+      .iconWrap {
+        font-size: 26px;
+        margin: 0 10px;
+        color: @menu-active;
+      }
     }
   }
 }
