@@ -28,8 +28,6 @@ const Toc: React.FC<IProps> = ({ mackdown }) => {
     scrollRef.current.scrollTop(needScrollTop);
   };
 
-  console.log(mackdown.includes('#'), 'mackdown');
-
   const renderThumb = () => {
     // renderThumb 改变样式时被调用的函数，必须是函数
     const thumbStyle = {
