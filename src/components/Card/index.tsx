@@ -2,7 +2,7 @@ import React from 'react';
 import { Skeleton, Popover } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
-import { formatDate } from '@/utils';
+import { formatGapTime } from '@/utils';
 import useStore from '@/store';
 import Image from '@/components/Image';
 import { CARD_URL } from '@/constant';
@@ -108,7 +108,7 @@ const Card: React.FC<IProps> = ({
                     分类：
                     {i.classify}
                   </span>
-                  <span className={styles.date}>{formatDate(i.createTime)}</span>
+                  <span className={styles.date}>{formatGapTime(i.createTime)}</span>
                 </div>
               )}
               <div className={styles.action}>

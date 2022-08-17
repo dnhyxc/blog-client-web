@@ -19,6 +19,7 @@ class UserInfo {
     zhihu: '',
     blog: '',
     mainCover: '',
+    auth: 0,
   };
 
   setUserInfo(values: LoginData) {

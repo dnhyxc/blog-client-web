@@ -19,7 +19,7 @@ import Toc from '@/components/ArticleToc';
 import Comments from '@/components/Comments';
 import { useGetArticleDetail } from '@/hooks';
 import useStore from '@/store';
-import { formatDate, decrypt } from '@/utils';
+import { formatGapTime, decrypt } from '@/utils';
 import { ArticleDetailParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -57,7 +57,7 @@ const ArticleDetail: React.FC = () => {
               {(detail?.authorName && decrypt(detail?.authorName)) || detail?.authorName}
             </div>
             <div>
-              <span>{formatDate(detail?.createTime)}</span>
+              <span>{formatGapTime(detail?.createTime)}</span>
               {getUserInfo?.userId === detail?.authorId && (
                 <Button type="link" onClick={onEditArticle}>
                   编辑

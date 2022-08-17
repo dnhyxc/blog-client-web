@@ -5,7 +5,7 @@ import Image from '@/components/Image';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
-import { formatDate } from '@/utils';
+import { formatGapTime } from '@/utils';
 import { HEAD_UEL } from '@/constant';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/Alert';
@@ -169,7 +169,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
                 <div className={styles.commentMain}>
                   <div className={styles.userInfo}>
                     <span className={styles.name}>{i.username}</span>
-                    <span className={styles.date}>{formatDate(i.date)}</span>
+                    <span className={styles.date}>{formatGapTime(i.date)}</span>
                   </div>
                   <div className={styles.desc}>{i.content}</div>
                   <div className={styles.action}>
@@ -257,7 +257,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
                                   </span>
                                 )}
                               </span>
-                              <span className={styles.date}>{formatDate(j.date)}</span>
+                              <span className={styles.date}>{formatGapTime(j.date)}</span>
                             </div>
                             {j.content && <div className={styles.desc}>{j.content}</div>}
                             {j.formContent && (

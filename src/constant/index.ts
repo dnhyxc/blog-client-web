@@ -56,6 +56,13 @@ export const SET_ITEM_CONFIG = [
   },
 ];
 
+export const getSetItemConfig = (auth: string) => {
+  if (!auth) {
+    return SET_ITEM_CONFIG.filter((i) => i.label !== 'auth');
+  }
+  return SET_ITEM_CONFIG;
+};
+
 export const FILETYPE = ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'];
 
 export const ABOUT_ME_TABS = [

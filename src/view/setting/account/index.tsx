@@ -4,8 +4,8 @@ import { Button, Input, message, Modal } from 'antd';
 import Content from '@/components/Content';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult, encrypt } from '@/utils';
-import { SET_ITEM_CONFIG, UPDATE_INFO_API_PATH } from '@/constant';
+import { normalizeResult, encrypt, getSetItemConfig } from '@/utils';
+import { UPDATE_INFO_API_PATH } from '@/constant';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
@@ -17,7 +17,7 @@ const Account: React.FC<IProps> = () => {
   const navigate = useNavigate();
   const inputRef = useRef<any>(null);
   const { userInfoStore } = useStore();
-  const { userId, zhihu, juejin, github, blog } = userInfoStore.getUserInfo;
+  const { userId, zhihu, juejin, github, blog, auth } = userInfoStore.getUserInfo;
 
   const INPUT_INIT_VALUE = {
     juejin,
@@ -25,6 +25,8 @@ const Account: React.FC<IProps> = () => {
     github,
     blog,
   };
+
+  console.log(auth, 'auth');
 
   useEffect(() => {
     if (inputRef && inputRef.current && selectItem) {
@@ -35,12 +37,13 @@ const Account: React.FC<IProps> = () => {
   }, [inputRef, selectItem]);
 
   // 修改用户信息
-  const onUpdateUserInfo = async (value: string, selectKey?: string) => {
+  const onUpdateUserInfo = async (value: string | number, selectKey?: string) => {
     if (!value) return;
     const res = normalizeResult<LoginData>(
       await Service.updateInfo(
         {
-          [selectKey || selectItem]: selectItem === 'password' ? encrypt(value) : value,
+          [selectKey || selectItem]:
+            selectItem === 'password' ? encrypt(value as string) : value,
           userId,
         },
         UPDATE_INFO_API_PATH[selectItem === 'password' ? 2 : 1]
@@ -63,7 +66,7 @@ const Account: React.FC<IProps> = () => {
     Modal.confirm({
       title: '确定设置为管理员权限吗？',
       onOk: () => {
-        onUpdateUserInfo('1', key);
+        onUpdateUserInfo(1, key);
       },
     });
   };
@@ -93,7 +96,7 @@ const Account: React.FC<IProps> = () => {
         <div className={styles.content}>
           <div className={styles.header}>账号管理</div>
           <div className={styles.setList}>
-            {SET_ITEM_CONFIG.map((i) => {
+            {getSetItemConfig(auth).map((i) => {
               return (
                 <div className={styles.setItem} key={i.label}>
                   <span className={styles.name}>{i.name}</span>

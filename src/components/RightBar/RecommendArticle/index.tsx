@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { message } from 'antd';
 import useStore from '@/store';
-import { formatDate } from '@/utils';
+import { formatGapTime } from '@/utils';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { ArticleItem } from '@/typings/common';
@@ -45,19 +45,21 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
 
   return (
     <div className={styles.NewArticles} ref={scrollRef}>
-      <div className={styles.header}>文章推荐</div>
-      {recommendList.length > 0 &&
-        recommendList.map((i) => (
-          <div key={i.id} className={styles.item} onClick={() => toDetail(i.id)}>
-            <div className={styles.title}>{i.title}</div>
-            <div className={styles.abstract}>
-              {i?.likeCount > 0 && (
-                <span className={styles.likeCount}>{i.likeCount} 点赞</span>
-              )}
-              <span>{formatDate(i.createTime)}</span>
+      <div className={styles.contant}>
+        <div className={styles.header}>文章推荐</div>
+        {recommendList.length > 0 &&
+          recommendList.map((i) => (
+            <div key={i.id} className={styles.item} onClick={() => toDetail(i.id)}>
+              <div className={styles.title}>{i.title}</div>
+              <div className={styles.abstract}>
+                <span>{formatGapTime(i.createTime)}</span>
+                {i?.likeCount > 0 && (
+                  <span className={styles.likeCount}>{i.likeCount} 点赞</span>
+                )}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+      </div>
     </div>
   );
 };
