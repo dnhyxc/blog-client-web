@@ -10,11 +10,21 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 10px;
-    margin-bottom: 6px;
-    box-shadow: 0 -3px 3px -3px #ccc inset;
+    margin-bottom: 1px;
+    // box-shadow: 0 -3px 3px -3px #ccc inset;
     background-color: #fff;
-    border-radius: 5px;
+    // border-radius: 5px;
     cursor: pointer;
+
+    &:first-child {
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    &:nth-last-child(2) {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
 
     &:hover {
       .imageScaleStyle {

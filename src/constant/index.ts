@@ -75,6 +75,20 @@ export const ABOUT_ME_TABS = [
     value: '2',
   },
 ];
+export const AUTHOR_TABS = [
+  {
+    name: '我的文章',
+    value: '1',
+  },
+  {
+    name: '点赞文章',
+    value: '2',
+  },
+  {
+    name: '时间轴',
+    value: '3',
+  },
+];
 
 export const ABOUT_TABS = [
   {
