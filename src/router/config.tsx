@@ -7,7 +7,6 @@
  */
 import { lazy, Suspense, ReactNode } from 'react';
 import { Navigate, RouteObject } from 'react-router-dom';
-import userInfoParams from '@/store/user';
 import { Spin } from 'antd';
 import AppLayout from '@/layout';
 import Setting from '@/view/setting';
@@ -24,8 +23,7 @@ const Timeline = lazy(() => import('@/view/timeline'));
 const Tag = lazy(() => import('@/view/tag'));
 const Profile = lazy(() => import('@/view/setting/profile'));
 const Account = lazy(() => import('@/view/setting/account'));
-
-const { getUserInfo } = userInfoParams;
+const Author = lazy(() => import('@/view/author'));
 
 const lazyLoad = (children: ReactNode, needSpin = true): ReactNode => {
   return (
@@ -61,17 +59,10 @@ const children = [
     element: lazyLoad(<Personal />),
   },
   {
-    path: 'home/detail/:id',
-    element: lazyLoad(<Detail />),
-  },
-];
-
-if (getUserInfo?.username !== 'cx') {
-  children.push({
     path: 'create',
     element: lazyLoad(<Mackdown />),
-  });
-}
+  },
+];
 
 const routes: RouteObject[] = [
   {
@@ -96,6 +87,10 @@ const routes: RouteObject[] = [
         element: lazyLoad(<Account />),
       },
     ],
+  },
+  {
+    path: 'author',
+    element: lazyLoad(<Author />),
   },
   {
     path: 'login',

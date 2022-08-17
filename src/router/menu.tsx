@@ -5,11 +5,9 @@ import {
   UserOutlined,
   FolderOpenOutlined,
   FieldTimeOutlined,
+  IdcardOutlined,
 } from '@ant-design/icons';
-import userInfoParams from '@/store/user';
 import styles from './index.less';
-
-const { getUserInfo } = userInfoParams;
 
 const menuList = [
   {
@@ -47,17 +45,21 @@ const menuList = [
     name: '我的主页',
     path: '/personal',
   },
-];
-
-if (getUserInfo?.username !== 'cx') {
-  menuList.push({
+  {
     key: 'create',
     icon: <ReadOutlined className={styles.menu_icon} />,
     label: '发布文章',
     name: '发布文章',
     path: '/create',
-  });
-}
+  },
+  {
+    key: 'author',
+    icon: <IdcardOutlined className={styles.menu_icon} />,
+    label: '关于博主',
+    name: '关于博主',
+    path: '/author',
+  },
+];
 
 const settingList = [
   {

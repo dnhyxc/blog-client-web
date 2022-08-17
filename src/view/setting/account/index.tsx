@@ -26,8 +26,6 @@ const Account: React.FC<IProps> = () => {
     blog,
   };
 
-  console.log(auth, 'auth');
-
   useEffect(() => {
     if (inputRef && inputRef.current && selectItem) {
       inputRef.current.focus({
