@@ -217,8 +217,10 @@ export const useScrollLoad = ({
 }: useScrollLoadParams<any>) => {
   const [pageNo, setPageNo] = useState<number>(1);
   const [suckTop, setSuckTop] = useState<boolean>(false);
+  const [scrollTop, setScrollTop] = useState<number>(0);
 
   const scrollRef = useRef<any>(null);
+  const contentRef = useRef<any>(null);
 
   const addClassName = (scrollTop: number, scrollRef: any) => {
     if (!scrollStyle) return;
@@ -236,6 +238,7 @@ export const useScrollLoad = ({
     const { scrollTop, scrollHeight, clientHeight } = event;
     // 元素吸顶控制器
     addClassName(scrollTop, scrollRef);
+    setScrollTop(scrollTop);
     if (
       !loading &&
       data?.count === pageSize &&
@@ -246,7 +249,7 @@ export const useScrollLoad = ({
     }
   };
 
-  return { pageNo, setPageNo, onScroll, scrollRef, suckTop };
+  return { pageNo, setPageNo, onScroll, scrollRef, suckTop, contentRef, scrollTop };
 };
 
 // 删除文章hooks

@@ -10,6 +10,7 @@ interface IProps {
   containerClassName?: string;
   wrapClassName?: string;
   onScroll?: Function;
+  contentRef?: any;
 }
 
 const Content: React.FC<IProps> = ({
@@ -18,12 +19,18 @@ const Content: React.FC<IProps> = ({
   containerClassName,
   wrapClassName,
   onScroll,
+  contentRef,
 }) => {
   return (
     <div className={classname(styles.container, containerClassName)}>
       <div className={classname(styles.wrap, wrapClassName)}>
         <div className={classname(styles.scrollWrap, className)}>
-          <Scrollbars autoHide className={styles.scrollBar} onScrollFrame={onScroll}>
+          <Scrollbars
+            autoHide
+            ref={contentRef}
+            className={styles.scrollBar}
+            onScrollFrame={onScroll}
+          >
             {children}
           </Scrollbars>
         </div>

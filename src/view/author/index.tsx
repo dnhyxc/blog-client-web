@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Affix, BackTop, Tabs, message, Timeline } from 'antd';
+import { Affix, Tabs, message, Timeline } from 'antd';
 import { ArrowUpOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import Header from '@/components/Header';
 import MAlert from '@/components/Alert';
@@ -44,7 +44,7 @@ const Author: React.FC<IProps> = () => {
     },
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
-  const { pageNo, setPageNo, onScroll } = useScrollLoad({
+  const { pageNo, setPageNo, onScroll, contentRef, scrollTop } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
@@ -129,6 +129,7 @@ const Author: React.FC<IProps> = () => {
       total: 0,
       count: 0,
     });
+    contentRef?.current?.scrollToTop(100);
   };
 
   // 编辑文章
@@ -150,6 +151,10 @@ const Author: React.FC<IProps> = () => {
     setAlertStatus,
   });
 
+  const onBackTop = () => {
+    contentRef?.current?.scrollTop();
+  };
+
   return (
     <>
       <div className={styles.AuthorContainer}>
@@ -166,6 +171,7 @@ const Author: React.FC<IProps> = () => {
           wrapClassName={styles.wrapClassName}
           className={styles.scrollWrap}
           onScroll={onScroll}
+          contentRef={contentRef}
         >
           <div className={styles.wrap}>
             <div className={styles.infoWrap}>
@@ -180,7 +186,10 @@ const Author: React.FC<IProps> = () => {
               <div className={styles.headImg}>
                 <Image url={HEAD_UEL} transitionImg={HEAD_UEL} className={styles.image} />
               </div>
-              <div className={styles.mainInfo}>dnhyxc</div>
+              <div className={styles.mainInfo}>
+                <div className={styles.username}>dnhyxc</div>
+                <div className={styles.moto}>行到水穷处，坐看云起时</div>
+              </div>
             </div>
             <div className={styles.content}>
               <div className={styles.tabList}>
@@ -198,6 +207,8 @@ const Author: React.FC<IProps> = () => {
                               deleteArticle={deleteArticle}
                               onEditArticle={onEditArticle}
                               showInfo={articleList.list.length === articleList.total}
+                              loadText="地主家也没余粮了"
+                              loading={loading}
                             />
                           ) : (
                             <Timeline className={styles.timelineContent}>
@@ -249,12 +260,12 @@ const Author: React.FC<IProps> = () => {
             </div>
           </div>
         </Content>
+        {scrollTop > 400 && (
+          <div className={styles.backTop} onClick={onBackTop}>
+            <ArrowUpOutlined className={styles.topIcon} />
+          </div>
+        )}
       </div>
-      <BackTop className={styles.backTopWrap}>
-        <div className={styles.backTop}>
-          <ArrowUpOutlined className={styles.topIcon} />
-        </div>
-      </BackTop>
     </>
   );
 };

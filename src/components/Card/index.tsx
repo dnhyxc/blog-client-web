@@ -26,6 +26,8 @@ interface IProps {
   onEditArticle?: Function;
   showClassify?: boolean;
   showInfo?: boolean;
+  loadText?: string;
+  loading?: boolean;
 }
 
 const Card: React.FC<IProps> = ({
@@ -44,6 +46,8 @@ const Card: React.FC<IProps> = ({
   onEditArticle,
   showClassify = true,
   showInfo,
+  loadText,
+  loading,
 }) => {
   const {
     userInfoStore: { getUserInfo },
@@ -151,15 +155,18 @@ const Card: React.FC<IProps> = ({
           <Skeleton active title paragraph={{ rows: skeletonRows }} />
         </div>
       )}
-      {showInfo && (
-        <div className={styles.noMore}>
-          {list.length > 0
-            ? `共(${list.length})
-          篇，已是全部家当～～～`
-            : `共(${list.length})
+      {showInfo &&
+        (!loading ? (
+          <div className={styles.noMore}>
+            {list.length > 0
+              ? `共(${list.length})
+          篇，${loadText || '已是全部家当'}～～～`
+              : `共(${list.length})
             篇，空空如也～～～`}
-        </div>
-      )}
+          </div>
+        ) : (
+          <div className={styles.noMore}>loading...</div>
+        ))}
     </div>
   );
 };
