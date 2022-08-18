@@ -51,6 +51,12 @@ const GET_MY_ARTICLE_LIST = '/api/getMyArticleList';
 // 获取我点赞的文章列表
 const GET_LIKE_ARTICLE_LIST = '/api/getLikeArticleList';
 
+// 获取我点赞的文章列表
+const GET_AUTHOR_ARTICLE_LIST = '/api/getAuthorArticleList';
+
+// 获取博主点赞的文章列表
+const GET_AUTHOR_LIKE_ARTICLES = '/api/getAuthorLikeArticles';
+
 export {
   REGISTER,
   LOGIN,
@@ -75,4 +81,6 @@ export {
   GET_USER_INFO,
   UPDATE_PASSWORD,
   GET_ARTICLE_BY_RANDOM,
+  GET_AUTHOR_ARTICLE_LIST,
+  GET_AUTHOR_LIKE_ARTICLES,
 };

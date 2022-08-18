@@ -74,7 +74,7 @@ const Personal = () => {
     const res = normalizeResult<ArticleListResult>(
       await Service.getMyArticleList(
         {
-          pageNo: 1,
+          pageNo,
           pageSize: PAGESIZE,
           userId: authorId || getUserInfo?.userId,
           accessUserId: getUserInfo?.userId,

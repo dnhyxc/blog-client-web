@@ -1,69 +1,110 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Affix, BackTop, Tabs } from 'antd';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import Header from '@/components/Header';
+import MAlert from '@/components/Alert';
+import Content from '@/components/Content';
 import Card from '@/components/Card';
 import Image from '@/components/Image';
-import { HEAD_UEL, MAIN_COVER, AUTHOR_TABS } from '@/constant';
 import RightBar from '@/components/RightBar';
-// import useStore from '@/store';
+import useStore from '@/store';
+import * as Service from '@/service';
+import { normalizeResult } from '@/utils/tools';
+import { useLoginStatus, useLikeArticle, useScrollLoad } from '@/hooks';
+import { PAGESIZE, HEAD_UEL, MAIN_COVER, AUTHOR_TABS, AUTHOR_API_PATH } from '@/constant';
+import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
-
-const data = [
-  {
-    abstract: 'react webpack5 项目搭建',
-    authorId: '62f8daba89f22210039e4316',
-    classify: '架构',
-    coverImage: 'http://localhost:9112/fa5f5639aa0df7696a68b8b00.png',
-    createTime: 1660658271716,
-    id: '62fba29d6b29a6ee26bee560',
-    isLike: false,
-    likeCount: 0,
-    tag: '前端框架',
-    title: 'react webpack5 项目搭建',
-  },
-  {
-    abstract: '项目部署',
-    authorId: '62f8daba89f22210039e4316',
-    classify: '架构',
-    coverImage: 'http://localhost:9112/fa5f5639aa0df7696a68b8b01.png',
-    createTime: 1660580859625,
-    id: '62fa74003bdadf8910bf01f6',
-    isLike: false,
-    likeCount: 1,
-    tag: '后端',
-    title: '项目部署',
-  },
-  {
-    abstract: '项目部署222',
-    authorId: '62f8daba89f22210039e4316',
-    classify: '架构',
-    coverImage: 'http://localhost:9112/fa5f5639aa0df7696a68b8b01.png',
-    createTime: 1660580859625,
-    id: '62fa74003bdadf8910bf01128',
-    isLike: false,
-    likeCount: 1,
-    tag: '后端',
-    title: '项目部署',
-  },
-];
 
 const { TabPane } = Tabs;
 
 interface IProps {}
 
 const Author: React.FC<IProps> = () => {
-  // const {
-  //   userInfoStore: { getUserInfo },
-  // } = useStore();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [selectKey, setSelectKey] = useState<string>('1');
+  const [articleList, setArticleList] = useState<ArticleListResult>({
+    list: [],
+    total: 0,
+    count: 0,
+  });
+
+  const listRef = useRef<ArticleItem[]>([]);
+  const navigate = useNavigate();
+  const {
+    userInfoStore: {
+      getUserInfo: { auth, userId },
+    },
+  } = useStore();
+  const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
+  const { pageNo, setPageNo, onScroll } = useScrollLoad({
+    data: articleList,
+    loading,
+    pageSize: PAGESIZE,
+  });
+
+  useEffect(() => {
+    getAuthorArticleList();
+  }, [selectKey, pageNo]);
+
+  // 获取博主的文章及点赞文章列表
+  const getAuthorArticleList = async () => {
+    setLoading(true);
+    const res = normalizeResult<ArticleListResult>(
+      await Service.getAuthorArticleList(
+        {
+          pageNo,
+          pageSize: PAGESIZE,
+          accessUserId: userId,
+        },
+        AUTHOR_API_PATH[selectKey]
+      )
+    );
+    setLoading(false);
+    if (res.success) {
+      const { total, list } = res.data;
+      // 使用ref暂存list，防止滚动加载时，list添加错乱问题
+      listRef.current = [...listRef.current, ...list];
+      setArticleList({
+        list: listRef.current,
+        total,
+        count: list.length,
+      });
+    }
+  };
+
+  // 文章点赞
+  const { likeArticle } = useLikeArticle({
+    setAlertStatus,
+    articleList,
+    updateList: setArticleList,
+    isAboutMe: auth === 1 && selectKey === '2',
+  });
+
+  // 点击进入详情
+  const toDetail = (id: string, needScroll: boolean): void => {
+    if (needScroll) {
+      navigate(`/detail/${id}?needScroll=1`);
+    } else {
+      navigate(`/detail/${id}`);
+    }
+  };
 
   const onChangeTabs = (key: string) => {
-    console.log(key, '-----key');
+    setSelectKey(key);
+    listRef.current = [];
+    setPageNo(1);
+    setArticleList({
+      list: listRef.current,
+      total: 0,
+      count: 0,
+    });
   };
 
   return (
     <>
       <div className={styles.AuthorContainer}>
+        {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
         <div className={styles.headerWrap}>
           <Header needLeft needMenu excludesWidth>
             <div className={styles.headerContent}>
@@ -71,51 +112,58 @@ const Author: React.FC<IProps> = () => {
             </div>
           </Header>
         </div>
-        <div className={styles.wrap}>
-          <div className={styles.infoWrap}>
-            <div className={styles.mainCover}>
-              <Image
-                url={MAIN_COVER}
-                transitionImg={MAIN_COVER}
-                className={styles.image}
-                imageWrapStyle={styles.imageWrapStyle}
-              />
-            </div>
-            <div className={styles.headImg}>
-              <Image url={HEAD_UEL} transitionImg={HEAD_UEL} className={styles.image} />
-            </div>
-            <div className={styles.mainInfo}>dnhyxc</div>
-          </div>
-          <div className={styles.content}>
-            <div className={styles.tabList}>
-              <div className={styles.tab}>
-                <Tabs defaultActiveKey="1" onChange={onChangeTabs}>
-                  {AUTHOR_TABS.map((i) => {
-                    return (
-                      <TabPane tab={i.name} key={i.value}>
-                        <Card
-                          list={data}
-                          wrapClass={styles.wrapClass}
-                          // toDetail={toDetail}
-                          // deleteArticle={deleteArticle}
-                          // likeArticle={likeArticle}
-                          // onEditArticle={onEditArticle}
-                          // showInfo={articleList.list.length === articleList.total}
-                          showInfo
-                        />
-                      </TabPane>
-                    );
-                  })}
-                </Tabs>
+        <Content
+          containerClassName={styles.containerClassName}
+          wrapClassName={styles.wrapClassName}
+          className={styles.scrollWrap}
+          onScroll={onScroll}
+        >
+          <div className={styles.wrap}>
+            <div className={styles.infoWrap}>
+              <div className={styles.mainCover}>
+                <Image
+                  url={MAIN_COVER}
+                  transitionImg={MAIN_COVER}
+                  className={styles.image}
+                  imageWrapStyle={styles.imageWrapStyle}
+                />
               </div>
-            </div>
-            <Affix offsetTop={60}>
-              <div className={styles.rightBar}>
-                <RightBar />
+              <div className={styles.headImg}>
+                <Image url={HEAD_UEL} transitionImg={HEAD_UEL} className={styles.image} />
               </div>
-            </Affix>
+              <div className={styles.mainInfo}>dnhyxc</div>
+            </div>
+            <div className={styles.content}>
+              <div className={styles.tabList}>
+                <div className={styles.tab}>
+                  <Tabs defaultActiveKey="1" onChange={onChangeTabs}>
+                    {AUTHOR_TABS.map((i) => {
+                      return (
+                        <TabPane tab={i.name} key={i.value}>
+                          <Card
+                            list={articleList.list}
+                            wrapClass={styles.wrapClass}
+                            toDetail={toDetail}
+                            likeArticle={likeArticle}
+                            // deleteArticle={deleteArticle}
+                            // onEditArticle={onEditArticle}
+                            // showInfo={articleList.list.length === articleList.total}
+                            showInfo
+                          />
+                        </TabPane>
+                      );
+                    })}
+                  </Tabs>
+                </div>
+              </div>
+              <Affix offsetTop={60}>
+                <div className={styles.rightBar}>
+                  <RightBar />
+                </div>
+              </Affix>
+            </div>
           </div>
-        </div>
+        </Content>
       </div>
       <BackTop className={styles.backTopWrap}>
         <div className={styles.backTop}>

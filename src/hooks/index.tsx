@@ -180,6 +180,7 @@ export const useLikeArticle = ({
           return i;
         });
 
+        // isAboutMe为true，就是用户自己的主页或博主自己进入博主主页，此时点赞需要删除取消点赞的文章
         if (isAboutMe) {
           const likes = list.filter((i) => i.isLike);
           updateList({

@@ -16,7 +16,7 @@ import {
   getArticleByRandom,
 } from './article';
 import { uploadFile } from './upload';
-import { getMyArticleList } from './userInfo';
+import { getMyArticleList, getAuthorArticleList } from './userInfo';
 import { register, login, updateInfo, getUserInfo, updatePassword } from './user';
 
 export {
@@ -42,4 +42,5 @@ export {
   uploadFile,
   updatePassword,
   getArticleByRandom,
+  getAuthorArticleList,
 };

@@ -7,16 +7,21 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding: 0 0 6px 8px;
+  padding-top: 60px;
+  height: 100%;
+  background-color: @background;
+  overflow: hidden;
 
-  &::after {
-    content: '';
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 8px;
-    background-color: #fff;
+  .containerClassName {
+    height: calc(100vh - 60px);
+  }
+
+  .wrapClassName {
+    padding: 0;
+  }
+
+  .scrollWrap {
+    background-color: #fff !important;
   }
 
   .headerWrap {
@@ -49,7 +54,7 @@
   }
 
   .wrap {
-    padding: 60px 10% 0;
+    padding: 0 10%;
     background-color: @background !important;
     min-height: calc(100vh - 70px);
 
@@ -126,8 +131,9 @@
   :global {
     .ant-tabs > .ant-tabs-nav {
       padding: 0 10px;
-      margin-bottom: 0;
+      margin-bottom: 10px;
       background-color: #fff;
+      border-radius: 5px;
     }
   }
 }
