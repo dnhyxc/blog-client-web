@@ -55,7 +55,7 @@
 
   .wrap {
     padding: 0 10%;
-    background-color: @background !important;
+    background-color: @background;
     min-height: calc(100vh - 70px);
 
     .infoWrap {
@@ -117,6 +117,29 @@
         .tab {
           .wrapClass {
             width: 100%;
+          }
+
+          .timelineContent {
+            flex: 1;
+            padding: 10px 0 0 5px;
+            background-color: #fff;
+
+            .timelineItem {
+              &:last-child {
+                padding-bottom: 0;
+              }
+
+              .date {
+                height: 35px;
+                font-size: 25px;
+                font-weight: 600;
+                line-height: 26px;
+              }
+
+              .itemClass {
+                border-bottom: 1px solid @background;
+              }
+            }
           }
         }
       }

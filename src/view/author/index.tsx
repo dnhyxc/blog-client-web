@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Affix, BackTop, Tabs } from 'antd';
-import { ArrowUpOutlined } from '@ant-design/icons';
+import { Affix, BackTop, Tabs, message, Timeline } from 'antd';
+import { ArrowUpOutlined, ClockCircleOutlined } from '@ant-design/icons';
 import Header from '@/components/Header';
 import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
@@ -11,9 +11,9 @@ import RightBar from '@/components/RightBar';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
-import { useLoginStatus, useLikeArticle, useScrollLoad } from '@/hooks';
+import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import { PAGESIZE, HEAD_UEL, MAIN_COVER, AUTHOR_TABS, AUTHOR_API_PATH } from '@/constant';
-import { ArticleListResult, ArticleItem } from '@/typings/common';
+import { ArticleListResult, ArticleItem, TimelineResult } from '@/typings/common';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -23,6 +23,7 @@ interface IProps {}
 const Author: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectKey, setSelectKey] = useState<string>('1');
+  const [timelineList, setTimelineList] = useState<TimelineResult[]>([]);
   const [articleList, setArticleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
@@ -47,8 +48,16 @@ const Author: React.FC<IProps> = () => {
     getAuthorArticleList();
   }, [selectKey, pageNo]);
 
-  // 获取博主的文章及点赞文章列表
   const getAuthorArticleList = async () => {
+    if (selectKey !== '3') {
+      getAuthorArticles();
+    } else {
+      getAuthorTimeline();
+    }
+  };
+
+  // 获取博主的文章及点赞文章列表
+  const getAuthorArticles = async () => {
     setLoading(true);
     const res = normalizeResult<ArticleListResult>(
       await Service.getAuthorArticleList(
@@ -70,15 +79,30 @@ const Author: React.FC<IProps> = () => {
         total,
         count: list.length,
       });
+    } else {
+      message.error(res.message);
+    }
+  };
+
+  // 获取时间轴列表
+  const getAuthorTimeline = async () => {
+    const res = normalizeResult<TimelineResult[]>(
+      await Service.getAuthorTimeline({ accessUserId: userId })
+    );
+    if (res.success) {
+      setTimelineList(res.data);
+    } else {
+      message.error(res.message);
     }
   };
 
   // 文章点赞
   const { likeArticle } = useLikeArticle({
     setAlertStatus,
-    articleList,
-    updateList: setArticleList,
+    articleList: selectKey !== '3' ? articleList : timelineList,
+    updateList: selectKey !== '3' ? setArticleList : setTimelineList,
     isAboutMe: auth === 1 && selectKey === '2',
+    isTimeLine: selectKey === '3',
   });
 
   // 点击进入详情
@@ -100,6 +124,19 @@ const Author: React.FC<IProps> = () => {
       count: 0,
     });
   };
+
+  // 编辑文章
+  const onEditArticle = (id: string) => {
+    navigate(`/create?id=${id}`);
+  };
+
+  // 删除文章
+  const { deleteArticle } = useDeleteArticle({
+    articleList,
+    setArticleList,
+    getArticleList: getAuthorArticleList,
+    setAlertStatus,
+  });
 
   return (
     <>
@@ -140,16 +177,51 @@ const Author: React.FC<IProps> = () => {
                     {AUTHOR_TABS.map((i) => {
                       return (
                         <TabPane tab={i.name} key={i.value}>
-                          <Card
-                            list={articleList.list}
-                            wrapClass={styles.wrapClass}
-                            toDetail={toDetail}
-                            likeArticle={likeArticle}
-                            // deleteArticle={deleteArticle}
-                            // onEditArticle={onEditArticle}
-                            // showInfo={articleList.list.length === articleList.total}
-                            showInfo
-                          />
+                          {i.value !== '3' ? (
+                            <Card
+                              list={articleList.list}
+                              wrapClass={styles.wrapClass}
+                              toDetail={toDetail}
+                              likeArticle={likeArticle}
+                              deleteArticle={deleteArticle}
+                              onEditArticle={onEditArticle}
+                              showInfo={articleList.list.length === articleList.total}
+                            />
+                          ) : (
+                            <Timeline className={styles.timelineContent}>
+                              {timelineList.map((i) => {
+                                return (
+                                  <Timeline.Item
+                                    className={styles.timelineItem}
+                                    key={i.date}
+                                    color="green"
+                                    dot={
+                                      <ClockCircleOutlined style={{ fontSize: '16px' }} />
+                                    }
+                                  >
+                                    <div className={styles.cardList}>
+                                      <div className={styles.date}>{i.date}</div>
+                                      {i.articles && i.articles.length > 0 && (
+                                        <Card
+                                          list={i.articles}
+                                          wrapClass={styles.wrapClass}
+                                          imgWrapStyle={styles.imgWrapStyle}
+                                          itemClass={styles.itemClass}
+                                          imgWrapClass={styles.imgWrapClass}
+                                          cardImgWrapStyle={styles.cardImgWrapStyle}
+                                          descClass={styles.descClass}
+                                          toDetail={toDetail}
+                                          skeletonRows={2}
+                                          skeletonAvatar={styles.skeletonAvatar}
+                                          likeArticle={likeArticle}
+                                        />
+                                      )}
+                                    </div>
+                                  </Timeline.Item>
+                                );
+                              })}
+                            </Timeline>
+                          )}
                         </TabPane>
                       );
                     })}

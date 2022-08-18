@@ -57,6 +57,9 @@ const GET_AUTHOR_ARTICLE_LIST = '/api/getAuthorArticleList';
 // 获取博主点赞的文章列表
 const GET_AUTHOR_LIKE_ARTICLES = '/api/getAuthorLikeArticles';
 
+// 获取博主点赞的文章列表
+const GET_AUTHOR_TIMELINE = '/api/getAuthorTimeline';
+
 export {
   REGISTER,
   LOGIN,
@@ -83,4 +86,5 @@ export {
   GET_ARTICLE_BY_RANDOM,
   GET_AUTHOR_ARTICLE_LIST,
   GET_AUTHOR_LIKE_ARTICLES,
+  GET_AUTHOR_TIMELINE,
 };

@@ -1,4 +1,5 @@
 import { post } from '@/utils/request';
+import * as API from './api';
 
 export async function getMyArticleList(
   params: {
@@ -22,5 +23,10 @@ export async function getAuthorArticleList(
   path: string
 ) {
   const res = await post(path, params);
+  return res;
+}
+
+export async function getAuthorTimeline(params: { accessUserId?: string }) {
+  const res = await post(API.GET_AUTHOR_TIMELINE, params);
   return res;
 }
