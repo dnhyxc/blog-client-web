@@ -9,6 +9,7 @@ import {
   ScrollEvent,
   useScrollLoadParams,
   useDeleteArticleParams,
+  useDeleteTimelineParams,
   ArticleItem,
   TimelineResult,
 } from '@/typings/common';
@@ -252,7 +253,6 @@ export const useScrollLoad = ({
 export const useDeleteArticle = ({
   articleList,
   setArticleList,
-  getArticleList,
   setAlertStatus,
 }: useDeleteArticleParams) => {
   const deleteArticle = (articleId: string) => {
@@ -274,9 +274,6 @@ export const useDeleteArticle = ({
             list,
           });
         } else {
-          if (res.success) {
-            getArticleList && getArticleList();
-          }
           if (!res.success && res.code === 409) {
             setAlertStatus(true);
           }
@@ -289,4 +286,49 @@ export const useDeleteArticle = ({
   };
 
   return { deleteArticle };
+};
+
+// 删除文章hooks
+export const useDeleteTimelineArticle = ({
+  timelineList,
+  setTimelineList,
+  setAlertStatus,
+}: useDeleteTimelineParams) => {
+  const deleteTimeline = (articleId: string) => {
+    Modal.confirm(modalConfig(articleId));
+  };
+
+  const modalConfig = (articleId: string) => {
+    return {
+      title: '确定删除该文章吗？',
+      async onOk() {
+        const res = normalizeResult<{ id: string }>(
+          await Service.deleteArticle({ articleId })
+        );
+        if (res.success) {
+          const list = timelineList.map((i) => {
+            if (i.articles.length) {
+              const filterList = i.articles.filter((j) => j.id !== articleId);
+              return {
+                ...i,
+                count: filterList.length,
+                articles: filterList,
+              };
+            }
+            return { ...i };
+          });
+          setTimelineList(list);
+        } else {
+          if (!res.success && res.code === 409) {
+            setAlertStatus(true);
+          }
+          if (!res.success && res.code !== 409) {
+            message.error(res.message);
+          }
+        }
+      },
+    };
+  };
+
+  return { deleteTimeline };
 };

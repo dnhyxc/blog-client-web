@@ -216,3 +216,9 @@ export interface useDeleteArticleParams {
   getArticleList: Function;
   setAlertStatus: Function;
 }
+
+export interface useDeleteTimelineParams {
+  timelineList: TimelineResult[];
+  setTimelineList: Function;
+  setAlertStatus: Function;
+}

@@ -11,7 +11,13 @@ import RightBar from '@/components/RightBar';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
-import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
+import {
+  useLoginStatus,
+  useLikeArticle,
+  useScrollLoad,
+  useDeleteArticle,
+  useDeleteTimelineArticle,
+} from '@/hooks';
 import { PAGESIZE, HEAD_UEL, MAIN_COVER, AUTHOR_TABS, AUTHOR_API_PATH } from '@/constant';
 import { ArticleListResult, ArticleItem, TimelineResult } from '@/typings/common';
 import styles from './index.less';
@@ -138,6 +144,12 @@ const Author: React.FC<IProps> = () => {
     setAlertStatus,
   });
 
+  const { deleteTimeline } = useDeleteTimelineArticle({
+    timelineList,
+    setTimelineList,
+    setAlertStatus,
+  });
+
   return (
     <>
       <div className={styles.AuthorContainer}>
@@ -214,6 +226,7 @@ const Author: React.FC<IProps> = () => {
                                           skeletonRows={2}
                                           skeletonAvatar={styles.skeletonAvatar}
                                           likeArticle={likeArticle}
+                                          deleteArticle={deleteTimeline}
                                         />
                                       )}
                                     </div>
