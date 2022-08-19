@@ -1,4 +1,4 @@
-import { post } from '@/utils/request';
+import { post, del } from '@/utils/request';
 import * as API from './api';
 import {
   CreateArticleParams,
@@ -102,5 +102,10 @@ export async function getTimelineList(params: {
 
 export async function getArticleByRandom(params: { userId?: string }) {
   const res = await post(API.GET_ARTICLE_BY_RANDOM, params);
+  return res;
+}
+
+export async function delAllArticle() {
+  const res = await del(API.DEL_ALL_ARTICLE);
   return res;
 }

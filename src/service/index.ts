@@ -14,6 +14,7 @@ import {
   getTagList,
   getTimelineList,
   getArticleByRandom,
+  delAllArticle,
 } from './article';
 import { uploadFile } from './upload';
 import { getMyArticleList, getAuthorArticleList, getAuthorTimeline } from './userInfo';
@@ -28,6 +29,7 @@ export {
   createArticle,
   updateArticle,
   searchArticle,
+  delAllArticle,
   getArticleDetail,
   releaseComment,
   getCommentList,

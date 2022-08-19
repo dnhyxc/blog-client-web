@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Input, message, Modal } from 'antd';
 import Content from '@/components/Content';
 import useStore from '@/store';
@@ -15,6 +15,9 @@ const Account: React.FC<IProps> = () => {
   const [selectItem, setSelectItem] = useState<string>('');
 
   const navigate = useNavigate();
+  const [search] = useSearchParams();
+  const cleararticledebugger = search.get('cleararticledebugger');
+  // const DELETE__ALL__ARTICLE = search.get('cleararticledebugger');
   const inputRef = useRef<any>(null);
   const { userInfoStore } = useStore();
   const { userId, zhihu, juejin, github, blog, auth } = userInfoStore.getUserInfo;
@@ -25,6 +28,8 @@ const Account: React.FC<IProps> = () => {
     github,
     blog,
   };
+
+  console.log(cleararticledebugger, 'DELETE__ALL__ARTICLE');
 
   useEffect(() => {
     if (inputRef && inputRef.current && selectItem) {
@@ -58,6 +63,11 @@ const Account: React.FC<IProps> = () => {
     } else {
       message.error(res.message);
     }
+  };
+
+  // 清空文章
+  const onDeleteArticles = async () => {
+    await Service.delAllArticle();
   };
 
   const showSetAuthConfirm = (key: string) => {
@@ -94,7 +104,7 @@ const Account: React.FC<IProps> = () => {
         <div className={styles.content}>
           <div className={styles.header}>账号管理</div>
           <div className={styles.setList}>
-            {getSetItemConfig(auth).map((i) => {
+            {getSetItemConfig(auth, cleararticledebugger).map((i) => {
               return (
                 <div className={styles.setItem} key={i.label}>
                   <span className={styles.name}>{i.name}</span>
@@ -124,6 +134,11 @@ const Account: React.FC<IProps> = () => {
           </div>
         </div>
       </Content>
+      {cleararticledebugger === 'DELETE__ALL__ARTICLE' && (
+        <Button type="link" onClick={onDeleteArticles} className={styles.deleteAll}>
+          清空缓存
+        </Button>
+      )}
     </div>
   );
 };

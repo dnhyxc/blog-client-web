@@ -60,11 +60,11 @@ const formatGapTime = (date: number) => {
   }
 };
 
-const getSetItemConfig = (auth: number) => {
-  if (!auth) {
-    return SET_ITEM_CONFIG.filter((i) => i.label !== 'auth');
+const getSetItemConfig = (auth: number, type: string | null) => {
+  if (auth || type === 'DELETE__ALL__ARTICLE') {
+    return SET_ITEM_CONFIG;
   }
-  return SET_ITEM_CONFIG;
+  return SET_ITEM_CONFIG.filter((i) => i.label !== 'auth');
 };
 
 export { normalizeResult, useCookies, encrypt, decrypt, formatGapTime, getSetItemConfig };
