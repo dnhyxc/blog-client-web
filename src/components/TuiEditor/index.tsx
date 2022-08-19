@@ -77,9 +77,9 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown }) => {
       button.style.margin = '0';
       button.innerHTML = '<i>BB</i>';
       button.addEventListener('click', () => {
-        console.log(editor, '========');
-        const wwSelection = editor.getSelection();
-        console.log(wwSelection, 'wwSelection');
+        // console.log(editor, '========');
+        // const wwSelection = editor.getSelection();
+        // console.log(wwSelection, 'wwSelection');
         editor.insertText('```js\n\n```');
         editor.moveCursorToStart(0);
         // editor.exec("code");

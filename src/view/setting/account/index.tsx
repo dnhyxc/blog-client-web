@@ -17,7 +17,6 @@ const Account: React.FC<IProps> = () => {
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const cleararticledebugger = search.get('cleararticledebugger');
-  // const DELETE__ALL__ARTICLE = search.get('cleararticledebugger');
   const inputRef = useRef<any>(null);
   const { userInfoStore } = useStore();
   const { userId, zhihu, juejin, github, blog, auth } = userInfoStore.getUserInfo;
@@ -28,8 +27,6 @@ const Account: React.FC<IProps> = () => {
     github,
     blog,
   };
-
-  console.log(cleararticledebugger, 'DELETE__ALL__ARTICLE');
 
   useEffect(() => {
     if (inputRef && inputRef.current && selectItem) {
