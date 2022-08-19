@@ -152,9 +152,8 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
           getAlertStatus={setAlertStatus}
         />
       </div>
-      <div className={styles.title}>全部评论</div>
-      {comments &&
-        comments.length > 0 &&
+      {comments?.length > 0 && <div className={styles.title}>全部评论</div>}
+      {comments?.length > 0 &&
         comments.map((i) => {
           return (
             <div className={styles.commentWrap} key={i.commentId}>

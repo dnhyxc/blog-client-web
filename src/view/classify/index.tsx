@@ -6,6 +6,7 @@ import Header from '@/components/Header';
 import RightBar from '@/components/RightBar';
 import Card from '@/components/Card';
 import MAlert from '@/components/Alert';
+import BackTop from '@/components/BackTop';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -27,7 +28,7 @@ const Classify: React.FC<IProps> = () => {
 
   const navigate = useNavigate();
   const listRef = useRef<ArticleItem[]>([]);
-  const { pageNo, setPageNo, onScroll, scrollRef } = useScrollLoad({
+  const { pageNo, setPageNo, onScroll, scrollRef, scrollTop, contentRef } = useScrollLoad({
     data: classifyList,
     loading,
     pageSize: PAGESIZE,
@@ -112,7 +113,7 @@ const Classify: React.FC<IProps> = () => {
     <div className={styles.Classify}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header needMenu>文章分类</Header>
-      <Content className={styles.contentWrap} onScroll={onScroll}>
+      <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
         <div className={styles.segmentedWrap}>
           <Segmented
             options={ARTICLE_CLASSIFY}
@@ -130,6 +131,7 @@ const Classify: React.FC<IProps> = () => {
             deleteArticle={deleteArticle}
             onEditArticle={onEditArticle}
             showInfo={classifyList.list.length === classifyList.total}
+            loading={loading}
           />
           <RightBar
             className={styles.rightbar}
@@ -138,6 +140,7 @@ const Classify: React.FC<IProps> = () => {
           />
         </div>
       </Content>
+      <BackTop scrollTop={scrollTop} contentRef={contentRef} />
     </div>
   );
 };

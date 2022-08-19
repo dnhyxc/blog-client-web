@@ -1,5 +1,5 @@
 import React, { useState, Fragment, ReactNode, useMemo } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Menu, Dropdown, Space } from 'antd';
 import classname from 'classname';
 import { CaretUpOutlined, CaretDownOutlined, AppstoreOutlined } from '@ant-design/icons';
@@ -16,6 +16,7 @@ interface IProps {
 
 const MenuList: React.FC<IProps> = ({ className, children }) => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { htmlWidth } = useHtmlWidth();
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
 
@@ -82,7 +83,10 @@ const MenuList: React.FC<IProps> = ({ className, children }) => {
         filterMenus.map((i) => {
           return (
             <Fragment key={i.name}>
-              <span className={styles.item} onClick={(e) => toOtherPage(e, i.path)}>
+              <span
+                className={classname(styles.item, i.path === pathname && styles.active)}
+                onClick={(e) => toOtherPage(e, i.path)}
+              >
                 {i.name}
               </span>
               {children}

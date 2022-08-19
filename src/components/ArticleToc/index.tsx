@@ -42,7 +42,13 @@ const Toc: React.FC<IProps> = ({ mackdown }) => {
       <div className={styles.tocText}>文章目录</div>
       <div className={styles.mackNav}>
         {/* renderThumbVertical 用于更改滚动条样式 */}
-        <Scrollbars autoHide ref={scrollRef} renderThumbVertical={renderThumb}>
+        <Scrollbars
+          autoHide
+          ref={scrollRef}
+          renderThumbVertical={renderThumb}
+          autoHeight
+          autoHeightMax="calc(100vh - 124px)"
+        >
           <MarkNav
             className={styles.tocList}
             source={mackdown}

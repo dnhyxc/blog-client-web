@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Affix, Tabs, message, Timeline } from 'antd';
-import { ArrowUpOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { Tabs, message, Timeline } from 'antd';
+import { ClockCircleOutlined } from '@ant-design/icons';
 import Header from '@/components/Header';
 import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
 import Card from '@/components/Card';
 import Image from '@/components/Image';
-import RightBar from '@/components/RightBar';
+import BackTop from '@/components/BackTop';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
@@ -40,7 +40,7 @@ const Author: React.FC<IProps> = () => {
   const navigate = useNavigate();
   const {
     userInfoStore: {
-      getUserInfo: { auth, userId },
+      getUserInfo: { auth, userId, username, mainCover, introduce, job },
     },
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
@@ -129,7 +129,6 @@ const Author: React.FC<IProps> = () => {
       total: 0,
       count: 0,
     });
-    contentRef?.current?.scrollToTop(100);
   };
 
   // 编辑文章
@@ -150,10 +149,6 @@ const Author: React.FC<IProps> = () => {
     setTimelineList,
     setAlertStatus,
   });
-
-  const onBackTop = () => {
-    contentRef?.current?.scrollTop();
-  };
 
   return (
     <>
@@ -177,7 +172,7 @@ const Author: React.FC<IProps> = () => {
             <div className={styles.infoWrap}>
               <div className={styles.mainCover}>
                 <Image
-                  url={MAIN_COVER}
+                  url={mainCover}
                   transitionImg={MAIN_COVER}
                   className={styles.image}
                   imageWrapStyle={styles.imageWrapStyle}
@@ -187,8 +182,9 @@ const Author: React.FC<IProps> = () => {
                 <Image url={HEAD_UEL} transitionImg={HEAD_UEL} className={styles.image} />
               </div>
               <div className={styles.mainInfo}>
-                <div className={styles.username}>dnhyxc</div>
-                <div className={styles.moto}>行到水穷处，坐看云起时</div>
+                <div className={styles.username}>{username}</div>
+                <div className={styles.job}>{job}</div>
+                <div className={styles.introduce}>{introduce}</div>
               </div>
             </div>
             <div className={styles.content}>
@@ -252,19 +248,10 @@ const Author: React.FC<IProps> = () => {
                   </Tabs>
                 </div>
               </div>
-              <Affix offsetTop={60}>
-                <div className={styles.rightBar}>
-                  <RightBar />
-                </div>
-              </Affix>
             </div>
           </div>
         </Content>
-        {scrollTop > 400 && (
-          <div className={styles.backTop} onClick={onBackTop}>
-            <ArrowUpOutlined className={styles.topIcon} />
-          </div>
-        )}
+        <BackTop scrollTop={scrollTop} contentRef={contentRef} />
       </div>
     </>
   );

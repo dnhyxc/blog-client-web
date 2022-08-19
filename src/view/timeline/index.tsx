@@ -8,6 +8,7 @@ import Content from '@/components/Content';
 import Header from '@/components/Header';
 import MAlert from '@/components/Alert';
 import Empty from '@/components/Empty';
+import BackTop from '@/components/BackTop';
 import { useLoginStatus, useLikeArticle, useScrollLoad } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -22,7 +23,7 @@ const TimeLine: React.FC<IProps> = () => {
   const navigate = useNavigate();
 
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
-  const { onScroll, scrollRef } = useScrollLoad({
+  const { onScroll, scrollRef, scrollTop, contentRef } = useScrollLoad({
     scrollStyle: styles.scrollStyle,
   });
 
@@ -66,7 +67,7 @@ const TimeLine: React.FC<IProps> = () => {
     <div className={styles.TimeLine}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header needMenu>时间轴</Header>
-      <Content className={styles.contentWrap} onScroll={onScroll}>
+      <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
         <div className={styles.wrap}>
           {timelineList.length > 0 ? (
             <Timeline className={styles.timelineContent}>
@@ -112,6 +113,7 @@ const TimeLine: React.FC<IProps> = () => {
           />
         </div>
       </Content>
+      <BackTop scrollTop={scrollTop} contentRef={contentRef} />
     </div>
   );
 };

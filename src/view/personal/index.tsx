@@ -14,6 +14,7 @@ import Card from '@/components/Card';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/Alert';
 import Header from '@/components/Header';
+import BackTop from '@/components/BackTop';
 import * as Service from '@/service';
 import useStore from '@/store';
 import { decrypt } from '@/utils';
@@ -53,7 +54,7 @@ const Personal = () => {
     userInfoStore: { getUserInfo },
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
-  const { pageNo, setPageNo, onScroll } = useScrollLoad({
+  const { pageNo, setPageNo, onScroll, scrollTop, contentRef } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
@@ -170,7 +171,7 @@ const Personal = () => {
     <div className={styles.Personal}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header needMenu>我的主页</Header>
-      <Content className={styles.contentWrap} onScroll={onScroll}>
+      <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
         <div className={styles.content}>
           <div className={styles.wrap}>
             <div className={styles.userInfo}>
@@ -231,6 +232,7 @@ const Personal = () => {
                         likeArticle={likeArticle}
                         onEditArticle={onEditArticle}
                         showInfo={articleList.list.length === articleList.total}
+                        loading={loading}
                       />
                     </TabPane>
                   );
@@ -240,6 +242,7 @@ const Personal = () => {
           </div>
         </div>
       </Content>
+      <BackTop scrollTop={scrollTop} contentRef={contentRef} />
     </div>
   );
 };

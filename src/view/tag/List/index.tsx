@@ -8,6 +8,7 @@ import RightBar from '@/components/RightBar';
 import MAlert from '@/components/Alert';
 import useStore from '@/store';
 import { PAGESIZE } from '@/constant';
+import BackTop from '@/components/BackTop';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
@@ -33,7 +34,7 @@ const TagList: React.FC<IProps> = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  const { pageNo, onScroll, scrollRef } = useScrollLoad({
+  const { pageNo, onScroll, scrollRef, scrollTop, contentRef } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
@@ -105,7 +106,7 @@ const TagList: React.FC<IProps> = () => {
         {tagName}
         &nbsp; 标签
       </Header>
-      <Content className={styles.contentWrap} onScroll={onScroll}>
+      <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
         <div className={styles.content}>
           <Card
             list={articleList.list}
@@ -113,9 +114,8 @@ const TagList: React.FC<IProps> = () => {
             deleteArticle={deleteArticle}
             toDetail={toDetail}
             onEditArticle={onEditArticle}
-            showInfo={
-              articleList.list.length > 0 && articleList.list.length === articleList.total
-            }
+            showInfo={articleList.list.length === articleList.total}
+            loading={loading}
           />
           <RightBar
             className={styles.rightbar}
@@ -124,6 +124,7 @@ const TagList: React.FC<IProps> = () => {
           />
         </div>
       </Content>
+      <BackTop scrollTop={scrollTop} contentRef={contentRef} />
     </div>
   );
 };

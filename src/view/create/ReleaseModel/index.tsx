@@ -8,7 +8,7 @@ import useStore from '@/store';
 import { useLoginStatus } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult } from '@/utils/tools';
-import { ARTICLE_CLASSIFY, ARTICLE_TAG } from '@/constant';
+import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL } from '@/constant';
 import { CreateArticleParams, CreateResult } from '@/typings/common';
 
 import styles from './index.less';
@@ -195,6 +195,7 @@ const ReleaseModel: React.FC<IProps> = ({
               <UploadFile
                 filePath={filePath}
                 setFilePath={setFilePath}
+                transitionImg={CARD_URL}
                 form={form}
                 imgStyle={styles.uploadImg}
                 setAlertStatus={setAlertStatus}

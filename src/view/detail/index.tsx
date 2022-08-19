@@ -79,7 +79,7 @@ const ArticleDetail: React.FC = () => {
   };
 
   return (
-    <div>
+    <>
       <div
         className={classname(
           styles.detailContainer,
@@ -143,7 +143,7 @@ const ArticleDetail: React.FC = () => {
           <ArrowUpOutlined className={styles.topIcon} />
         </div>
       </BackTop>
-    </div>
+    </>
   );
 };
 

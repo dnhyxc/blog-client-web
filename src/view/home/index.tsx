@@ -14,6 +14,7 @@ import RightBar from '@/components/RightBar';
 import Card from '@/components/Card';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/Alert';
+import BackTop from '@/components/BackTop';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -45,7 +46,7 @@ const Home: React.FC<IProps> = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  const { pageNo, setPageNo, onScroll, scrollRef } = useScrollLoad({
+  const { pageNo, setPageNo, onScroll, scrollRef, contentRef, scrollTop } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
@@ -201,7 +202,7 @@ const Home: React.FC<IProps> = () => {
         文章列表
       </Header>
       {articleList && (
-        <Content className={styles.contentWrap} onScroll={onScroll}>
+        <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
           <div className={styles.content}>
             <Card
               list={articleList.list}
@@ -210,6 +211,7 @@ const Home: React.FC<IProps> = () => {
               likeArticle={likeArticle}
               onEditArticle={onEditArticle}
               showInfo={articleList.list.length === articleList.total}
+              loading={loading}
             />
             <RightBar
               className={styles.rightbar}
@@ -219,6 +221,7 @@ const Home: React.FC<IProps> = () => {
           </div>
         </Content>
       )}
+      <BackTop scrollTop={scrollTop} contentRef={contentRef} />
     </div>
   );
 };

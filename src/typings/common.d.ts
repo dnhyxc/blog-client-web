@@ -73,6 +73,7 @@ export interface GetArticleListParams {
 export interface ArticleItem {
   abstract: string;
   authorId: string;
+  authorName: string;
   classify: string;
   content: string;
   coverImage: string;
@@ -173,6 +174,7 @@ interface TimelineArticles {
   abstract: string;
   createTime: number;
   authorId: string;
+  authorName: string;
   coverImage: string;
   isLike: boolean;
   tag: string;
@@ -191,6 +193,7 @@ export interface ArticleItemResult {
   abstract: string;
   createTime: number;
   authorId: string;
+  authorName: string;
   coverImage: string;
   isLike: boolean;
   tag: string;
