@@ -1,0 +1,74 @@
+@import '~@styles/common.less';
+
+.articleItem() {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  .title {
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+
+  .abstract,
+  .info {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.AnotherArticle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  padding: 10px 16px;
+
+  .prevArticle {
+    .articleItem();
+    padding-right: 20px;
+
+    .item {
+      width: 100%;
+
+      .title,
+      .abstract,
+      .info {
+        text-align: left;
+      }
+    }
+
+    .icon {
+      margin-right: 10px;
+    }
+  }
+
+  .nextArticle {
+    .articleItem();
+    padding-left: 20px;
+
+    .item {
+      width: 100%;
+
+      .title,
+      .abstract,
+      .info {
+        text-align: right;
+      }
+    }
+
+    .icon {
+      text-align: right;
+      margin-left: 10px;
+    }
+  }
+}

@@ -5,7 +5,7 @@
  * @LastEditors: dnh
  * @FilePath: \src\view\detail\index.tsx
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Affix, BackTop, Spin, Button } from 'antd';
 import classname from 'classname';
@@ -17,6 +17,7 @@ import { HEAD_UEL, CARD_URL } from '@/constant';
 import RightBar from '@/components/RightBar';
 import Toc from '@/components/ArticleToc';
 import Comments from '@/components/Comments';
+import AnotherArticle from '@/components/AnotherArticle';
 import { useGetArticleDetail } from '@/hooks';
 import useStore from '@/store';
 import { formatGapTime, decrypt } from '@/utils';
@@ -26,7 +27,10 @@ import styles from './index.less';
 const ArticleDetail: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { detail } = useGetArticleDetail(id);
+
+  const [adticleId, setArticleId] = useState<string | undefined>(id);
+
+  const { detail } = useGetArticleDetail(adticleId);
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
@@ -39,6 +43,10 @@ const ArticleDetail: React.FC = () => {
   // 去我的主页
   const toSetting = (authorId: string) => {
     navigate(`/personal?id=${authorId}`);
+  };
+
+  const getAnotherDetail = (id: string) => {
+    setArticleId(id);
   };
 
   const renderCoverImg = (detail: ArticleDetailParams) => {
@@ -122,6 +130,9 @@ const ArticleDetail: React.FC = () => {
                 <div className={styles.loadText}>正在卖力加载文章...</div>
               </div>
             )}
+            <div className={styles.anotherArticle}>
+              <AnotherArticle id={adticleId} toDetail={getAnotherDetail} />
+            </div>
             {detail && (
               <div className={styles.commentList}>
                 <Comments authorId={detail.authorId} />

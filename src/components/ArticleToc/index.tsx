@@ -20,7 +20,7 @@ const Toc: React.FC<IProps> = ({ mackdown }) => {
   }, [scrollRef]);
 
   const onHtmlScroll = () => {
-    const scrollRefScrollHeight = scrollRef.current.getScrollHeight();
+    const scrollRefScrollHeight = scrollRef?.current?.getScrollHeight();
     const htmlScrollTop = document.documentElement.scrollTop;
     const htmlScrollHeight = document.documentElement.scrollHeight;
     const percent = (scrollRefScrollHeight - 500) / htmlScrollHeight;

@@ -109,3 +109,19 @@ export async function delAllArticle() {
   const res = await del(API.DEL_ALL_ARTICLE);
   return res;
 }
+
+export async function getPrevArticle(params: {
+  id: string | undefined;
+  classify?: string | undefined;
+}) {
+  const res = await post(API.GET_PREV_ARTICLE, params);
+  return res;
+}
+
+export async function getNextArticle(params: {
+  id: string | undefined;
+  classify?: string | undefined;
+}) {
+  const res = await post(API.GET_NEXT_ARTICLE, params);
+  return res;
+}

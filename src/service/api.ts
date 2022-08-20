@@ -63,6 +63,12 @@ const GET_AUTHOR_TIMELINE = '/api/getAuthorTimeline';
 // 获取博主点赞的文章列表
 const DEL_ALL_ARTICLE = '/api/delAllArticle';
 
+// 获取博主点赞的文章列表
+const GET_PREV_ARTICLE = '/api/getPrevArticle';
+
+// 获取博主点赞的文章列表
+const GET_NEXT_ARTICLE = '/api/getNextArticle';
+
 export {
   REGISTER,
   LOGIN,
@@ -91,4 +97,6 @@ export {
   GET_AUTHOR_LIKE_ARTICLES,
   GET_AUTHOR_TIMELINE,
   DEL_ALL_ARTICLE,
+  GET_PREV_ARTICLE,
+  GET_NEXT_ARTICLE,
 };

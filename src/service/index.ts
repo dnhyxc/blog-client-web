@@ -15,6 +15,8 @@ import {
   getTimelineList,
   getArticleByRandom,
   delAllArticle,
+  getPrevArticle,
+  getNextArticle,
 } from './article';
 import { uploadFile } from './upload';
 import { getMyArticleList, getAuthorArticleList, getAuthorTimeline } from './userInfo';
@@ -46,4 +48,6 @@ export {
   getArticleByRandom,
   getAuthorArticleList,
   getAuthorTimeline,
+  getPrevArticle,
+  getNextArticle,
 };
