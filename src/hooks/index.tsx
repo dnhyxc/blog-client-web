@@ -93,6 +93,7 @@ export const useScroll = (needScroll: string | null) => {
 // 获取详情的hooks
 export const useGetArticleDetail = (id: string | null | undefined) => {
   const [detail, setDetail] = useState<ArticleDetailParams>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (id) {
@@ -101,9 +102,11 @@ export const useGetArticleDetail = (id: string | null | undefined) => {
   }, [id]);
 
   const getArticleDetail = async () => {
+    setLoading(true);
     const res = normalizeResult<ArticleDetailParams>(
       await Service.getArticleDetail({ id: id! })
     );
+    setLoading(false);
     if (res.success) {
       setDetail(res.data);
     } else {
@@ -111,7 +114,7 @@ export const useGetArticleDetail = (id: string | null | undefined) => {
     }
   };
 
-  return { detail };
+  return { detail, loading };
 };
 
 interface useLikeArticleParams {

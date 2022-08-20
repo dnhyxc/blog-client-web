@@ -21,11 +21,11 @@ const Toc: React.FC<IProps> = ({ mackdown }) => {
 
   const onHtmlScroll = () => {
     const scrollRefScrollHeight = scrollRef?.current?.getScrollHeight();
-    const htmlScrollTop = document.documentElement.scrollTop;
-    const htmlScrollHeight = document.documentElement.scrollHeight;
+    const htmlScrollTop = document.documentElement?.scrollTop;
+    const htmlScrollHeight = document.documentElement?.scrollHeight;
     const percent = (scrollRefScrollHeight - 500) / htmlScrollHeight;
     const needScrollTop = percent * htmlScrollTop;
-    scrollRef.current.scrollTop(needScrollTop);
+    scrollRef?.current?.scrollTop(needScrollTop);
   };
 
   const renderThumb = () => {

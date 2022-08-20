@@ -5,7 +5,7 @@
  * @LastEditors: dnh
  * @FilePath: \src\view\detail\index.tsx
  */
-import React, { useState } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Affix, BackTop, Spin, Button } from 'antd';
 import classname from 'classname';
@@ -28,9 +28,7 @@ const ArticleDetail: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [adticleId, setArticleId] = useState<string | undefined>(id);
-
-  const { detail } = useGetArticleDetail(adticleId);
+  const { detail, loading } = useGetArticleDetail(id);
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
@@ -43,10 +41,6 @@ const ArticleDetail: React.FC = () => {
   // 去我的主页
   const toSetting = (authorId: string) => {
     navigate(`/personal?id=${authorId}`);
-  };
-
-  const getAnotherDetail = (id: string) => {
-    setArticleId(id);
   };
 
   const renderCoverImg = (detail: ArticleDetailParams) => {
@@ -88,72 +82,96 @@ const ArticleDetail: React.FC = () => {
 
   return (
     <>
-      <div
-        className={classname(
-          styles.detailContainer,
-          detail?.content.includes('#') && styles.hanToc
-        )}
-      >
-        <div className={styles.headerWrap}>
-          <Header needLeft needMenu excludesWidth>
-            <div className={styles.headerContent}>
-              <div>文章详情</div>
-            </div>
-          </Header>
-        </div>
-        <div className={styles.content}>
-          <div className={styles.preview}>
-            {detail ? (
-              <Preview
-                className={styles.previewContent}
-                mackdown={detail.content}
-                coverImg={renderCoverImg(detail)}
-              >
-                <div className={styles.tagWrap}>
-                  <div className={styles.tagList}>
-                    <span className={styles.label}>分类：</span>
-                    <div className={styles.tagItemWrap}>
-                      <span className={styles.tag}>{detail.classify}</span>
+      <Spin spinning={loading} className={styles.spinWrap} tip="正在卖力加载中...">
+        <div
+          className={classname(
+            styles.detailContainer,
+            detail?.content.includes('#') && styles.hanToc
+          )}
+        >
+          <div className={styles.headerWrap}>
+            <Header needLeft needMenu excludesWidth>
+              <div className={styles.headerContent}>
+                <div>文章详情</div>
+              </div>
+            </Header>
+          </div>
+          <div className={styles.content}>
+            <div className={styles.preview}>
+              {detail && (
+                <Preview
+                  className={styles.previewContent}
+                  mackdown={detail.content}
+                  coverImg={renderCoverImg(detail)}
+                >
+                  <div className={styles.tagWrap}>
+                    <div className={styles.tagList}>
+                      <span className={styles.label}>分类：</span>
+                      <div className={styles.tagItemWrap}>
+                        <span className={styles.tag}>{detail.classify}</span>
+                      </div>
+                    </div>
+                    <div className={styles.tagList}>
+                      <span className={styles.label}>标签：</span>
+                      <div className={styles.tagItemWrap}>
+                        <span className={styles.tag}>{detail.tag}</span>
+                      </div>
                     </div>
                   </div>
-                  <div className={styles.tagList}>
-                    <span className={styles.label}>标签：</span>
-                    <div className={styles.tagItemWrap}>
-                      <span className={styles.tag}>{detail.tag}</span>
+                </Preview>
+              )}
+              {/* {detail ? (
+                <Preview
+                  className={styles.previewContent}
+                  mackdown={detail.content}
+                  coverImg={renderCoverImg(detail)}
+                >
+                  <div className={styles.tagWrap}>
+                    <div className={styles.tagList}>
+                      <span className={styles.label}>分类：</span>
+                      <div className={styles.tagItemWrap}>
+                        <span className={styles.tag}>{detail.classify}</span>
+                      </div>
+                    </div>
+                    <div className={styles.tagList}>
+                      <span className={styles.label}>标签：</span>
+                      <div className={styles.tagItemWrap}>
+                        <span className={styles.tag}>{detail.tag}</span>
+                      </div>
                     </div>
                   </div>
+                </Preview>
+              ) : (
+                <div className={styles.previewSpin}>
+                  <Spin />
+                  <div className={styles.loadText}>正在卖力加载文章...</div>
                 </div>
-              </Preview>
-            ) : (
-              <div className={styles.previewSpin}>
-                <Spin />
-                <div className={styles.loadText}>正在卖力加载文章...</div>
+              )} */}
+              <div className={styles.anotherArticle}>
+                <AnotherArticle id={id} />
               </div>
-            )}
-            <div className={styles.anotherArticle}>
-              <AnotherArticle id={adticleId} toDetail={getAnotherDetail} />
+              {detail && (
+                <div className={styles.commentList}>
+                  <Comments authorId={detail.authorId} />
+                </div>
+              )}
             </div>
-            {detail && (
-              <div className={styles.commentList}>
-                <Comments authorId={detail.authorId} />
-              </div>
-            )}
-          </div>
-          <div className={styles.rightBar}>
-            <RightBar />
-            {detail && (
-              <Affix offsetTop={50}>
-                <Toc mackdown={detail.content} />
-              </Affix>
-            )}
+            <div className={styles.rightBar}>
+              <RightBar />
+              {detail && (
+                <Affix offsetTop={50}>
+                  <Toc mackdown={detail.content} />
+                </Affix>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <BackTop className={styles.backTopWrap}>
-        <div className={styles.backTop}>
-          <ArrowUpOutlined className={styles.topIcon} />
-        </div>
-      </BackTop>
+        <BackTop className={styles.backTopWrap}>
+          <div className={styles.backTop}>
+            <ArrowUpOutlined className={styles.topIcon} />
+          </div>
+        </BackTop>
+      </Spin>
     </>
   );
 };

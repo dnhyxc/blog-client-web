@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { formatGapTime, decrypt } from '@/utils';
@@ -8,11 +9,13 @@ import styles from './index.less';
 
 interface IProps {
   id: string | undefined;
-  toDetail?: Function;
+  // toDetail?: Function;
 }
 
-const AnotherArticle: React.FC<IProps> = ({ id, toDetail }) => {
+const AnotherArticle: React.FC<IProps> = ({ id }) => {
   const [articleList, setArticleList] = useState<ArticleItem[]>([]);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     getAnothers();
@@ -35,6 +38,10 @@ const AnotherArticle: React.FC<IProps> = ({ id, toDetail }) => {
   const getNextArticle = async () => {
     const res = normalizeResult<ArticleItem>(await Service.getNextArticle({ id }));
     return res.data;
+  };
+
+  const toDetail = (id: string) => {
+    navigate(`/detail/${id}`);
   };
 
   return (

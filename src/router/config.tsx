@@ -72,7 +72,7 @@ const routes: RouteObject[] = [
   },
   {
     path: 'detail/:id',
-    element: lazyLoad(<Detail />),
+    element: lazyLoad(<Detail />, false),
   },
   {
     path: 'setting',
