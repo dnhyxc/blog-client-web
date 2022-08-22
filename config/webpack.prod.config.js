@@ -1,7 +1,9 @@
+const path = require('path');
 const { merge } = require('webpack-merge');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+const FileManagerWebpackPlugin = require('filemanager-webpack-plugin');
 const common = require('./webpack.common.config.js');
 
 module.exports = merge(common, {
@@ -75,7 +77,21 @@ module.exports = merge(common, {
       },
     ],
   },
-  plugins: [new CssMinimizerWebpackPlugin()],
+  plugins: [
+    new CssMinimizerWebpackPlugin(), // 打包完成后自动生成zip压缩包
+    new FileManagerWebpackPlugin({
+      events: {
+        onEnd: {
+          archive: [
+            {
+              source: path.resolve(__dirname, '../dist'),
+              destination: path.resolve(__dirname, '../dist.zip'),
+            },
+          ],
+        },
+      },
+    })
+  ],
   optimization: {
     minimize: true,
     minimizer: [

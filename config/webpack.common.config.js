@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const FileManagerWebpackPlugin = require('filemanager-webpack-plugin');
 // const PurgeCSSPlugin = require('purgecss-webpack-plugin'); // css优化去重复无效代码
 // const glob = require('glob');
 
@@ -88,19 +87,6 @@ module.exports = {
       dependencies: true,
       dependenciesCount: 10000,
       percentBy: 'entries',
-    }),
-    // 打包完成后自动生成zip压缩包
-    new FileManagerWebpackPlugin({
-      events: {
-        onEnd: {
-          archive: [
-            {
-              source: path.resolve(__dirname, '../dist'),
-              destination: path.resolve(__dirname, '../dist.zip'),
-            },
-          ],
-        },
-      },
     }),
     // 打包时排除没有用到的 css 代码，这个需要谨慎使用，用的不好会导致打包出的css没有内容
     // new PurgeCSSPlugin({
