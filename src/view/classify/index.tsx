@@ -10,7 +10,7 @@ import BackTop from '@/components/BackTop';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult } from '@/utils/tools';
+import { normalizeResult, storage } from '@/utils';
 import { ARTICLE_CLASSIFY, PAGESIZE } from '@/constant';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
@@ -45,14 +45,21 @@ const Classify: React.FC<IProps> = () => {
 
   const getClassifyList = async () => {
     setLoading(true);
-    const res = normalizeResult<ArticleListResult>(
-      await Service.getClassifyList({
-        pageNo,
-        pageSize: PAGESIZE,
+    const params = {
+      pageNo,
+      pageSize: PAGESIZE,
+      classify: selectClassify,
+      userId: getUserInfo?.userId,
+    };
+    storage.locSetItem(
+      'params',
+      JSON.stringify({
         classify: selectClassify,
         userId: getUserInfo?.userId,
+        from: 'classify',
       })
     );
+    const res = normalizeResult<ArticleListResult>(await Service.getClassifyList(params));
     setLoading(false);
     if (res.success) {
       const { total, list } = res.data;

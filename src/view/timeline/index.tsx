@@ -12,7 +12,7 @@ import BackTop from '@/components/BackTop';
 import { useLoginStatus, useLikeArticle, useScrollLoad } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult } from '@/utils/tools';
+import { normalizeResult, storage } from '@/utils';
 import { TimelineResult } from '@/typings/common';
 import styles from './index.less';
 
@@ -37,9 +37,9 @@ const TimeLine: React.FC<IProps> = () => {
 
   // 获取时间轴列表
   const getTimelineList = async () => {
-    const res = normalizeResult<TimelineResult[]>(
-      await Service.getTimelineList({ userId: getUserInfo?.userId })
-    );
+    const params = { userId: getUserInfo?.userId };
+    storage.locSetItem('params', JSON.stringify({ ...params, from: 'timeline' }));
+    const res = normalizeResult<TimelineResult[]>(await Service.getTimelineList(params));
     if (res.success) {
       setTimelineList(res.data);
     } else {

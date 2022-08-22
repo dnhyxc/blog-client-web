@@ -10,7 +10,7 @@ import Image from '@/components/Image';
 import BackTop from '@/components/BackTop';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult } from '@/utils/tools';
+import { normalizeResult, storage } from '@/utils';
 import {
   useLoginStatus,
   useLikeArticle,
@@ -65,15 +65,17 @@ const Author: React.FC<IProps> = () => {
   // 获取博主的文章及点赞文章列表
   const getAuthorArticles = async () => {
     setLoading(true);
+    const params = {
+      pageNo,
+      pageSize: PAGESIZE,
+      accessUserId: userId,
+    };
+    storage.locSetItem(
+      'params',
+      JSON.stringify({ accessUserId: userId, selectKey, from: 'author' })
+    );
     const res = normalizeResult<ArticleListResult>(
-      await Service.getAuthorArticleList(
-        {
-          pageNo,
-          pageSize: PAGESIZE,
-          accessUserId: userId,
-        },
-        AUTHOR_API_PATH[selectKey]
-      )
+      await Service.getAuthorArticleList(params, AUTHOR_API_PATH[selectKey])
     );
     setLoading(false);
     if (res.success) {
@@ -92,6 +94,10 @@ const Author: React.FC<IProps> = () => {
 
   // 获取时间轴列表
   const getAuthorTimeline = async () => {
+    storage.locSetItem(
+      'params',
+      JSON.stringify({ accessUserId: userId, selectKey, from: 'author' })
+    );
     const res = normalizeResult<TimelineResult[]>(
       await Service.getAuthorTimeline({ accessUserId: userId })
     );
@@ -113,6 +119,7 @@ const Author: React.FC<IProps> = () => {
 
   // 点击进入详情
   const toDetail = (id: string, needScroll: boolean): void => {
+    console.log(id, 'id');
     if (needScroll) {
       navigate(`/detail/${id}?needScroll=1`);
     } else {

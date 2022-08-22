@@ -3,6 +3,7 @@ import moment from 'moment';
 import { SET_ITEM_CONFIG } from '@/constant';
 import { encrypt, decrypt } from './crypto';
 import { normalizeResult } from './tools';
+import { storage } from './storage';
 
 export const formatDate = (date: number, format = 'YYYY/MM/DD HH:mm:ss') => {
   if (!date) return;
@@ -67,4 +68,12 @@ const getSetItemConfig = (auth: number, type: string | null) => {
   return SET_ITEM_CONFIG.filter((i) => i.label !== 'auth');
 };
 
-export { normalizeResult, useCookies, encrypt, decrypt, formatGapTime, getSetItemConfig };
+export {
+  normalizeResult,
+  useCookies,
+  encrypt,
+  decrypt,
+  formatGapTime,
+  getSetItemConfig,
+  storage,
+};

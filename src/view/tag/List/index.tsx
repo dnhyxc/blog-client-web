@@ -11,7 +11,7 @@ import { PAGESIZE } from '@/constant';
 import BackTop from '@/components/BackTop';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult } from '@/utils/tools';
+import { normalizeResult, storage } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
@@ -45,17 +45,15 @@ const TagList: React.FC<IProps> = () => {
     onGetArticleByTagName();
   }, [pageNo]);
 
-  // 文章搜索
+  // 文章tag搜索
   const onGetArticleByTagName = async () => {
     setLoading(true);
-    const res = normalizeResult<ArticleListResult>(
-      await Service.searchArticle({
-        tagName,
-        pageNo,
-        pageSize: PAGESIZE,
-        userId: getUserInfo?.userId,
-      })
+    const params = { tagName, pageNo, pageSize: PAGESIZE, userId: getUserInfo?.userId };
+    storage.locSetItem(
+      'params',
+      JSON.stringify({ tagName, userId: getUserInfo?.userId, from: 'tag' })
     );
+    const res = normalizeResult<ArticleListResult>(await Service.searchArticle(params));
     setLoading(false);
     if (res.success) {
       const { total, list } = res.data;

@@ -17,8 +17,7 @@ import Header from '@/components/Header';
 import BackTop from '@/components/BackTop';
 import * as Service from '@/service';
 import useStore from '@/store';
-import { decrypt } from '@/utils';
-import { normalizeResult } from '@/utils/tools';
+import { normalizeResult, decrypt, storage } from '@/utils';
 import {
   ABOUT_ME_TABS,
   ABOUT_TABS,
@@ -72,16 +71,23 @@ const Personal = () => {
   // 获取我的文章及点赞文章列表
   const getMyArticleList = async () => {
     setLoading(true);
+    const params = {
+      pageNo,
+      pageSize: PAGESIZE,
+      userId: authorId || getUserInfo?.userId,
+      accessUserId: getUserInfo?.userId,
+    };
+    storage.locSetItem(
+      'params',
+      JSON.stringify({
+        userId: authorId || getUserInfo?.userId,
+        accessUserId: getUserInfo?.userId,
+        selectKey,
+        from: 'personal',
+      })
+    );
     const res = normalizeResult<ArticleListResult>(
-      await Service.getMyArticleList(
-        {
-          pageNo,
-          pageSize: PAGESIZE,
-          userId: authorId || getUserInfo?.userId,
-          accessUserId: getUserInfo?.userId,
-        },
-        ABOUT_ME_API_PATH[selectKey]
-      )
+      await Service.getMyArticleList(params, ABOUT_ME_API_PATH[selectKey])
     );
     setLoading(false);
     if (res.success) {
