@@ -2,6 +2,12 @@
 
 .webkitScrollbarStyle();
 
+.ellipsis() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .AuthorContainer {
   position: relative;
   display: flex;
@@ -122,6 +128,11 @@
         .username {
           font-size: 26px;
           font-weight: 600;
+          .ellipsis();
+        }
+
+        .info {
+          .ellipsis();
         }
       }
     }

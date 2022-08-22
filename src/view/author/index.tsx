@@ -10,7 +10,7 @@ import Image from '@/components/Image';
 import BackTop from '@/components/BackTop';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult, storage } from '@/utils';
+import { normalizeResult, storage, decrypt } from '@/utils';
 import {
   useLoginStatus,
   useLikeArticle,
@@ -19,17 +19,20 @@ import {
   useDeleteTimelineArticle,
 } from '@/hooks';
 import { PAGESIZE, HEAD_UEL, MAIN_COVER, AUTHOR_TABS, AUTHOR_API_PATH } from '@/constant';
-import { ArticleListResult, ArticleItem, TimelineResult } from '@/typings/common';
+import { ArticleListResult, ArticleItem, TimelineResult, UserInfoParams } from '@/typings/common';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-interface IProps {}
+interface IProps { }
 
 const Author: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectKey, setSelectKey] = useState<string>('1');
   const [timelineList, setTimelineList] = useState<TimelineResult[]>([]);
+  const [authorInfo, setAuthorInfo] = useState<UserInfoParams>({
+    userId: '',
+  });
   const [articleList, setArticleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
@@ -40,7 +43,7 @@ const Author: React.FC<IProps> = () => {
   const navigate = useNavigate();
   const {
     userInfoStore: {
-      getUserInfo: { auth, userId, username, mainCover, introduce, job },
+      getUserInfo: { auth, userId },
     },
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
@@ -51,8 +54,29 @@ const Author: React.FC<IProps> = () => {
   });
 
   useEffect(() => {
+    onGetPersonalInfo();
+  }, []);
+
+  useEffect(() => {
     getAuthorArticleList();
   }, [selectKey, pageNo]);
+
+  // 获取博主信息
+  const onGetPersonalInfo = async () => {
+    const res = normalizeResult<UserInfoParams>(
+      await Service.getUserInfo({
+        auth: 1,
+      })
+    );
+    if (res.success) {
+      setAuthorInfo(res.data);
+      return;
+    }
+    if (res.code === 406) {
+      message.error(res.message);
+      navigate('home');
+    }
+  };
 
   const getAuthorArticleList = async () => {
     if (selectKey !== '3') {
@@ -119,7 +143,6 @@ const Author: React.FC<IProps> = () => {
 
   // 点击进入详情
   const toDetail = (id: string, needScroll: boolean): void => {
-    console.log(id, 'id');
     if (needScroll) {
       navigate(`/detail/${id}?needScroll=1`);
     } else {
@@ -179,19 +202,19 @@ const Author: React.FC<IProps> = () => {
             <div className={styles.infoWrap}>
               <div className={styles.mainCover}>
                 <Image
-                  url={mainCover}
+                  url={authorInfo?.mainCover || MAIN_COVER}
                   transitionImg={MAIN_COVER}
                   className={styles.image}
                   imageWrapStyle={styles.imageWrapStyle}
                 />
               </div>
               <div className={styles.headImg}>
-                <Image url={HEAD_UEL} transitionImg={HEAD_UEL} className={styles.image} />
+                <Image url={authorInfo?.headUrl || HEAD_UEL} transitionImg={HEAD_UEL} className={styles.image} />
               </div>
               <div className={styles.mainInfo}>
-                <div className={styles.username}>{username}</div>
-                <div className={styles.job}>{job}</div>
-                <div className={styles.introduce}>{introduce}</div>
+                <div className={styles.username}>{authorInfo?.username && decrypt(authorInfo?.username)}</div>
+                <div className={styles.info}>{authorInfo?.job}</div>
+                <div className={styles.info}>{authorInfo?.introduce}</div>
               </div>
             </div>
             <div className={styles.content}>

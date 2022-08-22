@@ -23,7 +23,7 @@ export async function updatePassword(params: UserInfoParams) {
   return res;
 }
 
-export async function getUserInfo(params: { userId: string | null }) {
+export async function getUserInfo(params: { userId?: string | null; auth?: number }) {
   const res = await post(API.GET_USER_INFO, params);
   return res;
 }

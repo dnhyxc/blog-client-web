@@ -225,3 +225,12 @@ export interface useDeleteTimelineParams {
   setTimelineList: Function;
   setAlertStatus: Function;
 }
+
+// 上下页参数定义
+export interface AnotherParams {
+  id?: string;
+  userId?: string;
+  from?: string;
+  accessUserId?: string;
+  selectKey?: string;
+}

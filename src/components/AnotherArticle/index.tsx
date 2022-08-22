@@ -4,7 +4,7 @@ import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { formatGapTime, decrypt, storage } from '@/utils';
 import MIcons from '../Icons';
-import { ArticleItem } from '@/typings/common';
+import { ArticleItem, AnotherParams } from '@/typings/common';
 import styles from './index.less';
 
 interface IProps {
@@ -16,8 +16,7 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
 
   const navigate = useNavigate();
 
-  const params: any = storage.locGetItem('params');
-  console.log(params && JSON.parse(params));
+  const params: AnotherParams = (storage.locGetItem('params') && JSON.parse(storage.locGetItem('params')!)) || {};
 
   useEffect(() => {
     getAnothers();
@@ -33,7 +32,7 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
   // 获取上一篇文章
   const getPrevArticle = async () => {
     const res = normalizeResult<ArticleItem>(
-      await Service.getPrevArticle({ id, ...JSON.parse(params) })
+      await Service.getPrevArticle({ id, ...params })
     );
     return res.data;
   };
@@ -41,7 +40,7 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
   // 获取下一篇文章
   const getNextArticle = async () => {
     const res = normalizeResult<ArticleItem>(
-      await Service.getNextArticle({ id, ...JSON.parse(params) })
+      await Service.getNextArticle({ id, ...params })
     );
     return res.data;
   };
@@ -51,41 +50,43 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
   };
 
   return (
-    <div className={styles.AnotherArticle}>
-      {articleList?.length > 0 &&
-        articleList.map((i, index) => {
-          return (
-            <div
-              key={i.id || index}
-              className={index > 0 ? styles.nextArticle : styles.prevArticle}
-              onClick={() => toDetail && toDetail(i.id)}
-            >
-              {index === 0 && i?.id && (
-                <div className={styles.icon}>
-                  <MIcons name="icon-arrow-left-bold" />
-                </div>
-              )}
-              {i.id && (
-                <div className={styles.item}>
-                  <div className={styles.title}>{i?.title}</div>
-                  <div className={styles.abstract}>{i?.abstract}</div>
-                  <div className={styles.info}>
-                    <span>{i?.authorName && decrypt(i?.authorName)}</span>
-                    <span>{` · ${i?.tag} · `}</span>
-                    <span>{`${i?.classify} · `}</span>
-                    <span>{formatGapTime(i?.createTime!)}</span>
+    (articleList[0]?.id || articleList[1]?.id) ? (
+      <div className={styles.AnotherArticle}>
+        {
+          articleList.map((i, index) => {
+            return (
+              <div
+                key={i.id || index}
+                className={index > 0 ? styles.nextArticle : styles.prevArticle}
+                onClick={() => toDetail && toDetail(i.id)}
+              >
+                {index === 0 && i?.id && (
+                  <div className={styles.icon}>
+                    <MIcons name="icon-arrow-left-bold" />
                   </div>
-                </div>
-              )}
-              {index > 0 && i?.id && (
-                <div className={styles.icon}>
-                  <MIcons name="icon-arrow-right-bold" />
-                </div>
-              )}
-            </div>
-          );
-        })}
-    </div>
+                )}
+                {i.id && (
+                  <div className={styles.item}>
+                    <div className={styles.title}>{i?.title}</div>
+                    <div className={styles.abstract}>{i?.abstract}</div>
+                    <div className={styles.info}>
+                      <span>{i?.authorName && decrypt(i?.authorName)}</span>
+                      <span>{` · ${i?.tag} · `}</span>
+                      <span>{`${i?.classify} · `}</span>
+                      <span>{formatGapTime(i?.createTime!)}</span>
+                    </div>
+                  </div>
+                )}
+                {index > 0 && i?.id && (
+                  <div className={styles.icon}>
+                    <MIcons name="icon-arrow-right-bold" />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+      </div>
+    ) : null
   );
 };
 

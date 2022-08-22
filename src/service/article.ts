@@ -5,6 +5,7 @@ import {
   SearchArticleParams,
   GetArticleListParams,
   CommentParams,
+  AnotherParams,
 } from '@/typings/common';
 
 export async function createArticle(params: CreateArticleParams) {
@@ -110,18 +111,12 @@ export async function delAllArticle() {
   return res;
 }
 
-export async function getPrevArticle(params: {
-  id: string | undefined;
-  classify?: string | undefined;
-}) {
+export async function getPrevArticle(params: AnotherParams) {
   const res = await post(API.GET_PREV_ARTICLE, params);
   return res;
 }
 
-export async function getNextArticle(params: {
-  id: string | undefined;
-  classify?: string | undefined;
-}) {
+export async function getNextArticle(params: AnotherParams) {
   const res = await post(API.GET_NEXT_ARTICLE, params);
   return res;
 }
