@@ -2,20 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
-import { formatGapTime, decrypt } from '@/utils';
+import { formatGapTime, decrypt, storage } from '@/utils';
 import MIcons from '../Icons';
 import { ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
 interface IProps {
   id: string | undefined;
-  // toDetail?: Function;
 }
 
 const AnotherArticle: React.FC<IProps> = ({ id }) => {
   const [articleList, setArticleList] = useState<ArticleItem[]>([]);
 
   const navigate = useNavigate();
+
+  const params: any = storage.locGetItem('params');
+  console.log(params && JSON.parse(params));
 
   useEffect(() => {
     getAnothers();
@@ -30,13 +32,17 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
 
   // 获取上一篇文章
   const getPrevArticle = async () => {
-    const res = normalizeResult<ArticleItem>(await Service.getPrevArticle({ id }));
+    const res = normalizeResult<ArticleItem>(
+      await Service.getPrevArticle({ id, ...JSON.parse(params) })
+    );
     return res.data;
   };
 
   // 获取下一篇文章
   const getNextArticle = async () => {
-    const res = normalizeResult<ArticleItem>(await Service.getNextArticle({ id }));
+    const res = normalizeResult<ArticleItem>(
+      await Service.getNextArticle({ id, ...JSON.parse(params) })
+    );
     return res.data;
   };
 

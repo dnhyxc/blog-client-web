@@ -81,98 +81,69 @@ const ArticleDetail: React.FC = () => {
   };
 
   return (
-    <>
-      <Spin spinning={loading} className={styles.spinWrap} tip="正在卖力加载中...">
-        <div
-          className={classname(
-            styles.detailContainer,
-            detail?.content.includes('#') && styles.hanToc
-          )}
-        >
-          <div className={styles.headerWrap}>
-            <Header needLeft needMenu excludesWidth>
-              <div className={styles.headerContent}>
-                <div>文章详情</div>
+    <Spin spinning={loading} className={styles.spinWrap} tip="正在卖力加载中...">
+      <div
+        className={classname(
+          styles.detailContainer,
+          detail?.content.includes('#') && styles.hanToc
+        )}
+      >
+        <div className={styles.headerWrap}>
+          <Header needLeft needMenu excludesWidth>
+            <div className={styles.headerContent}>
+              <div>文章详情</div>
+            </div>
+          </Header>
+        </div>
+        <div className={styles.content}>
+          <div className={styles.preview}>
+            {detail && (
+              <Preview
+                className={styles.previewContent}
+                mackdown={detail.content}
+                coverImg={renderCoverImg(detail)}
+              >
+                <div className={styles.tagWrap}>
+                  <div className={styles.tagList}>
+                    <span className={styles.label}>分类：</span>
+                    <div className={styles.tagItemWrap}>
+                      <span className={styles.tag}>{detail.classify}</span>
+                    </div>
+                  </div>
+                  <div className={styles.tagList}>
+                    <span className={styles.label}>标签：</span>
+                    <div className={styles.tagItemWrap}>
+                      <span className={styles.tag}>{detail.tag}</span>
+                    </div>
+                  </div>
+                </div>
+              </Preview>
+            )}
+            <div className={styles.anotherArticle}>
+              <AnotherArticle id={id} />
+            </div>
+            {detail && (
+              <div className={styles.commentList}>
+                <Comments authorId={detail.authorId} />
               </div>
-            </Header>
+            )}
           </div>
-          <div className={styles.content}>
-            <div className={styles.preview}>
-              {detail && (
-                <Preview
-                  className={styles.previewContent}
-                  mackdown={detail.content}
-                  coverImg={renderCoverImg(detail)}
-                >
-                  <div className={styles.tagWrap}>
-                    <div className={styles.tagList}>
-                      <span className={styles.label}>分类：</span>
-                      <div className={styles.tagItemWrap}>
-                        <span className={styles.tag}>{detail.classify}</span>
-                      </div>
-                    </div>
-                    <div className={styles.tagList}>
-                      <span className={styles.label}>标签：</span>
-                      <div className={styles.tagItemWrap}>
-                        <span className={styles.tag}>{detail.tag}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Preview>
-              )}
-              {/* {detail ? (
-                <Preview
-                  className={styles.previewContent}
-                  mackdown={detail.content}
-                  coverImg={renderCoverImg(detail)}
-                >
-                  <div className={styles.tagWrap}>
-                    <div className={styles.tagList}>
-                      <span className={styles.label}>分类：</span>
-                      <div className={styles.tagItemWrap}>
-                        <span className={styles.tag}>{detail.classify}</span>
-                      </div>
-                    </div>
-                    <div className={styles.tagList}>
-                      <span className={styles.label}>标签：</span>
-                      <div className={styles.tagItemWrap}>
-                        <span className={styles.tag}>{detail.tag}</span>
-                      </div>
-                    </div>
-                  </div>
-                </Preview>
-              ) : (
-                <div className={styles.previewSpin}>
-                  <Spin />
-                  <div className={styles.loadText}>正在卖力加载文章...</div>
-                </div>
-              )} */}
-              <div className={styles.anotherArticle}>
-                <AnotherArticle id={id} />
-              </div>
-              {detail && (
-                <div className={styles.commentList}>
-                  <Comments authorId={detail.authorId} />
-                </div>
-              )}
-            </div>
-            <div className={styles.rightBar}>
-              <RightBar />
-              {detail && (
-                <Affix offsetTop={50}>
-                  <Toc mackdown={detail.content} />
-                </Affix>
-              )}
-            </div>
+          <div className={styles.rightBar}>
+            <RightBar />
+            {detail && (
+              <Affix offsetTop={50}>
+                <Toc mackdown={detail.content} />
+              </Affix>
+            )}
           </div>
         </div>
-        <BackTop className={styles.backTopWrap}>
-          <div className={styles.backTop}>
-            <ArrowUpOutlined className={styles.topIcon} />
-          </div>
-        </BackTop>
-      </Spin>
-    </>
+      </div>
+      <BackTop className={styles.backTopWrap}>
+        <div className={styles.backTop}>
+          <ArrowUpOutlined className={styles.topIcon} />
+        </div>
+      </BackTop>
+    </Spin>
   );
 };
 
