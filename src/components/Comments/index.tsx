@@ -35,7 +35,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
 
   useEffect(() => {
     getCommentList();
-  }, []);
+  }, [id]);
 
   // 获取评论列表
   const getCommentList = async () => {
