@@ -35,6 +35,7 @@ export interface UserInfoParams {
   zhihu?: string;
   blog?: string;
   mainCover?: string;
+  articleTotal?: string;
 }
 
 export interface UpdateData {
@@ -233,4 +234,10 @@ export interface AnotherParams {
   from?: string;
   accessUserId?: string;
   selectKey?: string;
+}
+
+export interface GetUserInfoParams {
+  userId?: string | null;
+  auth?: number;
+  needTotal?: boolean;
 }

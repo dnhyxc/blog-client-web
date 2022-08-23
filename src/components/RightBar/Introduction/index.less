@@ -1,4 +1,4 @@
-@import "~@styles/common.less";
+@import '~@styles/common.less';
 
 .introductionWrap {
   width: 260px;
@@ -23,7 +23,7 @@
     align-items: center;
     flex-direction: column;
     margin-top: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 
     .name {
       font-size: 26px;
@@ -36,15 +36,17 @@
   }
 
   .articleInfo {
-    display: flex;
-    justify-content: space-between;
     padding: 0 25px;
     margin-bottom: 10px;
 
     .statistical {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
+      text-align: center;
+
+      .articleTotal {
+        font-size: 16px;
+        font-weight: 600;
+        margin: 0 5px;
+      }
     }
   }
 
