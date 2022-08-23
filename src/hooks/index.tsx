@@ -203,9 +203,6 @@ export const useLikeArticle = ({
     if (!res.success && res.code === 409) {
       setAlertStatus(true);
     }
-    if (!res.success && res.code !== 409) {
-      message.error(res.message);
-    }
   };
 
   return { likeArticle };
@@ -279,13 +276,9 @@ export const useDeleteArticle = ({
             total: articleList.total - 1,
             list,
           });
-        } else {
-          if (!res.success && res.code === 409) {
-            setAlertStatus(true);
-          }
-          if (!res.success && res.code !== 409) {
-            message.error(res.message);
-          }
+        }
+        if (!res.success && res.code === 409) {
+          setAlertStatus(true);
         }
       },
     };
@@ -324,13 +317,9 @@ export const useDeleteTimelineArticle = ({
             return { ...i };
           });
           setTimelineList(list);
-        } else {
-          if (!res.success && res.code === 409) {
-            setAlertStatus(true);
-          }
-          if (!res.success && res.code !== 409) {
-            message.error(res.message);
-          }
+        }
+        if (!res.success && res.code === 409) {
+          setAlertStatus(true);
         }
       },
     };
