@@ -37,6 +37,18 @@ const Introduction: React.FC<IProps> = () => {
     window.open(authorInfo?.github);
   };
 
+  const toJuejin = () => {
+    window.open(authorInfo?.juejin);
+  };
+
+  const toZhihu = () => {
+    window.open(authorInfo?.zhihu);
+  };
+
+  const toBlog = () => {
+    window.open(authorInfo?.blog);
+  };
+
   return (
     <div className={styles.introductionWrap}>
       <div className={styles.card}>
@@ -63,21 +75,9 @@ const Introduction: React.FC<IProps> = () => {
           GitHub
         </Button>
         <div className={styles.socialList}>
-          <span>
-            <a href={authorInfo?.juejin} target="_blank" rel="noreferrer">
-              掘金
-            </a>
-          </span>
-          <span>
-            <a href={authorInfo?.zhihu} target="_blank" rel="noreferrer">
-              知乎
-            </a>
-          </span>
-          <span>
-            <a href={authorInfo?.blog} target="_blank" rel="noreferrer">
-              博客
-            </a>
-          </span>
+          {authorInfo?.juejin && <span onClick={toJuejin}>掘金</span>}
+          {authorInfo?.zhihu && <span onClick={toZhihu}>知乎</span>}
+          {authorInfo?.blog && <span onClick={toBlog}>博客</span>}
         </div>
       </div>
     </div>

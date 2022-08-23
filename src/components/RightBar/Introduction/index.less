@@ -74,8 +74,13 @@
         border-radius: 5px;
         background-color: @content-padding;
         line-height: 36px;
+        color: @menu-active;
         text-align: center;
         cursor: pointer;
+
+        &:hover {
+          box-shadow: 0 0 5px #ccc;
+        }
 
         &:not(:last-child) {
           margin-right: 25px;
