@@ -119,9 +119,11 @@ const ArticleDetail: React.FC = () => {
                 </div>
               </Preview>
             )}
-            <div className={styles.anotherArticle}>
-              <AnotherArticle id={id} />
-            </div>
+            {detail && (
+              <div className={styles.anotherArticle}>
+                <AnotherArticle id={id} />
+              </div>
+            )}
             {detail && (
               <div className={styles.commentList}>
                 <Comments authorId={detail.authorId} />
