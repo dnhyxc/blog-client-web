@@ -95,9 +95,9 @@ const ArticleDetail: React.FC = () => {
             </div>
           </Header>
         </div>
-        <div className={styles.content}>
-          <div className={styles.preview}>
-            {detail && (
+        {detail && (
+          <div className={styles.content}>
+            <div className={styles.preview}>
               <Preview
                 className={styles.previewContent}
                 mackdown={detail.content}
@@ -118,27 +118,21 @@ const ArticleDetail: React.FC = () => {
                   </div>
                 </div>
               </Preview>
-            )}
-            {detail && (
               <div className={styles.anotherArticle}>
                 <AnotherArticle id={id} />
               </div>
-            )}
-            {detail && (
               <div className={styles.commentList}>
                 <Comments authorId={detail.authorId} />
               </div>
-            )}
-          </div>
-          <div className={styles.rightBar}>
-            <RightBar />
-            {detail && (
+            </div>
+            <div className={styles.rightBar}>
+              <RightBar />
               <Affix offsetTop={50}>
                 <Toc mackdown={detail.content} />
               </Affix>
-            )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <BackTop className={styles.backTopWrap}>
         <div className={styles.backTop}>
