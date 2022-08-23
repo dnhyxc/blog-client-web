@@ -19,7 +19,7 @@ import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from 
 import useStore from '@/store';
 import * as Service from '@/service';
 import { PAGESIZE } from '@/constant';
-import { normalizeResult } from '@/utils/tools';
+import { normalizeResult, storage } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
@@ -52,6 +52,10 @@ const Home: React.FC<IProps> = () => {
     pageSize: PAGESIZE,
     scrollStyle: styles.scrollStyle,
   });
+
+  useEffect(() => {
+    storage.locRemoveItem('params');
+  }, []);
 
   useEffect(() => {
     if (isSearch) {
