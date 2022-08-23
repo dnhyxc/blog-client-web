@@ -27,7 +27,7 @@ const Author = lazy(() => import('@/view/author'));
 
 const lazyLoad = (children: ReactNode, needSpin = true): ReactNode => {
   return (
-    <Suspense fallback={needSpin ? <Spin className={styles.loading} /> : null}>
+    <Suspense fallback={needSpin ? <Spin className={styles.loading} tip="正在卖力加载中..." /> : null}>
       {children}
     </Suspense>
   );
@@ -72,7 +72,7 @@ const routes: RouteObject[] = [
   },
   {
     path: 'detail/:id',
-    element: lazyLoad(<Detail />, false),
+    element: lazyLoad(<Detail />),
   },
   {
     path: 'setting',
