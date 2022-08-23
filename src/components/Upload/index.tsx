@@ -101,7 +101,8 @@ const UploadFile: React.FC<IProps> = ({
               : { coverImage: res?.data?.filePath }
           );
           message.success('上传成功');
-        } else {
+        }
+        if (res.code === 409) {
           setAlertStatus && setAlertStatus(true);
         }
       });
