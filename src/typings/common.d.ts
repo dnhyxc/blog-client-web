@@ -207,6 +207,15 @@ export interface LikeArticleList<T> {
   loading: boolean;
 }
 
+export interface useLikeArticleParams {
+  // eslint-disable-next-line no-unused-vars
+  setAlertStatus: (status: boolean) => void;
+  articleList: any;
+  updateList: Function;
+  isTimeLine?: boolean;
+  isAboutMe?: boolean;
+}
+
 export interface useScrollLoadParams<T> {
   data?: T;
   loading?: boolean;

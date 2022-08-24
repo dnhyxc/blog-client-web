@@ -12,6 +12,7 @@ import {
   useDeleteTimelineParams,
   ArticleItem,
   TimelineResult,
+  useLikeArticleParams,
 } from '@/typings/common';
 
 // 实时获取页面宽度的hooks
@@ -116,15 +117,6 @@ export const useGetArticleDetail = (id: string | null | undefined) => {
 
   return { detail, loading };
 };
-
-interface useLikeArticleParams {
-  // eslint-disable-next-line no-unused-vars
-  setAlertStatus: (status: boolean) => void;
-  articleList: any;
-  updateList: Function;
-  isTimeLine?: boolean;
-  isAboutMe?: boolean;
-}
 
 // 点赞hooks
 export const useLikeArticle = ({
@@ -287,7 +279,7 @@ export const useDeleteArticle = ({
   return { deleteArticle };
 };
 
-// 删除文章hooks
+// 删除timeline文章hooks
 export const useDeleteTimelineArticle = ({
   timelineList,
   setTimelineList,
