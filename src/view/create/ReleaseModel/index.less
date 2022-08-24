@@ -39,9 +39,33 @@
     border-radius: 5px;
   }
 
+  .tagList {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .tagInp {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .tagBtn {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-left: none;
+    }
+  }
+
   :global(.ant-upload.ant-upload-select-picture-card) {
     width: 200px;
     height: 112px;
     margin-bottom: 0;
   }
+}
+
+.webkitScrollbarStyle();
+
+.tagMenu {
+  max-height: 200px;
+  overflow: auto;
 }

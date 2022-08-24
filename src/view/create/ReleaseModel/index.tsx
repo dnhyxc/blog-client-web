@@ -1,6 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Input, Drawer, Select, message, Button, Radio, DatePicker } from 'antd';
+import {
+  Form,
+  Input,
+  Drawer,
+  Menu,
+  Space,
+  Dropdown,
+  message,
+  Button,
+  Radio,
+  DatePicker,
+} from 'antd';
+import type { MenuProps } from 'antd';
+import { DownOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import UploadFile from '@/components/Upload';
 import MAlert from '@/components/Alert';
@@ -28,7 +41,8 @@ const ReleaseModel: React.FC<IProps> = ({
   initialValue,
   onCancel,
 }) => {
-  const [filePath, setFilePath] = useState<string>();
+  const [filePath, setFilePath] = useState<string>('');
+  const [tagValue, setTagValue] = useState<string>();
 
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -108,6 +122,20 @@ const ReleaseModel: React.FC<IProps> = ({
     return Promise.resolve();
   };
 
+  const handleMenuClick: MenuProps['onClick'] = (e) => {
+    const tagName = ARTICLE_TAG.find((i) => i.key === e.key);
+    setTagValue(tagName?.label);
+    form.setFieldsValue({ tag: tagName?.label });
+  };
+
+  const onChangeTagValue = (e: any) => {
+    setTagValue(e.target.value);
+  };
+
+  const menu = (
+    <Menu onClick={handleMenuClick} items={ARTICLE_TAG} className={styles.tagMenu} />
+  );
+
   return (
     <div className={styles.ReleaseModel}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
@@ -165,15 +193,25 @@ const ReleaseModel: React.FC<IProps> = ({
               label="标签"
               name="tag"
               initialValue={initialValue?.tag}
-              rules={[{ required: true, message: '请选择一个标签' }]}
+              rules={[{ required: true, message: '请输入文章标签' }]}
             >
-              <Select placeholder="请选择标签">
-                {ARTICLE_TAG.map((i) => (
-                  <Select.Option value={i} key={i}>
-                    {i}
-                  </Select.Option>
-                ))}
-              </Select>
+              <div className={styles.tagList}>
+                <Input
+                  placeholder="请输入文章标签"
+                  value={tagValue}
+                  onChange={onChangeTagValue}
+                  maxLength={50}
+                  className={styles.tagInp}
+                />
+                <Dropdown overlay={menu} autoFocus>
+                  <Button className={styles.tagBtn} type="primary">
+                    <Space>
+                      选择标签
+                      <DownOutlined />
+                    </Space>
+                  </Button>
+                </Dropdown>
+              </div>
             </Form.Item>
             <Form.Item
               label="时间"
