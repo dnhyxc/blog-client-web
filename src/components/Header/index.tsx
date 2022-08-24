@@ -11,6 +11,7 @@ import { LeftOutlined } from '@ant-design/icons';
 import { useHtmlWidth } from '@/hooks';
 import MIcons from '../Icons';
 import Menu from './Menu';
+import User from './User';
 import styles from './index.less';
 
 interface IProps {
@@ -54,7 +55,12 @@ const Header: React.FC<IProps> = ({
         <div className={styles.child}>{children}</div>
         {excludesWidth ? needMenu && <Menu /> : needMenu && htmlWidth <= 960 && <Menu />}
       </div>
-      {right && <div className={styles.right}>{right}</div>}
+      <div className={styles.right}>
+        {right && (
+          <span>{right}</span>
+        )}
+        <User />
+      </div>
     </div>
   );
 };
