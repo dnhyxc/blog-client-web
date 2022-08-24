@@ -1,0 +1,33 @@
+@import '~@styles/common.less';
+
+.MSegmented {
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 2px 2px;
+  background-color: @menu-hover;
+  border-radius: 5px;
+
+  .tag {
+    position: relative;
+    display: inline-block;
+    padding: 3px 5px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+  }
+
+  .activeTag {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 30px;
+    background-color: #fff;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+    z-index: 1;
+  }
+}

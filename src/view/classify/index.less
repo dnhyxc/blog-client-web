@@ -20,12 +20,12 @@
       position: fixed;
       top: 65px;
       left: 195px;
-      width: calc(100% - 492px);
-      padding-right: 8px;
+      width: calc(100% - 500px);
+      // width: 100%;
       padding-bottom: 10px;
       text-align: center;
       background: @background;
-      z-index: 1;
+      z-index: 11;
 
       .segmented {
         background: @menu-hover;
@@ -35,7 +35,18 @@
     .content {
       display: flex;
       justify-content: center;
-      padding-top: 40px;
+
+      .filterList {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: 100%;
+      }
+
+      .wrapClass {
+        width: 100%;
+      }
 
       .emptyWrap {
         .emptyWrap();
@@ -43,7 +54,6 @@
     }
 
     .rightbar {
-      margin-top: -40px;
       margin-right: 9px;
       height: 100%;
     }

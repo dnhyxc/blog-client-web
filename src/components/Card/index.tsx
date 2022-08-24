@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { Skeleton, Popover } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
@@ -28,6 +28,7 @@ interface IProps {
   showInfo?: boolean;
   loadText?: string;
   loading?: boolean;
+  style?: CSSProperties;
 }
 
 const Card: React.FC<IProps> = ({
@@ -48,6 +49,7 @@ const Card: React.FC<IProps> = ({
   showInfo,
   loadText,
   loading,
+  style,
 }) => {
   const {
     userInfoStore: { getUserInfo },
@@ -80,7 +82,7 @@ const Card: React.FC<IProps> = ({
   };
 
   return (
-    <div className={classname(styles.wrap, wrapClass)}>
+    <div className={classname(styles.wrap, wrapClass)} style={style}>
       {list && list.length > 0 ? (
         list.map((i) => (
           <div

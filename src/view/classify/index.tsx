@@ -1,25 +1,26 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { message, Segmented } from 'antd';
+import { message } from 'antd';
+import classname from 'classname';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import RightBar from '@/components/RightBar';
 import Card from '@/components/Card';
 import MAlert from '@/components/Alert';
 import BackTop from '@/components/BackTop';
+import MSegmented from '@/components/Segmented';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, storage } from '@/utils';
-import { ARTICLE_CLASSIFY, PAGESIZE } from '@/constant';
+import { PAGESIZE } from '@/constant';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
-
-const Classify: React.FC<IProps> = () => {
+const Classify: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectClassify, setSelectClassify] = useState<string | number>('前端');
+  const [height, setHeight] = useState<number>(34);
   const [classifyList, setClassifyList] = useState<ArticleListResult>({
     list: [],
     total: 0,
@@ -75,7 +76,7 @@ const Classify: React.FC<IProps> = () => {
   };
 
   // 选择分类查询
-  const onSelectClassify = (classify: string | number) => {
+  const onSelectClassify = (classify: string) => {
     if (classify !== selectClassify) {
       setPageNo(1);
       listRef.current = [];
@@ -116,30 +117,33 @@ const Classify: React.FC<IProps> = () => {
     navigate(`/create?id=${id}`);
   };
 
+  // 获取MSegmented的高度，用户实时改变Card组件的paddingTop
+  const getOffsetHeight = (height: number) => {
+    setHeight(height);
+  };
+
   return (
     <div className={styles.Classify}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header needMenu>文章分类</Header>
       <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
-        <div className={styles.segmentedWrap}>
-          <Segmented
-            options={ARTICLE_CLASSIFY}
-            block
-            className={styles.segmented}
-            value={selectClassify}
-            onChange={onSelectClassify}
-          />
-        </div>
-        <div className={styles.content}>
-          <Card
-            list={classifyList.list}
-            toDetail={toDetail}
-            likeArticle={likeArticle}
-            deleteArticle={deleteArticle}
-            onEditArticle={onEditArticle}
-            showInfo={classifyList.list.length === classifyList.total}
-            loading={loading}
-          />
+        <div className={classname(styles.content, styles.contentPadding)}>
+          <div className={styles.filterList}>
+            <div className={styles.segmentedWrap}>
+              <MSegmented onClick={onSelectClassify} getOffsetHeight={getOffsetHeight} />
+            </div>
+            <Card
+              wrapClass={styles.wrapClass}
+              list={classifyList.list}
+              toDetail={toDetail}
+              likeArticle={likeArticle}
+              deleteArticle={deleteArticle}
+              onEditArticle={onEditArticle}
+              showInfo={classifyList.list.length === classifyList.total}
+              loading={loading}
+              style={{ paddingTop: `${height + 10}px` }}
+            />
+          </div>
           <RightBar
             className={styles.rightbar}
             showRecommendArticle

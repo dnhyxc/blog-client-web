@@ -213,7 +213,7 @@ export const useScrollLoad = ({
   data,
   loading,
   pageSize,
-  scrollStyle,
+  scrollStyle, // 如果需要吸顶，组件必须设置ref=scrollRef，且必须传入scrollStyle参数
 }: useScrollLoadParams<any>) => {
   const [pageNo, setPageNo] = useState<number>(1);
   const [suckTop, setSuckTop] = useState<boolean>(false);
