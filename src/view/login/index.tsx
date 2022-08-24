@@ -26,9 +26,9 @@ const Login = () => {
     const username = encrypt(values.username);
     const res = normalizeResult<LoginData>(await register({ username, password }));
     if (res.success) {
-      message.success(res.message);
+      message.success(res.message, 2);
     } else {
-      res.message && message.error(res.message);
+      res.message && message.error(res.message, 2);
     }
   };
 
@@ -49,7 +49,7 @@ const Login = () => {
       values?.remember ? setCookie('uname', username, 7) : removeCoolie('uname');
       navigate(`${commonStore.auth.redirectUrl}` || '/home', { replace: true });
     } else {
-      res.message && message.error(res.message);
+      res.message && message.error(res.message, 2);
     }
   };
 

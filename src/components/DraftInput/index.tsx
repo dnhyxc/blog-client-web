@@ -139,7 +139,7 @@ const DraftInput: React.FC<IProps> = ({
     }
 
     if (!res.success && res.code !== 409) {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 

@@ -114,7 +114,7 @@ const Personal = () => {
       return;
     }
     if (res.code === 406) {
-      message.error(res.message);
+      message.error(res.message, 2);
       navigate('home');
     }
   };

@@ -45,7 +45,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
     if (res.success) {
       setComments(res.data);
     } else {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 
@@ -103,7 +103,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
       setAlertStatus && setAlertStatus(true);
     }
     if (!res.success && res.code !== 409) {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 
@@ -138,7 +138,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
       setAlertStatus && setAlertStatus(true);
     }
     if (!res.success && res.code !== 409) {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 

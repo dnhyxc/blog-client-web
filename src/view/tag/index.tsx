@@ -24,7 +24,7 @@ const Tag: React.FC<IProps> = () => {
     if (res.success) {
       setTagList(res.data);
     } else {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 

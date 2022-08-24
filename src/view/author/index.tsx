@@ -19,12 +19,17 @@ import {
   useDeleteTimelineArticle,
 } from '@/hooks';
 import { PAGESIZE, HEAD_UEL, MAIN_COVER, AUTHOR_TABS, AUTHOR_API_PATH } from '@/constant';
-import { ArticleListResult, ArticleItem, TimelineResult, UserInfoParams } from '@/typings/common';
+import {
+  ArticleListResult,
+  ArticleItem,
+  TimelineResult,
+  UserInfoParams,
+} from '@/typings/common';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-interface IProps { }
+interface IProps {}
 
 const Author: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -73,7 +78,7 @@ const Author: React.FC<IProps> = () => {
       return;
     }
     if (res.code === 406) {
-      message.error(res.message);
+      message.error(res.message, 2);
       navigate('home');
     }
   };
@@ -112,7 +117,7 @@ const Author: React.FC<IProps> = () => {
         count: list.length,
       });
     } else {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 
@@ -128,7 +133,7 @@ const Author: React.FC<IProps> = () => {
     if (res.success) {
       setTimelineList(res.data);
     } else {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 
@@ -209,10 +214,16 @@ const Author: React.FC<IProps> = () => {
                 />
               </div>
               <div className={styles.headImg}>
-                <Image url={authorInfo?.headUrl || HEAD_UEL} transitionImg={HEAD_UEL} className={styles.image} />
+                <Image
+                  url={authorInfo?.headUrl || HEAD_UEL}
+                  transitionImg={HEAD_UEL}
+                  className={styles.image}
+                />
               </div>
               <div className={styles.mainInfo}>
-                <div className={styles.username}>{authorInfo?.username && decrypt(authorInfo?.username)}</div>
+                <div className={styles.username}>
+                  {authorInfo?.username && decrypt(authorInfo?.username)}
+                </div>
                 <div className={styles.info}>{authorInfo?.job}</div>
                 <div className={styles.info}>{authorInfo?.introduce}</div>
               </div>

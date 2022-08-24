@@ -53,12 +53,12 @@ const Account: React.FC<IProps> = () => {
       userInfoStore.setUserInfo({
         ...res.data,
       });
-      message.success(res.message);
+      message.success(res.message, 2);
       if (selectItem === 'password') {
         navigate('/login');
       }
     } else {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 

@@ -35,7 +35,7 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
     if (res.success) {
       setRecommendList(res.data);
     } else {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 

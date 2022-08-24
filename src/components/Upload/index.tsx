@@ -60,10 +60,10 @@ const UploadFile: React.FC<IProps> = ({
     const fileType = file.type;
     const isLt20M = file.size / 1024 / 1024 < 20;
     if (!FILETYPE.includes(fileType)) {
-      message.error('请上传 png、jpg、jpeg、gif 格式的图片');
+      message.error('请上传 png、jpg、jpeg、gif 格式的图片', 2);
     }
     if (!isLt20M) {
-      message.error('请上传小于20M的图片');
+      message.error('请上传小于20M的图片', 2);
     }
 
     const reader = new FileReader();
@@ -100,7 +100,7 @@ const UploadFile: React.FC<IProps> = ({
               ? { mainCover: res?.data?.filePath }
               : { coverImage: res?.data?.filePath }
           );
-          message.success('上传成功');
+          message.success('上传成功', 2);
         }
         if (res.code === 409) {
           setAlertStatus && setAlertStatus(true);

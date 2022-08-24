@@ -62,7 +62,7 @@ const ReleaseModel: React.FC<IProps> = ({
 
   const getResult = (res: any) => {
     if (res.success) {
-      message.success(res.message);
+      message.success(res.message, 2);
       navigate('/home');
     }
 
@@ -71,14 +71,14 @@ const ReleaseModel: React.FC<IProps> = ({
     }
 
     if (!res.success && res.code !== 409) {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 
   // 提交表单
   const onFinish = async () => {
     if (!create.mackdown) {
-      message.info('嘿，醒醒！文章还一个字没写呢...');
+      message.info('嘿，醒醒！文章还一个字没写呢...', 2);
       return;
     }
     const values = await form.validateFields();

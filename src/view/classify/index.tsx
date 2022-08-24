@@ -70,7 +70,7 @@ const Classify: React.FC<IProps> = () => {
         count: list.length,
       });
     } else {
-      message.error(res.message);
+      message.error(res.message, 2);
     }
   };
 
