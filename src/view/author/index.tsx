@@ -83,7 +83,7 @@ const Author: React.FC<IProps> = () => {
     }
   };
 
-  const getAuthorArticleList = async () => {
+  const getAuthorArticleList = () => {
     if (selectKey !== '3') {
       getAuthorArticles();
     } else {
