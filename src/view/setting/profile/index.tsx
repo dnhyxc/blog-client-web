@@ -56,9 +56,9 @@ const Profile: React.FC = () => {
       userInfoStore.setUserInfo({
         ...res.data,
       });
-      message.success(res.message, 2);
+      message.success(res.message);
     } else {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 

@@ -78,7 +78,7 @@ const Author: React.FC<IProps> = () => {
       return;
     }
     if (res.code === 406) {
-      message.error(res.message, 2);
+      message.error(res.message);
       navigate('home');
     }
   };
@@ -117,7 +117,7 @@ const Author: React.FC<IProps> = () => {
         count: list.length,
       });
     } else {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 
@@ -133,7 +133,7 @@ const Author: React.FC<IProps> = () => {
     if (res.success) {
       setTimelineList(res.data);
     } else {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 

@@ -114,7 +114,7 @@ const Personal = () => {
       return;
     }
     if (res.code === 406) {
-      message.error(res.message, 2);
+      message.error(res.message);
       navigate('home');
     }
   };
@@ -167,7 +167,7 @@ const Personal = () => {
 
   // 根据authorId获取对应的tabs
   const getTabList = () => {
-    if (authorId) {
+    if (authorId && authorId !== getUserInfo?.userId) {
       return ABOUT_TABS;
     }
     return ABOUT_ME_TABS;

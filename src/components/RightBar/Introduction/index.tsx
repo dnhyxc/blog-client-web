@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { HEAD_UEL } from '@/constant';
 import { Button } from 'antd';
 import Image from '@/components/Image';
@@ -15,6 +16,8 @@ const Introduction: React.FC<IProps> = () => {
   const [authorInfo, setAuthorInfo] = useState<UserInfoParams>({
     userId: '',
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     onGetPersonalInfo();
@@ -49,10 +52,19 @@ const Introduction: React.FC<IProps> = () => {
     window.open(authorInfo?.blog);
   };
 
+  const toAuthor = () => {
+    navigate('/author');
+  };
+
   return (
     <div className={styles.introductionWrap}>
       <div className={styles.card}>
-        <Image url={HEAD_UEL} transitionImg={HEAD_UEL} className={styles.image} />
+        <Image
+          url={authorInfo?.headUrl || HEAD_UEL}
+          transitionImg={HEAD_UEL}
+          className={styles.image}
+          onClick={toAuthor}
+        />
       </div>
       <div className={styles.nameInfo}>
         <div className={styles.name}>

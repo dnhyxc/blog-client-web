@@ -62,7 +62,7 @@ const ReleaseModel: React.FC<IProps> = ({
 
   const getResult = (res: any) => {
     if (res.success) {
-      message.success(res.message, 2);
+      message.success(res.message);
       navigate('/home');
     }
 
@@ -71,7 +71,7 @@ const ReleaseModel: React.FC<IProps> = ({
     }
 
     if (!res.success && res.code !== 409) {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 
@@ -206,7 +206,7 @@ const ReleaseModel: React.FC<IProps> = ({
               label="摘要"
               name="abstract"
               initialValue={initialValue?.abstract}
-              rules={[{ required: true, message: '请先输入文章摘要！' }]}
+              rules={[{ required: true, message: '请先输入文章摘要' }]}
             >
               <TextArea
                 placeholder="请输入文章摘要"

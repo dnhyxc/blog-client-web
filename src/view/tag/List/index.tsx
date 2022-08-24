@@ -64,7 +64,7 @@ const TagList: React.FC<IProps> = () => {
         count: list.length,
       });
     } else {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Button, message, Modal } from 'antd';
 import Image from '@/components/Image';
 import useStore from '@/store';
@@ -32,6 +32,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCommentList();
@@ -45,7 +46,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
     if (res.success) {
       setComments(res.data);
     } else {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 
@@ -103,7 +104,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
       setAlertStatus && setAlertStatus(true);
     }
     if (!res.success && res.code !== 409) {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 
@@ -138,8 +139,12 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
       setAlertStatus && setAlertStatus(true);
     }
     if (!res.success && res.code !== 409) {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
+  };
+
+  const toPersonal = (userId: string) => {
+    navigate(`/personal?id=${userId}`);
   };
 
   return (
@@ -150,6 +155,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
           getCommentList={getCommentList}
           focus={false}
           getAlertStatus={setAlertStatus}
+          onJump={() => toPersonal(authorId)}
         />
       </div>
       {comments?.length > 0 && <div className={styles.title}>全部评论</div>}
@@ -162,6 +168,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
                   url={i.headUrl || HEAD_UEL}
                   transitionImg={HEAD_UEL}
                   className={styles.image}
+                  onClick={() => toPersonal(i.userId)}
                 />
               </div>
               <div className={styles.commentContent}>
@@ -238,6 +245,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
                               url={j.headUrl || HEAD_UEL}
                               transitionImg={HEAD_UEL}
                               className={styles.image}
+                              onClick={() => toPersonal(j.userId)}
                             />
                           </div>
                           <div className={styles.commentChildItemContent}>

@@ -22,6 +22,7 @@ interface IProps {
   onHideInput?: Function;
   getAlertStatus?: Function;
   focus?: boolean;
+  onJump?: Function;
 }
 
 const DraftInput: React.FC<IProps> = ({
@@ -29,6 +30,7 @@ const DraftInput: React.FC<IProps> = ({
   className,
   selectComment,
   isThreeTier,
+  onJump,
   onReplay,
   getCommentList,
   onHideInput,
@@ -139,7 +141,7 @@ const DraftInput: React.FC<IProps> = ({
     }
 
     if (!res.success && res.code !== 409) {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 
@@ -158,6 +160,7 @@ const DraftInput: React.FC<IProps> = ({
               transitionImg={HEAD_UEL}
               className={styles.image}
               id="IMAGE"
+              onClick={onJump}
             />
           </div>
         )}

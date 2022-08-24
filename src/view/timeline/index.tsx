@@ -43,7 +43,7 @@ const TimeLine: React.FC<IProps> = () => {
     if (res.success) {
       setTimelineList(res.data);
     } else {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 

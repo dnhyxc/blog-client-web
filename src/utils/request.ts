@@ -31,7 +31,7 @@ function checkRedirection(response: Response): boolean {
       return true;
     }
   } catch (err) {
-    message.error('redirect url error', 2);
+    message.error('redirect url error');
   }
 
   return false;

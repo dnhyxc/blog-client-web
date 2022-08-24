@@ -62,7 +62,7 @@ export const useLoginStatus = () => {
       setAlertStatus(true);
     }
     if (!res.success && res.code !== 409) {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 
@@ -110,7 +110,7 @@ export const useGetArticleDetail = (id: string | null | undefined) => {
     if (res.success) {
       setDetail(res.data);
     } else {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 

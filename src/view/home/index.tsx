@@ -94,7 +94,7 @@ const Home: React.FC<IProps> = () => {
         count: list.length,
       });
     } else {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 
@@ -134,7 +134,7 @@ const Home: React.FC<IProps> = () => {
         count: list.length,
       });
     } else {
-      message.error(res.message, 2);
+      message.error(res.message);
     }
   };
 
