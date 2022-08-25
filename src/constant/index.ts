@@ -13,10 +13,6 @@ export const PAGESIZE = 20;
 // 文件上传路径
 export const UPLOADURL = '/api/upload';
 
-interface NumberKey {
-  [key: number]: any;
-}
-
 // 账号设置配置
 export const SET_ITEM_CONFIG = [
   {
@@ -262,6 +258,31 @@ export const ARTICLE_TAG = [
     key: '25',
   },
 ];
+
+export const USER_MENU = [
+  {
+    key: '1',
+    icon: 'icon-gerenzhongxin',
+    text: '我的主页',
+    path: '/author',
+  },
+  {
+    key: '2',
+    icon: 'icon-shezhi3',
+    text: '个人设置',
+    path: '/setting/profile',
+  },
+  {
+    key: '3',
+    icon: 'icon-tuichu1',
+    text: '退出登录',
+    path: '/login',
+  },
+];
+
+interface NumberKey {
+  [key: number]: any;
+}
 
 export const TAG_STYLES: NumberKey = {
   1: {
