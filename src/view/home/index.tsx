@@ -7,13 +7,14 @@
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Input, message } from 'antd';
+import { message } from 'antd';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import RightBar from '@/components/RightBar';
 import Card from '@/components/Card';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/Alert';
+import MSearch from '@/components/MSearch';
 import BackTop from '@/components/BackTop';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import useStore from '@/store';
@@ -22,8 +23,6 @@ import { PAGESIZE } from '@/constant';
 import { normalizeResult, storage } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
-
-const { Search } = Input;
 
 interface IProps {}
 
@@ -187,15 +186,7 @@ const Home: React.FC<IProps> = () => {
       {!showSearch && (
         <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={onShowSearch} />
       )}
-      {showSearch && (
-        <Search
-          ref={inputRef}
-          placeholder="请输入搜索内容"
-          enterButton
-          onSearch={onSearch}
-          onBlur={onBlur}
-        />
-      )}
+      {showSearch && <MSearch inputRef={inputRef} onSearch={onSearch} onBlur={onBlur} />}
     </>
   );
 
