@@ -5,10 +5,11 @@
  * @LastEditors: dnh
  * @FilePath: \src\view\login\index.tsx
  */
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, message, Form, Input, Checkbox } from 'antd';
 import useStore from '@/store';
-import { register, login } from '@/service';
+import { register, login, verify } from '@/service';
 import { normalizeResult, useCookies, encrypt, decrypt } from '@/utils';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
@@ -19,6 +20,18 @@ const Login = () => {
   const navigate = useNavigate();
   const { userInfoStore, commonStore } = useStore();
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    verifyToken();
+  }, []);
+
+  // 校验token是否过期
+  const verifyToken = async () => {
+    const res = normalizeResult<number>(await verify());
+    if (res.success) {
+      navigate(`${commonStore.auth.redirectUrl}` || '/home', { replace: true });
+    }
+  };
 
   const onRegister = async () => {
     const values = await form.validateFields();

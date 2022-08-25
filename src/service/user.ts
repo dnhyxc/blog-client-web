@@ -26,3 +26,8 @@ export async function getUserInfo(params: GetUserInfoParams) {
   const res = await post(API.GET_USER_INFO, params);
   return res;
 }
+
+export async function verify() {
+  const res = await post(API.VERIFY);
+  return res;
+}

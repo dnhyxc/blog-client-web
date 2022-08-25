@@ -69,6 +69,9 @@ const GET_PREV_ARTICLE = '/api/getPrevArticle';
 // 获取博主点赞的文章列表
 const GET_NEXT_ARTICLE = '/api/getNextArticle';
 
+// 校验token是否过期
+const VERIFY = '/api/verify';
+
 export {
   REGISTER,
   LOGIN,
@@ -99,4 +102,5 @@ export {
   DEL_ALL_ARTICLE,
   GET_PREV_ARTICLE,
   GET_NEXT_ARTICLE,
+  VERIFY,
 };
