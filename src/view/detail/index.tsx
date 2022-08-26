@@ -20,7 +20,7 @@ import Comments from '@/components/Comments';
 import AnotherArticle from '@/components/AnotherArticle';
 import { useGetArticleDetail } from '@/hooks';
 import useStore from '@/store';
-import { formatGapTime, decrypt } from '@/utils';
+import { formatGapTime } from '@/utils';
 import { ArticleDetailParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -56,7 +56,7 @@ const ArticleDetail: React.FC = () => {
           />
           <div className={styles.createInfo}>
             <div className={styles.username}>
-              {(detail?.authorName && decrypt(detail?.authorName)) || detail?.authorName}
+              {detail?.authorName}
             </div>
             <div>
               <span>{formatGapTime(detail?.createTime)}</span>

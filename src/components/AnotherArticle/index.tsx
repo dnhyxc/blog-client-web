@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
-import { formatGapTime, decrypt, storage } from '@/utils';
+import { formatGapTime, storage } from '@/utils';
 import MIcons from '../Icons';
 import { ArticleItem, AnotherParams } from '@/typings/common';
 import styles from './index.less';
@@ -70,7 +70,7 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
                     <div className={styles.title}>{i?.title}</div>
                     <div className={styles.abstract}>{i?.abstract}</div>
                     <div className={styles.info}>
-                      <span>{i?.authorName && decrypt(i?.authorName)}</span>
+                      <span>{i?.authorName}</span>
                       <span>{` · ${i?.tag} · `}</span>
                       <span>{`${i?.classify} · `}</span>
                       <span>{formatGapTime(i?.createTime!)}</span>

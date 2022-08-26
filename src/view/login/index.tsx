@@ -36,7 +36,7 @@ const Login = () => {
   const onRegister = async () => {
     const values = await form.validateFields();
     const password = encrypt(values.password);
-    const username = encrypt(values.username);
+    const { username } = values;
     const res = normalizeResult<LoginData>(await register({ username, password }));
     if (res.success) {
       message.success(res.message);
@@ -48,7 +48,7 @@ const Login = () => {
   const onLogin = async () => {
     const values = await form.validateFields();
     const password = encrypt(values.password);
-    const username = encrypt(values.username);
+    const { username } = values;
     const res = normalizeResult<LoginData>(await login({ username, password }));
     if (res.success) {
       const userInfo = { ...res.data };
@@ -81,9 +81,7 @@ const Login = () => {
               label={<div className={styles.userInfo}>用户名</div>}
               name="username"
               rules={[{ required: true, message: 'Please input your username!' }]}
-              initialValue={
-                getCoolie('uname') ? decrypt(getCoolie('uname') as string) : undefined
-              }
+              initialValue={getCoolie('uname')}
             >
               <Input placeholder="请输入用户名" />
             </Form.Item>

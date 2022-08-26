@@ -10,7 +10,7 @@ import Image from '@/components/Image';
 import BackTop from '@/components/BackTop';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult, storage, decrypt } from '@/utils';
+import { normalizeResult, storage } from '@/utils';
 import {
   useLoginStatus,
   useLikeArticle,
@@ -29,7 +29,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-interface IProps {}
+interface IProps { }
 
 const Author: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -222,7 +222,7 @@ const Author: React.FC<IProps> = () => {
               </div>
               <div className={styles.mainInfo}>
                 <div className={styles.username}>
-                  {authorInfo?.username && decrypt(authorInfo?.username)}
+                  {authorInfo?.username}
                 </div>
                 <div className={styles.info}>{authorInfo?.job}</div>
                 <div className={styles.info}>{authorInfo?.introduce}</div>

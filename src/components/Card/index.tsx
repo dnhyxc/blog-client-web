@@ -2,7 +2,7 @@ import React, { CSSProperties } from 'react';
 import { Skeleton, Popover } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
-import { formatGapTime, decrypt } from '@/utils';
+import { formatGapTime } from '@/utils';
 import useStore from '@/store';
 import Image from '@/components/Image';
 import { CARD_URL } from '@/constant';
@@ -106,7 +106,7 @@ const Card: React.FC<IProps> = ({
               <div className={descClass || styles.desc}>{i.abstract}</div>
               {showClassify && (
                 <div className={styles.classifyInfo}>
-                  <span>{i?.authorName && decrypt(i?.authorName)}</span>
+                  <span>{i?.authorName}</span>
                   <span className={styles.classify}>
                     标签：
                     {i.tag}

@@ -56,6 +56,7 @@ const ReleaseModel: React.FC<IProps> = ({
     if (initialValue?.coverImage) {
       setFilePath(initialValue?.coverImage);
     }
+    setTagValue(initialValue?.tag);
   }, [initialValue]);
 
   const onClose = () => {

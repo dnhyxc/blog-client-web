@@ -4,7 +4,7 @@ import { HEAD_UEL } from '@/constant';
 import { Button } from 'antd';
 import Image from '@/components/Image';
 import * as Service from '@/service';
-import { normalizeResult, decrypt } from '@/utils';
+import { normalizeResult } from '@/utils';
 import { UserInfoParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -68,7 +68,7 @@ const Introduction: React.FC<IProps> = () => {
       </div>
       <div className={styles.nameInfo}>
         <div className={styles.name}>
-          {authorInfo?.username && decrypt(authorInfo?.username)}
+          {authorInfo?.username}
         </div>
         {/* contentEditable="true"设置当前元素可编辑。suppressContentEditableWarning解决react报错 */}
         <div suppressContentEditableWarning contentEditable="true" className={styles.desc}>

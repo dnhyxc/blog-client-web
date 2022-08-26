@@ -1,5 +1,4 @@
 import { makeAutoObservable } from 'mobx';
-import { decrypt } from '@/utils';
 import { LoginData } from '@/typings/common';
 
 class UserInfo {
@@ -30,11 +29,7 @@ class UserInfo {
   get getUserInfo() {
     const storageInfo = localStorage.getItem('userInfo');
     const userInfo = storageInfo && JSON.parse(storageInfo);
-    const decryptInfo = {
-      ...userInfo,
-      username: (userInfo?.username && decrypt(userInfo?.username)) || userInfo?.useranme,
-    };
-    this.userInfo = decryptInfo;
+    this.userInfo = userInfo;
     return this.userInfo;
   }
 }

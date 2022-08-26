@@ -17,7 +17,7 @@ import Header from '@/components/Header';
 import BackTop from '@/components/BackTop';
 import * as Service from '@/service';
 import useStore from '@/store';
-import { normalizeResult, decrypt, storage } from '@/utils';
+import { normalizeResult, storage } from '@/utils';
 import {
   ABOUT_ME_TABS,
   ABOUT_TABS,
@@ -188,8 +188,7 @@ const Personal = () => {
               />
               <div className={styles.user}>
                 <div className={styles.userName}>
-                  {(personalInfo?.username && decrypt(personalInfo?.username)) ||
-                    getUserInfo?.username}
+                  {getUserInfo?.username}
                 </div>
                 <div>{personalInfo?.job || getUserInfo?.job}</div>
                 <div>{personalInfo?.motto || getUserInfo?.motto}</div>

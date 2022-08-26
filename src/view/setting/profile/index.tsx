@@ -3,7 +3,7 @@ import { Button, Form, Input, message } from 'antd';
 import useStore from '@/store';
 import { useLoginStatus } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult, encrypt } from '@/utils';
+import { normalizeResult } from '@/utils';
 import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
@@ -37,14 +37,10 @@ const Profile: React.FC = () => {
   // 修改用户信息
   const onUpdateUserInfo = async () => {
     const values = await form.validateFields();
-    const info = {
-      ...values,
-      username: encrypt(values.username),
-    };
     const res = normalizeResult<LoginData>(
       await Service.updateInfo(
         {
-          ...info,
+          ...values,
           headUrl: filePath,
           mainCover: mainCoverPath,
           userId,
