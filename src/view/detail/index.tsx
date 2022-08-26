@@ -122,7 +122,7 @@ const ArticleDetail: React.FC = () => {
                 <AnotherArticle id={id} />
               </div>
               <div className={styles.commentList}>
-                <Comments authorId={detail.authorId} />
+                <Comments authorId={detail.authorId} replayCount={detail.replyCount} />
               </div>
             </div>
             <div className={styles.rightBar}>

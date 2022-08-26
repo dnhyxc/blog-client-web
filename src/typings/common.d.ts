@@ -76,12 +76,13 @@ export interface ArticleItem {
   authorId: string;
   authorName: string;
   classify: string;
-  content: string;
+  content?: string;
   coverImage: string;
   createTime: number;
   id: string;
   isLike: boolean;
   likeCount: number;
+  replyCount: number;
   tag: string;
   title: string;
 }
@@ -105,6 +106,7 @@ export interface ArticleDetailParams {
   comments: CommentParams[];
   authorName: string;
   authorId: string;
+  replyCount: number;
 }
 
 /**
@@ -181,6 +183,7 @@ interface TimelineArticles {
   tag: string;
   classify: string;
   likeCount: number;
+  replyCount: number;
 }
 
 export interface TimelineResult {

@@ -7,11 +7,11 @@ import useStore from '@/store';
 import Image from '@/components/Image';
 import { CARD_URL } from '@/constant';
 import MIcons from '@/components/Icons';
-import { ArticleItemResult } from '@/typings/common';
+import { ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
 interface IProps {
-  list: ArticleItemResult[];
+  list: ArticleItem[];
   toDetail?: Function;
   wrapClass?: string;
   itemClass?: string;
@@ -55,7 +55,7 @@ const Card: React.FC<IProps> = ({
     userInfoStore: { getUserInfo },
   } = useStore();
 
-  const content = (item: ArticleItemResult) => {
+  const content = (item: ArticleItem) => {
     return (
       <>
         <div
@@ -71,12 +71,12 @@ const Card: React.FC<IProps> = ({
     );
   };
 
-  const onEdit = (e: any, item: ArticleItemResult) => {
+  const onEdit = (e: any, item: ArticleItem) => {
     e.stopPropagation();
     onEditArticle && onEditArticle(item.id);
   };
 
-  const onDelete = (e: any, item: ArticleItemResult) => {
+  const onDelete = (e: any, item: ArticleItem) => {
     e.stopPropagation();
     deleteArticle && deleteArticle(item.id);
   };
@@ -122,14 +122,14 @@ const Card: React.FC<IProps> = ({
                 <div className={styles.icons}>
                   <MIcons
                     name={`${i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'}`}
-                    text={i.likeCount! > 0 ? i.likeCount : '点赞'}
+                    text={i.likeCount > 0 ? i.likeCount : '点赞'}
                     iconWrapClass={styles.iconWrap}
                     className={i.isLike ? styles.isLike : null}
                     onClick={() => likeArticle && likeArticle(i.id)}
                   />
                   <MIcons
                     name="icon-comment"
-                    text="评论"
+                    text={i.replyCount > 0 ? i.replyCount : '评论'}
                     iconWrapClass={styles.iconWrap}
                     onClick={() => toDetail && toDetail(i.id, true)}
                   />
