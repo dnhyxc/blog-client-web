@@ -264,7 +264,7 @@ export const USER_MENU = [
     key: '1',
     icon: 'icon-gerenzhongxin',
     text: '我的主页',
-    path: '/author',
+    path: '/personal',
   },
   {
     key: '2',
