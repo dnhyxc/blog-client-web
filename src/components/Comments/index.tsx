@@ -16,10 +16,9 @@ import styles from './index.less';
 
 interface IProps {
   authorId: string;
-  replayCount?: number
 }
 
-const Comments: React.FC<IProps> = ({ authorId, replayCount }) => {
+const Comments: React.FC<IProps> = ({ authorId }) => {
   const [viewMoreComments, setViewMoreComments] = useState<string[]>([]);
   const [selectComment, setSelectComment] = useState<CommentParams>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -38,6 +37,16 @@ const Comments: React.FC<IProps> = ({ authorId, replayCount }) => {
   useEffect(() => {
     getCommentList();
   }, [id]);
+
+  // 计算评论数
+  const getCommentCount = (comments: CommentParams[]) => {
+    let count = 0;
+    comments.forEach((i) => {
+      const length: number = i.replyList?.length || 0;
+      count += length + 1;
+    });
+    return count;
+  };
 
   // 获取评论列表
   const getCommentList = async () => {
@@ -115,9 +124,11 @@ const Comments: React.FC<IProps> = ({ authorId, replayCount }) => {
       ? {
         commentId: comment.commentId!,
         fromCommentId: comment.commentId!,
+        articleId: id
       }
       : {
         commentId: comment.commentId!,
+        articleId: id
       };
     Modal.confirm(modalConfig(params));
   };
@@ -159,7 +170,7 @@ const Comments: React.FC<IProps> = ({ authorId, replayCount }) => {
           onJump={() => toPersonal(authorId)}
         />
       </div>
-      {comments?.length > 0 && <div className={styles.title}>全部评论<span className={styles.replyCount}>{replayCount}</span></div>}
+      {comments?.length > 0 && <div className={styles.title}>全部评论<span className={styles.replyCount}>{getCommentCount(comments)}</span></div>}
       {comments?.length > 0 &&
         comments.map((i) => {
           return (
