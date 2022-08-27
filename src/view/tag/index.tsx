@@ -20,8 +20,6 @@ const Tag: React.FC = () => {
     getTagList();
   }, []);
 
-  console.log(bodyWidth, 'bodyWidth');
-
   const getTagList = async () => {
     const res = normalizeResult<TagResult[]>(await Service.getTagList());
     if (res.success) {
