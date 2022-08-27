@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import * as echarts from 'echarts';
 import 'echarts-wordcloud';
+// import { useHtmlWidth } from '@/hooks';
 import { BIRD_BASE64 } from '@/constant';
 import styles from './index.less';
 
@@ -10,6 +11,8 @@ interface IProps {
 }
 
 const WordCloud: React.FC<IProps> = ({ data, callback }) => {
+  // const { htmlWidth } = useHtmlWidth();
+
   useEffect(() => {
     init();
   }, []);
@@ -73,8 +76,8 @@ const WordCloud: React.FC<IProps> = ({ data, callback }) => {
           top: 'center',
           right: null,
           bottom: null,
-          // width: "500%",
-          // height: "500%", // 当不设置高是，词超出图片范围会显示不完全
+          // width: htmlWidth < 960 ? '1000%' : 'none',
+          // height: htmlWidth < 960 ? '1000%' : 'none', // 当不设置高是，词超出图片范围会显示不完全
           // 数据是一个数组，每个数据项必须包含 name 和 value 属性。name是词，value是词的系数（频率）。
           data,
         },
@@ -112,6 +115,7 @@ const WordCloud: React.FC<IProps> = ({ data, callback }) => {
       });
     };
   };
+
   return (
     <div className={styles.WordCloud}>
       <div id="main" style={{ width: '100%', height: '100%' }} />

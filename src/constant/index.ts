@@ -302,84 +302,98 @@ interface NumberKey {
 
 export const TAG_STYLES: NumberKey = {
   1: {
-    color: 'red',
+    color: '#00BFFF',
     fontSize: '14px',
+    transform: `rotate(${Math.random() * 180}deg)`,
   },
   2: {
-    color: 'pink',
+    color: '#00FFFF',
     fontSize: '15px',
+    transform: `rotate(${-Math.random() * 90}deg)`,
   },
   3: {
-    color: 'green',
+    color: '#98FB98',
     fontSize: '16px',
+    transform: `rotate(${-Math.random() * 360}deg)`,
   },
   4: {
     color: 'yellow',
     fontSize: '17px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
   5: {
     color: '#9400D3',
     fontSize: '18px',
+    transform: `rotate(${-Math.random() * 360}deg)`,
   },
   6: {
     color: '#00BFFF',
     fontSize: '19px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
   7: {
     color: '#20B2AA',
     fontSize: '20px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
   8: {
-    color: '#008000',
+    color: '#9ACD32',
     fontSize: '21px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
   9: {
     color: '#ADFF2F',
     fontSize: '22px',
+    transform: `rotate(${-Math.random() * 360}deg)`,
   },
   10: {
     color: '#FFD700',
     fontSize: '23px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
   11: {
     color: '#FF8C00',
     fontSize: '24px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
   12: {
     color: '#FF7F50',
     fontSize: '25px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
   13: {
     color: '#FF6347',
     fontSize: '26px',
+    transform: `rotate(${-Math.random() * 360}deg)`,
   },
   14: {
     color: '#FFA500',
     fontSize: '27px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
   15: {
     color: '#9ACD32',
-    fontSize: '28px',
+    transform: `rotate(${-Math.random() * 360}deg)`,
   },
   16: {
-    color: '#228B22',
-    fontSize: '29px',
+    color: '#FFD700',
+    transform: `rotate(${-Math.random() * 360}deg)`,
   },
   17: {
     color: '#98FB98',
-    fontSize: '30px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
   18: {
     color: '#00CED1',
-    fontSize: '31px',
+    transform: `rotate(${-Math.random() * 360}deg)`,
   },
   19: {
     color: '#AFEEEE',
-    fontSize: '32px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
   20: {
     color: '#7B68EE',
-    fontSize: '33px',
+    transform: `rotate(${Math.random() * 360}deg)`,
   },
 };
 

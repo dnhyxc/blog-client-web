@@ -34,6 +34,16 @@ export const useHtmlWidth = () => {
   return { htmlWidth };
 };
 
+export const useGetBodyWidth = () => {
+  const [bodyWidth, setBodyWidth] = useState<number>(window.innerWidth);
+
+  useEffect(() => {
+    setBodyWidth(window.innerWidth);
+  }, []);
+
+  return { bodyWidth };
+};
+
 // 获取登录状态的hooks
 export const useLoginStatus = () => {
   const [showAlert, setShowAlert] = useState<boolean>(false);

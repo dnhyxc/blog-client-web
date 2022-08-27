@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Timeline, message } from 'antd';
+import classname from 'classname';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import Card from '@/components/Card';
 import RightBar from '@/components/RightBar';
@@ -16,9 +17,7 @@ import { normalizeResult, storage } from '@/utils';
 import { TimelineResult } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
-
-const TimeLine: React.FC<IProps> = () => {
+const TimeLine: React.FC = () => {
   const [timelineList, setTimelineList] = useState<TimelineResult[]>([]);
   const navigate = useNavigate();
 
@@ -102,13 +101,21 @@ const TimeLine: React.FC<IProps> = () => {
               })}
             </Timeline>
           ) : (
-            <div className={styles.emptyWrap}>
+            <div
+              className={classname(
+                styles.emptyWrap,
+                timelineList.length > 0 && styles.hasTimeList
+              )}
+            >
               <Empty />
             </div>
           )}
           <RightBar
-            className={styles.rightbar}
-            showRecommendArticle
+            className={classname(
+              styles.rightbar,
+              timelineList.length > 0 && styles.rightBarHasData
+            )}
+            showRecommendArticle={!!timelineList.length}
             scrollRef={scrollRef}
           />
         </div>
