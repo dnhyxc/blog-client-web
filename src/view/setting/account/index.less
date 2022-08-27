@@ -25,6 +25,14 @@
     .header {
       font-size: 20px;
       font-weight: 600;
+
+      .infoText {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+      }
     }
 
     .setList {
@@ -63,5 +71,9 @@
   .Account {
     margin-left: 0;
     padding: 0;
+
+    .containerClassName {
+      height: calc(100vh - 60px);
+    }
   }
 }

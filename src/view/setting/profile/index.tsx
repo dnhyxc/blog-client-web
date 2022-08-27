@@ -8,6 +8,7 @@ import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
 import Image from '@/components/Image';
+import MDropdown from '@/components/MDropdown';
 import { HEAD_UEL, UPDATE_INFO_API_PATH, MAIN_COVER } from '@/constant';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
@@ -69,12 +70,16 @@ const Profile: React.FC = () => {
       >
         <div className={styles.header}>
           <div className={styles.title}>
-            <span>个人资料</span>
+            <div className={styles.infoText}>
+              <span>个人设置</span>
+              <MDropdown />
+            </div>
             <div className={styles.mainCover}>
               <Image
                 url={mainCoverPath}
                 transitionImg={MAIN_COVER}
                 className={styles.image}
+                imageWrapStyle={styles.imageWrapStyle}
               />
             </div>
             <UploadFile
@@ -156,7 +161,11 @@ const Profile: React.FC = () => {
                   showCount
                 />
               </Form.Item>
-              <Form.Item wrapperCol={htmlWidth > 960 ? { offset: 6, span: 13 } : { offset: 0, span: 13 }}>
+              <Form.Item
+                wrapperCol={
+                  htmlWidth > 960 ? { offset: 6, span: 13 } : { offset: 0, span: 13 }
+                }
+              >
                 <Button type="primary" className={styles.submit} onClick={onUpdateUserInfo}>
                   保存修改
                 </Button>

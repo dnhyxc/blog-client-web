@@ -52,6 +52,22 @@ export const SET_ITEM_CONFIG = [
   },
 ];
 
+// setting 菜单配置
+export const SettingMenu = [
+  {
+    key: 'profile',
+    label: '个人设置',
+    name: '个人设置',
+    path: '/setting/profile',
+  },
+  {
+    key: 'account',
+    label: '账号设置',
+    name: '账号设置',
+    path: '/setting/account',
+  },
+];
+
 export const getSetItemConfig = (auth: string) => {
   if (!auth) {
     return SET_ITEM_CONFIG.filter((i) => i.label !== 'auth');

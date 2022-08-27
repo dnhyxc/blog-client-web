@@ -1,0 +1,65 @@
+@import '~@styles/common.less';
+
+.MenuList {
+  margin-left: 30px;
+  font-weight: 400;
+  font-size: 16px;
+  .ellipsis();
+  .item {
+    box-sizing: border-box;
+    margin-right: 30px;
+    padding-bottom: 11px;
+    cursor: pointer;
+
+    &:hover {
+      border-bottom: 3px solid @menu-active;
+      color: @menu-active;
+    }
+  }
+
+  .itemIcon {
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:hover {
+      color: @menu-active;
+    }
+  }
+}
+
+.dropdown {
+  padding-top: 10px;
+
+  .space {
+    font-size: 14px;
+  }
+}
+
+.selectMenu {
+  color: @menu-active;
+
+  .menuIcon {
+    font-size: 18px;
+  }
+}
+
+.activeMenu {
+  color: @menu-active;
+}
+
+.menu_label {
+  display: inline-block;
+  width: 4em;
+  text-align: justify;
+  text-align-last: justify;
+}
+
+:global(.ant-dropdown-menu-item:hover) {
+  background-color: @menu-hover;
+}
+
+@media screen and (max-width: 960px) {
+  .MenuList {
+    margin-left: 0;
+  }
+}
