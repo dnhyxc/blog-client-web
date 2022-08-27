@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Form, Input, message } from 'antd';
 import useStore from '@/store';
-import { useLoginStatus } from '@/hooks';
+import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils';
 import MAlert from '@/components/Alert';
@@ -24,6 +24,7 @@ const Profile: React.FC = () => {
   const {
     getUserInfo: { headUrl, mainCover, username, userId, job, motto, introduce },
   } = userInfoStore;
+  const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
     if (mainCover) {
@@ -71,7 +72,7 @@ const Profile: React.FC = () => {
             <span>个人资料</span>
             <div className={styles.mainCover}>
               <Image
-                url={mainCoverPath || MAIN_COVER}
+                url={mainCoverPath}
                 transitionImg={MAIN_COVER}
                 className={styles.image}
               />
@@ -155,7 +156,7 @@ const Profile: React.FC = () => {
                   showCount
                 />
               </Form.Item>
-              <Form.Item wrapperCol={{ offset: 6, span: 13 }}>
+              <Form.Item wrapperCol={htmlWidth > 960 ? { offset: 6, span: 13 } : { offset: 0, span: 13 }}>
                 <Button type="primary" className={styles.submit} onClick={onUpdateUserInfo}>
                   保存修改
                 </Button>

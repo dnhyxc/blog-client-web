@@ -18,7 +18,7 @@ import RightBar from '@/components/RightBar';
 import Toc from '@/components/ArticleToc';
 import Comments from '@/components/Comments';
 import AnotherArticle from '@/components/AnotherArticle';
-import { useGetArticleDetail } from '@/hooks';
+import { useGetArticleDetail, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
 import { formatGapTime } from '@/utils';
 import { ArticleDetailParams } from '@/typings/common';
@@ -32,6 +32,7 @@ const ArticleDetail: React.FC = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const { htmlWidth } = useHtmlWidth();
 
   // 编辑文章
   const onEditArticle = () => {
@@ -134,11 +135,12 @@ const ArticleDetail: React.FC = () => {
           </div>
         )}
       </div>
-      <BackTop className={styles.backTopWrap}>
-        <div className={styles.backTop}>
-          <ArrowUpOutlined className={styles.topIcon} />
-        </div>
-      </BackTop>
+      {htmlWidth > 960 && (
+        <BackTop className={styles.backTopWrap}>
+          <div className={styles.backTop}>
+            <ArrowUpOutlined className={styles.topIcon} />
+          </div>
+        </BackTop>)}
     </Spin>
   );
 };

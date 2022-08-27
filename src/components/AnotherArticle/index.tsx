@@ -70,7 +70,7 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
                     <div className={styles.title}>{i?.title}</div>
                     <div className={styles.abstract}>{i?.abstract}</div>
                     <div className={styles.info}>
-                      <span>{i?.authorName}</span>
+                      <span title={i?.authorName}>{i?.authorName?.length > 20 ? `${i?.authorName?.slice(0, 19)}...` : i?.authorName}</span>
                       <span>{` · ${i?.tag} · `}</span>
                       <span>{`${i?.classify} · `}</span>
                       <span>{formatGapTime(i?.createTime!)}</span>

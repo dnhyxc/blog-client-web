@@ -18,7 +18,7 @@ import moment from 'moment';
 import UploadFile from '@/components/Upload';
 import MAlert from '@/components/Alert';
 import useStore from '@/store';
-import { useLoginStatus } from '@/hooks';
+import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL } from '@/constant';
@@ -51,6 +51,7 @@ const ReleaseModel: React.FC<IProps> = ({
     userInfoStore: { getUserInfo },
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
+  const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
     if (initialValue?.coverImage) {
@@ -143,7 +144,7 @@ const ReleaseModel: React.FC<IProps> = ({
       <Drawer
         title="发布文章"
         placement="right"
-        width={500}
+        width={htmlWidth > 500 ? 500 : 'calc(100vw - 50px)'}
         closable={false}
         onClose={onClose}
         visible={visible}
@@ -234,6 +235,7 @@ const ReleaseModel: React.FC<IProps> = ({
               <UploadFile
                 filePath={filePath}
                 setFilePath={setFilePath}
+                uploadStyle={styles.uploadStyle}
                 transitionImg={CARD_URL}
                 form={form}
                 imgStyle={styles.uploadImg}

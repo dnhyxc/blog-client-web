@@ -16,7 +16,7 @@ import { normalizeResult, storage } from '@/utils';
 import { TimelineResult } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const TimeLine: React.FC<IProps> = () => {
   const [timelineList, setTimelineList] = useState<TimelineResult[]>([]);

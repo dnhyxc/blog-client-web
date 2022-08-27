@@ -88,6 +88,7 @@
         padding-right: 0;
         background: @background;
         z-index: 1;
+        overflow: auto;
 
         .segmented {
           background: @menu-hover;
@@ -98,6 +99,10 @@
         display: flex;
         justify-content: center;
         padding-top: 35px;
+
+        .wrapClass {
+          padding-top: 10px !important;
+        }
       }
     }
   }

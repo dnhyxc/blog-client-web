@@ -18,6 +18,7 @@ import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
 import uml from '@toast-ui/editor-plugin-uml';
 import Prism from 'prismjs';
 import * as Service from '@/service';
+import { useHtmlWidth } from '@/hooks';
 import { normalizeResult } from '@/utils';
 import { toolbars } from './toobars';
 import styles from './index.less';
@@ -28,13 +29,15 @@ interface IProps {
 }
 
 const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown }) => {
+  const { htmlWidth } = useHtmlWidth();
+
   useEffect(() => {
     const editor: any = new Editor({
       el: document.querySelector('#editor')!,
       placeholder: '请输入文章内容',
       initialValue: initialValue || '',
       initialEditType: 'markdown',
-      previewStyle: 'vertical', // 预览方式
+      previewStyle: htmlWidth > 960 ? 'vertical' : 'tab', // 预览方式
       // previewStyle: "tab", // 预览方式
       language: 'zh-CN',
       height: '100%',
@@ -87,7 +90,7 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown }) => {
 
       return button;
     }
-  }, [initialValue]);
+  }, [initialValue, htmlWidth]);
 
   const uploadImage = async (file: Blob, callback: Function) => {
     const formData = new FormData();

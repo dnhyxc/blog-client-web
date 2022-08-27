@@ -9,6 +9,10 @@
       height: 100%;
       font-size: 14px;
     }
+    .toastui-editor-dropdown-toolbar {
+      flex-wrap: wrap;
+      height: auto;
+    }
     .toastui-editor-defaultUI-toolbar {
       flex-wrap: wrap;
       height: 100%;
@@ -61,6 +65,21 @@
     }
     .toastui-editor-md-delimiter {
       color: @menu-active;
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  :global {
+    .toastui-editor-popup {
+      max-width: 300px;
+      margin-left: 0;
+    }
+
+    .toastui-editor-popup-add-image {
+      .toastui-editor-file-select-button {
+        width: 100px;
+      }
     }
   }
 }

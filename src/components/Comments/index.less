@@ -64,6 +64,7 @@
       .userInfo {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         margin-bottom: 10px;
 
         .name {
@@ -173,6 +174,88 @@
           .viewText {
             margin-right: 5px;
             padding-left: 55px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .Comments {
+    padding: 0 10px 20px 10px;
+
+    .commentWrap {
+      .avatar {
+        margin-right: 10px;
+
+        .image {
+          width: 35px;
+          height: 35px;
+        }
+      }
+
+      .commentContent {
+        .userInfo {
+          .name {
+            font-size: 14px;
+          }
+          .date {
+            font-size: 12px;
+          }
+        }
+
+        .commentChild {
+          padding: 5px;
+
+          .viewMore {
+            .viewText {
+              padding-left: 45px;
+            }
+          }
+
+          .commentChildItem {
+            position: relative;
+
+            .avatar {
+              position: absolute;
+            }
+
+            .commentChildItemContent {
+              .userInfo {
+                padding-left: 45px;
+
+                .name {
+                  flex: 1;
+                  font-size: 14px;
+                  .ellipsis();
+                }
+
+                .fromUsername {
+                  font-size: 14px;
+                }
+
+                .date {
+                  flex: 0.38;
+                  font-size: 12px;
+                  text-align: right;
+                }
+              }
+
+              .desc {
+                padding-left: 45px;
+              }
+
+              .formContent {
+                margin-left: 45px;
+              }
+
+              .action {
+                .actionContent {
+                  margin-left: 45px;
+                }
+              }
+            }
           }
         }
       }

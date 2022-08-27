@@ -75,6 +75,7 @@
 
       .classifyInfo {
         font-size: 12px;
+        .ellipsis();
 
         span {
           padding: 0 10px;
@@ -176,9 +177,40 @@
   .wrap {
     width: 100%;
 
+    .item {
+      .info {
+        .mobileDesc {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          .desc {
+            text-overflow: -o-ellipsis-lastline;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            line-clamp: 3;
+            -webkit-box-orient: vertical;
+          }
+
+          .mobileImgWrap {
+            width: auto;
+            height: 66px;
+            margin-left: 10px;
+
+            .image {
+              width: auto;
+              height: 66px;
+            }
+          }
+        }
+      }
+    }
+
     .noMore {
       text-align: center;
-      padding: 5px 0 15px 0;
+      padding: 10px 0 10px 0;
     }
   }
 }

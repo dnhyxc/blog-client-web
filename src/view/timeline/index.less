@@ -19,7 +19,7 @@
 
       .timelineContent {
         flex: 1;
-        padding: 10px 0 0 5px;
+        padding: 3px 0 0 5px;
 
         .timelineItem {
           &:last-child {
@@ -41,6 +41,16 @@
       .itemClass {
         height: 128px;
         padding-bottom: 15px;
+
+        &:nth-last-child(2) {
+          border-bottom-left-radius: 0;
+          border-bottom-right-radius: 0;
+        }
+
+        &:nth-last-child(1) {
+          border-bottom-left-radius: 5px;
+          border-bottom-right-radius: 5px;
+        }
       }
 
       .imgWrapStyle {
@@ -92,11 +102,40 @@
     width: 260px;
   }
 
-  :global(.ant-timeline-item-tail) {
-    border-left: 2px solid @menu-hover;
+  :global {
+    .ant-timeline-item-tail {
+      border-left: 2px solid @menu-hover;
+    }
+    .ant-timeline-item-head {
+      background-color: transparent;
+    }
+    .ant-timeline-item-head-custom {
+      top: 12.5px;
+    }
+    .ant-timeline-item-content {
+      top: 0;
+      margin: 0 0 0 20px;
+    }
   }
+}
 
-  :global(.ant-timeline-item-head) {
-    background-color: transparent;
+@media screen and (max-width: 960px) {
+  .TimeLine {
+    .contentWrap {
+      padding: 5px 0 0 2px;
+      .wrap {
+        padding-right: 0;
+        padding-bottom: 10px;
+
+        .itemClass {
+          height: 100%;
+        }
+        .imgWrapClass {
+          position: static;
+          height: 66px !important;
+          min-height: 66px !important;
+        }
+      }
+    }
   }
 }

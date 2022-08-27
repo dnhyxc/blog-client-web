@@ -4,6 +4,7 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
 import { formatGapTime } from '@/utils';
 import useStore from '@/store';
+import { useHtmlWidth } from '@/hooks';
 import Image from '@/components/Image';
 import { CARD_URL } from '@/constant';
 import MIcons from '@/components/Icons';
@@ -54,6 +55,7 @@ const Card: React.FC<IProps> = ({
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const { htmlWidth } = useHtmlWidth();
 
   const content = (item: ArticleItem) => {
     return (
@@ -90,21 +92,36 @@ const Card: React.FC<IProps> = ({
             key={i.id}
             onClick={() => toDetail && toDetail(i.id)}
           >
-            <div className={classname(imgWrapStyle, styles.imgWrap)}>
-              <div className={styles.text}>{i.title}</div>
-              <div className={classname(styles.cardImgWrap, cardImgWrapStyle)}>
-                <Image
-                  url={i.coverImage || CARD_URL}
-                  transitionImg={CARD_URL}
-                  className={classname(styles.image, imgWrapClass)}
-                  imageScaleStyle={styles.imageScaleStyle}
-                />
+            {htmlWidth > 960 && (
+              <div className={classname(imgWrapStyle, styles.imgWrap)}>
+                <div className={styles.text}>{i.title}</div>
+                <div className={classname(styles.cardImgWrap, cardImgWrapStyle)}>
+                  <Image
+                    url={i.coverImage || CARD_URL}
+                    transitionImg={CARD_URL}
+                    className={classname(styles.image, imgWrapClass)}
+                    imageScaleStyle={styles.imageScaleStyle}
+                  />
+                </div>
               </div>
-            </div>
+            )}
             <div className={styles.info}>
               <div className={styles.name}>{i.title}</div>
-              <div className={descClass || styles.desc}>{i.abstract}</div>
-              {showClassify && (
+              {htmlWidth > 960 && <div className={descClass || styles.desc}>{i.abstract}</div>}
+              {htmlWidth <= 960 && (
+                <div className={styles.mobileDesc}>
+                  <div className={descClass || styles.desc}>{i.abstract}</div>
+                  <div className={styles.mobileImgWrap}>
+                    <Image
+                      url={i.coverImage || CARD_URL}
+                      transitionImg={CARD_URL}
+                      className={classname(styles.image, imgWrapClass)}
+                      imageScaleStyle={styles.imageScaleStyle}
+                    />
+                  </div>
+                </div>
+              )}
+              {showClassify && htmlWidth > 960 && (
                 <div className={styles.classifyInfo}>
                   <span>{i?.authorName}</span>
                   <span className={styles.classify}>

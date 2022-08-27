@@ -32,6 +32,10 @@
 }
 
 .ReleaseModel {
+  .uploadStyle {
+    height: auto;
+  }
+
   .uploadImg {
     width: 200px;
     height: auto;
@@ -68,4 +72,22 @@
 .tagMenu {
   max-height: 200px;
   overflow: auto;
+}
+
+@media screen and (max-width: 500px) {
+  .tag {
+    width: calc(50% - 4px);
+
+    &:nth-child(-n + 4) {
+      margin-top: 5px;
+    }
+
+    &:nth-child(-n + 2) {
+      margin-top: 0;
+    }
+
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
 }

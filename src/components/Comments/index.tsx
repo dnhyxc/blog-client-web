@@ -262,7 +262,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
                           <div className={styles.commentChildItemContent}>
                             <div className={styles.userInfo}>
                               <span className={styles.name}>
-                                {j.username}
+                                <span>{j.username}</span>
                                 {j.userId === authorId && (
                                   <span className={styles.isAuthor}>(作者)</span>
                                 )}
