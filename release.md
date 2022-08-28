@@ -154,10 +154,14 @@ http {
 
 ```
 cp -r /usr/local/server/src/upload /usr/local/server/
+
+cp -r /usr/local/server/src/upload /usr/local/ 复制到local
 ```
 
 将 upload 资源从 server 复制到 src 中：
 
 ```
 cp -r /usr/local/server/upload /usr/local/server/src/
+
+cp -r /usr/local/upload /usr/local/server/src/  从local复制到src
 ```

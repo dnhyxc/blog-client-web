@@ -4,16 +4,17 @@ import { message } from 'antd';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import WordCloud from '@/components/WordCloud';
+import { useGetBodyWidth } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
+import WordList from '@/components/WordList';
 import { TagResult } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
-
-const Tag: React.FC<IProps> = () => {
+const Tag: React.FC = () => {
   const [tagList, setTagList] = useState<TagResult[]>([]);
   const navigate = useNavigate();
+  const { bodyWidth } = useGetBodyWidth();
 
   useEffect(() => {
     getTagList();
@@ -37,7 +38,11 @@ const Tag: React.FC<IProps> = () => {
       <Header needMenu>文章标签</Header>
       <Content>
         <div className={styles.wrap}>
-          {tagList.length > 0 && <WordCloud data={tagList} callback={toTagList} />}
+          {tagList.length > 0 && bodyWidth > 960 ? (
+            <WordCloud data={tagList} callback={toTagList} />
+          ) : (
+            <WordList data={tagList} callback={toTagList} />
+          )}
         </div>
       </Content>
     </div>

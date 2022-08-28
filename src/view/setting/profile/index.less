@@ -40,11 +40,16 @@
         left: 0;
         width: 100%;
 
+        .imageWrapStyle {
+          border-radius: 0;
+        }
+
         .image {
           width: 100%;
           height: auto;
           max-height: 265px;
           min-height: 265px;
+          border-radius: 0;
           cursor: default;
         }
       }
@@ -74,6 +79,7 @@
       left: 20px;
       display: flex;
       align-items: flex-end;
+      width: calc(100% - 20px);
 
       .uploadWrapStyle {
         width: 130px;
@@ -99,6 +105,7 @@
 
       .username {
         margin-left: 30px;
+        .ellipsis();
       }
 
       .uploadWrap {
@@ -142,10 +149,31 @@
     margin-left: 0;
     padding: 0;
 
+    .containerClassName {
+      height: calc(100vh - 60px);
+    }
+
     .header {
       height: 230px;
 
+      .headerWrap {
+        left: 10px;
+        width: calc(100% - 10px);
+
+        .username {
+          margin-left: 0;
+        }
+      }
+
       .title {
+        .infoText {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          position: relative;
+          z-index: 1;
+        }
+
         .mainCover {
           .image {
             width: 100%;
@@ -162,6 +190,7 @@
 
     .content {
       margin-top: 0;
+      padding: 0 10px;
     }
   }
 }

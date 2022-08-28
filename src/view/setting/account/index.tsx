@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Input, message, Modal } from 'antd';
 import Content from '@/components/Content';
+import MDropdown from '@/components/MDropdown';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, encrypt, getSetItemConfig } from '@/utils';
@@ -99,7 +100,12 @@ const Account: React.FC<IProps> = () => {
         wrapClassName={styles.wrapClassName}
       >
         <div className={styles.content}>
-          <div className={styles.header}>账号管理</div>
+          <div className={styles.header}>
+            <div className={styles.infoText}>
+              <span>账号设置</span>
+              <MDropdown />
+            </div>
+          </div>
           <div className={styles.setList}>
             {getSetItemConfig(auth, cleararticledebugger).map((i) => {
               return (
