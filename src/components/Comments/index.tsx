@@ -113,9 +113,6 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
     if (!res.success && res.code === 409) {
       setAlertStatus && setAlertStatus(true);
     }
-    if (!res.success && res.code !== 409) {
-      message.error(res.message);
-    }
   };
 
   // 删除评论
