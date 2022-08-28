@@ -1617,6 +1617,8 @@ yarn add husky -D
 
 > 注意：执行下述命令之前，必须要先使用 git init 创建 .git 文件，否则将会执行失败。
 
+如果原本已经有 `.husky` 文件，但是 commit 检测没有生效，那么将原本的 `.husky` 删除，然后执行如下命令：
+
 ```json
 npm run prepare
 
