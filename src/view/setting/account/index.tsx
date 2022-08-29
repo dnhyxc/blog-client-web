@@ -4,6 +4,7 @@ import { Button, Input, message, Modal } from 'antd';
 import Content from '@/components/Content';
 import MDropdown from '@/components/MDropdown';
 import useStore from '@/store';
+import { useHtmlWidth } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, encrypt, getSetItemConfig } from '@/utils';
 import { UPDATE_INFO_API_PATH } from '@/constant';
@@ -19,6 +20,7 @@ const Account: React.FC<IProps> = () => {
   const [search] = useSearchParams();
   const cleararticledebugger = search.get('cleararticledebugger');
   const inputRef = useRef<any>(null);
+  const { htmlWidth } = useHtmlWidth();
   const { userInfoStore } = useStore();
   const { userId, zhihu, juejin, github, blog, auth } = userInfoStore.getUserInfo;
 
@@ -103,7 +105,7 @@ const Account: React.FC<IProps> = () => {
           <div className={styles.header}>
             <div className={styles.infoText}>
               <span>账号设置</span>
-              <MDropdown />
+              {htmlWidth < 960 && <MDropdown />}
             </div>
           </div>
           <div className={styles.setList}>

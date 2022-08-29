@@ -55,7 +55,8 @@ const Profile: React.FC = () => {
         ...res.data,
       });
       message.success(res.message);
-    } else {
+    }
+    if (!res.success && res.code !== 409) {
       message.error(res.message);
     }
   };
@@ -72,7 +73,7 @@ const Profile: React.FC = () => {
           <div className={styles.title}>
             <div className={styles.infoText}>
               <span>个人设置</span>
-              <MDropdown />
+              {htmlWidth < 960 && <MDropdown />}
             </div>
             <div className={styles.mainCover}>
               <Image
