@@ -29,9 +29,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
   const [search] = useSearchParams();
   const id = search.get('id');
   const {
-    userInfoStore: {
-      getUserInfo: { userId },
-    },
+    userInfoStore: { getUserInfo },
   } = useStore();
 
   useEffect(() => {
@@ -68,7 +66,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
   // 设置路由守卫
   useEffect(() => {
     if (
-      !userId &&
+      !getUserInfo?.userId &&
       (pathname === '/create' ||
         pathname.includes('setting') ||
         pathname === '/timeline' ||
@@ -76,16 +74,16 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
     ) {
       navigate('home');
     }
-  }, [pathname, userId]);
+  }, [pathname, getUserInfo?.userId]);
 
   const filterMenus = useMemo(() => {
-    if (userId) {
+    if (getUserInfo?.userId) {
       return menuList;
     }
     return menuList.filter(
       (i) => i.key !== 'personal' && i.key !== 'create' && i.key !== 'timeline'
     );
-  }, [userId]);
+  }, [getUserInfo?.userId]);
 
   const onSelectMenu = (value: { key: string }) => {
     setSelectMenu(value.key);

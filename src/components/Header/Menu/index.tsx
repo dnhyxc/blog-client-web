@@ -21,9 +21,7 @@ const MenuList: React.FC<IProps> = ({ className, children }) => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
 
   const {
-    userInfoStore: {
-      getUserInfo: { userId },
-    },
+    userInfoStore: { getUserInfo },
   } = useStore();
 
   const toOtherPage = (e: any, path: string) => {
@@ -32,13 +30,13 @@ const MenuList: React.FC<IProps> = ({ className, children }) => {
   };
 
   const filterMenus = useMemo(() => {
-    if (userId) {
+    if (getUserInfo?.userId) {
       return menuList;
     }
     return menuList.filter(
       (i) => i.key !== 'personal' && i.key !== 'create' && i.key !== 'timeline'
     );
-  }, [userId]);
+  }, [getUserInfo?.userId]);
 
   const menu = (
     <Menu

@@ -116,7 +116,11 @@ const Account: React.FC<IProps> = () => {
                   {(selectItem !== i.label ||
                     selectItem === 'auth' ||
                     selectItem === 'logout') && (
-                    <Button type="link" onClick={() => onSetVisible(i.label)}>
+                    <Button
+                      type="link"
+                      className={styles.settingBtn}
+                      onClick={() => onSetVisible(i.label)}
+                    >
                       {i.action}
                     </Button>
                   )}

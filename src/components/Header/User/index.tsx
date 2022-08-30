@@ -44,7 +44,7 @@ const User: React.FC<IProps> = () => {
 
   return (
     <div className={styles.User}>
-      {getUserInfo.userId ? (
+      {getUserInfo?.userId ? (
         <Dropdown overlay={menu} placement="bottomRight" arrow trigger={['click']}>
           <div className={styles.headImg}>
             <Image

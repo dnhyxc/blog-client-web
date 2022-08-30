@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, message } from 'antd';
 import useStore from '@/store';
 import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult } from '@/utils';
+import { normalizeResult, storage } from '@/utils';
 import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
@@ -20,6 +21,7 @@ const Profile: React.FC = () => {
   const [mainCoverPath, setMainCoverPath] = useState<string>(MAIN_COVER);
 
   const [form] = Form.useForm();
+  const navigate = useNavigate();
   const { userInfoStore } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const {
@@ -39,25 +41,39 @@ const Profile: React.FC = () => {
   // 修改用户信息
   const onUpdateUserInfo = async () => {
     const values = await form.validateFields();
-    const res = normalizeResult<LoginData>(
-      await Service.updateInfo(
-        {
-          ...values,
-          headUrl: filePath,
-          mainCover: mainCoverPath,
-          userId,
-        },
-        UPDATE_INFO_API_PATH[1]
-      )
-    );
-    if (res.success) {
-      userInfoStore.setUserInfo({
-        ...res.data,
-      });
-      message.success(res.message);
-    }
-    if (!res.success && res.code !== 409) {
-      message.error(res.message);
+    if (
+      values.username !== username ||
+      values.job !== job ||
+      values.motto !== motto ||
+      values.introduce !== introduce
+    ) {
+      const res = normalizeResult<LoginData>(
+        await Service.updateInfo(
+          {
+            ...values,
+            headUrl: filePath,
+            mainCover: mainCoverPath,
+            userId,
+          },
+          UPDATE_INFO_API_PATH[1]
+        )
+      );
+      if (res.success) {
+        userInfoStore.setUserInfo({
+          ...res.data,
+        });
+        message.success(res.message);
+        if (values.username !== username) {
+          storage.locRemoveItem('token');
+          storage.locRemoveItem('userInfo');
+          navigate('/login', { replace: true });
+        }
+      }
+      if (!res.success && res.code !== 409) {
+        message.error(res.message);
+      }
+    } else {
+      message.info('没修改信息，休想提交');
     }
   };
 
@@ -124,36 +140,16 @@ const Profile: React.FC = () => {
               form={form}
               name="form"
             >
-              <Form.Item
-                label="用户名"
-                name="username"
-                initialValue={username}
-                rules={[{ required: true, message: '请先输入用户名' }]}
-              >
+              <Form.Item label="用户名" name="username" initialValue={username}>
                 <Input placeholder="请输入用户名" maxLength={50} />
               </Form.Item>
-              <Form.Item
-                label="职位"
-                name="job"
-                initialValue={job}
-                rules={[{ required: true, message: '请先输入职位' }]}
-              >
+              <Form.Item label="职位" name="job" initialValue={job}>
                 <Input placeholder="请输入职位" maxLength={50} />
               </Form.Item>
-              <Form.Item
-                label="座右铭"
-                name="motto"
-                initialValue={motto}
-                rules={[{ required: true, message: '请先输入座右铭' }]}
-              >
+              <Form.Item label="座右铭" name="motto" initialValue={motto}>
                 <Input placeholder="请输入座右铭" maxLength={50} />
               </Form.Item>
-              <Form.Item
-                label="个人介绍"
-                name="introduce"
-                initialValue={introduce}
-                rules={[{ required: true, message: '请先输入个人介绍' }]}
-              >
+              <Form.Item label="个人介绍" name="introduce" initialValue={introduce}>
                 <TextArea
                   placeholder="请输入个人介绍"
                   rows={3}
@@ -164,7 +160,7 @@ const Profile: React.FC = () => {
               </Form.Item>
               <Form.Item
                 wrapperCol={
-                  htmlWidth > 960 ? { offset: 6, span: 13 } : { offset: 0, span: 13 }
+                  htmlWidth > 576 ? { offset: 6, span: 13 } : { offset: 0, span: 13 }
                 }
               >
                 <Button type="primary" className={styles.submit} onClick={onUpdateUserInfo}>
