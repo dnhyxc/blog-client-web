@@ -7,15 +7,28 @@ body {
     height: 100vh;
   }
 
-  :global(.timeModel) {
-    position: fixed;
-    top: 30px;
-    left: 50%;
-    transform: translatex(-50%);
-    border: 1px solid #b7eb8f;
-    background-color: #f6ffed;
-    padding: 8px 15px;
-    border-radius: 5px;
+  :global {
+    .timeModel {
+      position: fixed;
+      top: 60px;
+      left: 50%;
+      transform: translatex(-50%);
+      border: 1px solid #ffe58f;
+      background-color: #fff3e5;
+      padding: 8px 15px;
+      border-radius: 5px;
+    }
+    .warnIcon {
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+      margin-right: 5px;
+      border-radius: 18px;
+      text-align: center;
+      line-height: 18px;
+      color: #fff;
+      background-color: #faad14;
+    }
   }
 
   @media screen and (max-width: 960px) {

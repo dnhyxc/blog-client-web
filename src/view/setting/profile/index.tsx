@@ -62,14 +62,16 @@ const Profile: React.FC = () => {
         userInfoStore.setUserInfo({
           ...res.data,
         });
-        message.success(res.message);
         if (values.username !== username) {
           storage.locRemoveItem('token');
           storage.locRemoveItem('userInfo');
+          message.success('用户名称已修改，请重新登录');
           navigate('/login', { replace: true });
+        } else {
+          message.success(res.message);
         }
       }
-      if (!res.success && res.code !== 409) {
+      if (!res.success && res.code !== 401 && res.code !== 409) {
         message.error(res.message);
       }
     } else {

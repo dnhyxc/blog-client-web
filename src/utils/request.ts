@@ -74,14 +74,17 @@ function onRedirect() {
     showConfirm();
     setTimeout(() => {
       window.location.href = '/login';
-    }, 1500);
+    }, 2000);
   }
 }
 
 const showConfirm = () => {
   const timeModel = document.createElement('div');
   timeModel.innerHTML = `
-    <span>登录已过期稍后将跳转至登录页</span>
+    <span>
+      <span class='warnIcon'>!</span>
+      登录已过期稍后将跳转至登录页
+    </span>
   `;
   timeModel.className = 'timeModel';
   document.body.appendChild(timeModel);
@@ -153,6 +156,7 @@ export default function request(_url: string, options?: any): FetchResult {
               onRedirect();
               return {
                 err: new Error(data.message || '系统异常'),
+                code: err.response.status,
               };
             }
             if (err.response.status === 409) {
