@@ -35,7 +35,7 @@ const Tag: React.FC = () => {
 
   return (
     <div className={styles.Tag}>
-      <Header needMenu>文章标签</Header>
+      <Header>文章标签</Header>
       <Content>
         <div className={styles.wrap}>
           {tagList.length > 0 && bodyWidth > 960 ? (

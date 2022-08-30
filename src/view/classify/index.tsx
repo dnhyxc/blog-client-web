@@ -125,7 +125,7 @@ const Classify: React.FC = () => {
   return (
     <div className={styles.Classify}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header needMenu>文章分类</Header>
+      <Header>文章分类</Header>
       <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
         <div className={classname(styles.content, styles.contentPadding)}>
           <div className={styles.filterList}>

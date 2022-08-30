@@ -13,6 +13,7 @@ import { ArrowUpOutlined } from '@ant-design/icons';
 import Preview from '@/components/Preview';
 import Header from '@/components/Header';
 import Image from '@/components/Image';
+import Footer from '@/components/Footer';
 import { HEAD_UEL, CARD_URL } from '@/constant';
 import RightBar from '@/components/RightBar';
 import Toc from '@/components/ArticleToc';
@@ -90,7 +91,7 @@ const ArticleDetail: React.FC = () => {
         )}
       >
         <div className={styles.headerWrap}>
-          <Header needLeft needMenu excludesWidth>
+          <Header needLeft excludesWidth>
             <div className={styles.headerContent}>
               <div>文章详情</div>
             </div>
@@ -134,6 +135,7 @@ const ArticleDetail: React.FC = () => {
             </div>
           </div>
         )}
+        {htmlWidth <= 960 && <Footer />}
       </div>
       {htmlWidth > 960 && (
         <BackTop className={styles.backTopWrap}>

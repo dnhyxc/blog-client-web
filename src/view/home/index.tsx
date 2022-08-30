@@ -193,7 +193,7 @@ const Home: React.FC<IProps> = () => {
   return (
     <div className={styles.container}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header needMenu right={rightNode()}>
+      <Header right={rightNode()}>
         文章列表
       </Header>
       {articleList && (

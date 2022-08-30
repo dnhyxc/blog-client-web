@@ -6,6 +6,7 @@
  * @FilePath: \src\components\Footer\index.tsx
  */
 import React, { ReactNode } from 'react';
+import MenuList from './Menu';
 import styles from './index.less';
 
 interface IProps {
@@ -13,7 +14,12 @@ interface IProps {
 }
 
 const Footer: React.FC<IProps> = ({ children }) => {
-  return <div className={styles.footerWrap}>{children}</div>;
+  return (
+    <div className={styles.footerWrap}>
+      <MenuList />
+      {children}
+    </div>
+  );
 };
 
 export default Footer;

@@ -17,8 +17,10 @@ import {
   useScrollLoad,
   useDeleteArticle,
   useDeleteTimelineArticle,
+  useHtmlWidth
 } from '@/hooks';
 import { PAGESIZE, HEAD_UEL, MAIN_COVER, AUTHOR_TABS, AUTHOR_API_PATH } from '@/constant';
+import Footer from '@/components/Footer';
 import {
   ArticleListResult,
   ArticleItem,
@@ -57,6 +59,7 @@ const Author: React.FC<IProps> = () => {
     loading,
     pageSize: PAGESIZE,
   });
+  const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
     onGetPersonalInfo();
@@ -190,7 +193,7 @@ const Author: React.FC<IProps> = () => {
       <div className={styles.AuthorContainer}>
         {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
         <div className={styles.headerWrap}>
-          <Header needLeft needMenu excludesWidth>
+          <Header needLeft excludesWidth>
             <div className={styles.headerContent}>
               <div>关于博主</div>
             </div>
@@ -292,6 +295,7 @@ const Author: React.FC<IProps> = () => {
             </div>
           </div>
         </Content>
+        {htmlWidth <= 960 && <Footer />}
         <BackTop scrollTop={scrollTop} contentRef={contentRef} />
       </div>
     </>

@@ -48,7 +48,7 @@ const CreateArticle: React.FC<IProps> = () => {
 
   return (
     <div className={styles.container}>
-      <Header needMenu right={renderRight()}>
+      <Header right={renderRight()}>
         发布文章
       </Header>
       <div className={styles.tuiEditorWrap}>

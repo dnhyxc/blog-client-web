@@ -65,7 +65,7 @@ const TimeLine: React.FC = () => {
   return (
     <div className={styles.TimeLine}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header needMenu>时间轴</Header>
+      <Header>时间轴</Header>
       <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
         <div className={styles.wrap}>
           {timelineList.length > 0 ? (

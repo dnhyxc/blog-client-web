@@ -1,0 +1,41 @@
+@import '~@styles/common.less';
+
+.MenuList {
+  flex: 1;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  font-weight: 400;
+  font-size: 16px;
+  .ellipsis();
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:hover {
+      color: @menu-active;
+    }
+
+    .text {
+      font-size: 12px;
+    }
+  }
+
+  .active {
+    color: @menu-active;
+  }
+
+  .itemIcon {
+    box-sizing: border-box;
+    cursor: pointer;
+
+    &:hover {
+      color: @menu-active;
+    }
+  }
+}

@@ -7,13 +7,13 @@ import styles from './index.less';
 
 const { Content } = Layout;
 
-interface IProps {}
+interface IProps { }
 
 const Setting: React.FC<IProps> = () => {
   return (
     <div className={styles.Setting}>
       <div className={styles.headerWrap}>
-        <Header needLeft needMenu excludesWidth>
+        <Header needLeft excludesWidth>
           <div className={styles.headerContent}>
             <div>我的主页</div>
           </div>

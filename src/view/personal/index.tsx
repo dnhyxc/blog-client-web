@@ -176,7 +176,7 @@ const Personal = () => {
   return (
     <div className={styles.Personal}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header needMenu>我的主页</Header>
+      <Header>我的主页</Header>
       <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
         <div className={styles.content}>
           <div className={styles.wrap}>

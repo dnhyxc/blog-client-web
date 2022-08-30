@@ -100,7 +100,7 @@ const TagList: React.FC<IProps> = () => {
   return (
     <div className={styles.TagList}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header needMenu>
+      <Header>
         {tagName}
         &nbsp; 标签
       </Header>
