@@ -24,7 +24,7 @@ import { normalizeResult, storage } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -45,6 +45,7 @@ const Home: React.FC<IProps> = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  // scrollRef：用户设置rightbar的吸顶效果，contentRef：scrollbar 滚动到顶部，scrollTop：回到顶部
   const { pageNo, setPageNo, onScroll, scrollRef, contentRef, scrollTop } = useScrollLoad({
     data: articleList,
     loading,
