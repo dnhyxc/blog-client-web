@@ -159,6 +159,7 @@ const Personal = () => {
       total: 0,
       count: 0,
     });
+    contentRef.current.scrollTop();
   };
 
   const toSetting = () => {
@@ -187,9 +188,7 @@ const Personal = () => {
                 className={styles.image}
               />
               <div className={styles.user}>
-                <div className={styles.userName}>
-                  {getUserInfo?.username}
-                </div>
+                <div className={styles.userName}>{getUserInfo?.username}</div>
                 <div>{personalInfo?.job || getUserInfo?.job}</div>
                 <div>{personalInfo?.motto || getUserInfo?.motto}</div>
               </div>

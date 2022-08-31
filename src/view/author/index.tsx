@@ -17,7 +17,7 @@ import {
   useScrollLoad,
   useDeleteArticle,
   useDeleteTimelineArticle,
-  useHtmlWidth
+  useHtmlWidth,
 } from '@/hooks';
 import { PAGESIZE, HEAD_UEL, MAIN_COVER, AUTHOR_TABS, AUTHOR_API_PATH } from '@/constant';
 import Footer from '@/components/Footer';
@@ -31,7 +31,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-interface IProps { }
+interface IProps {}
 
 const Author: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -224,9 +224,7 @@ const Author: React.FC<IProps> = () => {
                 />
               </div>
               <div className={styles.mainInfo}>
-                <div className={styles.username}>
-                  {authorInfo?.username}
-                </div>
+                <div className={styles.username}>{authorInfo?.username}</div>
                 <div className={styles.info}>{authorInfo?.job}</div>
                 <div className={styles.info}>{authorInfo?.introduce}</div>
               </div>
