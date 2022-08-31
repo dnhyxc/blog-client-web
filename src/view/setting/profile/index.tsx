@@ -45,7 +45,9 @@ const Profile: React.FC = () => {
       values.username !== username ||
       values.job !== job ||
       values.motto !== motto ||
-      values.introduce !== introduce
+      values.introduce !== introduce ||
+      headUrl !== filePath ||
+      mainCover !== mainCoverPath
     ) {
       const res = normalizeResult<LoginData>(
         await Service.updateInfo(

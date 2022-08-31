@@ -4,6 +4,7 @@ import { Layout } from 'antd';
 import Header from '@/components/Header';
 import MenuList from '@/components/MenuList';
 import Footer from '@/components/Footer';
+import { useHtmlWidth } from '@/hooks';
 import styles from './index.less';
 
 const { Content } = Layout;
@@ -11,6 +12,8 @@ const { Content } = Layout;
 interface IProps {}
 
 const Setting: React.FC<IProps> = () => {
+  const { htmlWidth } = useHtmlWidth();
+
   return (
     <div className={styles.Setting}>
       <div className={styles.headerWrap}>
@@ -25,7 +28,7 @@ const Setting: React.FC<IProps> = () => {
         <Content>
           <Outlet />
         </Content>
-        <Footer />
+        {htmlWidth <= 960 && <Footer />}
       </Layout>
     </div>
   );
