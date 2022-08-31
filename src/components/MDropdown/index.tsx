@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, Dropdown, Space } from 'antd';
 import classname from 'classname';
 import { CaretUpOutlined, CaretDownOutlined } from '@ant-design/icons';
@@ -14,12 +14,20 @@ interface IProps {
 const MDropdown: React.FC<IProps> = ({ className }) => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
 
+  const { pathname } = useLocation();
+
   const menu = (
     <Menu
       items={SettingMenu.map((i) => ({
         key: i.key,
         label: (
-          <Link to={i.path} className={styles.menu_label}>
+          <Link
+            to={i.path}
+            className={classname(
+              styles.menu_label,
+              pathname === i.path && styles.activeLink
+            )}
+          >
             {i.name}
           </Link>
         ),
