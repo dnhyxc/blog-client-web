@@ -220,13 +220,21 @@
       max-width: 960px;
     }
 
-    .content {
-      width: 100%;
-      padding-bottom: 50px;
-    }
-
     .wrap {
       padding: 0;
+
+      .content {
+        width: 100%;
+        padding-bottom: 50px;
+
+        .tabList {
+          .tab {
+            .timelineContent {
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
 
       .infoWrap {
         .headImg {

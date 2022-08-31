@@ -100,6 +100,7 @@ const Account: React.FC<IProps> = () => {
       <Content
         containerClassName={styles.containerClassName}
         wrapClassName={styles.wrapClassName}
+        className={styles.scrollWrap}
       >
         <div className={styles.content}>
           <div className={styles.header}>

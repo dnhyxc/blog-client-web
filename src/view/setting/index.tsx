@@ -3,11 +3,12 @@ import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 import Header from '@/components/Header';
 import MenuList from '@/components/MenuList';
+import Footer from '@/components/Footer';
 import styles from './index.less';
 
 const { Content } = Layout;
 
-interface IProps { }
+interface IProps {}
 
 const Setting: React.FC<IProps> = () => {
   return (
@@ -24,6 +25,7 @@ const Setting: React.FC<IProps> = () => {
         <Content>
           <Outlet />
         </Content>
+        <Footer />
       </Layout>
     </div>
   );
