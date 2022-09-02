@@ -69,7 +69,7 @@ const Card: React.FC<IProps> = ({
           </div>
         )}
         <div onClick={(e) => onDelete(e, item)} className={styles.btn}>
-          删除
+          下架
         </div>
       </>
     );
