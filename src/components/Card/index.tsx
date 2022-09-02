@@ -60,12 +60,14 @@ const Card: React.FC<IProps> = ({
   const content = (item: ArticleItem) => {
     return (
       <>
-        <div
-          onClick={(e) => onEdit(e, item)}
-          className={classname(styles.edit, styles.btn)}
-        >
-          编辑
-        </div>
+        {getUserInfo?.userId === item.authorId && (
+          <div
+            onClick={(e) => onEdit(e, item)}
+            className={classname(styles.edit, styles.btn)}
+          >
+            编辑
+          </div>
+        )}
         <div onClick={(e) => onDelete(e, item)} className={styles.btn}>
           删除
         </div>
@@ -107,7 +109,9 @@ const Card: React.FC<IProps> = ({
             )}
             <div className={styles.info}>
               <div className={styles.name}>{i.title}</div>
-              {htmlWidth > 960 && <div className={descClass || styles.desc}>{i.abstract}</div>}
+              {htmlWidth > 960 && (
+                <div className={descClass || styles.desc}>{i.abstract}</div>
+              )}
               {htmlWidth <= 960 && (
                 <div className={styles.mobileDesc}>
                   <div className={descClass || styles.desc}>{i.abstract}</div>
@@ -151,7 +155,7 @@ const Card: React.FC<IProps> = ({
                     onClick={() => toDetail && toDetail(i.id, true)}
                   />
                 </div>
-                {getUserInfo?.userId === i.authorId && (
+                {(getUserInfo?.userId === i.authorId || getUserInfo?.auth === 1) && (
                   <Popover
                     placement="left"
                     content={() => content(i)}
