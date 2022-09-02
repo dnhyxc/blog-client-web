@@ -29,7 +29,7 @@ const Classify: React.FC = () => {
 
   const navigate = useNavigate();
   const listRef = useRef<ArticleItem[]>([]);
-  const { pageNo, setPageNo, onScroll, scrollRef, scrollTop, contentRef } = useScrollLoad({
+  const { pageNo, setPageNo, onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad({
     data: classifyList,
     loading,
     pageSize: PAGESIZE,
@@ -126,7 +126,7 @@ const Classify: React.FC = () => {
     <div className={styles.Classify}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header>文章分类</Header>
-      <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
+      <Content className={styles.contentWrap} onScroll={onScroll} scrollbarRef={scrollbarRef}>
         <div className={classname(styles.content, styles.contentPadding)}>
           <div className={styles.filterList}>
             <div className={styles.segmentedWrap}>
@@ -151,7 +151,7 @@ const Classify: React.FC = () => {
           />
         </div>
       </Content>
-      <BackTop scrollTop={scrollTop} contentRef={contentRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
     </div>
   );
 };

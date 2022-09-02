@@ -5,14 +5,14 @@ import styles from './index.less';
 
 interface IProps {
   scrollTop: number;
-  contentRef?: any;
+  scrollbarRef?: any;
 }
 
-const BackTop: React.FC<IProps> = ({ scrollTop, contentRef }) => {
+const BackTop: React.FC<IProps> = ({ scrollTop, scrollbarRef }) => {
   const { htmlWidth } = useHtmlWidth();
 
   const onBackTop = () => {
-    contentRef?.current?.scrollTop();
+    scrollbarRef?.current?.scrollTop();
   };
 
   return scrollTop > 400 && htmlWidth > 960 ? (

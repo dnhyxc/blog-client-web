@@ -10,7 +10,7 @@ interface IProps {
   containerClassName?: string;
   wrapClassName?: string;
   onScroll?: Function;
-  contentRef?: any;
+  scrollbarRef?: any;
   autoHeight?: boolean;
   autoHeightMax?: number | string;
 }
@@ -21,7 +21,7 @@ const Content: React.FC<IProps> = ({
   containerClassName,
   wrapClassName,
   onScroll,
-  contentRef,
+  scrollbarRef,
   autoHeight,
   autoHeightMax,
 }) => {
@@ -33,7 +33,7 @@ const Content: React.FC<IProps> = ({
             autoHide
             autoHeight={autoHeight}
             autoHeightMax={autoHeightMax}
-            ref={contentRef}
+            ref={scrollbarRef}
             className={styles.scrollBar}
             onScrollFrame={onScroll}
           >

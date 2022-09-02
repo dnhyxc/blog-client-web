@@ -22,7 +22,7 @@ const TimeLine: React.FC = () => {
   const navigate = useNavigate();
 
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
-  const { onScroll, scrollRef, scrollTop, contentRef } = useScrollLoad({
+  const { onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad({
     scrollStyle: styles.scrollStyle,
   });
 
@@ -66,7 +66,7 @@ const TimeLine: React.FC = () => {
     <div className={styles.TimeLine}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header>时间轴</Header>
-      <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
+      <Content className={styles.contentWrap} onScroll={onScroll} scrollbarRef={scrollbarRef}>
         <div className={styles.wrap}>
           {timelineList.length > 0 ? (
             <Timeline className={styles.timelineContent}>
@@ -120,7 +120,7 @@ const TimeLine: React.FC = () => {
           />
         </div>
       </Content>
-      <BackTop scrollTop={scrollTop} contentRef={contentRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
     </div>
   );
 };

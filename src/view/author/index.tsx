@@ -54,7 +54,7 @@ const Author: React.FC<IProps> = () => {
     },
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
-  const { pageNo, setPageNo, onScroll, contentRef, scrollTop } = useScrollLoad({
+  const { pageNo, setPageNo, onScroll, scrollbarRef, scrollTop } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
@@ -204,7 +204,7 @@ const Author: React.FC<IProps> = () => {
           wrapClassName={styles.wrapClassName}
           className={styles.scrollWrap}
           onScroll={onScroll}
-          contentRef={contentRef}
+          scrollbarRef={scrollbarRef}
         >
           <div className={styles.wrap}>
             <div className={styles.infoWrap}>
@@ -294,7 +294,7 @@ const Author: React.FC<IProps> = () => {
           </div>
         </Content>
         {htmlWidth <= 960 && <Footer />}
-        <BackTop scrollTop={scrollTop} contentRef={contentRef} />
+        <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
       </div>
     </>
   );

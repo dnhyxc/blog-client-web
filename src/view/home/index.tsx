@@ -45,8 +45,8 @@ const Home: React.FC<IProps> = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  // scrollRef：用户设置rightbar的吸顶效果，contentRef：scrollbar 滚动到顶部，scrollTop：回到顶部
-  const { pageNo, setPageNo, onScroll, scrollRef, contentRef, scrollTop } = useScrollLoad({
+  // scrollRef：用户设置rightbar的吸顶效果，scrollbarRef：scrollbar 滚动到顶部，scrollTop：回到顶部
+  const { pageNo, setPageNo, onScroll, scrollRef, scrollbarRef, scrollTop } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
@@ -198,7 +198,7 @@ const Home: React.FC<IProps> = () => {
         文章列表
       </Header>
       {articleList && (
-        <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
+        <Content className={styles.contentWrap} onScroll={onScroll} scrollbarRef={scrollbarRef}>
           <div className={styles.content}>
             <Card
               list={articleList.list}
@@ -217,7 +217,7 @@ const Home: React.FC<IProps> = () => {
           </div>
         </Content>
       )}
-      <BackTop scrollTop={scrollTop} contentRef={contentRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
     </div>
   );
 };

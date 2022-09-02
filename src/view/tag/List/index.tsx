@@ -34,7 +34,7 @@ const TagList: React.FC<IProps> = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  const { pageNo, onScroll, scrollRef, scrollTop, contentRef } = useScrollLoad({
+  const { pageNo, onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
@@ -104,7 +104,7 @@ const TagList: React.FC<IProps> = () => {
         {tagName}
         &nbsp; 标签
       </Header>
-      <Content className={styles.contentWrap} onScroll={onScroll} contentRef={contentRef}>
+      <Content className={styles.contentWrap} onScroll={onScroll} scrollbarRef={scrollbarRef}>
         <div className={styles.content}>
           <Card
             list={articleList.list}
@@ -122,7 +122,7 @@ const TagList: React.FC<IProps> = () => {
           />
         </div>
       </Content>
-      <BackTop scrollTop={scrollTop} contentRef={contentRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
     </div>
   );
 };
