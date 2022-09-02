@@ -159,7 +159,9 @@ const Personal = () => {
       total: 0,
       count: 0,
     });
-    scrollbarRef.current.scrollTop();
+    if (scrollTop) {
+      scrollbarRef.current.scrollTop();
+    }
   };
 
   const toSetting = () => {
@@ -178,7 +180,11 @@ const Personal = () => {
     <div className={styles.Personal}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header>我的主页</Header>
-      <Content className={styles.contentWrap} onScroll={onScroll} scrollbarRef={scrollbarRef}>
+      <Content
+        className={styles.contentWrap}
+        onScroll={onScroll}
+        scrollbarRef={scrollbarRef}
+      >
         <div className={styles.content}>
           <div className={styles.wrap}>
             <div className={styles.userInfo}>
