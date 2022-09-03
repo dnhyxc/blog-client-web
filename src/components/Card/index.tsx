@@ -139,7 +139,7 @@ const Card: React.FC<IProps> = ({
                   <span className={styles.date}>{formatGapTime(i.createTime)}</span>
                 </div>
               )}
-              <div className={styles.action}>
+              <div className={styles.action} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.icons}>
                   <MIcons
                     name={`${i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'}`}
