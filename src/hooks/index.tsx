@@ -16,20 +16,27 @@ import {
   useLikeArticleParams,
 } from '@/typings/common';
 
-export const useDebounce = (fn: Function, delay: number, dep: any[]) => {
-  const { current } = useRef<any>({ fn, timer: null });
+export const useDebounce = (fn: Function, delay: number, dep: any[], immediate: boolean = false) => {
+  const { current } = useRef<any>({ fn, timer: null, count: 0 });
 
   useEffect(() => {
     current.fn = fn;
   }, [fn]);
 
   return useCallback((...args: any[]) => {
-    if (current.timer) {
-      clearTimeout(current.timer);
-    }
-    current.timer = setTimeout(() => {
+    if (immediate && current.count === 0) {
       current.fn(...args);
-    }, delay);
+      current.count += 1;
+    } else {
+      if (current.timer) {
+        clearTimeout(current.timer);
+        current.count = 0;
+      }
+      current.timer = setTimeout(() => {
+        current.fn(...args);
+        current.count += 1;
+      }, delay);
+    }
   }, dep);
 };
 
