@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import classname from 'classname';
 import { HEAD_UEL } from '@/constant';
 import { Button } from 'antd';
 import Image from '@/components/Image';
@@ -10,9 +11,10 @@ import styles from './index.less';
 
 interface IProps {
   className?: string;
+  showRecommendArticle?: boolean
 }
 
-const Introduction: React.FC<IProps> = () => {
+const Introduction: React.FC<IProps> = ({ className, showRecommendArticle }) => {
   const [authorInfo, setAuthorInfo] = useState<UserInfoParams>({
     userId: '',
   });
@@ -57,42 +59,44 @@ const Introduction: React.FC<IProps> = () => {
   };
 
   return (
-    <div className={styles.introductionWrap}>
-      <div className={styles.card}>
-        <Image
-          url={authorInfo?.headUrl || HEAD_UEL}
-          transitionImg={HEAD_UEL}
-          className={styles.image}
-          onClick={toAuthor}
-        />
-      </div>
-      <div className={styles.nameInfo}>
-        <div className={styles.name}>
-          {authorInfo?.username}
+    authorInfo.userId ? (
+      <div className={classname(styles.introductionWrap, className, showRecommendArticle && styles.needMarginBottom)}>
+        <div className={styles.card}>
+          <Image
+            url={authorInfo?.headUrl || HEAD_UEL}
+            transitionImg={HEAD_UEL}
+            className={styles.image}
+            onClick={toAuthor}
+          />
         </div>
-        {/* contentEditable="true"设置当前元素可编辑。suppressContentEditableWarning解决react报错 */}
-        <div suppressContentEditableWarning contentEditable="true" className={styles.desc}>
-          {authorInfo?.motto}
+        <div className={styles.nameInfo}>
+          <div className={styles.name}>
+            {authorInfo?.username}
+          </div>
+          {/* contentEditable="true"设置当前元素可编辑。suppressContentEditableWarning解决react报错 */}
+          <div suppressContentEditableWarning contentEditable="true" className={styles.desc}>
+            {authorInfo?.motto}
+          </div>
+        </div>
+        <div className={styles.articleInfo}>
+          <div className={styles.statistical}>
+            共发表
+            <span className={styles.articleTotal}>{authorInfo?.articleTotal}</span>
+            篇文章
+          </div>
+        </div>
+        <div className={styles.socialWrap}>
+          <Button className={styles.github} type="primary" onClick={toGithub}>
+            GitHub
+          </Button>
+          <div className={styles.socialList}>
+            {authorInfo?.juejin && <span onClick={toJuejin}>掘金</span>}
+            {authorInfo?.zhihu && <span onClick={toZhihu}>知乎</span>}
+            {authorInfo?.blog && <span onClick={toBlog}>博客</span>}
+          </div>
         </div>
       </div>
-      <div className={styles.articleInfo}>
-        <div className={styles.statistical}>
-          共发表
-          <span className={styles.articleTotal}>{authorInfo?.articleTotal}</span>
-          篇文章
-        </div>
-      </div>
-      <div className={styles.socialWrap}>
-        <Button className={styles.github} type="primary" onClick={toGithub}>
-          GitHub
-        </Button>
-        <div className={styles.socialList}>
-          {authorInfo?.juejin && <span onClick={toJuejin}>掘金</span>}
-          {authorInfo?.zhihu && <span onClick={toZhihu}>知乎</span>}
-          {authorInfo?.blog && <span onClick={toBlog}>博客</span>}
-        </div>
-      </div>
-    </div>
+    ) : null
   );
 };
 

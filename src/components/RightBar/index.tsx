@@ -17,7 +17,7 @@ const RightBar: React.FC<IProps> = ({ className, showRecommendArticle, scrollRef
   return (
     htmlWidth > 960 ? (
       <div className={classname(styles.container, className)}>
-        <Introduction />
+        <Introduction showRecommendArticle={showRecommendArticle} />
         {showRecommendArticle && <RecommendArticle scrollRef={scrollRef} />}
       </div>
     ) : null

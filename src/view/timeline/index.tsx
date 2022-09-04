@@ -110,14 +110,11 @@ const TimeLine: React.FC = () => {
               <Empty />
             </div>
           )}
-          <RightBar
-            className={classname(
-              styles.rightbar,
-              timelineList.length > 0 && styles.rightBarHasData
-            )}
+          {timelineList.length > 0 && <RightBar
+            className={styles.rightbar}
             showRecommendArticle={!!timelineList.length}
             scrollRef={scrollRef}
-          />
+          />}
         </div>
       </Content>
       <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
