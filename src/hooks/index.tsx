@@ -222,6 +222,9 @@ export const useLikeArticle = ({
     if (!res.success && res.code === 409) {
       setAlertStatus(true);
     }
+    if (!res.success && res.code !== 409) {
+      message.error(res.message);
+    }
   };
 
   return { likeArticle };
@@ -299,6 +302,9 @@ export const useDeleteArticle = ({
         if (!res.success && res.code === 409) {
           setAlertStatus(true);
         }
+        if (!res.success && res.code !== 409) {
+          message.error(res.message);
+        }
       },
     };
   };
@@ -339,6 +345,9 @@ export const useDeleteTimelineArticle = ({
         }
         if (!res.success && res.code === 409) {
           setAlertStatus(true);
+        }
+        if (!res.success && res.code !== 409) {
+          message.error(res.message);
         }
       },
     };

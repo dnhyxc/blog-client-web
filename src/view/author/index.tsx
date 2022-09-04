@@ -49,9 +49,7 @@ const Author: React.FC<IProps> = () => {
   const listRef = useRef<ArticleItem[]>([]);
   const navigate = useNavigate();
   const {
-    userInfoStore: {
-      getUserInfo: { auth, userId },
-    },
+    userInfoStore: { getUserInfo },
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const { pageNo, setPageNo, onScroll, scrollbarRef, scrollTop } = useScrollLoad({
@@ -100,11 +98,11 @@ const Author: React.FC<IProps> = () => {
     const params = {
       pageNo,
       pageSize: PAGESIZE,
-      accessUserId: userId,
+      accessUserId: getUserInfo?.userId,
     };
     storage.locSetItem(
       'params',
-      JSON.stringify({ accessUserId: userId, selectKey, from: 'author' })
+      JSON.stringify({ accessUserId: getUserInfo?.userId, selectKey, from: 'author' })
     );
     const res = normalizeResult<ArticleListResult>(
       await Service.getAuthorArticleList(params, AUTHOR_API_PATH[selectKey])
@@ -128,10 +126,10 @@ const Author: React.FC<IProps> = () => {
   const getAuthorTimeline = async () => {
     storage.locSetItem(
       'params',
-      JSON.stringify({ accessUserId: userId, selectKey, from: 'author' })
+      JSON.stringify({ accessUserId: getUserInfo?.userId, selectKey, from: 'author' })
     );
     const res = normalizeResult<TimelineResult[]>(
-      await Service.getAuthorTimeline({ accessUserId: userId })
+      await Service.getAuthorTimeline({ accessUserId: getUserInfo?.userId })
     );
     if (res.success) {
       setTimelineList(res.data);
@@ -145,7 +143,7 @@ const Author: React.FC<IProps> = () => {
     setAlertStatus,
     articleList: selectKey !== '3' ? articleList : timelineList,
     updateList: selectKey !== '3' ? setArticleList : setTimelineList,
-    isAboutMe: auth === 1 && selectKey === '2',
+    isAboutMe: getUserInfo?.auth === 1 && selectKey === '2',
     isTimeLine: selectKey === '3',
   });
 

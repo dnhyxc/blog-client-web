@@ -113,6 +113,9 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
     if (!res.success && res.code === 409) {
       setAlertStatus && setAlertStatus(true);
     }
+    if (!res.success && res.code !== 409) {
+      message.error(res.message);
+    }
   };
 
   // 删除评论
@@ -139,6 +142,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
     };
   };
 
+  // 删除评论接口
   const deleteComment = async (params: { commentId: string; fromCommentId?: string, articleId: string | undefined }) => {
     const res = normalizeResult<DeleteCommentResult>(await Service.deleteComment(params));
     if (res.success) {
