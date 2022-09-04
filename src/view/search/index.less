@@ -1,0 +1,159 @@
+@import '~@styles/common.less';
+
+.webkitScrollbarStyle();
+
+.tagMenu {
+  max-height: 200px;
+  overflow: auto;
+}
+
+.Search {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: 60px;
+  height: 100%;
+  background-color: @background;
+  overflow: hidden;
+
+  .containerClassName {
+    height: calc(100vh - 60px);
+  }
+
+  .wrapClassName {
+    padding: 0;
+  }
+
+  .scrollWrap {
+    background-color: #fff !important;
+  }
+
+  .headerWrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    background-color: #fff;
+    align-items: center;
+    z-index: 99;
+
+    .headerContent {
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+
+  .wrap {
+    padding: 30px 10% 0 10%;
+    text-align: center;
+    background-color: @background;
+    min-height: calc(100vh - 60px);
+
+    .searchWrap {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: hidden;
+      padding-bottom: 30px;
+      height: 100%;
+
+      .tagBtn {
+        // height: 38px;
+      }
+
+      .SearchInp {
+        width: 60%;
+      }
+    }
+
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      overflow: hidden;
+      padding-bottom: 10px;
+      height: 100%;
+
+      .wrapClass {
+        width: 100%;
+        max-width: 960px;
+      }
+    }
+  }
+
+  .backTop {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    height: 40px;
+    width: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    background-color: @menu-active;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+
+    .topIcon {
+      font-size: 18px;
+    }
+  }
+
+  :global {
+    .ant-tabs > .ant-tabs-nav {
+      padding: 0 10px;
+      margin-bottom: 10px;
+      background-color: #fff;
+      border-radius: 5px;
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .AuthorContainer {
+    max-width: 960px;
+
+    .herderWrap {
+      width: 100%;
+      max-width: 960px;
+    }
+
+    .wrap {
+      padding: 0;
+
+      .content {
+        width: 100%;
+        padding-bottom: 50px;
+
+        .tabList {
+          .tab {
+            .timelineContent {
+              margin-bottom: 10px;
+            }
+          }
+        }
+      }
+
+      .infoWrap {
+        .headImg {
+          width: 125px;
+          height: 125px;
+          left: 10px;
+        }
+
+        .mainInfo {
+          padding-left: 140px;
+
+          .username {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+}

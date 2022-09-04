@@ -24,6 +24,7 @@ const Tag = lazy(() => import('@/view/tag'));
 const Profile = lazy(() => import('@/view/setting/profile'));
 const Account = lazy(() => import('@/view/setting/account'));
 const Author = lazy(() => import('@/view/author'));
+const Search = lazy(() => import('@/view/search'));
 
 const lazyLoad = (children: ReactNode, needSpin = true): ReactNode => {
   return (
@@ -87,6 +88,10 @@ const routes: RouteObject[] = [
         element: lazyLoad(<Account />),
       },
     ],
+  },
+  {
+    path: 'search',
+    element: lazyLoad(<Search />),
   },
   {
     path: 'author',
