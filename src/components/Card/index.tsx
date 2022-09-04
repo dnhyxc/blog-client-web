@@ -108,7 +108,24 @@ const Card: React.FC<IProps> = ({
               </div>
             )}
             <div className={styles.info}>
-              <div className={styles.name}>{i.title}</div>
+              <div className={styles.name}>
+                <span>{i.title}</span>
+                {(getUserInfo?.userId === i.authorId || getUserInfo?.auth === 1) && (
+                  <Popover
+                    placement="left"
+                    content={() => content(i)}
+                    trigger="hover"
+                    className={styles.popover}
+                    zIndex={12}
+                  >
+                    <EllipsisOutlined
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    />
+                  </Popover>
+                )}
+              </div>
               {htmlWidth > 960 && (
                 <div className={descClass || styles.desc}>{i.abstract}</div>
               )}
@@ -141,34 +158,28 @@ const Card: React.FC<IProps> = ({
               )}
               <div className={styles.action} onClick={(e) => e.stopPropagation()}>
                 <div className={styles.icons}>
-                  <MIcons
-                    name={`${i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'}`}
-                    text={i.likeCount > 0 ? i.likeCount : '点赞'}
-                    iconWrapClass={styles.iconWrap}
-                    className={i.isLike ? styles.isLike : null}
-                    onClick={() => likeArticle && likeArticle(i.id)}
-                  />
-                  <MIcons
-                    name="icon-comment"
-                    text={i.replyCount > 0 ? i.replyCount : '评论'}
-                    iconWrapClass={styles.iconWrap}
-                    onClick={() => toDetail && toDetail(i.id, true)}
-                  />
-                </div>
-                {(getUserInfo?.userId === i.authorId || getUserInfo?.auth === 1) && (
-                  <Popover
-                    placement="left"
-                    content={() => content(i)}
-                    trigger="hover"
-                    zIndex={12}
-                  >
-                    <EllipsisOutlined
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
+                  <div>
+                    <MIcons
+                      name={`${i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'}`}
+                      text={i.likeCount > 0 ? i.likeCount : '点赞'}
+                      iconWrapClass={styles.iconWrap}
+                      className={i.isLike ? styles.isLike : null}
+                      onClick={() => likeArticle && likeArticle(i.id)}
                     />
-                  </Popover>
-                )}
+                    <MIcons
+                      name="icon-comment"
+                      text={i.replyCount > 0 ? i.replyCount : '评论'}
+                      iconWrapClass={styles.iconWrap}
+                      onClick={() => toDetail && toDetail(i.id, true)}
+                    />
+                  </div>
+                  {htmlWidth < 960 && (
+                    <div className={styles.classifyWrap}>
+                      <span>{i?.authorName?.length > 10 ? `${i?.authorName.slice(0, 10)}...` : i?.authorName}</span>
+                      <span className={styles.classifyTag}>{i.classify}</span>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

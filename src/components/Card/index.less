@@ -93,6 +93,9 @@
       }
 
       .name {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         font-size: 16px;
         font-weight: 600;
         .ellipsis();
@@ -119,12 +122,35 @@
         align-items: center;
 
         .icons {
+          display: flex;
+          justify-content: space-between;
+          flex: 1;
+          // width: 95%;
           margin-bottom: 0;
           .clickNoSelectText();
+          .ellipsis();
+
+          .classifyWrap {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .classifyTag {
+              display: inline-block;
+              margin-left: 10px;
+              padding: 2px 10px;
+              background-color: @background;
+              border-radius: 5px;
+            }
+          }
 
           .isLike {
             color: @menu-active;
           }
+        }
+
+        .popover {
+          margin-left: 10px;
         }
       }
     }
