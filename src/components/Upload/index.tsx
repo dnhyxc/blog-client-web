@@ -1,6 +1,6 @@
 import 'cropperjs/dist/cropper.css';
 import React, { ReactNode, useRef, useState } from 'react';
-import { Upload, message, Modal } from 'antd';
+import { Upload, Modal } from 'antd';
 import { UploadListType } from 'antd/lib/upload/interface';
 import Cropper from 'react-cropper';
 import { PlusOutlined } from '@ant-design/icons';
@@ -9,7 +9,7 @@ import type { RcFile } from 'antd/es/upload';
 import MIcons from '@/components/Icons';
 import MImage from '@/components/Image';
 import * as Service from '@/service';
-import { normalizeResult } from '@/utils';
+import { normalizeResult, success, error } from '@/utils';
 import { FILETYPE } from '@/constant';
 import styles from './index.less';
 
@@ -60,10 +60,10 @@ const UploadFile: React.FC<IProps> = ({
     const fileType = file.type;
     const isLt20M = file.size / 1024 / 1024 < 20;
     if (!FILETYPE.includes(fileType)) {
-      message.error('请上传 png、jpg、jpeg、gif 格式的图片', 2);
+      error('请上传 png、jpg、jpeg、gif 格式的图片');
     }
     if (!isLt20M) {
-      message.error('请上传小于20M的图片', 2);
+      error('请上传小于20M的图片');
     }
 
     const reader = new FileReader();
@@ -100,10 +100,13 @@ const UploadFile: React.FC<IProps> = ({
               ? { mainCover: res?.data?.filePath }
               : { coverImage: res?.data?.filePath }
           );
-          message.success('上传成功', 2);
+          success(res.message);
         }
-        if (res.code === 409) {
+        if (!res.success && res.code === 409) {
           setAlertStatus && setAlertStatus(true);
+        }
+        if (!res.success && res.code !== 409) {
+          error(res.message);
         }
       });
     }
@@ -165,7 +168,7 @@ const UploadFile: React.FC<IProps> = ({
         listType={listType!}
         showUploadList={false}
         beforeUpload={beforeUpload}
-        customRequest={() => {}} // 覆盖upload action默认的上传行为，改为自定义上传
+        customRequest={() => { }} // 覆盖upload action默认的上传行为，改为自定义上传
       >
         {uploadNode || (!filePath && <PlusOutlined />)}
       </Upload>

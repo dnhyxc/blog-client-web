@@ -7,7 +7,6 @@ import {
   Menu,
   Space,
   Dropdown,
-  message,
   Button,
   Radio,
   DatePicker,
@@ -20,7 +19,7 @@ import MAlert from '@/components/Alert';
 import useStore from '@/store';
 import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Server from '@/service';
-import { normalizeResult } from '@/utils/tools';
+import { normalizeResult, success, error, info } from '@/utils';
 import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL } from '@/constant';
 import { CreateArticleParams, CreateResult } from '@/typings/common';
 
@@ -78,7 +77,7 @@ const ReleaseModel: React.FC<IProps> = ({
 
   const getResult = (res: any) => {
     if (res.success) {
-      message.success(res.message);
+      success(res.message);
       navigate('/home');
     }
 
@@ -87,14 +86,14 @@ const ReleaseModel: React.FC<IProps> = ({
     }
 
     if (!res.success && res.code !== 409) {
-      message.error(res.message);
+      error(res.message);
     }
   };
 
   // 提交表单
   const onFinish = async () => {
     if (!create.mackdown) {
-      message.info('嘿，醒醒！文章还一个字没写呢...', 2);
+      info('嘿，醒醒！文章还一个字没写呢...');
       return;
     }
     const values = await form.validateFields();

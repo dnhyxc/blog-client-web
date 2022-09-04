@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Timeline, message } from 'antd';
+import { Timeline } from 'antd';
 import classname from 'classname';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import Card from '@/components/Card';
@@ -13,7 +13,7 @@ import BackTop from '@/components/BackTop';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteTimelineArticle } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult, storage } from '@/utils';
+import { normalizeResult, storage, error } from '@/utils';
 import { TimelineResult } from '@/typings/common';
 import styles from './index.less';
 
@@ -42,7 +42,7 @@ const TimeLine: React.FC = () => {
     if (res.success) {
       setTimelineList(res.data);
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 

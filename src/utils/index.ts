@@ -4,6 +4,7 @@ import { SET_ITEM_CONFIG } from '@/constant';
 import { encrypt, decrypt } from './crypto';
 import { normalizeResult } from './tools';
 import { storage } from './storage';
+import { success, error, info } from './message';
 
 export const formatDate = (date: number, format = 'YYYY/MM/DD HH:mm:ss') => {
   if (!date) return;
@@ -76,4 +77,7 @@ export {
   formatGapTime,
   getSetItemConfig,
   storage,
+  success,
+  error,
+  info,
 };

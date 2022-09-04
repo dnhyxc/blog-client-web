@@ -7,7 +7,6 @@
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import RightBar from '@/components/RightBar';
@@ -20,7 +19,7 @@ import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from 
 import useStore from '@/store';
 import * as Service from '@/service';
 import { PAGESIZE } from '@/constant';
-import { normalizeResult, storage } from '@/utils';
+import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
@@ -94,7 +93,7 @@ const Home: React.FC<IProps> = () => {
         count: list.length,
       });
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 
@@ -134,7 +133,7 @@ const Home: React.FC<IProps> = () => {
         count: list.length,
       });
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 

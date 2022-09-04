@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Button, Input, message } from 'antd';
+import { Button, Input } from 'antd';
 import { useParams } from 'react-router-dom';
 import classname from 'classname';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult } from '@/utils/tools';
+import { normalizeResult, error } from '@/utils';
 import Image from '@/components/Image';
 import { HEAD_UEL } from '@/constant';
 import { CommentParams, ReplayCommentResult } from '@/typings/common';
@@ -141,7 +141,7 @@ const DraftInput: React.FC<IProps> = ({
     }
 
     if (!res.success && res.code !== 409) {
-      message.error(res.message);
+      error(res.message);
     }
   };
 

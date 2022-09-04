@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
-import { Button, message, Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import Image from '@/components/Image';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
-import { formatGapTime } from '@/utils';
+import { formatGapTime, error } from '@/utils';
 import { HEAD_UEL } from '@/constant';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/Alert';
@@ -56,7 +56,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
     if (res.success) {
       setComments(res.data);
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 
@@ -114,7 +114,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
       setAlertStatus && setAlertStatus(true);
     }
     if (!res.success && res.code !== 409) {
-      message.error(res.message);
+      error(res.message);
     }
   };
 
@@ -152,7 +152,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
       setAlertStatus && setAlertStatus(true);
     }
     if (!res.success && res.code !== 409) {
-      message.error(res.message);
+      error(res.message);
     }
   };
 

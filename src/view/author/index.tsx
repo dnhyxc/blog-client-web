@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Tabs, message, Timeline } from 'antd';
+import { Tabs, Timeline } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import Header from '@/components/Header';
 import MAlert from '@/components/Alert';
@@ -10,7 +10,7 @@ import Image from '@/components/Image';
 import BackTop from '@/components/BackTop';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult, storage } from '@/utils';
+import { normalizeResult, storage, error } from '@/utils';
 import {
   useLoginStatus,
   useLikeArticle,
@@ -79,7 +79,7 @@ const Author: React.FC<IProps> = () => {
       return;
     }
     if (res.code === 406) {
-      message.error(res.message);
+      error(res.message);
       navigate('home');
     }
   };
@@ -118,7 +118,7 @@ const Author: React.FC<IProps> = () => {
         count: list.length,
       });
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 
@@ -134,7 +134,7 @@ const Author: React.FC<IProps> = () => {
     if (res.success) {
       setTimelineList(res.data);
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 

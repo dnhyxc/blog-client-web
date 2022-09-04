@@ -1,8 +1,8 @@
 import commonStore, { Auth } from '@/store/common';
-import { message } from 'antd';
 import fetch from 'isomorphic-fetch';
 import { stringify } from 'query-string';
 import { addGatewayPattern } from './urlTool';
+import { error } from './message';
 
 export interface ICheckStatusProps {
   response: Response;
@@ -31,7 +31,7 @@ function checkRedirection(response: Response): boolean {
       return true;
     }
   } catch (err) {
-    message.error('redirect url error');
+    error('redirect url error');
   }
 
   return false;

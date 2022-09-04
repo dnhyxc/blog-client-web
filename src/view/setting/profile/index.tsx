@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Input, message } from 'antd';
+import { Button, Form, Input } from 'antd';
 import useStore from '@/store';
 import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult, storage } from '@/utils';
+import { normalizeResult, storage, success, error, info } from '@/utils';
 import MAlert from '@/components/Alert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
@@ -67,17 +67,17 @@ const Profile: React.FC = () => {
         if (values.username !== username) {
           storage.locRemoveItem('token');
           storage.locRemoveItem('userInfo');
-          message.success('用户名称已修改，请重新登录');
+          success('用户名称已修改，请重新登录');
           navigate('/login', { replace: true });
         } else {
-          message.success(res.message);
+          success(res.message);
         }
       }
       if (!res.success && res.code !== 401 && res.code !== 409) {
-        message.error(res.message);
+        error(res.message);
       }
     } else {
-      message.info('没修改信息，休想提交');
+      info('没修改信息，休想提交');
     }
   };
 

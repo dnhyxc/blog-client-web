@@ -7,7 +7,7 @@
  */
 import { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Button, message, Tabs } from 'antd';
+import { Button, Tabs } from 'antd';
 import Content from '@/components/Content';
 import Image from '@/components/Image';
 import Card from '@/components/Card';
@@ -17,7 +17,7 @@ import Header from '@/components/Header';
 import BackTop from '@/components/BackTop';
 import * as Service from '@/service';
 import useStore from '@/store';
-import { normalizeResult, storage } from '@/utils';
+import { normalizeResult, storage, error } from '@/utils';
 import {
   ABOUT_ME_TABS,
   ABOUT_TABS,
@@ -114,7 +114,7 @@ const Personal = () => {
       return;
     }
     if (res.code === 406) {
-      message.error(res.message);
+      error(res.message);
       navigate('home');
     }
   };

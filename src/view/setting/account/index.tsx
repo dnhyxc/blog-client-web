@@ -1,17 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Button, Input, message, Modal } from 'antd';
+import { Button, Input, Modal } from 'antd';
 import Content from '@/components/Content';
 import MDropdown from '@/components/MDropdown';
 import useStore from '@/store';
 import { useHtmlWidth } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult, encrypt, getSetItemConfig } from '@/utils';
+import { normalizeResult, encrypt, getSetItemConfig, error, success } from '@/utils';
 import { UPDATE_INFO_API_PATH } from '@/constant';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const Account: React.FC<IProps> = () => {
   const [selectItem, setSelectItem] = useState<string>('');
@@ -56,12 +56,12 @@ const Account: React.FC<IProps> = () => {
       userInfoStore.setUserInfo({
         ...res.data,
       });
-      message.success(res.message);
+      success(res.message);
       if (selectItem === 'password') {
         navigate('/login');
       }
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 
@@ -117,14 +117,14 @@ const Account: React.FC<IProps> = () => {
                   {(selectItem !== i.label ||
                     selectItem === 'auth' ||
                     selectItem === 'logout') && (
-                    <Button
-                      type="link"
-                      className={styles.settingBtn}
-                      onClick={() => onSetVisible(i.label)}
-                    >
-                      {i.action}
-                    </Button>
-                  )}
+                      <Button
+                        type="link"
+                        className={styles.settingBtn}
+                        onClick={() => onSetVisible(i.label)}
+                      >
+                        {i.action}
+                      </Button>
+                    )}
                   {selectItem === i.label &&
                     selectItem !== 'auth' &&
                     selectItem !== 'logout' && (

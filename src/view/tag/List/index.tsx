@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { message } from 'antd';
 import Header from '@/components/Header';
 import Content from '@/components/Content';
 import Card from '@/components/Card';
@@ -11,11 +10,11 @@ import { PAGESIZE } from '@/constant';
 import BackTop from '@/components/BackTop';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult, storage } from '@/utils';
+import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const TagList: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -64,7 +63,7 @@ const TagList: React.FC<IProps> = () => {
         count: list.length,
       });
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 

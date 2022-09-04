@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
 import useStore from '@/store';
-import { formatGapTime } from '@/utils';
+import { formatGapTime, error } from '@/utils';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { ArticleItem } from '@/typings/common';
@@ -35,7 +34,7 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
     if (res.success) {
       setRecommendList(res.data);
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 

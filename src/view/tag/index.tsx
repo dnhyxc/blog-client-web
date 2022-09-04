@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import WordCloud from '@/components/WordCloud';
 import { useGetBodyWidth } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult } from '@/utils/tools';
+import { normalizeResult, error } from '@/utils';
 import WordList from '@/components/WordList';
 import { TagResult } from '@/typings/common';
 import styles from './index.less';
@@ -25,7 +24,7 @@ const Tag: React.FC = () => {
     if (res.success) {
       setTagList(res.data);
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 

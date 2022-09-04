@@ -7,10 +7,10 @@
  */
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, message, Form, Input, Checkbox } from 'antd';
+import { Button, Form, Input, Checkbox } from 'antd';
 import useStore from '@/store';
 import { register, login, verify } from '@/service';
-import { normalizeResult, useCookies, encrypt, decrypt } from '@/utils';
+import { normalizeResult, useCookies, encrypt, decrypt, success, error } from '@/utils';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
@@ -39,9 +39,9 @@ const Login = () => {
     const { username } = values;
     const res = normalizeResult<LoginData>(await register({ username, password }));
     if (res.success) {
-      message.success(res.message);
+      success(res.message);
     } else {
-      res.message && message.error(res.message);
+      res.message && error(res.message);
     }
   };
 
@@ -62,7 +62,7 @@ const Login = () => {
       values?.remember ? setCookie('uname', username, 7) : removeCoolie('uname');
       navigate(`${commonStore.auth.redirectUrl}` || '/home', { replace: true });
     } else {
-      res.message && message.error(res.message);
+      res.message && error(res.message);
     }
   };
 

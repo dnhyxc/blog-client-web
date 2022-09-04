@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { message, Modal } from 'antd';
+import { Modal } from 'antd';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
+import { error } from '@/utils';
 import {
   ArticleDetailParams,
   ScrollEvent,
@@ -90,7 +91,7 @@ export const useLoginStatus = () => {
       setAlertStatus(true);
     }
     if (!res.success && res.code !== 409) {
-      message.error(res.message);
+      error(res.message);
     }
   };
 
@@ -138,7 +139,7 @@ export const useGetArticleDetail = (id: string | null | undefined) => {
     if (res.success) {
       setDetail(res.data);
     } else {
-      message.error(res.message);
+      error(res.message);
     }
   };
 
@@ -223,7 +224,7 @@ export const useLikeArticle = ({
       setAlertStatus(true);
     }
     if (!res.success && res.code !== 409) {
-      message.error(res.message);
+      error(res.message);
     }
   };
 
@@ -303,7 +304,7 @@ export const useDeleteArticle = ({
           setAlertStatus(true);
         }
         if (!res.success && res.code !== 409) {
-          message.error(res.message);
+          error(res.message);
         }
       },
     };
@@ -347,7 +348,7 @@ export const useDeleteTimelineArticle = ({
           setAlertStatus(true);
         }
         if (!res.success && res.code !== 409) {
-          message.error(res.message);
+          error(res.message);
         }
       },
     };
