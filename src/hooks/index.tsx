@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { message, Modal } from 'antd';
 import useStore from '@/store';
@@ -15,6 +15,23 @@ import {
   useLikeArticleParams,
 } from '@/typings/common';
 
+export const useDebounce = (fn: Function, delay: number, dep: any[]) => {
+  const { current } = useRef<any>({ fn, timer: null });
+
+  useEffect(() => {
+    current.fn = fn;
+  }, [fn]);
+
+  return useCallback((...args: any[]) => {
+    if (current.timer) {
+      clearTimeout(current.timer);
+    }
+    current.timer = setTimeout(() => {
+      current.fn(...args);
+    }, delay);
+  }, dep);
+};
+
 // 实时获取页面宽度的hooks
 export const useHtmlWidth = () => {
   const [htmlWidth, setHtmlWidth] = useState<number>(window.innerWidth);
@@ -26,10 +43,10 @@ export const useHtmlWidth = () => {
     };
   }, []);
 
-  const onResize = () => {
+  const onResize = useDebounce(() => {
     const width = window.innerWidth;
     setHtmlWidth(width);
-  };
+  }, 100, []);
 
   return { htmlWidth };
 };
