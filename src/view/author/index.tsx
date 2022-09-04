@@ -31,7 +31,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-interface IProps {}
+interface IProps { }
 
 const Author: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -236,7 +236,7 @@ const Author: React.FC<IProps> = () => {
                     {AUTHOR_TABS.map((i) => {
                       return (
                         <TabPane tab={i.name} key={i.value}>
-                          {i.value !== '3' ? (
+                          {(i.value !== '3' || !timelineList.length || (timelineList.length && !timelineList[0].articles.length)) && (
                             <Card
                               list={articleList.list}
                               wrapClass={styles.wrapClass}
@@ -248,7 +248,8 @@ const Author: React.FC<IProps> = () => {
                               loadText="地主家也没余粮了"
                               loading={loading}
                             />
-                          ) : (
+                          )}
+                          {i.value === '3' && timelineList.length > 0 && timelineList[0].articles.length > 0 && (
                             <Timeline className={styles.timelineContent}>
                               {timelineList.map((i) => {
                                 return (
@@ -266,14 +267,9 @@ const Author: React.FC<IProps> = () => {
                                         <Card
                                           list={i.articles}
                                           wrapClass={styles.wrapClass}
-                                          imgWrapStyle={styles.imgWrapStyle}
                                           itemClass={styles.itemClass}
-                                          imgWrapClass={styles.imgWrapClass}
-                                          cardImgWrapStyle={styles.cardImgWrapStyle}
                                           descClass={styles.descClass}
                                           toDetail={toDetail}
-                                          skeletonRows={2}
-                                          skeletonAvatar={styles.skeletonAvatar}
                                           likeArticle={likeArticle}
                                           deleteArticle={deleteTimeline}
                                         />
