@@ -1,9 +1,9 @@
 @import '~@styles/common.less';
 
 .articleItem() {
-  width: 50%;
+  width: 49%;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   cursor: pointer;
 
@@ -31,10 +31,9 @@
 
   .prevArticle {
     .articleItem();
-    padding-right: 20px;
 
     .item {
-      width: 100%;
+      width: 90%;
 
       .title,
       .abstract,
@@ -50,10 +49,10 @@
 
   .nextArticle {
     .articleItem();
-    padding-left: 20px;
+    justify-content: flex-end;
 
     .item {
-      width: 100%;
+      width: 90%;
 
       .title,
       .abstract,
