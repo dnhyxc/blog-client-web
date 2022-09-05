@@ -275,6 +275,59 @@ export const ARTICLE_TAG = [
   },
 ];
 
+export const SEARCH_TYPE = [
+  {
+    label: '文章标题',
+    type: 'title',
+    key: '1',
+  },
+  {
+    label: '作者名称',
+    type: 'authorName',
+    key: '2',
+  },
+  {
+    label: '文章标签',
+    type: 'tag',
+    key: '3',
+  },
+  {
+    label: '文章分类',
+    type: 'classify',
+    key: '4',
+  },
+  {
+    label: '文章摘要',
+    type: 'abstract',
+    key: '5',
+  },
+  {
+    label: '我点赞的',
+    type: 'isLike',
+    key: '6',
+  },
+  {
+    label: '发表时间',
+    type: 'createTime',
+    key: '7',
+  },
+  {
+    label: '最多评论',
+    type: 'replyCount',
+    key: '8',
+  },
+  {
+    label: '最多点赞',
+    type: 'likeCount',
+    key: '9',
+  },
+  {
+    label: '文章id',
+    type: 'id',
+    key: '10',
+  },
+];
+
 export const USER_MENU = [
   {
     key: '1',

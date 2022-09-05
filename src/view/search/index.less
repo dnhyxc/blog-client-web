@@ -4,6 +4,7 @@
 
 .tagMenu {
   max-height: 200px;
+  text-align: center;
   overflow: auto;
 }
 
@@ -56,17 +57,30 @@
     .searchWrap {
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       overflow: hidden;
-      padding-bottom: 30px;
+      padding-bottom: 40px;
       height: 100%;
 
-      .tagBtn {
-        // height: 38px;
+      .tagSelect {
+        min-width: 118px;
+        height: 40px;
+        line-height: 40px;
+        padding: 0 20px;
+        background-color: @menu-hover;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        cursor: pointer;
       }
 
       .SearchInp {
         width: 60%;
+
+        :global {
+          .ant-input-search-button {
+            border-radius: 0 5px 5px 0;
+          }
+        }
       }
     }
 

@@ -253,3 +253,9 @@ export interface GetUserInfoParams {
   auth?: number;
   needTotal?: boolean;
 }
+
+export interface SearchTypeParams {
+  label: string;
+  type: string;
+  key: string;
+}

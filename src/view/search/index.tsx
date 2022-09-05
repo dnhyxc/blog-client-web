@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Input,
-  Menu,
-  Button,
-  Space,
-  Dropdown,
-} from 'antd';
+import { Input, Menu, Space, Dropdown } from 'antd';
 import type { MenuProps } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import Content from '@/components/Content';
@@ -22,18 +16,20 @@ import {
   // useDeleteTimelineArticle,
   useHtmlWidth,
 } from '@/hooks';
-import { PAGESIZE, ARTICLE_TAG } from '@/constant';
+import { PAGESIZE, SEARCH_TYPE } from '@/constant';
 import {
   ArticleListResult,
+  SearchTypeParams,
   // ArticleItem,
   // TimelineResult,
   // UserInfoParams,
 } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Search: React.FC<IProps> = () => {
+  const [searchType, setSearchType] = useState<SearchTypeParams>();
   const [loading] = useState<boolean>(false);
   const [articleList] = useState<ArticleListResult>({
     list: [],
@@ -55,11 +51,12 @@ const Search: React.FC<IProps> = () => {
   const { htmlWidth } = useHtmlWidth();
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
-    console.log(e);
+    const selectKey = SEARCH_TYPE.find((i) => e.key === i.key);
+    setSearchType(selectKey);
   };
 
   const menu = (
-    <Menu onClick={handleMenuClick} items={ARTICLE_TAG} className={styles.tagMenu} />
+    <Menu onClick={handleMenuClick} items={SEARCH_TYPE} className={styles.tagMenu} />
   );
 
   return (
@@ -82,14 +79,19 @@ const Search: React.FC<IProps> = () => {
         <div className={styles.wrap}>
           <div className={styles.searchWrap}>
             <Dropdown overlay={menu} autoFocus>
-              <Button size="large" className={styles.tagBtn} type="primary">
+              <div className={styles.tagSelect}>
                 <Space>
-                  选择标签
+                  {searchType?.label || '选择标签'}
                   <DownOutlined />
                 </Space>
-              </Button>
+              </div>
             </Dropdown>
-            <Input.Search placeholder="请输入搜索内容" enterButton="Search" size="large" className={styles.SearchInp} />
+            <Input.Search
+              placeholder="请输入搜索内容"
+              enterButton="Search"
+              size="large"
+              className={styles.SearchInp}
+            />
           </div>
           <div className={styles.content}>
             <Card
@@ -101,7 +103,7 @@ const Search: React.FC<IProps> = () => {
               // onEditArticle={onEditArticle}
               // showInfo={articleList.list.length === articleList.total}
               loadText="地主家也没余粮了"
-            // loading={loading}
+              // loading={loading}
             />
           </div>
         </div>
