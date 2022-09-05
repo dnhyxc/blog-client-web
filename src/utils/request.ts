@@ -1,6 +1,7 @@
 import commonStore, { Auth } from '@/store/common';
 import fetch from 'isomorphic-fetch';
 import { stringify } from 'query-string';
+import { show } from '@/components/Confirm';
 import { addGatewayPattern } from './urlTool';
 import { error } from './message';
 
@@ -71,24 +72,9 @@ function parseJSON(response: Response) {
 function onRedirect() {
   const { pathname } = window.location;
   if (pathname !== '/login') {
-    showConfirm();
-    setTimeout(() => {
-      window.location.href = '/login';
-    }, 2000);
+    show();
   }
 }
-
-const showConfirm = () => {
-  const timeModel = document.createElement('div');
-  timeModel.innerHTML = `
-    <span>
-      <span class='warnIcon'>!</span>
-      登录已过期稍后将跳转至登录页
-    </span>
-  `;
-  timeModel.className = 'timeModel';
-  document.body.appendChild(timeModel);
-};
 
 export type FetchResult = Promise<{ err: Error | null; data: any }>;
 
@@ -147,43 +133,41 @@ export default function request(_url: string, options?: any): FetchResult {
     })
     .catch((err: any) => {
       if (err && err.response) {
-        return err.response
-          .json()
-          .then((data: any) => {
-            if (err.response.status === 401 || err.response.status === 403) {
-              // 重定向跳转
-              setAuth({ hasAuth: false, noLogin: true, redirectUrl: '/login' });
-              onRedirect();
-              return {
-                err: new Error(data.message || '系统异常'),
-                code: err.response.status,
-              };
-            }
-            if (err.response.status === 409) {
-              setAuth({ hasAuth: false, noLogin: true });
-              return {
-                err: new Error(data.message || '系统异常'),
-                code: err.response.status,
-              };
-            }
-            if (err.response.status === 406) {
-              return {
-                err: new Error(data.message || '系统异常'),
-                code: err.response.status,
-              };
-            }
-            if (err.response.status === 200) {
-              return null;
-            }
+        return err.response.json().then((data: any) => {
+          if (err.response.status === 401 || err.response.status === 403) {
+            // 重定向跳转
+            setAuth({ hasAuth: false, noLogin: true, redirectUrl: '/login' });
+            onRedirect();
             return {
               err: new Error(data.message || '系统异常'),
+              code: err.response.status,
             };
-          })
-          .catch(() => {
+          }
+          if (err.response.status === 409) {
+            setAuth({ hasAuth: false, noLogin: true });
             return {
-              err: new Error('系统异常'),
+              err: new Error(data.message || '系统异常'),
+              code: err.response.status,
             };
-          });
+          }
+          if (err.response.status === 406) {
+            return {
+              err: new Error(data.message || '系统异常'),
+              code: err.response.status,
+            };
+          }
+          if (err.response.status === 200) {
+            return null;
+          }
+          return {
+            err: new Error(data.message || '系统异常'),
+          };
+        });
+        // .catch(() => {
+        //   return {
+        //     err: new Error('系统异常'),
+        //   };
+        // });
       }
       return {
         err: new Error('系统异常'),

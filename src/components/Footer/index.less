@@ -1,7 +1,4 @@
 .footerWrap {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,4 +7,12 @@
   padding: 0 15px;
   box-shadow: 0px -5px 5px -5px #ddd;
   background-color: #fff;
+}
+
+@media screen and (max-width: 960px) {
+  .footerWrap {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+  }
 }
