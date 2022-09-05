@@ -1,6 +1,7 @@
 import commonStore, { Auth } from '@/store/common';
 import fetch from 'isomorphic-fetch';
 import { stringify } from 'query-string';
+import { show } from '@/components/Confirm';
 import { addGatewayPattern } from './urlTool';
 import { error } from './message';
 
@@ -69,36 +70,11 @@ function parseJSON(response: Response) {
 }
 
 function onRedirect() {
-  let timer = null;
   const { pathname } = window.location;
   if (pathname !== '/login') {
-    showConfirm();
-    if (timer) {
-      clearTimeout(timer);
-    }
-    timer = setTimeout(() => {
-      window.location.href = '/login';
-    }, 1296);
+    show();
   }
 }
-
-const showConfirm = () => {
-  const timeModel = document.createElement('div');
-  timeModel.innerHTML = `
-    <span style="white-space: nowrap">
-      <span class='warnIcon'>!</span>
-      登录已过期，请 <span>前往</span> 登录页重新登录
-      <span>×</span>
-    </span>
-  `;
-  timeModel.className = 'timeModel';
-  const timeModelNode = document.querySelector('.timeModel');
-  if (timeModelNode) {
-    document.body.replaceChild(timeModel, timeModelNode);
-  } else {
-    document.body.appendChild(timeModel);
-  }
-};
 
 export type FetchResult = Promise<{ err: Error | null; data: any }>;
 
