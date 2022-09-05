@@ -105,7 +105,7 @@ const UploadFile: React.FC<IProps> = ({
         if (!res.success && res.code === 409) {
           setAlertStatus && setAlertStatus(true);
         }
-        if (!res.success && res.code !== 409) {
+        if (!res.success && res.code !== 409 && res.code !== 401) {
           error(res.message);
         }
       });
@@ -168,7 +168,7 @@ const UploadFile: React.FC<IProps> = ({
         listType={listType!}
         showUploadList={false}
         beforeUpload={beforeUpload}
-        customRequest={() => { }} // 覆盖upload action默认的上传行为，改为自定义上传
+        customRequest={() => {}} // 覆盖upload action默认的上传行为，改为自定义上传
       >
         {uploadNode || (!filePath && <PlusOutlined />)}
       </Upload>

@@ -140,7 +140,7 @@ const DraftInput: React.FC<IProps> = ({
       getAlertStatus && getAlertStatus(true);
     }
 
-    if (!res.success && res.code !== 409) {
+    if (!res.success && res.code !== 409 && res.code !== 401) {
       error(res.message);
     }
   };

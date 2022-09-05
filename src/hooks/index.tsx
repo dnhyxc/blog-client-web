@@ -16,7 +16,12 @@ import {
   useLikeArticleParams,
 } from '@/typings/common';
 
-export const useDebounce = (fn: Function, delay: number, dep: any[], immediate: boolean = false) => {
+export const useDebounce = (
+  fn: Function,
+  delay: number,
+  dep: any[],
+  immediate: boolean = false
+) => {
   const { current } = useRef<any>({ fn, timer: null, count: 0 });
 
   useEffect(() => {
@@ -51,10 +56,14 @@ export const useHtmlWidth = () => {
     };
   }, []);
 
-  const onResize = useDebounce(() => {
-    const width = window.innerWidth;
-    setHtmlWidth(width);
-  }, 100, []);
+  const onResize = useDebounce(
+    () => {
+      const width = window.innerWidth;
+      setHtmlWidth(width);
+    },
+    100,
+    []
+  );
 
   return { htmlWidth };
 };
@@ -97,7 +106,7 @@ export const useLoginStatus = () => {
     if (!res.success && res.code === 409) {
       setAlertStatus(true);
     }
-    if (!res.success && res.code !== 409) {
+    if (!res.success && res.code !== 409 && res.code !== 401) {
       error(res.message);
     }
   };
@@ -230,7 +239,7 @@ export const useLikeArticle = ({
     if (!res.success && res.code === 409) {
       setAlertStatus(true);
     }
-    if (!res.success && res.code !== 409) {
+    if (!res.success && res.code !== 409 && res.code !== 401) {
       error(res.message);
     }
   };
@@ -310,7 +319,7 @@ export const useDeleteArticle = ({
         if (!res.success && res.code === 409) {
           setAlertStatus(true);
         }
-        if (!res.success && res.code !== 409) {
+        if (!res.success && res.code !== 409 && res.code !== 401) {
           error(res.message);
         }
       },
@@ -354,7 +363,7 @@ export const useDeleteTimelineArticle = ({
         if (!res.success && res.code === 409) {
           setAlertStatus(true);
         }
-        if (!res.success && res.code !== 409) {
+        if (!res.success && res.code !== 409 && res.code !== 401) {
           error(res.message);
         }
       },

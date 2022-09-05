@@ -96,14 +96,14 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
     }
     const params = isThreeTier
       ? {
-        commentId: comment.commentId!,
-        fromCommentId: comment.commentId!,
-        userId: getUserInfo?.userId,
-      }
+          commentId: comment.commentId!,
+          fromCommentId: comment.commentId!,
+          userId: getUserInfo?.userId,
+        }
       : {
-        commentId: comment.commentId!,
-        userId: getUserInfo?.userId,
-      };
+          commentId: comment.commentId!,
+          userId: getUserInfo?.userId,
+        };
     setLoading(true);
     const res = normalizeResult<GiveLikeResult>(await Service.giveLike(params));
     setLoading(false);
@@ -113,7 +113,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
     if (!res.success && res.code === 409) {
       setAlertStatus && setAlertStatus(true);
     }
-    if (!res.success && res.code !== 409) {
+    if (!res.success && res.code !== 409 && res.code !== 401) {
       error(res.message);
     }
   };
@@ -122,18 +122,22 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
   const onDeleteComment = (comment: CommentParams, isThreeTier?: boolean) => {
     const params = isThreeTier
       ? {
-        commentId: comment.commentId!,
-        fromCommentId: comment.commentId!,
-        articleId: id,
-      }
+          commentId: comment.commentId!,
+          fromCommentId: comment.commentId!,
+          articleId: id,
+        }
       : {
-        commentId: comment.commentId!,
-        articleId: id,
-      };
+          commentId: comment.commentId!,
+          articleId: id,
+        };
     Modal.confirm(modalConfig(params));
   };
 
-  const modalConfig = (params: { commentId: string; fromCommentId?: string, articleId: string | undefined }) => {
+  const modalConfig = (params: {
+    commentId: string;
+    fromCommentId?: string;
+    articleId: string | undefined;
+  }) => {
     return {
       title: '确定删除该评论吗？',
       async onOk() {
@@ -143,7 +147,11 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
   };
 
   // 删除评论接口
-  const deleteComment = async (params: { commentId: string; fromCommentId?: string, articleId: string | undefined }) => {
+  const deleteComment = async (params: {
+    commentId: string;
+    fromCommentId?: string;
+    articleId: string | undefined;
+  }) => {
     const res = normalizeResult<DeleteCommentResult>(await Service.deleteComment(params));
     if (res.success) {
       getCommentList && getCommentList();
@@ -151,7 +159,7 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
     if (!res.success && res.code === 409) {
       setAlertStatus && setAlertStatus(true);
     }
-    if (!res.success && res.code !== 409) {
+    if (!res.success && res.code !== 409 && res.code !== 401) {
       error(res.message);
     }
   };
@@ -199,8 +207,9 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
                     <div className={styles.actionContent}>
                       <div className={styles.likeAndReplay}>
                         <MIcons
-                          name={`${i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'
-                            }`}
+                          name={`${
+                            i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'
+                          }`}
                           text={i.likeCount! > 0 ? i.likeCount : '点赞'}
                           iconWrapClass={styles.iconWrap}
                           className={i.isLike ? styles.isLike : null}
@@ -292,10 +301,11 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
                               <div className={styles.actionContent}>
                                 <div className={styles.likeAndReplay}>
                                   <MIcons
-                                    name={`${j.isLike
-                                      ? 'icon-24gf-thumbsUp2'
-                                      : 'icon-24gl-thumbsUp2'
-                                      }`}
+                                    name={`${
+                                      j.isLike
+                                        ? 'icon-24gf-thumbsUp2'
+                                        : 'icon-24gl-thumbsUp2'
+                                    }`}
                                     text={j.likeCount! > 0 ? j.likeCount : '点赞'}
                                     iconWrapClass={styles.iconWrap}
                                     className={j.isLike ? styles.isLike : null}
@@ -355,19 +365,19 @@ const Comments: React.FC<IProps> = ({ authorId }) => {
                     })}
                     {checkReplyList(i.replyList, i.commentId!).length !==
                       i.replyList.length && (
-                        <div
-                          className={styles.viewMore}
+                      <div
+                        className={styles.viewMore}
+                        onClick={() => onViewMoreReply(i.commentId!)}
+                      >
+                        <span className={styles.viewText}>
+                          查看更多（{i.replyList && i.replyList.length - 2}条）回复
+                        </span>
+                        <MIcons
+                          name="icon-xiajiantou"
                           onClick={() => onViewMoreReply(i.commentId!)}
-                        >
-                          <span className={styles.viewText}>
-                            查看更多（{i.replyList && i.replyList.length - 2}条）回复
-                          </span>
-                          <MIcons
-                            name="icon-xiajiantou"
-                            onClick={() => onViewMoreReply(i.commentId!)}
-                          />
-                        </div>
-                      )}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
