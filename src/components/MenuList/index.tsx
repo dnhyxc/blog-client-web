@@ -20,9 +20,10 @@ const { Sider } = Layout;
 interface IProps {
   type?: string; // type 有值说明是setting
   width?: number;
+  className?: string;
 }
 
-const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
+const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
   const [selectMenu, setSelectMenu] = useState<string>('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -96,7 +97,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180 }) => {
       trigger={null}
       collapsible
       width={width}
-      className={classname(styles.siderWrap, type && styles.settingSiderWrap)}
+      className={classname(className, styles.siderWrap, type && styles.settingSiderWrap)}
     >
       {!type && (
         <div className={styles.logo}>

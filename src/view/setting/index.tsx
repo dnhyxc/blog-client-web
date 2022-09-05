@@ -24,7 +24,7 @@ const Setting: React.FC<IProps> = () => {
         </Header>
       </div>
       <Layout className={styles.layout}>
-        <MenuList type="setting" width={200} />
+        <MenuList type="setting" width={200} className={styles.menuListWrap} />
         <Content>
           <Outlet />
         </Content>
