@@ -16,6 +16,7 @@ import {
   useLikeArticleParams,
 } from '@/typings/common';
 
+// 防抖函数
 export const useDebounce = (
   fn: Function,
   delay: number,
@@ -41,6 +42,24 @@ export const useDebounce = (
         current.fn(...args);
         current.count += 1;
       }, delay);
+    }
+  }, dep);
+};
+
+// 节流函数
+export const useThrottle = (fn: Function, delay: number, dep: any[] = []) => {
+  const { current } = useRef<any>({ fn, timer: null });
+
+  useEffect(() => {
+    current.fn = fn;
+  }, [fn]);
+
+  return useCallback((...args: any[]) => {
+    if (!current.timer) {
+      current.timer = setTimeout(() => {
+        delete current.timer;
+      }, delay);
+      current.fn(...args);
     }
   }, dep);
 };
