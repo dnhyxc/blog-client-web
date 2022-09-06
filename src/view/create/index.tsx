@@ -7,6 +7,7 @@ import Header from '@/components/Header';
 import TuiEditor from '@/components/TuiEditor';
 import { useGetArticleDetail } from '@/hooks';
 import ReleaseModel from './ReleaseModel';
+import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
@@ -31,14 +32,17 @@ const CreateArticle: React.FC<IProps> = () => {
 
   const renderRight = () => {
     return (
-      <Button
-        type="link"
-        className={styles.release}
-        disabled={!create?.mackdown}
-        onClick={() => setVisible(true)}
-      >
-        发布文章
-      </Button>
+      <span>
+        <Button
+          type="link"
+          className={styles.release}
+          disabled={!create?.mackdown}
+          onClick={() => setVisible(true)}
+        >
+          发布文章
+        </Button>
+        <DraftPopover />
+      </span>
     );
   };
 
@@ -48,9 +52,7 @@ const CreateArticle: React.FC<IProps> = () => {
 
   return (
     <div className={styles.container}>
-      <Header right={renderRight()}>
-        发布文章
-      </Header>
+      <Header right={renderRight()}>发布文章</Header>
       <div className={styles.tuiEditorWrap}>
         <TuiEditor onGetMackdown={onGetMackdown} initialValue={detail?.content} />
       </div>
