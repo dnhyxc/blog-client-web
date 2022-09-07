@@ -43,12 +43,12 @@ export interface UpdateData {
 }
 
 export interface CreateArticleParams {
-  title: string;
+  title?: string;
   content: string;
-  classify: string;
-  tag: string;
-  coverImage: string;
-  abstract: string;
+  classify?: string;
+  tag?: string;
+  coverImage?: string;
+  abstract?: string;
   createTime: number;
   authorId: string;
 }

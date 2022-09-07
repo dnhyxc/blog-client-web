@@ -36,7 +36,7 @@ export const useDebounce = (
     } else {
       if (current.timer) {
         clearTimeout(current.timer);
-        current.count = 0;
+        // current.count = 0;
       }
       current.timer = setTimeout(() => {
         current.fn(...args);

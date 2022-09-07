@@ -20,7 +20,7 @@ import useStore from '@/store';
 import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, success, error, info } from '@/utils';
-import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL, ARTICLE_DRAFT } from '@/constant';
+import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL } from '@/constant';
 import { CreateArticleParams, CreateResult } from '@/typings/common';
 
 import styles from './index.less';
@@ -72,12 +72,6 @@ const ReleaseModel: React.FC<IProps> = ({
   // 调用创建文章的接口
   const updateArticle = async (params: CreateArticleParams) => {
     const res = normalizeResult<CreateResult>(await Server.updateArticle(params));
-    getResult(res);
-  };
-
-  // 文章草稿的创建及更新接口
-  const articleDraft = async (params: CreateArticleParams, path: string) => {
-    const res = normalizeResult<CreateResult>(await Server.articleDraft(params, path));
     getResult(res);
   };
 
@@ -133,7 +127,6 @@ const ReleaseModel: React.FC<IProps> = ({
       articleId,
     };
     if (!articleId) delete params.articleId;
-    articleDraft(params, ARTICLE_DRAFT[articleId ? 2 : 1]);
   };
 
   // 校验标题是否包含特殊字符
