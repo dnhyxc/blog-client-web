@@ -28,6 +28,12 @@ const LIKE_ARTICLE = '/api/likeArticle';
 const SEARCH_ARTICLE = '/api/searchArticle';
 // 文章搜索
 const GET_ARTICLE_BY_RANDOM = '/api/getArticleByRandom';
+// 文章草稿
+const CREATE_DRAFT = '/api/createDraft';
+// 更新文章草稿
+const UPDATE_DRAFT = '/api/updateDraft';
+// 获取草稿列表
+const GET_DRAFT_LIST = '/api/getDraftList';
 
 // 评论
 const COMMENTS = '/api/comments';
@@ -88,6 +94,9 @@ export {
   DELETE_COMMENT,
   DELETE_ARTICLE,
   SEARCH_ARTICLE,
+  CREATE_DRAFT,
+  UPDATE_DRAFT,
+  GET_DRAFT_LIST,
   GET_CLASSIFY_LIST,
   GET_TAG_LIST,
   GET_TIMELINE_LIST,

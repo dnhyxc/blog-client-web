@@ -23,6 +23,16 @@ export async function searchArticle(params: SearchArticleParams) {
   return res;
 }
 
+export async function articleDraft(params: CreateArticleParams, path: string) {
+  const res = await post(path, params);
+  return res;
+}
+
+export async function getDraftList(params: GetArticleListParams) {
+  const res = await post(API.GET_DRAFT_LIST, params);
+  return res;
+}
+
 export async function deleteArticle(params: { articleId: string }) {
   const res = await post(API.DELETE_ARTICLE, params);
   return res;

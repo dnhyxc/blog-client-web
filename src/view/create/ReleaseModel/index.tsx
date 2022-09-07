@@ -20,7 +20,7 @@ import useStore from '@/store';
 import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, success, error, info } from '@/utils';
-import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL } from '@/constant';
+import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL, ARTICLE_DRAFT } from '@/constant';
 import { CreateArticleParams, CreateResult } from '@/typings/common';
 
 import styles from './index.less';
@@ -75,6 +75,12 @@ const ReleaseModel: React.FC<IProps> = ({
     getResult(res);
   };
 
+  // 文章草稿的创建及更新接口
+  const articleDraft = async (params: CreateArticleParams, path: string) => {
+    const res = normalizeResult<CreateResult>(await Server.articleDraft(params, path));
+    getResult(res);
+  };
+
   const getResult = (res: any) => {
     if (res.success) {
       success(res.message);
@@ -110,6 +116,24 @@ const ReleaseModel: React.FC<IProps> = ({
       delete params.articleId;
       createArticle(params);
     }
+  };
+
+  // 保存草稿
+  const onSaveDraft = async () => {
+    if (!create.mackdown) {
+      info('嘿，醒醒！文章还一个字没写呢...');
+      return;
+    }
+    const values = await form.validateFields();
+    const params = {
+      ...values,
+      content: create.mackdown,
+      createTime: values?.createTime?.valueOf() || new Date().valueOf(),
+      authorId: getUserInfo?.userId,
+      articleId,
+    };
+    if (!articleId) delete params.articleId;
+    articleDraft(params, ARTICLE_DRAFT[articleId ? 2 : 1]);
   };
 
   // 校验标题是否包含特殊字符
@@ -148,9 +172,14 @@ const ReleaseModel: React.FC<IProps> = ({
         onClose={onClose}
         visible={visible}
         extra={
-          <Button type="primary" onClick={onFinish}>
-            发布
-          </Button>
+          <div>
+            <Button type="primary" ghost className={styles.saveDraft} onClick={onSaveDraft}>
+              保存草稿
+            </Button>
+            <Button type="primary" onClick={onFinish}>
+              发布
+            </Button>
+          </div>
         }
       >
         <div className={styles.ReleaseModel}>

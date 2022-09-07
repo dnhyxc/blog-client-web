@@ -3,15 +3,21 @@
   font-size: 15px;
 }
 
-.containerClassName {
-  max-height: 300px;
-}
-
-.wrapClassName {
-  padding: 0;
-}
-
 .draftContent {
   width: 350px;
-  border: 1px solid red;
+
+  .containerClassName {
+    max-height: 300px;
+
+    .wrapClassName {
+      padding: 0;
+    }
+  }
+
+  .draftList {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid red;
+  }
 }
