@@ -19,12 +19,13 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [content, setContent] = useState<string>('');
   const [draftArticleId, setDraftArticleId] = useState<string>('');
+  const [deleteId, setDeleteId] = useState<string>('');
 
   const {
     create,
@@ -33,7 +34,7 @@ const CreateArticle: React.FC<IProps> = () => {
   const [search] = useSearchParams();
   const id = search.get('id');
   const draftId = search.get('draftId');
-  const { detail } = useGetArticleDetail(id, draftId);
+  const { detail } = useGetArticleDetail(id, draftId, visible);
 
   const onGetMackdown = (mackdown: any) => {
     setContent(mackdown.trim());
@@ -52,6 +53,10 @@ const CreateArticle: React.FC<IProps> = () => {
       window.removeEventListener('keydown', onKeyDown);
     };
   }, [content]);
+
+  useEffect(() => {
+    console.log(deleteId);
+  }, [deleteId]);
 
   // 监听是否是ctrl+enter组合键
   const onKeyDown = (event: any) => {
@@ -87,16 +92,30 @@ const CreateArticle: React.FC<IProps> = () => {
         content: create.mackdown,
         createTime: values?.createTime?.valueOf() || new Date().valueOf(),
         authorId: getUserInfo?.userId,
-        articleId: draftArticleId,
+        articleId: draftArticleId || draftId,
       };
 
-      if (!draftArticleId) delete params.articleId;
-      articleDraft(params, ARTICLE_DRAFT[draftArticleId ? 2 : 1]);
+      if (!draftArticleId && !draftId) delete params.articleId;
+
+      articleDraft(params, ARTICLE_DRAFT[(draftArticleId || draftId) ? 2 : 1]);
     },
     500,
     [],
     true
   );
+
+  // 删除草稿
+  const deleteDraft = async (id?: string, needMessage?: boolean) => {
+    if (!draftId) return;
+    const res = normalizeResult<string>(await Server.deleteDraft({ id: id || draftId }));
+    if (!needMessage) return;
+    if (res.success) {
+      setDeleteId(res.data);
+      success(res.message);
+    } else {
+      error(res.message);
+    }
+  };
 
   const renderRight = () => {
     return (
@@ -109,7 +128,7 @@ const CreateArticle: React.FC<IProps> = () => {
         >
           发布文章
         </Button>
-        <DraftPopover />
+        <DraftPopover deleteDraft={deleteDraft} />
       </span>
     );
   };
@@ -130,8 +149,8 @@ const CreateArticle: React.FC<IProps> = () => {
           onCancel={onCancel}
           initialValue={detail}
           articleId={id}
-          draftId={draftId}
           onSaveDraft={onSaveDraft}
+          deleteDraft={deleteDraft}
         />
       )}
     </div>

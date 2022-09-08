@@ -10,9 +10,12 @@ import { PAGESIZE } from '@/constant';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps {
+  // eslint-disable-next-line no-unused-vars
+  deleteDraft?: (id?: string, needMessage?: boolean) => void
+}
 
-const DraftPopover: React.FC<IProps> = () => {
+const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
   const [draftList, setDraftList] = useState<ArticleListResult>({
     list: [],
     total: 0,
@@ -79,15 +82,13 @@ const DraftPopover: React.FC<IProps> = () => {
 
   // 编辑
   const onEditDraft = (item: ArticleItem) => {
-    console.log(item, 'item');
     navigate(`/create?draftId=${item.id}`);
     setVisible(false);
   };
 
   // 编辑
   const onDelDraft = (item: ArticleItem) => {
-    console.log(item, 'item');
-    setVisible(false);
+    deleteDraft && deleteDraft(item.id, true);
   };
 
   const content = (
@@ -104,8 +105,7 @@ const DraftPopover: React.FC<IProps> = () => {
             <div key={i.id} className={styles.draftItem}>
               <span className={styles.title}>
                 {i.title ||
-                  `${i.content?.slice(0, 26).replace(/#/g, '')}${
-                    i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
+                  `${i.content?.slice(0, 26).replace(/#/g, '')}${i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
                   }`}
               </span>
               <span className={styles.actions}>

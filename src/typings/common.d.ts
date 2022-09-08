@@ -258,7 +258,7 @@ export interface CreateDraftParams {
   content: string;
   createTime: number;
   authorId: string;
-  articleId?: string;
+  articleId?: string | null;
 }
 
 export interface CreateDraftParamsResult {

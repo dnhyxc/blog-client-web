@@ -30,8 +30,9 @@ interface IProps {
   onCancel: Function;
   initialValue?: CreateArticleParams;
   articleId?: string | null;
-  draftId?: string | null;
   onSaveDraft?: Function;
+  // eslint-disable-next-line no-unused-vars
+  deleteDraft?: (id?: string, needMessage?: boolean) => void;
 }
 
 const { TextArea } = Input;
@@ -39,10 +40,10 @@ const { TextArea } = Input;
 const ReleaseModel: React.FC<IProps> = ({
   visible = true,
   articleId,
-  draftId,
   initialValue,
   onCancel,
   onSaveDraft,
+  deleteDraft
 }) => {
   const [filePath, setFilePath] = useState<string>('');
   const [tagValue, setTagValue] = useState<string>();
@@ -56,8 +57,6 @@ const ReleaseModel: React.FC<IProps> = ({
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const { htmlWidth } = useHtmlWidth();
 
-  console.log(initialValue, 'initialValue', draftId);
-
   useEffect(() => {
     if (initialValue?.coverImage) {
       setFilePath(initialValue?.coverImage);
@@ -69,16 +68,12 @@ const ReleaseModel: React.FC<IProps> = ({
     onCancel && onCancel();
   };
 
-  // // 删除草稿
-  // const deleteDraft = async () => {
-  //   if (!draftId) return;
-  //   const res = normalizeResult<{ id: string }>(await Server.deleteDraft({ id: draftId }));
-  //   console.log(res, 'res');
-  // };
-
   // 调用创建文章的接口
   const createArticle = async (params: CreateArticleParams) => {
     const res = normalizeResult<CreateResult>(await Server.createArticle(params));
+    if (res.success) {
+      deleteDraft && deleteDraft();
+    }
     getResult(res);
   };
 

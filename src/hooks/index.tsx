@@ -157,7 +157,8 @@ export const useScroll = (needScroll: string | null) => {
 // 获取详情的hooks
 export const useGetArticleDetail = (
   id: string | null | undefined,
-  draftId?: string | null | undefined
+  draftId?: string | null | undefined,
+  visible?: boolean
 ) => {
   const [detail, setDetail] = useState<ArticleDetailParams>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -165,10 +166,12 @@ export const useGetArticleDetail = (
   useEffect(() => {
     if (id) {
       getArticleDetail();
-    } else {
+      return;
+    }
+    if (draftId) {
       getDraftById();
     }
-  }, [id, draftId]);
+  }, [id, draftId, visible]);
 
   const getArticleDetail = async () => {
     setLoading(true);
