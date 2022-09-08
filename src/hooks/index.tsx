@@ -155,20 +155,38 @@ export const useScroll = (needScroll: string | null) => {
 };
 
 // 获取详情的hooks
-export const useGetArticleDetail = (id: string | null | undefined) => {
+export const useGetArticleDetail = (
+  id: string | null | undefined,
+  draftId?: string | null | undefined
+) => {
   const [detail, setDetail] = useState<ArticleDetailParams>();
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (id) {
       getArticleDetail();
+    } else {
+      getDraftById();
     }
-  }, [id]);
+  }, [id, draftId]);
 
   const getArticleDetail = async () => {
     setLoading(true);
     const res = normalizeResult<ArticleDetailParams>(
       await Service.getArticleDetail({ id: id! })
+    );
+    setLoading(false);
+    if (res.success) {
+      setDetail(res.data);
+    } else {
+      error(res.message);
+    }
+  };
+
+  const getDraftById = async () => {
+    setLoading(true);
+    const res = normalizeResult<ArticleDetailParams>(
+      await Service.getDraftById({ id: draftId! })
     );
     setLoading(false);
     if (res.success) {

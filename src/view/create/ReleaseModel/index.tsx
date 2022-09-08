@@ -30,6 +30,8 @@ interface IProps {
   onCancel: Function;
   initialValue?: CreateArticleParams;
   articleId?: string | null;
+  draftId?: string | null;
+  onSaveDraft?: Function;
 }
 
 const { TextArea } = Input;
@@ -37,8 +39,10 @@ const { TextArea } = Input;
 const ReleaseModel: React.FC<IProps> = ({
   visible = true,
   articleId,
+  draftId,
   initialValue,
   onCancel,
+  onSaveDraft,
 }) => {
   const [filePath, setFilePath] = useState<string>('');
   const [tagValue, setTagValue] = useState<string>();
@@ -52,6 +56,8 @@ const ReleaseModel: React.FC<IProps> = ({
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const { htmlWidth } = useHtmlWidth();
 
+  console.log(initialValue, 'initialValue', draftId);
+
   useEffect(() => {
     if (initialValue?.coverImage) {
       setFilePath(initialValue?.coverImage);
@@ -62,6 +68,13 @@ const ReleaseModel: React.FC<IProps> = ({
   const onClose = () => {
     onCancel && onCancel();
   };
+
+  // // 删除草稿
+  // const deleteDraft = async () => {
+  //   if (!draftId) return;
+  //   const res = normalizeResult<{ id: string }>(await Server.deleteDraft({ id: draftId }));
+  //   console.log(res, 'res');
+  // };
 
   // 调用创建文章的接口
   const createArticle = async (params: CreateArticleParams) => {
@@ -113,20 +126,9 @@ const ReleaseModel: React.FC<IProps> = ({
   };
 
   // 保存草稿
-  const onSaveDraft = async () => {
-    if (!create.mackdown) {
-      info('嘿，醒醒！文章还一个字没写呢...');
-      return;
-    }
+  const onCreateDraft = async () => {
     const values = await form.validateFields();
-    const params = {
-      ...values,
-      content: create.mackdown,
-      createTime: values?.createTime?.valueOf() || new Date().valueOf(),
-      authorId: getUserInfo?.userId,
-      articleId,
-    };
-    if (!articleId) delete params.articleId;
+    onSaveDraft && onSaveDraft(values);
   };
 
   // 校验标题是否包含特殊字符
@@ -166,7 +168,12 @@ const ReleaseModel: React.FC<IProps> = ({
         visible={visible}
         extra={
           <div>
-            <Button type="primary" ghost className={styles.saveDraft} onClick={onSaveDraft}>
+            <Button
+              type="primary"
+              ghost
+              className={styles.saveDraft}
+              onClick={onCreateDraft}
+            >
               保存草稿
             </Button>
             <Button type="primary" onClick={onFinish}>

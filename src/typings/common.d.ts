@@ -253,3 +253,18 @@ export interface GetUserInfoParams {
   auth?: number;
   needTotal?: boolean;
 }
+
+export interface CreateDraftParams {
+  content: string;
+  createTime: number;
+  authorId: string;
+  articleId?: string;
+}
+
+export interface CreateDraftParamsResult {
+  id: string;
+  authorId: string;
+  authorName: string;
+  content: string;
+  createTime: number;
+}

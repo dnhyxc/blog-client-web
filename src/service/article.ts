@@ -28,6 +28,16 @@ export async function articleDraft(params: CreateArticleParams, path: string) {
   return res;
 }
 
+export async function getDraftById(params: { id: string }) {
+  const res = await post(API.GET_DRAFT_BY_ID, params);
+  return res;
+}
+
+export async function deleteDraft(params: { id: string }) {
+  const res = await post(API.DELETE_DRAFT, params);
+  return res;
+}
+
 export async function getDraftList(params: GetArticleListParams) {
   const res = await post(API.GET_DRAFT_LIST, params);
   return res;

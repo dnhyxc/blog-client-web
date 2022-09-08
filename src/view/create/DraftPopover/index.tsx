@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Popover, Button } from 'antd';
 import Content from '@/components/Content';
+import { useNavigate } from 'react-router-dom';
 import { useScrollLoad } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -18,13 +19,15 @@ const DraftPopover: React.FC<IProps> = () => {
     count: 0,
   });
   const [loading, setLoading] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
   const listRef = useRef<ArticleItem[]>([]);
+  const navigate = useNavigate();
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
   // scrollRef：用户设置rightbar的吸顶效果，scrollbarRef：scrollbar 滚动到顶部，scrollTop：回到顶部
-  const { pageNo, onScroll } = useScrollLoad({
+  const { pageNo, setPageNo, onScroll } = useScrollLoad({
     data: draftList,
     loading,
     pageSize: PAGESIZE,
@@ -32,8 +35,10 @@ const DraftPopover: React.FC<IProps> = () => {
   });
 
   useEffect(() => {
-    getDraftList();
-  }, [pageNo]);
+    if (visible) {
+      getDraftList();
+    }
+  }, [pageNo, visible]);
 
   // 获取文章列表
   const getDraftList = async () => {
@@ -60,6 +65,31 @@ const DraftPopover: React.FC<IProps> = () => {
     }
   };
 
+  // Popover onVisibleChange 事件
+  const onVisibleChange = (visible: boolean) => {
+    setVisible(visible);
+    setPageNo(1);
+    listRef.current = [];
+    setDraftList({
+      list: listRef.current,
+      total: 0,
+      count: 0,
+    });
+  };
+
+  // 编辑
+  const onEditDraft = (item: ArticleItem) => {
+    console.log(item, 'item');
+    navigate(`/create?draftId=${item.id}`);
+    setVisible(false);
+  };
+
+  // 编辑
+  const onDelDraft = (item: ArticleItem) => {
+    console.log(item, 'item');
+    setVisible(false);
+  };
+
   const content = (
     <div className={styles.draftContent}>
       <Content
@@ -71,11 +101,25 @@ const DraftPopover: React.FC<IProps> = () => {
       >
         {draftList?.list?.map((i) => {
           return (
-            <div className={styles.draftList}>
-              <span>{i.title}</span>
-              <span>
-                <span>{formatGapTime(i.createTime)}</span>
-                <span>{i.title}</span>
+            <div key={i.id} className={styles.draftItem}>
+              <span className={styles.title}>
+                {i.title ||
+                  `${i.content?.slice(0, 26).replace(/#/g, '')}${
+                    i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
+                  }`}
+              </span>
+              <span className={styles.actions}>
+                <span className={styles.createTime}>{formatGapTime(i.createTime)}</span>
+                <Button
+                  className={styles.editBtn}
+                  type="link"
+                  onClick={() => onEditDraft(i)}
+                >
+                  编辑
+                </Button>
+                <Button className={styles.delBtn} type="link" onClick={() => onDelDraft(i)}>
+                  删除
+                </Button>
               </span>
             </div>
           );
@@ -84,13 +128,17 @@ const DraftPopover: React.FC<IProps> = () => {
     </div>
   );
 
+  const title = <div className={styles.modalTitle}>草稿列表</div>;
+
   return (
     <Popover
       className={styles.draftPop}
       placement="bottomRight"
-      title="草稿列表"
+      title={title}
       content={content}
       trigger="click"
+      visible={visible}
+      onVisibleChange={onVisibleChange}
     >
       <Button type="link" className={styles.draftBtn}>
         草稿箱
