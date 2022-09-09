@@ -23,6 +23,7 @@ class Message {
     message.info({
       content,
       style: {
+        position: 'relative',
         marginTop: `${top || 42}px`,
       },
     });

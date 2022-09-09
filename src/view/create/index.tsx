@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import { observer } from 'mobx-react';
 import useStore from '@/store';
@@ -19,7 +19,7 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -31,10 +31,11 @@ const CreateArticle: React.FC<IProps> = () => {
     create,
     userInfoStore: { getUserInfo },
   } = useStore();
+  const navigate = useNavigate();
   const [search] = useSearchParams();
   const id = search.get('id');
   const draftId = search.get('draftId');
-  const { detail } = useGetArticleDetail(id, draftId, visible);
+  const { detail } = useGetArticleDetail(id, draftId, visible, deleteId);
 
   const onGetMackdown = (mackdown: any) => {
     setContent(mackdown.trim());
@@ -55,8 +56,10 @@ const CreateArticle: React.FC<IProps> = () => {
   }, [content]);
 
   useEffect(() => {
-    console.log(deleteId);
-  }, [deleteId]);
+    if (deleteId === draftId) {
+      navigate('/create');
+    }
+  }, [deleteId, draftId]);
 
   // 监听是否是ctrl+enter组合键
   const onKeyDown = (event: any) => {
@@ -97,7 +100,7 @@ const CreateArticle: React.FC<IProps> = () => {
 
       if (!draftArticleId && !draftId) delete params.articleId;
 
-      articleDraft(params, ARTICLE_DRAFT[(draftArticleId || draftId) ? 2 : 1]);
+      articleDraft(params, ARTICLE_DRAFT[draftArticleId || draftId ? 2 : 1]);
     },
     500,
     [],
@@ -106,15 +109,10 @@ const CreateArticle: React.FC<IProps> = () => {
 
   // 删除草稿
   const deleteDraft = async (id?: string, needMessage?: boolean) => {
-    if (!draftId) return;
+    if (!draftId && !id) return;
     const res = normalizeResult<string>(await Server.deleteDraft({ id: id || draftId }));
     if (!needMessage) return;
-    if (res.success) {
-      setDeleteId(res.data);
-      success(res.message);
-    } else {
-      error(res.message);
-    }
+    setDeleteId(res.data);
   };
 
   const renderRight = () => {
@@ -147,7 +145,7 @@ const CreateArticle: React.FC<IProps> = () => {
         <ReleaseModel
           visible={visible}
           onCancel={onCancel}
-          initialValue={detail}
+          initialValue={detail as any}
           articleId={id}
           onSaveDraft={onSaveDraft}
           deleteDraft={deleteDraft}

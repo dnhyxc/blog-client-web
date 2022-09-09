@@ -158,9 +158,14 @@ export const useScroll = (needScroll: string | null) => {
 export const useGetArticleDetail = (
   id: string | null | undefined,
   draftId?: string | null | undefined,
-  visible?: boolean
+  visible?: boolean,
+  deleteId?: string
 ) => {
-  const [detail, setDetail] = useState<ArticleDetailParams>();
+  const [detail, setDetail] = useState<ArticleDetailParams>({
+    id: '',
+    title: '',
+    content: '',
+  });
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -172,6 +177,16 @@ export const useGetArticleDetail = (
       getDraftById();
     }
   }, [id, draftId, visible]);
+
+  useEffect(() => {
+    if (deleteId === draftId) {
+      setDetail({
+        id: '',
+        title: '',
+        content: '',
+      });
+    }
+  }, [deleteId, draftId]);
 
   const getArticleDetail = async () => {
     setLoading(true);

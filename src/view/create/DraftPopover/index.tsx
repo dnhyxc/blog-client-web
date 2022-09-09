@@ -12,7 +12,7 @@ import styles from './index.less';
 
 interface IProps {
   // eslint-disable-next-line no-unused-vars
-  deleteDraft?: (id?: string, needMessage?: boolean) => void
+  deleteDraft?: (id?: string, needMessage?: boolean) => void;
 }
 
 const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
@@ -86,8 +86,14 @@ const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
     setVisible(false);
   };
 
-  // 编辑
+  // 删除
   const onDelDraft = (item: ArticleItem) => {
+    const list = draftList.list.filter((i) => i.id !== item.id);
+    setDraftList({
+      ...draftList,
+      total: draftList.total - 1,
+      list,
+    });
     deleteDraft && deleteDraft(item.id, true);
   };
 
@@ -105,7 +111,8 @@ const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
             <div key={i.id} className={styles.draftItem}>
               <span className={styles.title}>
                 {i.title ||
-                  `${i.content?.slice(0, 26).replace(/#/g, '')}${i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
+                  `${i.content?.slice(0, 26).replace(/#/g, '')}${
+                    i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
                   }`}
               </span>
               <span className={styles.actions}>

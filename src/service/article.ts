@@ -33,7 +33,7 @@ export async function getDraftById(params: { id: string }) {
   return res;
 }
 
-export async function deleteDraft(params: { id: string }) {
+export async function deleteDraft(params: { id: string | null }) {
   const res = await post(API.DELETE_DRAFT, params);
   return res;
 }
