@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { Button } from 'antd';
 import { observer } from 'mobx-react';
 import useStore from '@/store';
@@ -19,7 +19,7 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -31,11 +31,10 @@ const CreateArticle: React.FC<IProps> = () => {
     create,
     userInfoStore: { getUserInfo },
   } = useStore();
-  const navigate = useNavigate();
   const [search] = useSearchParams();
   const id = search.get('id');
   const draftId = search.get('draftId');
-  const { detail } = useGetArticleDetail(id, draftId, visible, deleteId);
+  const { detail } = useGetArticleDetail({ id, draftId, visible, draftArticleId });
 
   const onGetMackdown = (mackdown: any) => {
     setContent(mackdown.trim());
@@ -49,15 +48,16 @@ const CreateArticle: React.FC<IProps> = () => {
   }, [detail]);
 
   useEffect(() => {
+    if (visible || id) return;
     window.addEventListener('keydown', onKeyDown);
     return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [content]);
+  }, [content, visible, id]);
 
   useEffect(() => {
     if (deleteId === draftId) {
-      navigate('/create');
+      window.location.href = '/create';
     }
   }, [deleteId, draftId]);
 
@@ -95,7 +95,7 @@ const CreateArticle: React.FC<IProps> = () => {
         content: create.mackdown,
         createTime: values?.createTime?.valueOf() || new Date().valueOf(),
         authorId: getUserInfo?.userId,
-        articleId: draftArticleId || draftId,
+        articleId: draftId || draftArticleId,
       };
 
       if (!draftArticleId && !draftId) delete params.articleId;
@@ -103,7 +103,7 @@ const CreateArticle: React.FC<IProps> = () => {
       articleDraft(params, ARTICLE_DRAFT[draftArticleId || draftId ? 2 : 1]);
     },
     500,
-    [],
+    [visible],
     true
   );
 
@@ -145,7 +145,7 @@ const CreateArticle: React.FC<IProps> = () => {
         <ReleaseModel
           visible={visible}
           onCancel={onCancel}
-          initialValue={detail as any}
+          initialValue={detail}
           articleId={id}
           onSaveDraft={onSaveDraft}
           deleteDraft={deleteDraft}

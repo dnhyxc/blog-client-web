@@ -97,16 +97,23 @@ export interface ArticleDetailParams {
   id: string;
   title: string;
   content: string;
-  classify?: string;
-  tag?: string;
-  coverImage?: string;
+  classify: string;
+  tag: string;
+  coverImage: string;
   headUrl?: string;
-  abstract?: string;
-  createTime?: number;
+  abstract: string;
+  createTime: number;
   comments?: CommentParams[];
   authorName?: string;
   authorId?: string;
   replyCount?: number;
+}
+
+export interface UseGetArticleDetailParams {
+  id: string | null | undefined;
+  draftArticleId?: string | null;
+  draftId?: string | null | undefined;
+  visible?: boolean;
 }
 
 /**

@@ -14,6 +14,7 @@ import {
   ArticleItem,
   TimelineResult,
   useLikeArticleParams,
+  UseGetArticleDetailParams,
 } from '@/typings/common';
 
 // 防抖函数
@@ -155,17 +156,13 @@ export const useScroll = (needScroll: string | null) => {
 };
 
 // 获取详情的hooks
-export const useGetArticleDetail = (
-  id: string | null | undefined,
-  draftId?: string | null | undefined,
-  visible?: boolean,
-  deleteId?: string
-) => {
-  const [detail, setDetail] = useState<ArticleDetailParams>({
-    id: '',
-    title: '',
-    content: '',
-  });
+export const useGetArticleDetail = ({
+  id,
+  draftArticleId,
+  draftId,
+  visible
+}: UseGetArticleDetailParams) => {
+  const [detail, setDetail] = useState<ArticleDetailParams>();
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -176,17 +173,13 @@ export const useGetArticleDetail = (
     if (draftId) {
       getDraftById();
     }
-  }, [id, draftId, visible]);
+  }, [id, draftId]);
 
   useEffect(() => {
-    if (deleteId === draftId) {
-      setDetail({
-        id: '',
-        title: '',
-        content: '',
-      });
+    if (visible) {
+      getDraftById();
     }
-  }, [deleteId, draftId]);
+  }, [visible]);
 
   const getArticleDetail = async () => {
     setLoading(true);
@@ -203,8 +196,9 @@ export const useGetArticleDetail = (
 
   const getDraftById = async () => {
     setLoading(true);
+    if (!draftId && !draftArticleId) return;
     const res = normalizeResult<ArticleDetailParams>(
-      await Service.getDraftById({ id: draftId! })
+      await Service.getDraftById({ id: draftId! || draftArticleId! })
     );
     setLoading(false);
     if (res.success) {

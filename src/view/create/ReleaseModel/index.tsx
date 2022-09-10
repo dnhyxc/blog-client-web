@@ -21,14 +21,14 @@ import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, success, error, info } from '@/utils';
 import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL } from '@/constant';
-import { CreateArticleParams, CreateResult } from '@/typings/common';
+import { CreateArticleParams, ArticleDetailParams, CreateResult } from '@/typings/common';
 
 import styles from './index.less';
 
 interface IProps {
   visible: boolean;
   onCancel: Function;
-  initialValue?: CreateArticleParams;
+  initialValue: ArticleDetailParams | ArticleDetailParams | undefined;
   articleId?: string | null;
   onSaveDraft?: Function;
   // eslint-disable-next-line no-unused-vars
@@ -62,6 +62,11 @@ const ReleaseModel: React.FC<IProps> = ({
       setFilePath(initialValue?.coverImage);
     }
     setTagValue(initialValue?.tag);
+    form.setFieldsValue({ title: initialValue?.title });
+    form.setFieldsValue({ classify: initialValue?.classify });
+    form.setFieldsValue({ coverImage: initialValue?.coverImage });
+    form.setFieldsValue({ createTime: moment(initialValue?.createTime) });
+    form.setFieldsValue({ abstract: initialValue?.abstract });
   }, [initialValue]);
 
   const onClose = () => {

@@ -102,6 +102,7 @@ const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
       <Content
         containerClassName={styles.containerClassName}
         wrapClassName={styles.wrapClassName}
+        className={styles.scrollWrap}
         autoHeight
         autoHeightMax="300px"
         onScroll={onScroll}
@@ -111,8 +112,7 @@ const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
             <div key={i.id} className={styles.draftItem}>
               <span className={styles.title}>
                 {i.title ||
-                  `${i.content?.slice(0, 26).replace(/#/g, '')}${
-                    i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
+                  `${i.content?.slice(0, 26).replace(/#/g, '')}${i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
                   }`}
               </span>
               <span className={styles.actions}>
