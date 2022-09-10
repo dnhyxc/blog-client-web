@@ -104,13 +104,13 @@ export interface ArticleDetailParams {
   abstract: string;
   createTime: number;
   comments?: CommentParams[];
-  authorName?: string;
-  authorId?: string;
+  authorName: string;
+  authorId: string;
   replyCount?: number;
 }
 
 export interface UseGetArticleDetailParams {
-  id: string | null | undefined;
+  id: string | undefined | null;
   draftArticleId?: string | null;
   draftId?: string | null | undefined;
   visible?: boolean;

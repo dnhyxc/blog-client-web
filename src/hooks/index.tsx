@@ -160,7 +160,7 @@ export const useGetArticleDetail = ({
   id,
   draftArticleId,
   draftId,
-  visible
+  visible,
 }: UseGetArticleDetailParams) => {
   const [detail, setDetail] = useState<ArticleDetailParams>();
   const [loading, setLoading] = useState<boolean>(false);
