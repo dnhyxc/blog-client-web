@@ -19,7 +19,7 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -28,7 +28,6 @@ const CreateArticle: React.FC<IProps> = () => {
   const [deleteId, setDeleteId] = useState<string>('');
 
   const {
-    create,
     userInfoStore: { getUserInfo },
   } = useStore();
   const [search] = useSearchParams();
@@ -38,14 +37,7 @@ const CreateArticle: React.FC<IProps> = () => {
 
   const onGetMackdown = (mackdown: any) => {
     setContent(mackdown.trim());
-    create.createMackdown(mackdown.trim());
   };
-
-  useEffect(() => {
-    if (detail?.content) {
-      create.createMackdown(detail?.content as string);
-    }
-  }, [detail]);
 
   useEffect(() => {
     if (visible || id) return;
@@ -85,14 +77,14 @@ const CreateArticle: React.FC<IProps> = () => {
   // 保存草稿
   const onSaveDraft = useDebounce(
     async (values: CreateArticleParams) => {
-      if (!create.mackdown) {
+      if (!content) {
         info('嘿，醒醒！文章还一个字没写呢...');
         return;
       }
 
       const params: CreateDraftParams = {
         ...values,
-        content: create.mackdown,
+        content,
         createTime: values?.createTime?.valueOf() || new Date().valueOf(),
         authorId: getUserInfo?.userId,
         articleId: draftId || draftArticleId,
@@ -103,7 +95,7 @@ const CreateArticle: React.FC<IProps> = () => {
       articleDraft(params, ARTICLE_DRAFT[draftArticleId || draftId ? 2 : 1]);
     },
     500,
-    [visible],
+    [visible, content],
     true
   );
 
@@ -121,7 +113,7 @@ const CreateArticle: React.FC<IProps> = () => {
         <Button
           type="link"
           className={styles.release}
-          disabled={!create?.mackdown}
+          disabled={!content && !detail?.content}
           onClick={() => setVisible(true)}
         >
           发布文章
@@ -144,6 +136,7 @@ const CreateArticle: React.FC<IProps> = () => {
       {visible && (
         <ReleaseModel
           visible={visible}
+          content={content || detail!.content}
           onCancel={onCancel}
           initialValue={detail}
           articleId={id}

@@ -27,6 +27,7 @@ import styles from './index.less';
 
 interface IProps {
   visible: boolean;
+  content: string;
   onCancel: Function;
   initialValue: ArticleDetailParams | ArticleDetailParams | undefined;
   articleId?: string | null;
@@ -39,11 +40,12 @@ const { TextArea } = Input;
 
 const ReleaseModel: React.FC<IProps> = ({
   visible = true,
+  content,
   articleId,
   initialValue,
   onCancel,
   onSaveDraft,
-  deleteDraft
+  deleteDraft,
 }) => {
   const [filePath, setFilePath] = useState<string>('');
   const [tagValue, setTagValue] = useState<string>();
@@ -51,7 +53,6 @@ const ReleaseModel: React.FC<IProps> = ({
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const {
-    create,
     userInfoStore: { getUserInfo },
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
@@ -66,6 +67,7 @@ const ReleaseModel: React.FC<IProps> = ({
     form.setFieldsValue({ classify: initialValue?.classify });
     form.setFieldsValue({ coverImage: initialValue?.coverImage });
     form.setFieldsValue({ createTime: moment(initialValue?.createTime) });
+    form.setFieldsValue({ tag: initialValue?.tag });
     form.setFieldsValue({ abstract: initialValue?.abstract });
   }, [initialValue]);
 
@@ -105,14 +107,14 @@ const ReleaseModel: React.FC<IProps> = ({
 
   // 提交表单
   const onFinish = async () => {
-    if (!create.mackdown) {
+    if (!content) {
       info('嘿，醒醒！文章还一个字没写呢...');
       return;
     }
     const values = await form.validateFields();
     const params = {
       ...values,
-      content: create.mackdown,
+      content,
       createTime: values?.createTime?.valueOf() || new Date().valueOf(),
       authorId: getUserInfo?.userId,
       articleId,
