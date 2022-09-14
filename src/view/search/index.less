@@ -56,11 +56,10 @@
 
     .searchWrap {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      flex-direction: column;
       overflow: hidden;
-      padding-bottom: 40px;
       height: 100%;
+      padding: 0 5px 10px 5px;
 
       .tagSelect {
         min-width: 118px;
@@ -73,21 +72,48 @@
         cursor: pointer;
       }
 
-      .SearchInp {
-        width: 60%;
+      .search {
+        margin-bottom: 10px;
+
+        .searchInp {
+          width: 60%;
+          max-width: 960px;
+
+          :global {
+            .ant-input-search-button {
+              border-radius: 0 5px 5px 0;
+            }
+          }
+        }
 
         :global {
-          .ant-input-search-button {
-            border-radius: 0 5px 5px 0;
+          .ant-input-wrapper {
+            height: 50px;
+
+            .ant-input {
+              height: 50px;
+              border-radius: 5px 0 0 5px;
+            }
+
+            .ant-btn {
+              width: 95px;
+              height: 50px;
+            }
           }
         }
       }
 
       .searchTagList {
-        border: 1px solid red;
+        display: flex;
+        justify-content: center;
+
+        .radioGroup {
+          width: 100%;
+          max-width: 500px;
+        }
+
         .tag {
-          background-color: #fff;
-          width: calc(25% - 4px);
+          width: calc(20% - 4px);
           margin-top: 5px;
           margin-right: 5px;
           text-align: center;
@@ -103,11 +129,11 @@
             border-radius: 3px;
           }
 
-          &:nth-child(-n + 4) {
+          &:nth-child(-n + 5) {
             margin-top: 0;
           }
 
-          &:nth-child(4n) {
+          &:nth-child(5n) {
             margin-right: 0;
           }
         }
@@ -166,23 +192,35 @@
       padding: 0;
 
       .searchWrap {
-        display: flex;
-        flex-direction: column;
-        border: 1px solid red;
+        .search {
+          .searchInp {
+            width: 100%;
 
-        .SearchInp {
-          width: 100%;
+            :global {
+              .ant-input-search-button {
+                border-radius: 0 5px 5px 0;
+              }
+            }
+          }
 
           :global {
-            .ant-input-search-button {
-              border-radius: 0 5px 5px 0;
+            .ant-input-wrapper {
+              height: 42px;
+
+              .ant-input {
+                height: 42px;
+                border-radius: 5px 0 0 5px;
+              }
+
+              .ant-btn {
+                width: 95px;
+                height: 42px;
+              }
             }
           }
         }
 
         .searchTagList {
-          border: 1px solid red;
-
           .tag {
             width: calc(50% - 4px);
 
@@ -194,16 +232,33 @@
               margin-top: 0;
             }
 
+            &:nth-child(5n) {
+              margin-right: 5px;
+            }
+
             &:nth-child(2n) {
               margin-right: 0;
             }
+          }
+        }
+
+        .showMore {
+          margin-top: 10px;
+
+          .downIcon {
+            color: @font-4;
+          }
+
+          .viewMoreInfo {
+            margin-left: 10px;
+            color: @font-4;
           }
         }
       }
 
       .content {
         width: 100%;
-        padding-bottom: 50px;
+        padding: 0 6px 50px;
 
         .tabList {
           .tab {

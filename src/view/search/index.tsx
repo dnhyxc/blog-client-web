@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { Input, Menu, Space, Dropdown, Radio } from 'antd';
-import type { MenuProps } from 'antd';
-import { DownOutlined } from '@ant-design/icons';
+import React, { useMemo, useState } from 'react';
+import { Input, Radio, RadioChangeEvent } from 'antd';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import Card from '@/components/Card';
 import MAlert from '@/components/Alert';
+import MIcons from '@/components/Icons';
 import BackTop from '@/components/BackTop';
 import Footer from '@/components/Footer';
 import {
@@ -19,17 +18,17 @@ import {
 import { PAGESIZE, SEARCH_TYPE } from '@/constant';
 import {
   ArticleListResult,
-  SearchTypeParams,
   // ArticleItem,
   // TimelineResult,
   // UserInfoParams,
 } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const Search: React.FC<IProps> = () => {
-  const [searchType, setSearchType] = useState<SearchTypeParams>();
+  const [showMore, setShowMore] = useState<boolean>(false);
+  const [radioValue, setRadioValue] = useState<string>('');
   const [loading] = useState<boolean>(false);
   const [articleList] = useState<ArticleListResult>({
     list: [],
@@ -50,14 +49,22 @@ const Search: React.FC<IProps> = () => {
   const { showAlert, toLogin, onCloseAlert } = useLoginStatus();
   const { htmlWidth } = useHtmlWidth();
 
-  const handleMenuClick: MenuProps['onClick'] = (e) => {
-    const selectKey = SEARCH_TYPE.find((i) => e.key === i.key);
-    setSearchType(selectKey);
+  // 展示更多条件
+  const onShowMore = () => {
+    setShowMore(!showMore);
   };
 
-  const menu = (
-    <Menu onClick={handleMenuClick} items={SEARCH_TYPE} className={styles.tagMenu} />
-  );
+  const conditions = useMemo(() => {
+    if (showMore || htmlWidth > 960) {
+      return SEARCH_TYPE;
+    }
+    return SEARCH_TYPE.slice(0, 2);
+  }, [showMore, htmlWidth]);
+
+  const onRadioChange = (e: RadioChangeEvent) => {
+    console.log(e.target.value, 'value');
+    setRadioValue(e.target.value);
+  };
 
   return (
     <div className={styles.Search}>
@@ -78,31 +85,35 @@ const Search: React.FC<IProps> = () => {
       >
         <div className={styles.wrap}>
           <div className={styles.searchWrap}>
-            <Dropdown overlay={menu} autoFocus>
-              <div className={styles.tagSelect}>
-                <Space>
-                  {searchType?.label || '选择标签'}
-                  <DownOutlined />
-                </Space>
-              </div>
-            </Dropdown>
-            <Input.Search
-              placeholder="请输入搜索内容"
-              enterButton="Search"
-              size="large"
-              className={styles.SearchInp}
-            />
+            <div className={styles.search}>
+              <Input.Search
+                placeholder="请输入搜索内容"
+                enterButton="搜索"
+                size="large"
+                className={styles.searchInp}
+              />
+            </div>
             <div className={styles.searchTagList}>
-              <Radio.Group buttonStyle="solid">
-                {SEARCH_TYPE.map((i) => {
+              <Radio.Group buttonStyle="solid" className={styles.radioGroup} onChange={onRadioChange}>
+                {conditions.map((i) => {
                   return (
-                    <Radio.Button className={styles.tag} key={i.key} value={i.key}>
+                    <Radio.Button className={styles.tag} key={i.key} value={radioValue}>
                       {i.label}
                     </Radio.Button>
                   );
                 })}
               </Radio.Group>
             </div>
+            {htmlWidth < 960 && (
+              <div onClick={onShowMore} className={styles.showMore}>
+                <MIcons
+                  className={styles.downIcon}
+                  name={!showMore ? 'icon-xiajiantou' : 'icon-shangjiantou'}
+                  onClick={onShowMore}
+                />
+                <span className={styles.viewMoreInfo}>更多搜索选项</span>
+              </div>
+            )}
           </div>
           <div className={styles.content}>
             <Card
@@ -114,7 +125,7 @@ const Search: React.FC<IProps> = () => {
               // onEditArticle={onEditArticle}
               // showInfo={articleList.list.length === articleList.total}
               loadText="地主家也没余粮了"
-              // loading={loading}
+            // loading={loading}
             />
           </div>
         </div>
