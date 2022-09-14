@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Menu, Space, Dropdown } from 'antd';
+import { Input, Menu, Space, Dropdown, Radio } from 'antd';
 import type { MenuProps } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import Content from '@/components/Content';
@@ -92,6 +92,17 @@ const Search: React.FC<IProps> = () => {
               size="large"
               className={styles.SearchInp}
             />
+            <div className={styles.searchTagList}>
+              <Radio.Group buttonStyle="solid">
+                {SEARCH_TYPE.map((i) => {
+                  return (
+                    <Radio.Button className={styles.tag} key={i.key} value={i.key}>
+                      {i.label}
+                    </Radio.Button>
+                  );
+                })}
+              </Radio.Group>
+            </div>
           </div>
           <div className={styles.content}>
             <Card
