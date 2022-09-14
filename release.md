@@ -112,7 +112,7 @@ pm2 update
 
 ### 创建 data 及 log 文件
 
-```
+```js
 cd mongdb/mongodb-linux-x86_64-rhel70-5.0.12
 
 mkdir data
@@ -128,14 +128,14 @@ touch mongod.log
 
 ### 启动 mongodb
 
-```
+```js
 cd mongodb/bin
 ./mongod --dbpath=/data  --logpath=/data/log/mongod.log --fork
 ```
 
 ### 链接数据库
 
-```
+```js
 cd mongodb/bin
 ./mongo
 ```
@@ -148,7 +148,7 @@ cd mongodb/bin
 
 ### 创建 nginx 并将 nginx tar 包放到 nginx 文件夹中
 
-```
+```js
 cd /usr/local
 
 mkdir nginx
@@ -162,7 +162,7 @@ tar -vxf nginx-1.22.0
 
 ### 执行如下命令
 
-```
+```js
 ./configure
 
 make
@@ -176,7 +176,7 @@ make install
 
 ```js
 http {
-  client_max_body_size 10m;
+  client_max_body_size 20m;
 }
 ```
 
@@ -202,7 +202,7 @@ http {
 
 将 upload 资源复制到 server 中：
 
-```
+```js
 cp -r /usr/local/server/src/upload /usr/local/server/
 
 cp -r /usr/local/server/src/upload /usr/local/ 复制到local
@@ -210,7 +210,7 @@ cp -r /usr/local/server/src/upload /usr/local/ 复制到local
 
 将 upload 资源从 server 复制到 src 中：
 
-```
+```js
 cp -r /usr/local/server/upload /usr/local/server/src/
 
 cp -r /usr/local/upload /usr/local/server/src/  从local复制到src
