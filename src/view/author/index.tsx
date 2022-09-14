@@ -50,6 +50,7 @@ const Author: React.FC<IProps> = () => {
 
   const listRef = useRef<ArticleItem[]>([]);
   const navigate = useNavigate();
+  const { htmlWidth } = useHtmlWidth();
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
@@ -59,7 +60,6 @@ const Author: React.FC<IProps> = () => {
     loading,
     pageSize: PAGESIZE,
   });
-  const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
     onGetPersonalInfo();
