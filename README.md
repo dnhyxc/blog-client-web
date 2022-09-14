@@ -2,29 +2,29 @@
 
 ```
 blog-client-web
-├─ .babelrc
-├─ .eslintrc.json
+├─ .babelrc babel配置
+├─ .eslintrc.json eslint配置文件
 ├─ .gitignore
-├─ .husky
+├─ .husky husky配置
 │  ├─ pre-commit
 │  └─ _
 │     ├─ .gitignore
 │     └─ husky.sh
-├─ .prettierrc
-├─ config
+├─ .prettierrc  prettier代码格式化配置
+├─ config webpack配置
 │  ├─ webpack.common.config.js
 │  ├─ webpack.dev.config.js
 │  └─ webpack.prod.config.js
 ├─ config.md
 ├─ package.json
-├─ postcss.config.js
+├─ postcss.config.js  postcss配置
 ├─ public
 │  ├─ favicon.png
 │  └─ index.html
 ├─ README.md
 ├─ release.md
 ├─ src
-│  ├─ assets
+│  ├─ assets  静态资源
 │  │  ├─ iconfont
 │  │  │  ├─ iconfont.css
 │  │  │  ├─ iconfont.ttf
@@ -37,141 +37,141 @@ blog-client-web
 │  │     ├─ header.jpg
 │  │     └─ mainCover.png
 │  ├─ components
-│  │  ├─ Access
+│  │  ├─ Access 权鉴组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ Alert
+│  │  ├─ Alert  alert组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ AnotherArticle
+│  │  ├─ AnotherArticle 上下篇文章组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ ArticleToc
+│  │  ├─ ArticleToc 文章目录组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ BackTop
+│  │  ├─ BackTop  回到顶部
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ Card
+│  │  ├─ Card 卡片组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ Comments
+│  │  ├─ Comments 评论组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ Confirm
+│  │  ├─ Confirm  自定义confirm组件
 │  │  │  ├─ confirm.tsx
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ Content
+│  │  ├─ Content  容器组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ Decorator
+│  │  ├─ Decorator  装饰组件
 │  │  │  ├─ index.scss
 │  │  │  └─ index.tsx
-│  │  ├─ DraftInput
+│  │  ├─ DraftInput 富文本输入框组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ Empty
+│  │  ├─ Empty  空状态组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ Footer
+│  │  ├─ Footer 页脚组件
 │  │  │  ├─ index.less
 │  │  │  ├─ index.tsx
 │  │  │  └─ Menu
 │  │  │     ├─ index.less
 │  │  │     └─ index.tsx
-│  │  ├─ Header
+│  │  ├─ Header 头部组件
 │  │  │  ├─ index.less
 │  │  │  ├─ index.tsx
 │  │  │  ├─ Menu
 │  │  │  │  ├─ index.less
 │  │  │  │  └─ index.tsx
-│  │  │  └─ User
+│  │  │  └─ User  头部头像组件
 │  │  │     ├─ index.less
 │  │  │     └─ index.tsx
-│  │  ├─ Icons
+│  │  ├─ Icons  图标组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ Image
+│  │  ├─ Image  图片展示组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ MDropdown
+│  │  ├─ MDropdown  下拉选择组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ MenuList
+│  │  ├─ MenuList 左侧菜单组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ MSearch
+│  │  ├─ MSearch  搜索组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ Preview
+│  │  ├─ Preview  富文本预览组件
 │  │  │  ├─ index.less
 │  │  │  ├─ index.tsx
 │  │  │  └─ readme.md
-│  │  ├─ RightBar
+│  │  ├─ RightBar 右侧展示列组件
 │  │  │  ├─ AboutMe
 │  │  │  │  ├─ index.less
 │  │  │  │  └─ index.tsx
 │  │  │  ├─ index.less
 │  │  │  ├─ index.tsx
-│  │  │  ├─ Introduction
+│  │  │  ├─ Introduction  博主信息组件
 │  │  │  │  ├─ index.less
 │  │  │  │  └─ index.tsx
-│  │  │  └─ RecommendArticle
+│  │  │  └─ RecommendArticle  文章推荐组件
 │  │  │     ├─ index.less
 │  │  │     └─ index.tsx
-│  │  ├─ Segmented
+│  │  ├─ Segmented  分段控制器组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ TuiEditor
+│  │  ├─ TuiEditor  markdown编辑组件
 │  │  │  ├─ index.less
 │  │  │  ├─ index.md
 │  │  │  ├─ index.tsx
 │  │  │  └─ toobars.ts
-│  │  ├─ Upload
+│  │  ├─ Upload  文件上传组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  ├─ WordCloud
+│  │  ├─ WordCloud  词云组件
 │  │  │  ├─ index.less
 │  │  │  └─ index.tsx
-│  │  └─ WordList
+│  │  └─ WordList  h5词云组件
 │  │     ├─ index.less
 │  │     └─ index.tsx
-│  ├─ constant
+│  ├─ constant  全局通用变量声明文件
 │  │  └─ index.ts
-│  ├─ hooks
+│  ├─ hooks  自定义hooks
 │  │  └─ index.tsx
 │  ├─ index.less
-│  ├─ index.tsx
-│  ├─ layout
+│  ├─ index.tsx 项目入口文件
+│  ├─ layout  项目布局组件
 │  │  ├─ index.less
 │  │  └─ index.tsx
-│  ├─ router
+│  ├─ router  项目路由配置
 │  │  ├─ config.tsx
 │  │  ├─ index.less
 │  │  ├─ index.tsx
 │  │  └─ menu.tsx
-│  ├─ service
+│  ├─ service  API文件
 │  │  ├─ api.ts
 │  │  ├─ article.ts
 │  │  ├─ index.ts
 │  │  ├─ upload.ts
 │  │  ├─ user.ts
 │  │  └─ userInfo.ts
-│  ├─ store
+│  ├─ store  mobx状态管理组件
 │  │  ├─ common.ts
 │  │  ├─ create.ts
 │  │  ├─ detail.ts
 │  │  ├─ index.ts
 │  │  └─ user.ts
-│  ├─ styles
+│  ├─ styles  全局公共样式配置
 │  │  ├─ common.less
 │  │  └─ layout.less
-│  ├─ typings
+│  ├─ typings  ts全局类型声明文件
 │  │  ├─ common.d.ts
 │  │  ├─ component.d.ts
 │  │  └─ index.d.ts
-│  ├─ utils
+│  ├─ utils  全局公共工具文件
 │  │  ├─ crypto.ts
 │  │  ├─ index.ts
 │  │  ├─ message.ts
@@ -180,13 +180,13 @@ blog-client-web
 │  │  ├─ tools.ts
 │  │  └─ urlTool.ts
 │  └─ view
-│     ├─ author
+│     ├─ author  关于作者页面
 │     │  ├─ index.less
 │     │  └─ index.tsx
-│     ├─ classify
+│     ├─ classify  文章分类页面
 │     │  ├─ index.less
 │     │  └─ index.tsx
-│     ├─ create
+│     ├─ create  文章创建页面
 │     │  ├─ DraftPopover
 │     │  │  ├─ index.less
 │     │  │  └─ index.tsx
@@ -195,37 +195,37 @@ blog-client-web
 │     │  └─ ReleaseModel
 │     │     ├─ index.less
 │     │     └─ index.tsx
-│     ├─ detail
+│     ├─ detail  文章详情页面
 │     │  ├─ index.less
 │     │  └─ index.tsx
-│     ├─ home
+│     ├─ home  首页页面
 │     │  ├─ index.less
 │     │  └─ index.tsx
-│     ├─ login
+│     ├─ login  登录页面
 │     │  ├─ index.less
 │     │  └─ index.tsx
-│     ├─ personal
+│     ├─ personal  我的主页页面
 │     │  ├─ index.less
 │     │  └─ index.tsx
-│     ├─ setting
-│     │  ├─ account
+│     ├─ setting  设置页面
+│     │  ├─ account  账号设置页面
 │     │  │  ├─ index.less
 │     │  │  └─ index.tsx
 │     │  ├─ index.less
 │     │  ├─ index.tsx
-│     │  └─ profile
+│     │  └─ profile  个人设置页面
 │     │     ├─ index.less
 │     │     └─ index.tsx
-│     ├─ tag
+│     ├─ tag  标签分类页面
 │     │  ├─ index.less
 │     │  ├─ index.tsx
 │     │  └─ List
 │     │     ├─ index.less
 │     │     └─ index.tsx
-│     └─ timeline
+│     └─ timeline  时间轴页面
 │        ├─ index.less
 │        └─ index.tsx
-├─ tsconfig.json
+├─ tsconfig.json  ts配置页面
 └─ yarn.lock
 
 ```
