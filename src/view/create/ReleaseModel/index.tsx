@@ -21,24 +21,31 @@ import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, success, error, info } from '@/utils';
 import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL } from '@/constant';
-import { CreateArticleParams, CreateResult } from '@/typings/common';
+import { CreateArticleParams, ArticleDetailParams, CreateResult } from '@/typings/common';
 
 import styles from './index.less';
 
 interface IProps {
   visible: boolean;
+  content: string;
   onCancel: Function;
-  initialValue?: CreateArticleParams;
+  initialValue: ArticleDetailParams | ArticleDetailParams | undefined;
   articleId?: string | null;
+  onSaveDraft?: Function;
+  // eslint-disable-next-line no-unused-vars
+  deleteDraft?: (id?: string, needMessage?: boolean) => void;
 }
 
 const { TextArea } = Input;
 
 const ReleaseModel: React.FC<IProps> = ({
   visible = true,
+  content,
   articleId,
   initialValue,
   onCancel,
+  onSaveDraft,
+  deleteDraft,
 }) => {
   const [filePath, setFilePath] = useState<string>('');
   const [tagValue, setTagValue] = useState<string>();
@@ -46,7 +53,6 @@ const ReleaseModel: React.FC<IProps> = ({
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const {
-    create,
     userInfoStore: { getUserInfo },
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
@@ -57,6 +63,12 @@ const ReleaseModel: React.FC<IProps> = ({
       setFilePath(initialValue?.coverImage);
     }
     setTagValue(initialValue?.tag);
+    form.setFieldsValue({ title: initialValue?.title });
+    form.setFieldsValue({ classify: initialValue?.classify });
+    form.setFieldsValue({ coverImage: initialValue?.coverImage });
+    form.setFieldsValue({ createTime: moment(initialValue?.createTime) });
+    form.setFieldsValue({ tag: initialValue?.tag });
+    form.setFieldsValue({ abstract: initialValue?.abstract });
   }, [initialValue]);
 
   const onClose = () => {
@@ -66,6 +78,9 @@ const ReleaseModel: React.FC<IProps> = ({
   // 调用创建文章的接口
   const createArticle = async (params: CreateArticleParams) => {
     const res = normalizeResult<CreateResult>(await Server.createArticle(params));
+    if (res.success) {
+      deleteDraft && deleteDraft();
+    }
     getResult(res);
   };
 
@@ -92,14 +107,14 @@ const ReleaseModel: React.FC<IProps> = ({
 
   // 提交表单
   const onFinish = async () => {
-    if (!create.mackdown) {
+    if (!content) {
       info('嘿，醒醒！文章还一个字没写呢...');
       return;
     }
     const values = await form.validateFields();
     const params = {
       ...values,
-      content: create.mackdown,
+      content,
       createTime: values?.createTime?.valueOf() || new Date().valueOf(),
       authorId: getUserInfo?.userId,
       articleId,
@@ -110,6 +125,12 @@ const ReleaseModel: React.FC<IProps> = ({
       delete params.articleId;
       createArticle(params);
     }
+  };
+
+  // 保存草稿
+  const onCreateDraft = async () => {
+    const values = await form.validateFields();
+    onSaveDraft && onSaveDraft(values);
   };
 
   // 校验标题是否包含特殊字符
@@ -148,9 +169,19 @@ const ReleaseModel: React.FC<IProps> = ({
         onClose={onClose}
         visible={visible}
         extra={
-          <Button type="primary" onClick={onFinish}>
-            发布
-          </Button>
+          <div>
+            <Button
+              type="primary"
+              ghost
+              className={styles.saveDraft}
+              onClick={onCreateDraft}
+            >
+              保存草稿
+            </Button>
+            <Button type="primary" onClick={onFinish}>
+              发布
+            </Button>
+          </div>
         }
       >
         <div className={styles.ReleaseModel}>

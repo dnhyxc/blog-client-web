@@ -43,12 +43,12 @@ export interface UpdateData {
 }
 
 export interface CreateArticleParams {
-  title: string;
+  title?: string;
   content: string;
-  classify: string;
-  tag: string;
-  coverImage: string;
-  abstract: string;
+  classify?: string;
+  tag?: string;
+  coverImage?: string;
+  abstract?: string;
   createTime: number;
   authorId: string;
 }
@@ -100,13 +100,20 @@ export interface ArticleDetailParams {
   classify: string;
   tag: string;
   coverImage: string;
-  headUrl: string;
+  headUrl?: string;
   abstract: string;
   createTime: number;
-  comments: CommentParams[];
+  comments?: CommentParams[];
   authorName: string;
   authorId: string;
-  replyCount: number;
+  replyCount?: number;
+}
+
+export interface UseGetArticleDetailParams {
+  id: string | undefined | null;
+  draftArticleId?: string | null;
+  draftId?: string | null | undefined;
+  visible?: boolean;
 }
 
 /**
@@ -258,4 +265,18 @@ export interface SearchTypeParams {
   label: string;
   type: string;
   key: string;
+}
+export interface CreateDraftParams {
+  content: string;
+  createTime: number;
+  authorId: string;
+  articleId?: string | null;
+}
+
+export interface CreateDraftParamsResult {
+  id: string;
+  authorId: string;
+  authorName: string;
+  content: string;
+  createTime: number;
 }

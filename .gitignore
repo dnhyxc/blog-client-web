@@ -2,3 +2,5 @@ node_modules/
 dist/
 dist.zip
 .vscode
+interview.md
+config.md

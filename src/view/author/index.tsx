@@ -4,6 +4,7 @@ import { Tabs, Timeline } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import Header from '@/components/Header';
 import MAlert from '@/components/Alert';
+import MIcons from '@/components/Icons';
 import Content from '@/components/Content';
 import Card from '@/components/Card';
 import Image from '@/components/Image';
@@ -31,7 +32,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-interface IProps { }
+interface IProps {}
 
 const Author: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,9 +46,11 @@ const Author: React.FC<IProps> = () => {
     total: 0,
     count: 0,
   });
+  const [showMoreInfo, setShowMoreInfo] = useState<boolean>(false);
 
   const listRef = useRef<ArticleItem[]>([]);
   const navigate = useNavigate();
+  const { htmlWidth } = useHtmlWidth();
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
@@ -57,7 +60,6 @@ const Author: React.FC<IProps> = () => {
     loading,
     pageSize: PAGESIZE,
   });
-  const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
     onGetPersonalInfo();
@@ -186,6 +188,11 @@ const Author: React.FC<IProps> = () => {
     setAlertStatus,
   });
 
+  // 查看更多信息
+  const onViewMoreInfo = () => {
+    setShowMoreInfo(!showMoreInfo);
+  };
+
   return (
     <>
       <div className={styles.AuthorContainer}>
@@ -224,7 +231,54 @@ const Author: React.FC<IProps> = () => {
               <div className={styles.mainInfo}>
                 <div className={styles.username}>{authorInfo?.username}</div>
                 <div className={styles.info}>{authorInfo?.job}</div>
-                <div className={styles.info}>{authorInfo?.introduce}</div>
+              </div>
+            </div>
+            <div className={styles.viewMore}>
+              {showMoreInfo && (
+                <div>
+                  <div className={styles.info}>{authorInfo?.introduce}</div>
+                  <div className={styles.info}>{authorInfo?.motto}</div>
+                  <a
+                    href={authorInfo?.github}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={styles.info}
+                  >
+                    {authorInfo?.github}
+                  </a>
+                  <a
+                    href={authorInfo?.juejin}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={styles.info}
+                  >
+                    {authorInfo?.juejin}
+                  </a>
+                  <a
+                    className={styles.info}
+                    href={authorInfo?.zhihu}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {authorInfo?.zhihu}
+                  </a>
+                  <a
+                    className={styles.info}
+                    href={authorInfo?.blog}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {authorInfo?.blog}
+                  </a>
+                </div>
+              )}
+              <div className={styles.moreInfo} onClick={onViewMoreInfo}>
+                <MIcons
+                  className={styles.downIcon}
+                  name={!showMoreInfo ? 'icon-xiajiantou' : 'icon-shangjiantou'}
+                  onClick={onViewMoreInfo}
+                />
+                <span className={styles.viewMoreInfo}>查看详细资料</span>
               </div>
             </div>
             <div className={styles.content}>
@@ -234,7 +288,9 @@ const Author: React.FC<IProps> = () => {
                     {AUTHOR_TABS.map((i) => {
                       return (
                         <TabPane tab={i.name} key={i.value}>
-                          {(i.value !== '3' || !timelineList.length || (timelineList.length && !timelineList[0].articles.length)) && (
+                          {(i.value !== '3' ||
+                            !timelineList.length ||
+                            (timelineList.length && !timelineList[0].articles.length)) && (
                             <Card
                               list={articleList.list}
                               wrapClass={styles.wrapClass}
@@ -247,37 +303,39 @@ const Author: React.FC<IProps> = () => {
                               loading={loading}
                             />
                           )}
-                          {i.value === '3' && timelineList.length > 0 && timelineList[0].articles.length > 0 && (
-                            <Timeline className={styles.timelineContent}>
-                              {timelineList.map((i) => {
-                                return (
-                                  <Timeline.Item
-                                    className={styles.timelineItem}
-                                    key={i.date}
-                                    color="green"
-                                    dot={
-                                      <ClockCircleOutlined style={{ fontSize: '16px' }} />
-                                    }
-                                  >
-                                    <div className={styles.cardList}>
-                                      <div className={styles.date}>{i.date}</div>
-                                      {i.articles && i.articles.length > 0 && (
-                                        <Card
-                                          list={i.articles}
-                                          wrapClass={styles.wrapClass}
-                                          itemClass={styles.itemClass}
-                                          descClass={styles.descClass}
-                                          toDetail={toDetail}
-                                          likeArticle={likeArticle}
-                                          deleteArticle={deleteTimeline}
-                                        />
-                                      )}
-                                    </div>
-                                  </Timeline.Item>
-                                );
-                              })}
-                            </Timeline>
-                          )}
+                          {i.value === '3' &&
+                            timelineList.length > 0 &&
+                            timelineList[0].articles.length > 0 && (
+                              <Timeline className={styles.timelineContent}>
+                                {timelineList.map((i) => {
+                                  return (
+                                    <Timeline.Item
+                                      className={styles.timelineItem}
+                                      key={i.date}
+                                      color="green"
+                                      dot={
+                                        <ClockCircleOutlined style={{ fontSize: '16px' }} />
+                                      }
+                                    >
+                                      <div className={styles.cardList}>
+                                        <div className={styles.date}>{i.date}</div>
+                                        {i.articles && i.articles.length > 0 && (
+                                          <Card
+                                            list={i.articles}
+                                            wrapClass={styles.wrapClass}
+                                            itemClass={styles.itemClass}
+                                            descClass={styles.descClass}
+                                            toDetail={toDetail}
+                                            likeArticle={likeArticle}
+                                            deleteArticle={deleteTimeline}
+                                          />
+                                        )}
+                                      </div>
+                                    </Timeline.Item>
+                                  );
+                                })}
+                              </Timeline>
+                            )}
                         </TabPane>
                       );
                     })}

@@ -29,7 +29,7 @@ const ArticleDetail: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { detail, loading } = useGetArticleDetail(id);
+  const { detail, loading } = useGetArticleDetail({ id });
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
@@ -41,7 +41,7 @@ const ArticleDetail: React.FC = () => {
   };
 
   // 去我的主页
-  const toSetting = (authorId: string) => {
+  const toSetting = (authorId: string | undefined) => {
     navigate(`/personal?id=${authorId}`);
   };
 
@@ -57,9 +57,7 @@ const ArticleDetail: React.FC = () => {
             onClick={() => toSetting(detail?.authorId)}
           />
           <div className={styles.createInfo}>
-            <div className={styles.username}>
-              {detail?.authorName}
-            </div>
+            <div className={styles.username}>{detail?.authorName}</div>
             <div>
               <span>{formatGapTime(detail?.createTime)}</span>
               {getUserInfo?.userId === detail?.authorId && (
@@ -142,7 +140,8 @@ const ArticleDetail: React.FC = () => {
           <div className={styles.backTop}>
             <ArrowUpOutlined className={styles.topIcon} />
           </div>
-        </BackTop>)}
+        </BackTop>
+      )}
     </Spin>
   );
 };

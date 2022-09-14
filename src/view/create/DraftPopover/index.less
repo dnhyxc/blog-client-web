@@ -1,0 +1,74 @@
+@import '~@styles/common.less';
+
+.draftBtn {
+  padding: 4px 0 4px 5px;
+  font-size: 15px;
+}
+
+.modalTitle {
+  height: 35px;
+  line-height: 35px;
+  font-weight: 600;
+}
+
+.draftContent {
+  width: 350px;
+
+  .containerClassName {
+    max-height: 300px;
+
+    .wrapClassName {
+      padding: 0;
+
+      .scrollWrap {
+        background-color: #fff;
+      }
+    }
+  }
+
+  .draftItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    border-bottom: 1px solid @background;
+    height: 45px;
+    line-height: 45px;
+
+    .title {
+      padding-left: 8px;
+      .ellipsis();
+    }
+
+    .actions {
+      .createTime {
+        .ellipsis();
+      }
+
+      .editBtn {
+        padding: 0 5px;
+      }
+
+      .delBtn {
+        padding: 0 8px 0 0;
+      }
+    }
+  }
+}
+
+:global {
+  .ant-popover-inner-content {
+    padding: 0 5px 12px 5px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .draftContent {
+    width: auto;
+    min-width: 290px;
+
+    .draftItem {
+      max-width: 290px;
+    }
+  }
+}

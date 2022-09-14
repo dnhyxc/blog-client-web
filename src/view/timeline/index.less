@@ -40,7 +40,7 @@
 
       .itemClass {
         height: 128px;
-        padding-bottom: 15px;
+        padding-bottom: 10px;
 
         &:nth-last-child(2) {
           border-bottom-left-radius: 0;
@@ -128,6 +128,7 @@
   .TimeLine {
     .contentWrap {
       padding: 5px 0 0 2px;
+
       .wrap {
         padding-right: 0;
         padding-bottom: 10px;
@@ -135,10 +136,16 @@
         .itemClass {
           height: 100%;
         }
+
         .imgWrapClass {
           position: static;
           height: 66px !important;
           min-height: 66px !important;
+        }
+
+        .descClass {
+          .ellipsisMore(3);
+          white-space: initial;
         }
       }
     }

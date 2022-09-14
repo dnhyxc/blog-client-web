@@ -29,6 +29,16 @@
   user-select: none;
 }
 
+.ellipsisMore(@count) {
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: @count;
+  line-clamp: @count;
+  -webkit-box-orient: vertical;
+}
+
 .ellipsis() {
   overflow: hidden;
   text-overflow: ellipsis;

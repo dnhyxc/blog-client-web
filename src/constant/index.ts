@@ -126,6 +126,11 @@ export const UPDATE_INFO_API_PATH = {
   2: API.UPDATE_PASSWORD,
 };
 
+export const ARTICLE_DRAFT = {
+  1: API.CREATE_DRAFT,
+  2: API.UPDATE_DRAFT,
+};
+
 export const ICONLINKS = [
   {
     name: 'icon-juejin',

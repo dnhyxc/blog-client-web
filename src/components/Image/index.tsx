@@ -35,14 +35,20 @@ const Image: React.FC<IProps> = ({
   }, [url]);
 
   const loadImage = () => {
+    let timer: any = null;
     const img = new window.Image();
     if (img.complete) {
       setLoaded(true);
       setLoadUrl(transitionImg);
     }
     img.onload = () => {
-      setLoaded(true);
-      setLoadUrl(url);
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(() => {
+        setLoaded(true);
+        setLoadUrl(url);
+      });
     };
     img.src = url;
   };

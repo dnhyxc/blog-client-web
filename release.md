@@ -26,6 +26,10 @@ yum -y install lrzsz
 
 `cd node-vxxx.tar.xz cd bin`到 node-vxxx.tar.xz 下的 bin 目录中，接着输入命令`ln -s /usr/local/node/node-vxxx.tar.xz/bin/node /usr/local/bin/node`设置 node 环境变量。
 
+`cd node-vxxx.tar.xz cd bin`到 node-vxxx.tar.xz 下的 bin 目录中，接着输入命令`ln -s /usr/local/node/node-vxxx.tar.xz/bin/npm /usr/local/bin/npm`设置 node 环境变量。
+
+`cd node-vxxx.tar.xz cd bin`到 node-vxxx.tar.xz 下的 bin 目录中，接着输入命令`ln -s /usr/local/node/node-vxxx.tar.xz/bin/yarn /usr/local/bin/yarn`设置 node 环境变量。
+
 ### node 项目部署
 
 `cd /usr/local`到 local 文件夹中，接着输入`mkdir server`创建一个 server 文件夹。
@@ -106,18 +110,64 @@ pm2 update
 
 `cs etc`到 etc 目录下。执行`vi profile`命令。接着输入`export PATH=/usr/local/mongodb/mongodb-linux-x86_64-rhel80-5.0.10/bin:$PATH`，设置完毕后保存。之后输入`source profile`让配置生效。
 
+### 创建 data 及 log 文件
+
+```js
+cd mongdb/mongodb-linux-x86_64-rhel70-5.0.12
+
+mkdir data
+
+cd data
+
+mkdir log
+
+cd log
+
+touch mongod.log
+```
+
 ### 启动 mongodb
 
-```
+```js
 cd mongodb/bin
-./mongod --dbpath /usr/local/mongodb/mongodb-linux-x86_64-rhel80-5.0.10/data/
+./mongod --dbpath=/data  --logpath=/data/log/mongod.log --fork
 ```
 
 ### 链接数据库
 
-```
+```js
 cd mongodb/bin
 ./mongo
+```
+
+### 安装 nginx
+
+[去官网下载 nginx：](https://nginx.org/en/download.html)
+
+选择下载 Stable version 下的第二个版本：nginx-1.22.0 pgp
+
+### 创建 nginx 并将 nginx tar 包放到 nginx 文件夹中
+
+```js
+cd /usr/local
+
+mkdir nginx
+
+cd nginx
+
+rz
+
+tar -vxf nginx-1.22.0
+```
+
+### 执行如下命令
+
+```js
+./configure
+
+make
+
+make install
 ```
 
 ### nginx 上传报错
@@ -126,7 +176,7 @@ cd mongodb/bin
 
 ```js
 http {
-  client_max_body_size 10m;
+  client_max_body_size 20m;
 }
 ```
 
@@ -152,7 +202,7 @@ http {
 
 将 upload 资源复制到 server 中：
 
-```
+```js
 cp -r /usr/local/server/src/upload /usr/local/server/
 
 cp -r /usr/local/server/src/upload /usr/local/ 复制到local
@@ -160,7 +210,7 @@ cp -r /usr/local/server/src/upload /usr/local/ 复制到local
 
 将 upload 资源从 server 复制到 src 中：
 
-```
+```js
 cp -r /usr/local/server/upload /usr/local/server/src/
 
 cp -r /usr/local/upload /usr/local/server/src/  从local复制到src
