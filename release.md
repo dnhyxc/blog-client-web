@@ -198,20 +198,57 @@ http {
 
 前端资源部署完成之后，需要重启 nginx 使部署的资源生效。进入 `/usr/local/nginx/sbin` 目录下，执行 `./nginx -s reload` 即可重启项目。此时即可去浏览器中查看资源是否生效了。
 
+### nginx 配置
+
+```conf
+worker_processes  1;
+
+events {
+  worker_connections  1024;
+}
+
+http {
+  include   mime.types;
+  default_type  application/octet-stream;
+  sendfile  on;
+  keepalive_timeout   65;
+  client_max_body_size  20m;  #上传size改为20m，防止文件过大无法上传
+
+  server {
+    listen  80; 监听80端口
+    server_name   43.143.120.87; #服务器公网域名，或者设置为localhost
+
+    location / {
+      root  /usr/local/nginx/html/dist; #设置前端资源包的路径
+      index   index.html  index.htm;  #设置前端资源入口html文件
+      try_files   $uri  $uri/ /index.html;  #解决 browserRouter 页面刷新后出现404
+    }
+
+    location /api/ {  #代理后端接口
+      proxy_set_header  Host  $http_host;
+      proxy_set_header  X-Real-IP $remote_addr;
+      proxy_set_header  REMOTE-HOST $remote_addr;
+      proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass  http:43.143.120.87:9112;
+    }
+  }
+}
+```
+
 ### 复制 upload 资源
 
 将 upload 资源复制到 server 中：
 
 ```js
-cp -r /usr/local/server/src/upload /usr/local/server/
-
-cp -r /usr/local/server/src/upload /usr/local/ 复制到local
+cp -
+  r / usr / local / server / src / upload / usr / local / server / cp -
+  r / usr / local / server / src / upload / usr / local / 复制到local;
 ```
 
 将 upload 资源从 server 复制到 src 中：
 
 ```js
-cp -r /usr/local/server/upload /usr/local/server/src/
-
-cp -r /usr/local/upload /usr/local/server/src/  从local复制到src
+cp -
+  r / usr / local / server / upload / usr / local / server / src / cp -
+  r / usr / local / upload / usr / local / server / src / 从local复制到src;
 ```
