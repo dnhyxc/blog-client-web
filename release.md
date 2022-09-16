@@ -200,6 +200,8 @@ http {
 
 ### nginx 配置
 
+当需要在一台 nginx 服务器上配置多个前端项目时，需要在 `/usr/local/nginx/` 目录下创建一个 `html_admin` 文件夹，同时更改 nginx 中另一个 server 中监听的端口号，具体如下：
+
 ```conf
 worker_processes  1;
 
@@ -224,12 +226,46 @@ http {
       try_files   $uri  $uri/ /index.html;  #解决 browserRouter 页面刷新后出现404
     }
 
-    location /api/ {  #代理后端接口
+    #为前台项目代理服务接口
+    location /api/ {
       proxy_set_header  Host  $http_host;
       proxy_set_header  X-Real-IP $remote_addr;
       proxy_set_header  REMOTE-HOST $remote_addr;
       proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_pass  http:43.143.120.87:9112;
+      proxy_pass  http://43.143.120.87:9112;  #或者也可以设置为: http://localhost:9112;
+    }
+
+    #设置服务器图片资源的代理
+    location /image/ {
+      root  /usr/local/server/src/upload/image;
+      rewrite  ^/usr/local/server/src/upload/(.*) /$1 break;
+      proxy_pass  http://localhost:9112;
+    }
+
+    error_page  500 502 503 504 /50x.html;
+    location = /50x.html {
+      root  html;
+    }
+  }
+
+  #为后台项目代理服务接口
+  server {
+    listen  8090;
+    server_name  localhost;
+
+    location / {
+      root  /usr/local/nginx/html_admin/dist; #设置前端资源包的路径
+      index   index.html  index.htm;  #设置前端资源入口html文件
+      try_files   $uri  $uri/ /index.html;  #解决 browserRouter 页面刷新后出现404
+    }
+
+    #为前台项目代理服务接口
+    location /admin/ {
+      proxy_set_header  Host  $http_host;
+      proxy_set_header  X-Real-IP $remote_addr;
+      proxy_set_header  REMOTE-HOST $remote_addr;
+      proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass  http://43.143.120.87:9112;  #或者也可以设置为: http://localhost:9112;
     }
   }
 }
