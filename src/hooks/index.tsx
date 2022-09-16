@@ -5,6 +5,7 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { error } from '@/utils';
+import { close } from '@/components/Confirm';
 import {
   ArticleDetailParams,
   ScrollEvent,
@@ -424,16 +425,18 @@ export const useDeleteTimelineArticle = ({
 
 // 校验token是否过期的hook
 export const useVerifyToken = () => {
-  const navigate = useNavigate();
-
   useEffect(() => {
     verifyToken();
+
+    let timer: any = null;
+    timer = setTimeout(() => close(), 5000);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   const verifyToken = async () => {
-    const res = normalizeResult<number>(await Service.verify());
-    if (!res.success) {
-      navigate('/login', { replace: true });
-    }
+    normalizeResult<number>(await Service.verify());
   };
 };
