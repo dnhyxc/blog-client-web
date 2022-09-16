@@ -10,7 +10,13 @@ import Header from '@/components/Header';
 import MAlert from '@/components/Alert';
 import Empty from '@/components/Empty';
 import BackTop from '@/components/BackTop';
-import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteTimelineArticle } from '@/hooks';
+import {
+  useLoginStatus,
+  useLikeArticle,
+  useScrollLoad,
+  useDeleteTimelineArticle,
+  useVerifyToken,
+} from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, storage, error } from '@/utils';
@@ -19,8 +25,10 @@ import styles from './index.less';
 
 const TimeLine: React.FC = () => {
   const [timelineList, setTimelineList] = useState<TimelineResult[]>([]);
-  const navigate = useNavigate();
 
+  // 校验token是否过期
+  useVerifyToken();
+  const navigate = useNavigate();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const { onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad({
     scrollStyle: styles.scrollStyle,
@@ -78,7 +86,11 @@ const TimeLine: React.FC = () => {
     <div className={styles.TimeLine}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header>时间轴</Header>
-      <Content className={styles.contentWrap} onScroll={onScroll} scrollbarRef={scrollbarRef}>
+      <Content
+        className={styles.contentWrap}
+        onScroll={onScroll}
+        scrollbarRef={scrollbarRef}
+      >
         <div className={styles.wrap}>
           {timelineList.length > 0 && timelineList[0].articles.length > 0 ? (
             <Timeline className={styles.timelineContent}>
@@ -124,11 +136,13 @@ const TimeLine: React.FC = () => {
               <Empty />
             </div>
           )}
-          {timelineList.length > 0 && <RightBar
-            className={styles.rightbar}
-            showRecommendArticle={!!timelineList.length}
-            scrollRef={scrollRef}
-          />}
+          {timelineList.length > 0 && (
+            <RightBar
+              className={styles.rightbar}
+              showRecommendArticle={!!timelineList.length}
+              scrollRef={scrollRef}
+            />
+          )}
         </div>
       </Content>
       <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />

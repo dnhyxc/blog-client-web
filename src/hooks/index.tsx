@@ -421,3 +421,19 @@ export const useDeleteTimelineArticle = ({
 
   return { deleteTimeline };
 };
+
+// 校验token是否过期的hook
+export const useVerifyToken = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    verifyToken();
+  }, []);
+
+  const verifyToken = async () => {
+    const res = normalizeResult<number>(await Service.verify());
+    if (!res.success) {
+      navigate('/login', { replace: true });
+    }
+  };
+};

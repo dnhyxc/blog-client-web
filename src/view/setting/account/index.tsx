@@ -4,18 +4,20 @@ import { Button, Input, Modal } from 'antd';
 import Content from '@/components/Content';
 import MDropdown from '@/components/MDropdown';
 import useStore from '@/store';
-import { useHtmlWidth } from '@/hooks';
+import { useHtmlWidth, useVerifyToken } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, encrypt, getSetItemConfig, error, success } from '@/utils';
 import { UPDATE_INFO_API_PATH } from '@/constant';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Account: React.FC<IProps> = () => {
   const [selectItem, setSelectItem] = useState<string>('');
 
+  // 校验token是否过期
+  useVerifyToken();
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const cleararticledebugger = search.get('cleararticledebugger');
@@ -117,14 +119,14 @@ const Account: React.FC<IProps> = () => {
                   {(selectItem !== i.label ||
                     selectItem === 'auth' ||
                     selectItem === 'logout') && (
-                      <Button
-                        type="link"
-                        className={styles.settingBtn}
-                        onClick={() => onSetVisible(i.label)}
-                      >
-                        {i.action}
-                      </Button>
-                    )}
+                    <Button
+                      type="link"
+                      className={styles.settingBtn}
+                      onClick={() => onSetVisible(i.label)}
+                    >
+                      {i.action}
+                    </Button>
+                  )}
                   {selectItem === i.label &&
                     selectItem !== 'auth' &&
                     selectItem !== 'logout' && (

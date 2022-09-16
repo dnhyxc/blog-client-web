@@ -5,7 +5,7 @@ import { observer } from 'mobx-react';
 import useStore from '@/store';
 import Header from '@/components/Header';
 import TuiEditor from '@/components/TuiEditor';
-import { useGetArticleDetail, useDebounce } from '@/hooks';
+import { useGetArticleDetail, useDebounce, useVerifyToken } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, info, success, error } from '@/utils';
 import { ARTICLE_DRAFT } from '@/constant';
@@ -27,6 +27,8 @@ const CreateArticle: React.FC<IProps> = () => {
   const [draftArticleId, setDraftArticleId] = useState<string>('');
   const [deleteId, setDeleteId] = useState<string>('');
 
+  // 校验token是否过期
+  useVerifyToken();
   const {
     userInfoStore: { getUserInfo },
   } = useStore();

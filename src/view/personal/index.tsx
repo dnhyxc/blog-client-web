@@ -26,7 +26,13 @@ import {
   ABOUT_ME_API_PATH,
   HEAD_UEL,
 } from '@/constant';
-import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
+import {
+  useLoginStatus,
+  useLikeArticle,
+  useScrollLoad,
+  useDeleteArticle,
+  useVerifyToken,
+} from '@/hooks';
 import { ArticleListResult, ArticleItem, UserInfoParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -44,6 +50,8 @@ const Personal = () => {
     userId: '',
   });
 
+  // 校验token是否过期
+  useVerifyToken();
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const authorId: string | null = search.get('id');

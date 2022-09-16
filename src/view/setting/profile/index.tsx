@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
 import useStore from '@/store';
-import { useLoginStatus, useHtmlWidth } from '@/hooks';
+import { useLoginStatus, useHtmlWidth, useVerifyToken } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, storage, success, error, info } from '@/utils';
 import MAlert from '@/components/Alert';
@@ -20,6 +20,8 @@ const Profile: React.FC = () => {
   const [filePath, setFilePath] = useState<string>(HEAD_UEL);
   const [mainCoverPath, setMainCoverPath] = useState<string>(MAIN_COVER);
 
+  // 校验token是否过期
+  useVerifyToken();
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const { userInfoStore } = useStore();
