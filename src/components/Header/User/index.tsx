@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Dropdown, Menu } from 'antd';
 import useStore from '@/store';
 import Image from '@/components/Image';
@@ -8,20 +8,25 @@ import { HEAD_UEL, USER_MENU } from '@/constant';
 import { storage } from '@/utils';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const User: React.FC<IProps> = () => {
   const navigate = useNavigate();
+  const { pathname, search } = useLocation();
   const {
     userInfoStore: { getUserInfo },
+    commonStore,
   } = useStore();
 
   const onJump = (path: string) => {
     if (path === '/login') {
+      commonStore.setAuth({ redirectUrl: `${pathname}${search}` });
       storage.locRemoveItem('token');
       storage.locRemoveItem('userInfo');
+      navigate(`${path}?verify=${pathname.slice(1)}`);
+    } else {
+      navigate(path);
     }
-    navigate(path);
   };
 
   const menu = (
