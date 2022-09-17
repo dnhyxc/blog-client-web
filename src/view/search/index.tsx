@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
-import { Input, Radio, RadioChangeEvent } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Input } from 'antd';
+import classname from 'classname';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import Card from '@/components/Card';
@@ -18,6 +19,7 @@ import {
 import { PAGESIZE, SEARCH_TYPE } from '@/constant';
 import {
   ArticleListResult,
+  SearchTypeParams,
   // ArticleItem,
   // TimelineResult,
   // UserInfoParams,
@@ -28,8 +30,9 @@ interface IProps { }
 
 const Search: React.FC<IProps> = () => {
   const [showMore, setShowMore] = useState<boolean>(false);
-  const [radioValue, setRadioValue] = useState<string>('');
+  const [filterValue, setFilterValue] = useState<string[]>([]);
   const [loading] = useState<boolean>(false);
+  const [conditions, setConditions] = useState<SearchTypeParams[]>([]);
   const [articleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
@@ -54,16 +57,32 @@ const Search: React.FC<IProps> = () => {
     setShowMore(!showMore);
   };
 
-  const conditions = useMemo(() => {
-    if (showMore || htmlWidth > 960) {
-      return SEARCH_TYPE;
+  useEffect(() => {
+    if (showMore) {
+      setConditions(SEARCH_TYPE);
+      return;
     }
-    return SEARCH_TYPE.slice(0, 2);
+    if (htmlWidth > 960) {
+      setConditions(SEARCH_TYPE.slice(0, 5));
+      return;
+    }
+    const filters = SEARCH_TYPE.slice(0, 2);
+    setConditions(filters);
   }, [showMore, htmlWidth]);
 
-  const onRadioChange = (e: RadioChangeEvent) => {
-    console.log(e.target.value, 'value');
-    setRadioValue(e.target.value);
+  const menageConditions = () => {
+    setShowMore(!showMore);
+  };
+
+  const onSelectChange = (value: string) => {
+    const filter = filterValue.find((i) => i === value);
+    if (filter) {
+      const values = filterValue.filter((i) => i !== value);
+      setFilterValue(values);
+    } else {
+      filterValue.push(value);
+      setFilterValue([...filterValue]);
+    }
   };
 
   return (
@@ -94,15 +113,25 @@ const Search: React.FC<IProps> = () => {
               />
             </div>
             <div className={styles.searchTagList}>
-              <Radio.Group buttonStyle="solid" className={styles.radioGroup} onChange={onRadioChange}>
+              {htmlWidth > 960 && (
+                <div className={styles.label} onClick={menageConditions}>
+                  <MIcons
+                    className={styles.downIcon}
+                    name={!showMore ? 'icon-xiajiantou' : 'icon-shangjiantou'}
+                    onClick={onShowMore}
+                  />
+                  <span className={styles.viewMoreInfo}>更多选项：</span>
+                </div>
+              )}
+              <div className={styles.radioGroup}>
                 {conditions.map((i) => {
                   return (
-                    <Radio.Button className={styles.tag} key={i.key} value={radioValue}>
+                    <div className={classname(styles.tag, filterValue.includes(i.key) && styles.active)} key={i.key} onClick={() => onSelectChange(i.key)}>
                       {i.label}
-                    </Radio.Button>
+                    </div>
                   );
                 })}
-              </Radio.Group>
+              </div>
             </div>
             {htmlWidth < 960 && (
               <div onClick={onShowMore} className={styles.showMore}>

@@ -77,6 +77,7 @@
 
         .searchInp {
           width: 60%;
+          min-width: 705px;
           max-width: 960px;
 
           :global {
@@ -107,18 +108,38 @@
         display: flex;
         justify-content: center;
 
+        .label {
+          display: flex;
+          align-items: center;
+          margin-right: 5px;
+          text-align: center;
+          background-color: #fff;
+          padding-left: 8px;
+          cursor: pointer;
+
+          .viewMoreInfo {
+            margin-left: 5px;
+            color: @font-4;
+          }
+        }
+
         .radioGroup {
+          display: flex;
+          flex-wrap: wrap;
           width: 100%;
-          max-width: 500px;
+          max-width: 600px;
         }
 
         .tag {
           width: calc(20% - 4px);
           margin-top: 5px;
           margin-right: 5px;
+          padding: 5px 0;
           text-align: center;
           border: none;
           border-radius: 3px;
+          background-color: #fff;
+          cursor: pointer;
 
           &:not(:first-child)::before {
             background-color: transparent !important;
@@ -136,6 +157,11 @@
           &:nth-child(5n) {
             margin-right: 0;
           }
+        }
+
+        .active {
+          background-color: @menu-active;
+          color: #fff;
         }
       }
     }
@@ -234,6 +260,10 @@
 
             &:nth-child(5n) {
               margin-right: 5px;
+            }
+
+            &:nth-child(-n + 5) {
+              margin-top: 5px;
             }
 
             &:nth-child(2n) {

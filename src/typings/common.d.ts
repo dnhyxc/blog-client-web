@@ -37,6 +37,10 @@ export interface UserInfoParams {
   mainCover?: string;
   articleTotal?: string;
 }
+export interface ResetPasswordParams {
+  username: string;
+  password: string;
+}
 
 export interface UpdateData {
   id: string;

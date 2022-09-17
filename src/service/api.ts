@@ -11,6 +11,8 @@ const UPDATE_INFO = '/api/updateInfo';
 const GET_USER_INFO = '/api/getUserInfo';
 // 更改密码
 const UPDATE_PASSWORD = '/api/updatePassword';
+// 重置密码
+const RESET_PASSWORD = '/api/resetPassword';
 
 // 创建文章
 const CREATE_ARTICLE = '/api/createArticle';
@@ -110,6 +112,7 @@ export {
   GET_LIKE_ARTICLE_LIST,
   GET_USER_INFO,
   UPDATE_PASSWORD,
+  RESET_PASSWORD,
   GET_ARTICLE_BY_RANDOM,
   GET_AUTHOR_ARTICLE_LIST,
   GET_AUTHOR_LIKE_ARTICLES,

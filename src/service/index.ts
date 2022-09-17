@@ -24,7 +24,15 @@ import {
 } from './article';
 import { uploadFile } from './upload';
 import { getMyArticleList, getAuthorArticleList, getAuthorTimeline } from './userInfo';
-import { register, login, updateInfo, getUserInfo, updatePassword, verify } from './user';
+import {
+  register,
+  login,
+  updateInfo,
+  getUserInfo,
+  updatePassword,
+  resetPassword,
+  verify,
+} from './user';
 
 export {
   register,
@@ -53,6 +61,7 @@ export {
   getMyArticleList,
   uploadFile,
   updatePassword,
+  resetPassword,
   getArticleByRandom,
   getAuthorArticleList,
   getAuthorTimeline,

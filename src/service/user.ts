@@ -1,5 +1,10 @@
 import { post, put } from '@/utils/request';
-import { UserInfoParams, LoginParams, GetUserInfoParams } from '@/typings/common';
+import {
+  UserInfoParams,
+  LoginParams,
+  GetUserInfoParams,
+  ResetPasswordParams,
+} from '@/typings/common';
 import * as API from './api';
 
 export async function register(params: LoginParams) {
@@ -19,6 +24,11 @@ export async function updateInfo(params: UserInfoParams, path: string) {
 
 export async function updatePassword(params: UserInfoParams) {
   const res = await put(API.UPDATE_PASSWORD, params);
+  return res;
+}
+
+export async function resetPassword(params: ResetPasswordParams) {
+  const res = await put(API.RESET_PASSWORD, params);
   return res;
 }
 

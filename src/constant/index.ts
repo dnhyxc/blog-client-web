@@ -4,8 +4,9 @@ import HEAD_UEL from '@/assets/images/header.jpg';
 import CARD_URL from '@/assets/images/card.png';
 import EMPTY_URL from '@/assets/images/empty.jpg';
 import MAIN_COVER from '@/assets/images/mainCover.png';
+import CYWL_URL from '@/assets/images/cywl.jpg';
 
-export { ABOUTME, HEAD_UEL, CARD_URL, EMPTY_URL, MAIN_COVER };
+export { ABOUTME, HEAD_UEL, CARD_URL, EMPTY_URL, MAIN_COVER, CYWL_URL };
 
 // 每页数量
 export const PAGESIZE = 20;
