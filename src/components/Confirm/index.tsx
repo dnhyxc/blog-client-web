@@ -25,7 +25,9 @@ class Confirm {
 
   // 调用unmount防止出现重复createRoot的报错
   close = () => {
-    this.root.unmount();
+    if (this.root) {
+      this.root.unmount();
+    }
   };
 }
 

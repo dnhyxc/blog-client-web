@@ -425,6 +425,12 @@ export const useDeleteTimelineArticle = ({
 
 // 校验token是否过期的hook
 export const useVerifyToken = () => {
+  const { commonStore } = useStore();
+
+  const navigate = useNavigate();
+
+  const { pathname, search } = useLocation();
+
   useEffect(() => {
     verifyToken();
 
@@ -437,6 +443,10 @@ export const useVerifyToken = () => {
   }, []);
 
   const verifyToken = async () => {
-    normalizeResult<number>(await Service.verify());
+    const res = normalizeResult<number>(await Service.verify());
+    if (!res.success) {
+      commonStore.setAuth({ redirectUrl: `${pathname}${search}` });
+      navigate(`/login?verify=${pathname.slice(1)}`);
+    }
   };
 };

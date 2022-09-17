@@ -6,11 +6,12 @@
  * @FilePath: \src\view\login\index.tsx
  */
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Form, Input, Checkbox } from 'antd';
 import useStore from '@/store';
 import { register, login, verify } from '@/service';
 import { normalizeResult, useCookies, encrypt, decrypt, success, error } from '@/utils';
+import { close } from '@/components/Confirm';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
@@ -20,10 +21,23 @@ const Login = () => {
   const navigate = useNavigate();
   const { userInfoStore, commonStore } = useStore();
   const [form] = Form.useForm();
+  const [search] = useSearchParams();
+  const verifyPath = search.get('verify');
 
   useEffect(() => {
-    verifyToken();
+    let timer: any = null;
+    timer = setTimeout(() => close(), 3000);
+
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
+
+  useEffect(() => {
+    if (!verifyPath) {
+      verifyToken();
+    }
+  }, [verifyPath]);
 
   // 校验token是否过期
   const verifyToken = async () => {

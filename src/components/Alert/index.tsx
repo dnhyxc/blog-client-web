@@ -11,8 +11,8 @@ const MAlert: React.FC<IProps> = ({ onClick, onClose }) => {
   return (
     <Alert
       message={
-        <div>
-          您尚未登录，暂时无权操作，请前往
+        <div className={styles.alertInfo}>
+          尚未登录，请前往
           <Button
             type="link"
             className={styles.toLogin}
