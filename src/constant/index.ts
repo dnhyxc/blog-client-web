@@ -283,13 +283,13 @@ export const ARTICLE_TAG = [
 
 export const SEARCH_TYPE = [
   {
-    label: '文章标题',
-    type: 'title',
+    label: '全部',
+    type: 'all',
     key: '1',
   },
   {
-    label: '作者名称',
-    type: 'authorName',
+    label: '文章标题',
+    type: 'title',
     key: '2',
   },
   {
@@ -308,28 +308,28 @@ export const SEARCH_TYPE = [
     key: '5',
   },
   {
-    label: '我点赞的',
-    type: 'isLike',
+    label: '文章内容',
+    type: 'content',
     key: '6',
   },
   {
-    label: '发表时间',
-    type: 'createTime',
+    label: '我点赞的',
+    type: 'isLike',
     key: '7',
+  },
+  {
+    label: '作者名称',
+    type: 'authorName',
+    key: '8',
   },
   {
     label: '最多评论',
     type: 'replyCount',
-    key: '8',
+    key: '9',
   },
   {
     label: '最多点赞',
     type: 'likeCount',
-    key: '9',
-  },
-  {
-    label: '文章id',
-    type: 'id',
     key: '10',
   },
 ];

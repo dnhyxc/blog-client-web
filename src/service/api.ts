@@ -40,6 +40,8 @@ const GET_DRAFT_LIST = '/api/getDraftList';
 const GET_DRAFT_BY_ID = '/api/getDraftById';
 // 获取草稿详情
 const DELETE_DRAFT = '/api/deleteDraft';
+// 高级搜索
+const ADVANCED_SEARCH = '/api/advancedSearch';
 
 // 评论
 const COMMENTS = '/api/comments';
@@ -105,6 +107,7 @@ export {
   GET_DRAFT_LIST,
   GET_DRAFT_BY_ID,
   DELETE_DRAFT,
+  ADVANCED_SEARCH,
   GET_CLASSIFY_LIST,
   GET_TAG_LIST,
   GET_TIMELINE_LIST,

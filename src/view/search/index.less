@@ -14,6 +14,7 @@
   flex-direction: column;
   justify-content: flex-start;
   padding-top: 60px;
+  padding-bottom: 10px;
   height: 100%;
   background-color: @background;
   overflow: hidden;
@@ -57,9 +58,10 @@
     .searchWrap {
       display: flex;
       flex-direction: column;
+      align-items: center;
       overflow: hidden;
       height: 100%;
-      padding: 0 5px 10px 5px;
+      padding: 0 0 10px 0;
 
       .tagSelect {
         min-width: 118px;
@@ -73,12 +75,13 @@
       }
 
       .search {
+        width: 100%;
         margin-bottom: 10px;
 
         .searchInp {
-          width: 60%;
+          width: 100%;
           min-width: 705px;
-          max-width: 705px;
+          max-width: 960px;
 
           :global {
             .ant-input-search-button {
@@ -97,7 +100,7 @@
             }
 
             .ant-btn {
-              width: 95px;
+              width: 151px;
               height: 50px;
             }
           }
@@ -107,6 +110,8 @@
       .searchTagList {
         display: flex;
         justify-content: center;
+        max-width: 960px;
+        width: 100%;
 
         .label {
           display: flex;
@@ -115,6 +120,8 @@
           text-align: center;
           background-color: #fff;
           padding-left: 8px;
+          min-width: 100px;
+          border-radius: 5px;
           cursor: pointer;
 
           .viewMoreInfo {
@@ -127,7 +134,7 @@
           display: flex;
           flex-wrap: wrap;
           width: 100%;
-          max-width: 600px;
+          max-width: 860px;
         }
 
         .tag {
@@ -171,7 +178,6 @@
       justify-content: center;
       align-items: flex-start;
       overflow: hidden;
-      padding-bottom: 10px;
       height: 100%;
 
       .wrapClass {
@@ -212,7 +218,19 @@
 
 @media screen and (max-width: 960px) {
   .Search {
+    padding-top: 50px;
+    padding-bottom: 0;
     max-width: 960px;
+
+    .containerClassName {
+      height: calc(100vh - 50px);
+    }
+
+    .wrapClassName {
+      padding: 6px;
+      width: 100%;
+      height: calc(100% - 50px);
+    }
 
     .wrap {
       padding: 0;
@@ -248,8 +266,12 @@
         }
 
         .searchTagList {
+          .radioGroup {
+            max-width: 960px;
+          }
+
           .tag {
-            width: calc(50% - 4px);
+            width: calc(50% - 3px);
 
             &:nth-child(-n + 4) {
               margin-top: 5px;
@@ -283,13 +305,14 @@
           .viewMoreInfo {
             margin-left: 10px;
             color: @font-4;
+            cursor: pointer;
           }
         }
       }
 
       .content {
         width: 100%;
-        padding: 0 6px 50px;
+        padding: 0 0 50px;
 
         .tabList {
           .tab {

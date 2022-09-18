@@ -65,6 +65,15 @@ export interface SearchArticleParams {
   userId?: string;
 }
 
+// 高级搜索参数
+export interface AdvancedSearchParams {
+  keyword: string;
+  pageNo: number;
+  pageSize: number;
+  userId: string;
+  filterValues?: string[];
+}
+
 export interface CreateResult {
   id: number;
 }

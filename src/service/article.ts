@@ -6,6 +6,7 @@ import {
   GetArticleListParams,
   CommentParams,
   AnotherParams,
+  AdvancedSearchParams,
 } from '@/typings/common';
 
 export async function createArticle(params: CreateArticleParams) {
@@ -20,6 +21,11 @@ export async function updateArticle(params: CreateArticleParams) {
 
 export async function searchArticle(params: SearchArticleParams) {
   const res = await post(API.SEARCH_ARTICLE, params);
+  return res;
+}
+
+export async function advancedSearch(params: AdvancedSearchParams) {
+  const res = await post(API.ADVANCED_SEARCH, params);
   return res;
 }
 

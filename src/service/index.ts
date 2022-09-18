@@ -21,6 +21,7 @@ import {
   delAllArticle,
   getPrevArticle,
   getNextArticle,
+  advancedSearch,
 } from './article';
 import { uploadFile } from './upload';
 import { getMyArticleList, getAuthorArticleList, getAuthorTimeline } from './userInfo';
@@ -68,4 +69,5 @@ export {
   getPrevArticle,
   getNextArticle,
   verify,
+  advancedSearch,
 };

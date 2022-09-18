@@ -8,6 +8,7 @@
   flex-direction: column;
   justify-content: flex-start;
   padding-top: 60px;
+  padding-bottom: 10px;
   height: 100%;
   background-color: @background;
   overflow: hidden;
@@ -167,7 +168,6 @@
       justify-content: center;
       align-items: flex-start;
       overflow: hidden;
-      padding-bottom: 10px;
       height: 100%;
 
       .tabList {
@@ -231,6 +231,18 @@
 @media screen and (max-width: 960px) {
   .AuthorContainer {
     max-width: 960px;
+    padding-top: 50px;
+    padding-bottom: 0;
+
+    .containerClassName {
+      height: calc(100vh - 50px);
+    }
+
+    .wrapClassName {
+      padding: 6px;
+      width: 100%;
+      height: calc(100% - 50px);
+    }
 
     .herderWrap {
       width: 100%;
@@ -242,7 +254,6 @@
 
       .content {
         width: 100%;
-        padding-bottom: 50px;
 
         .tabList {
           .tab {

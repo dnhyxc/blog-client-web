@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Input } from 'antd';
 import classname from 'classname';
 import Content from '@/components/Content';
@@ -10,52 +11,50 @@ import BackTop from '@/components/BackTop';
 import Footer from '@/components/Footer';
 import {
   useLoginStatus,
-  // useLikeArticle,
+  useLikeArticle,
   useScrollLoad,
-  // useDeleteArticle,
-  // useDeleteTimelineArticle,
+  useDeleteArticle,
   useHtmlWidth,
 } from '@/hooks';
+import useStore from '@/store';
+import * as Service from '@/service';
 import { PAGESIZE, SEARCH_TYPE } from '@/constant';
+import { info, error, normalizeResult } from '@/utils';
 import {
   ArticleListResult,
   SearchTypeParams,
-  // ArticleItem,
+  ArticleItem,
   // TimelineResult,
   // UserInfoParams,
 } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Search: React.FC<IProps> = () => {
   const [showMore, setShowMore] = useState<boolean>(false);
-  const [filterValue, setFilterValue] = useState<string[]>([]);
-  const [loading] = useState<boolean>(false);
+  const [filterValues, setFilterValues] = useState<string[]>(['all']);
+  const [loading, setLoading] = useState<boolean>(false);
   const [conditions, setConditions] = useState<SearchTypeParams[]>([]);
-  const [articleList] = useState<ArticleListResult>({
+  const [keyword, setKeyWord] = useState<string>('');
+  const [articleList, setArticleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
     count: 0,
   });
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [articleList, setArticleList] = useState<ArticleListResult>({
-  //   list: [],
-  //   total: 0,
-  //   count: 0,
-  // });
-  const { onScroll, scrollbarRef, scrollTop } = useScrollLoad({
+
+  const listRef = useRef<ArticleItem[]>([]);
+  const { pageNo, setPageNo, onScroll, scrollbarRef, scrollTop } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
   });
-  const { showAlert, toLogin, onCloseAlert } = useLoginStatus();
+  const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const { htmlWidth } = useHtmlWidth();
-
-  // 展示更多条件
-  const onShowMore = () => {
-    setShowMore(!showMore);
-  };
+  const {
+    userInfoStore: { getUserInfo },
+  } = useStore();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (showMore) {
@@ -70,19 +69,117 @@ const Search: React.FC<IProps> = () => {
     setConditions(filters);
   }, [showMore, htmlWidth]);
 
+  useEffect(() => {
+    if (keyword) {
+      advancedSearch();
+    }
+  }, [pageNo, keyword, filterValues]);
+
+  // 高级搜索接口
+  const advancedSearch = async () => {
+    const params = {
+      keyword,
+      userId: getUserInfo?.userId,
+      pageNo,
+      pageSize: PAGESIZE,
+      filterList: filterValues,
+    };
+    setLoading(true);
+    const res = normalizeResult<ArticleListResult>(await Service.advancedSearch(params));
+    setLoading(false);
+    if (res.success) {
+      const { total, list } = res.data;
+      // 使用ref暂存list，防止滚动加载时，list添加错乱问题
+      listRef.current = [...listRef.current, ...list];
+      setArticleList({
+        list: listRef.current,
+        total,
+        count: list.length,
+      });
+    } else {
+      error(res.message);
+    }
+  };
+
+  // 搜索
+  const onSearch = async (value: string) => {
+    if (!value) {
+      info('请先输入搜索内容');
+      setPageNo(1);
+      listRef.current = [];
+      setArticleList({
+        list: listRef.current,
+        total: 0,
+        count: 0,
+      });
+      return;
+    }
+    setKeyWord(value);
+  };
+
+  // 展示更多条件
+  const onShowMore = () => {
+    setShowMore(!showMore);
+  };
+
   const menageConditions = () => {
     setShowMore(!showMore);
   };
 
   const onSelectChange = (value: string) => {
-    const filter = filterValue.find((i) => i === value);
-    if (filter) {
-      const values = filterValue.filter((i) => i !== value);
-      setFilterValue(values);
+    setPageNo(1);
+    listRef.current = [];
+    setArticleList({
+      list: listRef.current,
+      total: 0,
+      count: 0,
+    });
+
+    if (value === 'all') {
+      setFilterValues(['all']);
     } else {
-      filterValue.push(value);
-      setFilterValue([...filterValue]);
+      const noAll = filterValues.filter((i) => i !== 'all');
+      const filter = noAll.find((i) => i === value);
+      if (filter) {
+        const values = noAll.filter((i) => i !== value);
+        if (values?.length) {
+          setFilterValues(values);
+        } else {
+          setFilterValues(['all']);
+        }
+      } else {
+        noAll.push(value);
+        setFilterValues([...noAll]);
+      }
     }
+  };
+
+  // 文章点赞
+  const { likeArticle } = useLikeArticle({
+    setAlertStatus,
+    articleList,
+    updateList: setArticleList,
+  });
+
+  // 删除文章
+  const { deleteArticle } = useDeleteArticle({
+    articleList,
+    setArticleList,
+    getArticleList: advancedSearch,
+    setAlertStatus,
+  });
+
+  const toDetail = (id: string, needScroll: boolean): void => {
+    if (needScroll) {
+      navigate(`/detail/${id}?needScroll=1`);
+    } else {
+      navigate(`/detail/${id}`);
+    }
+  };
+
+  // 编辑文章
+  const onEditArticle = (id: string) => {
+    navigate(`/create?id=${id}`);
   };
 
   return (
@@ -110,6 +207,7 @@ const Search: React.FC<IProps> = () => {
                 enterButton="搜索"
                 size="large"
                 className={styles.searchInp}
+                onSearch={onSearch}
               />
             </div>
             <div className={styles.searchTagList}>
@@ -126,7 +224,14 @@ const Search: React.FC<IProps> = () => {
               <div className={styles.radioGroup}>
                 {conditions.map((i) => {
                   return (
-                    <div className={classname(styles.tag, filterValue.includes(i.key) && styles.active)} key={i.key} onClick={() => onSelectChange(i.key)}>
+                    <div
+                      className={classname(
+                        styles.tag,
+                        filterValues.includes(i.type) && styles.active
+                      )}
+                      key={i.key}
+                      onClick={() => onSelectChange(i.type)}
+                    >
                       {i.label}
                     </div>
                   );
@@ -146,15 +251,15 @@ const Search: React.FC<IProps> = () => {
           </div>
           <div className={styles.content}>
             <Card
-              list={[]}
+              list={articleList.list}
               wrapClass={styles.wrapClass}
-              // toDetail={toDetail}
-              // likeArticle={likeArticle}
-              // deleteArticle={deleteArticle}
-              // onEditArticle={onEditArticle}
-              // showInfo={articleList.list.length === articleList.total}
+              toDetail={toDetail}
+              likeArticle={likeArticle}
+              deleteArticle={deleteArticle}
+              onEditArticle={onEditArticle}
+              showInfo={articleList.list.length === articleList.total}
               loadText="地主家也没余粮了"
-            // loading={loading}
+              loading={loading}
             />
           </div>
         </div>
