@@ -103,18 +103,18 @@ const Search: React.FC<IProps> = () => {
 
   // 搜索
   const onSearch = async (value: string) => {
-    if (!value) {
+    setPageNo(1);
+    listRef.current = [];
+    setArticleList({
+      list: listRef.current,
+      total: 0,
+      count: 0,
+    });
+    if (value) {
+      setKeyWord(value);
+    } else {
       info('请先输入搜索内容');
-      setPageNo(1);
-      listRef.current = [];
-      setArticleList({
-        list: listRef.current,
-        total: 0,
-        count: 0,
-      });
-      return;
     }
-    setKeyWord(value);
   };
 
   // 展示更多条件
