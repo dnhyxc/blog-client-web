@@ -8,6 +8,7 @@ import Card from '@/components/Card';
 import MAlert from '@/components/Alert';
 import BackTop from '@/components/BackTop';
 import MSegmented from '@/components/Segmented';
+import MIcons from '@/components/Icons';
 import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -28,12 +29,14 @@ const Classify: React.FC = () => {
 
   const navigate = useNavigate();
   const listRef = useRef<ArticleItem[]>([]);
-  const { pageNo, setPageNo, onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad({
-    data: classifyList,
-    loading,
-    pageSize: PAGESIZE,
-    scrollStyle: styles.scrollStyle,
-  });
+  const { pageNo, setPageNo, onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad(
+    {
+      data: classifyList,
+      loading,
+      pageSize: PAGESIZE,
+      scrollStyle: styles.scrollStyle,
+    }
+  );
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
@@ -121,11 +124,27 @@ const Classify: React.FC = () => {
     setHeight(height);
   };
 
+  // 高级搜索
+  const toSearch = () => {
+    navigate('/search');
+  };
+
+  // 渲染右侧搜索
+  const rightNode = () => (
+    <div className={styles.searchWrap}>
+      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
+    </div>
+  );
+
   return (
     <div className={styles.Classify}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header>文章分类</Header>
-      <Content className={styles.contentWrap} onScroll={onScroll} scrollbarRef={scrollbarRef}>
+      <Header right={rightNode()}>文章分类</Header>
+      <Content
+        className={styles.contentWrap}
+        onScroll={onScroll}
+        scrollbarRef={scrollbarRef}
+      >
         <div className={classname(styles.content, styles.contentPadding)}>
           <div className={styles.filterList}>
             <div className={styles.segmentedWrap}>

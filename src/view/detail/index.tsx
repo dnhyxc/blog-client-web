@@ -14,6 +14,7 @@ import Preview from '@/components/Preview';
 import Header from '@/components/Header';
 import Image from '@/components/Image';
 import Footer from '@/components/Footer';
+import MIcons from '@/components/Icons';
 import { HEAD_UEL, CARD_URL } from '@/constant';
 import RightBar from '@/components/RightBar';
 import Toc from '@/components/ArticleToc';
@@ -80,6 +81,18 @@ const ArticleDetail: React.FC = () => {
     );
   };
 
+  // 高级搜索
+  const toSearch = () => {
+    navigate('/search');
+  };
+
+  // 渲染右侧搜索
+  const rightNode = () => (
+    <div className={styles.searchWrap}>
+      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
+    </div>
+  );
+
   return (
     <Spin spinning={loading} className={styles.spinWrap} tip="正在卖力加载中...">
       <div
@@ -89,7 +102,7 @@ const ArticleDetail: React.FC = () => {
         )}
       >
         <div className={styles.headerWrap}>
-          <Header needLeft excludesWidth>
+          <Header needLeft excludesWidth right={rightNode()}>
             <div className={styles.headerContent}>
               <div>文章详情</div>
             </div>

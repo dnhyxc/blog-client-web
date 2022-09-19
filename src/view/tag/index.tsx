@@ -7,6 +7,7 @@ import { useGetBodyWidth } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error } from '@/utils';
 import WordList from '@/components/WordList';
+import MIcons from '@/components/Icons';
 import { TagResult } from '@/typings/common';
 import styles from './index.less';
 
@@ -32,9 +33,21 @@ const Tag: React.FC = () => {
     navigate(`/tag/list?tagName=${name}`);
   };
 
+  // 高级搜索
+  const toSearch = () => {
+    navigate('/search');
+  };
+
+  // 渲染右侧搜索
+  const rightNode = () => (
+    <div className={styles.searchWrap}>
+      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
+    </div>
+  );
+
   return (
     <div className={styles.Tag}>
-      <Header>文章标签</Header>
+      <Header right={rightNode()}>文章标签</Header>
       <Content>
         <div className={styles.wrap}>
           {tagList.length > 0 && bodyWidth > 960 ? (

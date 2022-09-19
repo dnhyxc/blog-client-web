@@ -7,6 +7,7 @@
  */
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'antd';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import RightBar from '@/components/RightBar';
@@ -15,7 +16,13 @@ import MIcons from '@/components/Icons';
 import MAlert from '@/components/Alert';
 import MSearch from '@/components/MSearch';
 import BackTop from '@/components/BackTop';
-import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
+import {
+  useLoginStatus,
+  useLikeArticle,
+  useScrollLoad,
+  useDeleteArticle,
+  useHtmlWidth,
+} from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { PAGESIZE } from '@/constant';
@@ -23,7 +30,7 @@ import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -44,13 +51,16 @@ const Home: React.FC<IProps> = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const { htmlWidth } = useHtmlWidth();
   // scrollRef：用户设置rightbar的吸顶效果，scrollbarRef：scrollbar 滚动到顶部，scrollTop：回到顶部
-  const { pageNo, setPageNo, onScroll, scrollRef, scrollbarRef, scrollTop } = useScrollLoad({
-    data: articleList,
-    loading,
-    pageSize: PAGESIZE,
-    scrollStyle: styles.scrollStyle,
-  });
+  const { pageNo, setPageNo, onScroll, scrollRef, scrollbarRef, scrollTop } = useScrollLoad(
+    {
+      data: articleList,
+      loading,
+      pageSize: PAGESIZE,
+      scrollStyle: styles.scrollStyle,
+    }
+  );
 
   useEffect(() => {
     storage.locRemoveItem('params');
@@ -180,24 +190,38 @@ const Home: React.FC<IProps> = () => {
     setShowSearch(false);
   };
 
+  // 高级搜索
+  const toSearch = () => {
+    navigate('/search');
+  };
+
   // 渲染右侧搜索
   const rightNode = () => (
-    <>
-      {!showSearch && (
-        <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={onShowSearch} />
+    <div className={styles.searchWrap}>
+      <div>
+        {!showSearch && (
+          <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={onShowSearch} />
+        )}
+        {showSearch && <MSearch inputRef={inputRef} onSearch={onSearch} onBlur={onBlur} />}
+      </div>
+      {htmlWidth > 960 && (
+        <Button type="link" className={styles.toSearch} onClick={toSearch}>
+          高级搜索
+        </Button>
       )}
-      {showSearch && <MSearch inputRef={inputRef} onSearch={onSearch} onBlur={onBlur} />}
-    </>
+    </div>
   );
 
   return (
     <div className={styles.container}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header right={rightNode()}>
-        文章列表
-      </Header>
+      <Header right={rightNode()}>文章列表</Header>
       {articleList && (
-        <Content className={styles.contentWrap} onScroll={onScroll} scrollbarRef={scrollbarRef}>
+        <Content
+          className={styles.contentWrap}
+          onScroll={onScroll}
+          scrollbarRef={scrollbarRef}
+        >
           <div className={styles.content}>
             <Card
               list={articleList.list}

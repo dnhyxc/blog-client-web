@@ -10,6 +10,7 @@ import Header from '@/components/Header';
 import MAlert from '@/components/Alert';
 import Empty from '@/components/Empty';
 import BackTop from '@/components/BackTop';
+import MIcons from '@/components/Icons';
 import {
   useLoginStatus,
   useLikeArticle,
@@ -82,10 +83,22 @@ const TimeLine: React.FC = () => {
     }
   };
 
+  // 高级搜索
+  const toSearch = () => {
+    navigate('/search');
+  };
+
+  // 渲染右侧搜索
+  const rightNode = () => (
+    <div className={styles.searchWrap}>
+      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
+    </div>
+  );
+
   return (
     <div className={styles.TimeLine}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header>时间轴</Header>
+      <Header right={rightNode()}>时间轴</Header>
       <Content
         className={styles.contentWrap}
         onScroll={onScroll}

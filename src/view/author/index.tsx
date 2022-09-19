@@ -193,12 +193,24 @@ const Author: React.FC<IProps> = () => {
     setShowMoreInfo(!showMoreInfo);
   };
 
+  // 高级搜索
+  const toSearch = () => {
+    navigate('/search');
+  };
+
+  // 渲染右侧搜索
+  const rightNode = () => (
+    <div className={styles.searchWrap}>
+      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
+    </div>
+  );
+
   return (
     <>
       <div className={styles.AuthorContainer}>
         {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
         <div className={styles.headerWrap}>
-          <Header needLeft excludesWidth>
+          <Header needLeft excludesWidth right={rightNode()}>
             <div className={styles.headerContent}>
               <div>关于博主</div>
             </div>
