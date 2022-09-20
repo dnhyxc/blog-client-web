@@ -200,7 +200,11 @@ const Home: React.FC<IProps> = () => {
     <div className={styles.searchWrap}>
       <div>
         {!showSearch && (
-          <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={onShowSearch} />
+          <MIcons
+            name="icon-sousuo2"
+            className={styles.iconWrap}
+            onClick={htmlWidth > 960 ? onShowSearch : toSearch}
+          />
         )}
         {showSearch && <MSearch inputRef={inputRef} onSearch={onSearch} onBlur={onBlur} />}
       </div>
