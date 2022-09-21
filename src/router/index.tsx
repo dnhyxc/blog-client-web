@@ -8,6 +8,7 @@
 import React from 'react';
 import { useRoutes, BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
+import Music from '@/components/Music';
 import zhCN from 'antd/lib/locale/zh_CN';
 import routeConfig from './config';
 
@@ -18,6 +19,7 @@ const RouterConfig = () => {
 const App: React.FC = () => {
   return (
     <ConfigProvider locale={zhCN}>
+      <Music />
       <BrowserRouter>
         <RouterConfig />
       </BrowserRouter>
