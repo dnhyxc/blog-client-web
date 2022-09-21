@@ -5,8 +5,19 @@ import CARD_URL from '@/assets/images/card.png';
 import EMPTY_URL from '@/assets/images/empty.jpg';
 import MAIN_COVER from '@/assets/images/mainCover.png';
 import CYWL_URL from '@/assets/images/cywl.jpg';
+import BOAT_TO_CHINA_MP3 from '@/assets/music/boatToChina.mp3';
+import BOAT_TO_CHINA_LRC from '@/assets/music/lrc/boatToChina.lrc';
 
-export { ABOUTME, HEAD_UEL, CARD_URL, EMPTY_URL, MAIN_COVER, CYWL_URL };
+export {
+  ABOUTME,
+  HEAD_UEL,
+  CARD_URL,
+  EMPTY_URL,
+  MAIN_COVER,
+  CYWL_URL,
+  BOAT_TO_CHINA_MP3,
+  BOAT_TO_CHINA_LRC,
+};
 
 // 每页数量
 export const PAGESIZE = 20;

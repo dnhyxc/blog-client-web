@@ -20,6 +20,10 @@ declare module '*.bmp';
 
 declare module '*.tiff';
 
+declare module '*.lrc';
+
+declare module '*.mp3';
+
 declare module 'react-custom-scrollbars';
 
 declare module 'react-syntax-highlighter';

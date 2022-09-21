@@ -41,11 +41,19 @@ module.exports = {
         },
       },
       {
-        test: /\.(ttf|woff|woff2|eot|otf)$/,
+        test: /\.(ttf|woff|woff2|eot|otf|mp3|lrc|mp4)$/,
         type: 'asset/resource',
         exclude: /node_modules/,
         generator: {
           filename: 'assets/font/[name].[contenthash:8][ext]', // 指定打包后文件存放的文件夹和文件名
+        },
+      },
+      {
+        test: /\.(mp3|lrc|mp4)$/,
+        type: 'asset/resource',
+        exclude: /node_modules/,
+        generator: {
+          filename: 'assets/music/[name].[contenthash:8][ext]', // 指定打包后文件存放的文件夹和文件名
         },
       },
       {
