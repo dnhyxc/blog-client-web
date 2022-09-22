@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import classname from 'classname';
 import styles from './index.less';
 
-// https://github.com/zoyoy1203/musicPlayer/blob/master/js/index.js
+// https://cloud.tencent.com/developer/article/2098058
 
 const Audio: React.FC = () => {
   const Audio = useRef<HTMLAudioElement | null>(null);
