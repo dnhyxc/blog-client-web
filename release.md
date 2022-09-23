@@ -288,3 +288,20 @@ cp -r /usr/local/server/upload /usr/local/server/src/
 
 cp -r /usr/local/upload /usr/local/server/src/  // 从local复制到src
 ```
+
+### mac 终止占用的端口
+
+查询占用端口的 PID：
+
+```conf
+lsof -i tcp:port(如：9012)
+
+#COMMAND   PID   USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+#node    56185 dnhyxc   24u  IPv6 0x6acfe600190c69b3      0t0  TCP *:9012 (LISTEN)
+```
+
+终止端口对应的进程：
+
+```conf
+kill -9 PID #PID，如 56185
+```

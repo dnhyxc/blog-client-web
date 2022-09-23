@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { CYWL_URL, MUSIC_PATHS } from '@/constant';
 import classname from 'classname';
 import MIcons from '../Icons';
 import styles from './index.less';
@@ -6,13 +7,28 @@ import styles from './index.less';
 // https://cloud.tencent.com/developer/article/2098058
 
 const Audio: React.FC = () => {
+  const [currentPath, setCurrentPath] = useState<string>('');
+  const [count, setCount] = useState<number>(0);
   const [isPlay, setIsPlay] = useState<boolean>(false);
 
   const Audio = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    Audio.current = new window.Audio(); // 创建Audio对象
-  }, []);
+    let current: string = '';
+    const num = 0;
+    if (count > 1 || count < 0) {
+      current = MUSIC_PATHS[num];
+    } else {
+      current = MUSIC_PATHS[count];
+    }
+    setCurrentPath(current);
+  }, [count]);
+
+  useEffect(() => {
+    if (currentPath) {
+      Audio.current = new window.Audio(currentPath); // 创建Audio对象
+    }
+  }, [currentPath]);
 
   // hover 进度条
   const onHoverProgress = () => {
@@ -21,12 +37,21 @@ const Audio: React.FC = () => {
 
   // 上一首/下一首
   const onSelectTrack = (count: number) => {
-    console.log('上下首', count);
+    if (count > 0) {
+      setCount(count++);
+    } else {
+      setCount(count--);
+    }
   };
 
   // 播放
   const onPlay = () => {
     setIsPlay(!isPlay);
+    if (isPlay) {
+      Audio.current?.pause();
+    } else {
+      Audio.current?.play();
+    }
   };
 
   return (
@@ -59,7 +84,9 @@ const Audio: React.FC = () => {
         {/*  左侧歌曲封面旋转模块  */}
         <div className={styles.musicImgs}>
           {/*  封面图  */}
-          <div className={styles.img} />
+          <div className={styles.img}>
+            <img src={CYWL_URL} alt="" className={classname(styles.cover, isPlay && styles.coverRotate)} />
+          </div>
           {/*  歌曲缓冲时的提示文字  */}
           <div id="buffer-box" className={styles.bufferBox}>
             缓冲…
@@ -70,9 +97,8 @@ const Audio: React.FC = () => {
           {/* 上一首按钮 */}
           <div
             className={classname(styles.btn, styles.prevBtn)}
-            onClick={() => onSelectTrack(-1)}
           >
-            <MIcons name="icon-shangyishou" className={styles.prev} />
+            <MIcons name="icon-shangyishou" className={styles.prev} onClick={() => onSelectTrack(-1)} />
           </div>
           {/* 暂停/播放 按钮 */}
           <div className={classname(styles.btn)}>
@@ -85,9 +111,8 @@ const Audio: React.FC = () => {
           {/* 下一首按钮 */}
           <div
             className={classname(styles.btn, styles.nextBtn)}
-            onClick={() => onSelectTrack(1)}
           >
-            <MIcons name="icon-xiayishou" className={styles.next} />
+            <MIcons name="icon-xiayishou" className={styles.next} onClick={() => onSelectTrack(1)} />
           </div>
         </div>
       </div>
