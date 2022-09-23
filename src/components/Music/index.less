@@ -1,22 +1,22 @@
+@import '~@styles/common.less';
+
 .player {
   position: fixed;
   bottom: 60px;
   left: 0;
   width: 350px;
-  border: 1px solid red;
   z-index: 999;
 
   /* 歌曲信息模块 */
   .playerContent1 {
     position: absolute;
     top: 0px;
-    left: 15px;
+    left: 0;
     width: 350px;
     height: 90px;
     padding: 0 20px 0 130px;
     background: rgb(209, 226, 245);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-radius: 20px;
     /* transition过渡动画：设置top属性过渡，过渡时间0.3s,速度曲线为ease(逐渐变慢) */
     transition: top 0.3s ease;
   }
@@ -115,7 +115,7 @@
 
     background: #fff;
     border-radius: 20px;
-    box-shadow: 0 30px 80px #656565;
+    box-shadow: 0 10px 60px #c9c9c9;
 
     /* 左侧封面图模块 */
     .musicImgs {
@@ -190,8 +190,35 @@
 
     .playerControls {
       position: absolute;
-      top: 20px;
+      top: 16px;
       left: 150px;
+
+      .btn {
+        float: left;
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        font-size: 24px;
+        color: #d6dee7;
+
+        .play,
+        .prev,
+        .next {
+          color: @menu-active;
+          font-size: 24px;
+          cursor: pointer;
+        }
+
+        .prev,
+        .next {
+          font-size: 20px;
+        }
+      }
+
+      .prevBtn,
+      .nextBtn {
+        line-height: 56px;
+      }
     }
   }
 }
@@ -235,13 +262,4 @@
 
 .musicImgs.buffering .bufferBox {
   opacity: 1;
-}
-
-.playerControls .btn {
-  float: left;
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
-  font-size: 24px;
-  color: #d6dee7;
 }

@@ -1,10 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classname from 'classname';
+import MIcons from '../Icons';
 import styles from './index.less';
 
 // https://cloud.tencent.com/developer/article/2098058
 
 const Audio: React.FC = () => {
+  const [isPlay, setIsPlay] = useState<boolean>(false);
+
   const Audio = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const Audio: React.FC = () => {
 
   // 播放
   const onPlay = () => {
-    console.log('播放');
+    setIsPlay(!isPlay);
   };
 
   return (
@@ -66,24 +69,25 @@ const Audio: React.FC = () => {
         <div className={styles.playerControls}>
           {/* 上一首按钮 */}
           <div
-            className={classname(styles.btn, 'prev iconfont')}
+            className={classname(styles.btn, styles.prevBtn)}
             onClick={() => onSelectTrack(-1)}
           >
-            上
+            <MIcons name="icon-shangyishou" className={styles.prev} />
           </div>
           {/* 暂停/播放 按钮 */}
-          <div
-            className={classname(styles.btn, 'play-pause icon-jiediankaishi iconfont')}
-            onClick={onPlay}
-          >
-            放
+          <div className={classname(styles.btn)}>
+            <MIcons
+              name={!isPlay ? 'icon-play-filling' : 'icon-pause-fill'}
+              className={styles.play}
+              onClick={onPlay}
+            />
           </div>
           {/* 下一首按钮 */}
           <div
-            className={classname(styles.btn, 'next iconfont')}
+            className={classname(styles.btn, styles.nextBtn)}
             onClick={() => onSelectTrack(1)}
           >
-            下
+            <MIcons name="icon-xiayishou" className={styles.next} />
           </div>
         </div>
       </div>
