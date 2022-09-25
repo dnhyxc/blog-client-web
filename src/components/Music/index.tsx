@@ -1,57 +1,61 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { CYWL_URL, MUSIC_PATHS } from '@/constant';
 import classname from 'classname';
+import { player } from './util/play';
 import MIcons from '../Icons';
 import styles from './index.less';
 
 // https://cloud.tencent.com/developer/article/2098058
 
 const Audio: React.FC = () => {
-  const [currentPath, setCurrentPath] = useState<string>('');
-  const [count, setCount] = useState<number>(0);
   const [isPlay, setIsPlay] = useState<boolean>(false);
 
-  const Audio = useRef<HTMLAudioElement | null>(null);
+  const coverRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
-    let current: string = '';
-    const num = 0;
-    if (count > 1 || count < 0) {
-      current = MUSIC_PATHS[num];
-    } else {
-      current = MUSIC_PATHS[count];
-    }
-    setCurrentPath(current);
-  }, [count]);
+    MUSIC_PATHS.forEach((i) => {
+      player.append(i);
+    });
 
-  useEffect(() => {
-    if (currentPath) {
-      Audio.current = new window.Audio(currentPath); // 创建Audio对象
-    }
-  }, [currentPath]);
-
-  // hover 进度条
-  const onHoverProgress = () => {
-    console.log('hover进度条');
-  };
-
-  // 上一首/下一首
-  const onSelectTrack = (count: number) => {
-    if (count > 0) {
-      setCount(count++);
-    } else {
-      setCount(count--);
-    }
-  };
+    player.onReady.listen(() => {
+      // this.changeCover();
+      console.log('onReady');
+    });
+    player.onChange.listen(() => {
+      // this.changeCover();
+      console.log('onChange');
+    });
+    player.onPlay.listen(() => {
+      setIsPlay(true);
+    });
+    player.onPause.listen(() => {
+      setIsPlay(false);
+    });
+  }, []);
 
   // 播放
   const onPlay = () => {
     setIsPlay(!isPlay);
     if (isPlay) {
-      Audio.current?.pause();
+      player.pause();
     } else {
-      Audio.current?.play();
+      player.play();
     }
+  };
+
+  // 上一首
+  const onPlayPrev = () => {
+    player.prev();
+  };
+
+  // 下一首
+  const onPlayNext = () => {
+    player.next();
+  };
+
+  // 进度条
+  const onHoverProgress = () => {
+    console.log(onHoverProgress, 'onHoverProgress');
   };
 
   return (
@@ -85,7 +89,7 @@ const Audio: React.FC = () => {
         <div className={styles.musicImgs}>
           {/*  封面图  */}
           <div className={styles.img}>
-            <img src={CYWL_URL} alt="" className={classname(styles.cover, isPlay && styles.coverRotate)} />
+            <img src={CYWL_URL} alt="" ref={coverRef} className={classname(styles.cover, isPlay && styles.coverRotate)} />
           </div>
           {/*  歌曲缓冲时的提示文字  */}
           <div id="buffer-box" className={styles.bufferBox}>
@@ -98,7 +102,7 @@ const Audio: React.FC = () => {
           <div
             className={classname(styles.btn, styles.prevBtn)}
           >
-            <MIcons name="icon-shangyishou" className={styles.prev} onClick={() => onSelectTrack(-1)} />
+            <MIcons name="icon-shangyishou" className={styles.prev} onClick={() => onPlayPrev()} />
           </div>
           {/* 暂停/播放 按钮 */}
           <div className={classname(styles.btn)}>
@@ -112,7 +116,7 @@ const Audio: React.FC = () => {
           <div
             className={classname(styles.btn, styles.nextBtn)}
           >
-            <MIcons name="icon-xiayishou" className={styles.next} onClick={() => onSelectTrack(1)} />
+            <MIcons name="icon-xiayishou" className={styles.next} onClick={() => onPlayNext()} />
           </div>
         </div>
       </div>

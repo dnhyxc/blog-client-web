@@ -36,25 +36,29 @@ class Player {
     this.onReady = new Dispatcher();
   }
 
-  async readAudioBuffer(file: File) {
+  readAudioBuffer = (url: string) => {
+    const request = new XMLHttpRequest();
     return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = async (evt: any) => {
-        this.audioContext.decodeAudioData(evt.target.result).then(resolve, reject);
+      request.open('GET', url, true);
+      request.responseType = 'arraybuffer';
+      request.onload = () => {
+        this.audioContext.decodeAudioData(request.response, (buffer) =>
+          (buffer ? resolve(buffer) : reject('decoding error'))
+        );
       };
-      reader.onerror = reject;
-      reader.readAsArrayBuffer(file);
+      request.onerror = (error) => reject(error);
+      request.send();
     });
-  }
+  };
 
-  async append(file: File) {
+  async append(url: string) {
     const { isEmpty } = this;
     this.playList.push({
-      file,
+      url,
       offset: 0,
       start: null,
       source: null,
-      buffer: await this.readAudioBuffer(file),
+      buffer: await this.readAudioBuffer(url),
     });
     if (isEmpty) {
       this.onReady.emit(this);
