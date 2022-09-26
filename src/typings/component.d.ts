@@ -8,3 +8,9 @@ export interface ScrollEvent {
   scrollWidth: number;
   top: number;
 }
+
+export interface AudioInfo {
+  position: number;
+  duration: number;
+  progress: string;
+}

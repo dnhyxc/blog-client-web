@@ -12,6 +12,16 @@ export const formatDate = (date: number, format = 'YYYY/MM/DD HH:mm:ss') => {
   return moment(date).format(format);
 };
 
+export const formatTime = (val: number) => {
+  const min = Math.floor(val / 60);
+  const sec = Math.floor(val % 60);
+  return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+};
+
+export const formatName = (val: string) => {
+  return val.replace(/\.mp3$/, '');
+};
+
 class JsCookies {
   name?: string;
 

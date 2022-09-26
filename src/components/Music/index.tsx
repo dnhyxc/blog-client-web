@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { CYWL_URL, MUSIC_PATHS } from '@/constant';
-import { useDebounce } from '@/hooks';
 import classname from 'classname';
+import { formatTime } from '@/utils';
+// import { formatTime, formatName } from '@/utils';
+import { AudioInfo } from '@/typings/component';
 import { player } from './util/play';
 import MIcons from '../Icons';
 import styles from './index.less';
@@ -11,9 +13,18 @@ import styles from './index.less';
 const Audio: React.FC = () => {
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const [pageLeft, setPageLeft] = useState<number>(0);
+  const [curPosition, setCurPosition] = useState<number>(0);
+  const [audioInfo, setAudioInfo] = useState<AudioInfo>({
+    position: 0,
+    duration: 0.001,
+    progress: ''
+  });
 
   const coverRef = useRef<HTMLImageElement | null>(null);
   const seekBarRef = useRef<HTMLDivElement | null>(null);
+  const hoverBarRef = useRef<HTMLDivElement | null>(null);
+  const insTimeRef = useRef<HTMLDivElement | null>(null);
+  const animationRef = useRef<number>(0);
 
   useEffect(() => {
     MUSIC_PATHS.forEach((i) => {
@@ -24,18 +35,46 @@ const Audio: React.FC = () => {
       // this.changeCover();
       console.log('onReady');
     });
+
     player.onChange.listen(() => {
       // this.changeCover();
       console.log('onChange');
     });
+
     player.onPlay.listen(() => {
       setIsPlay(true);
-      console.log(player.position);
     });
+
     player.onPause.listen(() => {
       setIsPlay(false);
     });
   }, []);
+
+  useEffect(() => {
+    if (isPlay) {
+      draw();
+    } else {
+      cancelAnimationFrame(animationRef.current);
+    }
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [isPlay]);
+
+  const draw = () => {
+    animationRef.current = requestAnimationFrame(draw);
+    const time = player.position / player.duration;
+    const progress = `${(time * 100).toFixed(2)}%`;
+    const { position } = player;
+    const { duration } = player;
+    setAudioInfo({
+      progress,
+      position,
+      duration,
+    });
+  };
 
   // 播放
   const onPlay = () => {
@@ -57,16 +96,36 @@ const Audio: React.FC = () => {
     player.next();
   };
 
-  // 进度条
-  const onHoverProgress = useDebounce((e: any) => {
-    const pageX = e.pageX - 136;
+  // 计算鼠标位于左侧的距离
+  const onHoverProgress = (e: any) => {
+    // 减去135是因为鼠标hover的元素本身向左偏移了135
+    const pageX = e.pageX - 135;
     setPageLeft(pageX);
-  }, 100);
+    // 设置insTime的偏移量
+    insTimeRef.current!.style.left = `${pageX - 18}px`;
+    // 计算当前位置的比例
+    const currentPercentage = pageLeft / 140;
+    // 计算position
+    const currentPosition = player.duration * currentPercentage;
+    setCurPosition(currentPosition);
+    // 计算progress
+    const progress = `${(currentPercentage * 100).toFixed(2)}%`;
+    // 设置进度条的宽度
+    hoverBarRef.current!.style.width = progress;
+  };
 
   // 设置播放位置
   const setPosition = () => {
-    player.position = pageLeft;
-    seekBarRef.current!.style.width = `${pageLeft}px`;
+    // 计算当前位置的比例
+    const currentPercentage = pageLeft / 140;
+    // 计算position
+    const currentPosition = player.duration * currentPercentage;
+    // 设置当前position
+    player.position = currentPosition;
+    // 计算progress
+    const progress = `${(currentPercentage * 100).toFixed(2)}%`;
+    // 设置进度条的宽度
+    seekBarRef.current!.style.width = progress;
   };
 
   return (
@@ -87,18 +146,18 @@ const Audio: React.FC = () => {
           onMouseMove={onHoverProgress}
         >
           {/* 鼠标移动到进度条上，显示的时间信息 */}
-          <div id="ins-time" className={styles.insTime} />
+          <div className={styles.insTime} ref={insTimeRef}>{formatTime(curPosition)}</div>
           {/* 鼠标移动到进度条上，进度条变暗部分 */}
-          <div id="s-hover" className={styles.sHover} />
+          <div className={styles.sHover} ref={hoverBarRef} />
           {/* 表示当前歌曲播放进度的蓝色进度条 */}
-          <div id="seek-bar" className={styles.seekBar} ref={seekBarRef} />
+          <div className={styles.seekBar} ref={seekBarRef} style={{ width: audioInfo.progress }} />
         </div>
         {/* 歌曲时间 */}
         <div className={styles.time}>
           {/* 当前播放的时间 */}
-          <div className={styles.currentTime}>{player.position}</div>
+          <div className={styles.currentTime}>{formatTime(audioInfo.position)}</div>
           {/* 歌曲总时长 */}
-          <div className={styles.totalTime}>{player.duration}</div>
+          <div className={styles.totalTime}>{formatTime(audioInfo.duration)}</div>
         </div>
       </div>
       {/* 控制模块 */}

@@ -13,11 +13,10 @@
     left: 10px;
     bottom: 70px;
     width: 260px;
-    height: 90px;
+    height: 80px;
     background: rgb(209, 226, 245);
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    /* transition过渡动画：设置top属性过渡，过渡时间0.3s,速度曲线为ease(逐渐变慢) */
     transition: top 0.3s ease;
 
     .nameInfo {
@@ -58,10 +57,7 @@
       .currentTime,
       .totalTime {
         font-size: 12px;
-        padding: 0 10px;
-        line-height: 20px;
-        background-color: #e8f5ff;
-        border-radius: 10px;
+        line-height: 28px;
         transition: 0.3s ease all;
       }
     }
@@ -70,44 +66,52 @@
       position: absolute;
       height: 6px;
       border-radius: 6px;
-      width: calc(260px - 120px);
+      width: 140px;
+      max-width: 140px;
       margin-left: 120px;
       bottom: 0;
       background-color: #afcbc2;
       cursor: pointer;
+
+      &:hover {
+        .sHover {
+          display: block;
+          height: 6px;
+          border-radius: 6px;
+          background-color: @menu-deep;
+          z-index: 9;
+        }
+
+        .insTime {
+          display: block;
+          position: absolute;
+          top: -20px;
+          background-color: #e8f5ff;
+          font-size: 12px;
+          white-space: pre;
+          padding: 0 6px;
+          border-radius: 5px;
+          z-index: 9;
+        }
+      }
 
       .seekBar {
         height: 6px;
         border-radius: 6px;
         background-color: @menu-active;
         z-index: 9;
-        width: 100px;
+        width: 0;
       }
-    }
 
-    .insTime {
-      position: absolute;
-      top: -29px;
-      color: @menu-hover;
-      font-size: 12px;
-      white-space: pre;
-      padding: 5px 6px;
-      border-radius: 4px;
-      display: none;
-    }
+      .sHover {
+        width: 0;
+        display: none;
+      }
 
-    .sHover {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      opacity: 0.2;
-      z-index: 2;
-    }
-
-    .insTime,
-    .sHover {
-      background-color: #4b4d5c;
+      .insTime {
+        left: 0;
+        display: none;
+      }
     }
   }
 
@@ -127,7 +131,7 @@
     height: 70px;
 
     background: #fff;
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: 0 10px 60px #c9c9c9;
 
     /* 左侧封面图模块 */
