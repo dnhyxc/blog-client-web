@@ -2,116 +2,129 @@
 
 .player {
   position: fixed;
-  bottom: 60px;
-  left: 0;
-  width: 350px;
-  z-index: 999;
+  bottom: 64px;
+  right: 26px;
+  width: 278px;
+  z-index: 99;
 
   /* 歌曲信息模块 */
   .playerContent1 {
     position: absolute;
-    top: 0px;
-    left: 0;
-    width: 350px;
+    left: 10px;
+    bottom: 70px;
+    width: 260px;
     height: 90px;
-    padding: 0 20px 0 130px;
     background: rgb(209, 226, 245);
-    border-radius: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     /* transition过渡动画：设置top属性过渡，过渡时间0.3s,速度曲线为ease(逐渐变慢) */
     transition: top 0.3s ease;
+
+    .nameInfo {
+      width: 100%;
+      padding: 0 10px;
+
+      .musicName,
+      .artistName {
+        height: 20px;
+        margin-top: 5px;
+        font-size: 14px;
+        text-align: right;
+      }
+      .artistName {
+        font-size: 12px;
+        color: #656565;
+      }
+    }
+
+    .time {
+      display: flex;
+      justify-content: space-between;
+      position: absolute;
+      bottom: 6px;
+      right: 0;
+      font-size: 12px;
+      height: 20px;
+      margin: 5px 0;
+      width: calc(260px - 120px);
+      padding: 0 10px;
+
+      .currentTime {
+        float: left;
+      }
+      .totalTime {
+        float: right;
+      }
+      .currentTime,
+      .totalTime {
+        font-size: 12px;
+        padding: 0 10px;
+        line-height: 20px;
+        background-color: #e8f5ff;
+        border-radius: 10px;
+        transition: 0.3s ease all;
+      }
+    }
+
+    .sArea {
+      position: absolute;
+      height: 6px;
+      border-radius: 6px;
+      width: calc(260px - 120px);
+      margin-left: 120px;
+      bottom: 0;
+      background-color: #afcbc2;
+      cursor: pointer;
+
+      .seekBar {
+        height: 6px;
+        border-radius: 6px;
+        background-color: @menu-active;
+        z-index: 9;
+        width: 100px;
+      }
+    }
+
+    .insTime {
+      position: absolute;
+      top: -29px;
+      color: @menu-hover;
+      font-size: 12px;
+      white-space: pre;
+      padding: 5px 6px;
+      border-radius: 4px;
+      display: none;
+    }
+
+    .sHover {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0.2;
+      z-index: 2;
+    }
+
+    .insTime,
+    .sHover {
+      background-color: #4b4d5c;
+    }
   }
 
   &.active {
     top: -85px;
   }
 
-  .musicName,
-  .artistName {
-    height: 20px;
-    margin-top: 5px;
-    font-size: 14px;
-  }
-  .artistName {
-    font-size: 12px;
-    color: #656565;
-  }
-  .time {
-    font-size: 12px;
-    height: 15px;
-    margin: 5px 0;
-  }
-  .currentTime {
-    float: left;
-  }
-  .totalTime {
-    float: right;
-  }
-  .currentTime,
-  .totalTime {
-    color: transparent;
-    font-size: 11px;
-    background-color: #e8f5ff;
-    border-radius: 10px;
-    transition: 0.3s ease all;
-  }
   .time.active .currentTime,
   .time.active .totalTime {
     color: rgb(54, 127, 196);
     background-color: transparent;
   }
 
-  .sArea,
-  .seekBar {
-    position: relative;
-    height: 4px;
-    border-radius: 4px;
-  }
-
-  .sArea {
-    background-color: #e8f5ff;
-    cursor: pointer;
-  }
-
-  .insTime {
-    position: absolute;
-    top: -29px;
-    color: @menu-hover;
-    font-size: 12px;
-    white-space: pre;
-    padding: 5px 6px;
-    border-radius: 4px;
-    display: none;
-  }
-
-  .sHover {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    opacity: 0.2;
-    z-index: 2;
-  }
-
-  .insTime,
-  .sHover {
-    background-color: #4b4d5c;
-  }
-
-  .seekBar {
-    content: '';
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    background-color: rgb(54, 127, 196);
-    transition: 0.2s ease width;
-  }
-
   .playerContent2 {
     position: relative;
-    width: 350px;
-    height: 90px;
+    width: 278px;
+    height: 70px;
 
     background: #fff;
     border-radius: 20px;
@@ -120,20 +133,21 @@
     /* 左侧封面图模块 */
     .musicImgs {
       position: absolute;
-      top: -40px;
-      width: 120px;
-      height: 120px;
+      top: -42px;
+      width: 90px;
+      height: 90px;
       margin-left: 30px;
-      -webkit-transform: rotateZ(0);
       transform: rotateZ(0);
       transition: 0.3s ease all;
-      border: 10px solid #fff;
-      box-shadow: 0px -10px 15px -15px #c9c9c9;
-      border-radius: 50%;
+      box-shadow: 0 0 0 10px #fff, 0px -10px 10px 0px #c9c9c9;
+      // box-shadow: 0 0 0 10px #fff, 0px -10px 60px 0px #c9c9c9;
+      border-radius: 110px;
       overflow: hidden;
 
       .img {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: absolute;
         top: 0;
         left: 0;
@@ -141,10 +155,8 @@
         height: 100%;
 
         .cover {
-          vertical-align: middle;
-          width: 100%;
-          height: auto;
-          min-height: 100px;
+          width: 90px;
+          height: 90px;
         }
 
         .coverRotate {
@@ -203,15 +215,16 @@
     .playerControls {
       position: absolute;
       top: 16px;
-      left: 150px;
+      left: 140px;
 
       .btn {
         float: left;
-        width: 60px;
-        height: 60px;
-        line-height: 60px;
+        width: 40px;
+        height: 36px;
+        line-height: 36px;
         font-size: 24px;
         color: #d6dee7;
+        text-align: center;
 
         .play,
         .prev,
@@ -229,9 +242,28 @@
 
       .prevBtn,
       .nextBtn {
-        line-height: 56px;
+        line-height: 33px;
       }
     }
+  }
+
+  .musicImgs .img,
+  .bufferBox {
+    transition: 0.1s linear all;
+  }
+
+  .musicImgs.buffering .img {
+    opacity: 0.25;
+  }
+
+  .musicImgs.buffering .img.active {
+    opacity: 0.8;
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+  }
+
+  .musicImgs.buffering .bufferBox {
+    opacity: 1;
   }
 }
 
@@ -272,21 +304,8 @@
   }
 }
 
-.musicImgs .img,
-.bufferBox {
-  transition: 0.1s linear all;
-}
-
-.musicImgs.buffering .img {
-  opacity: 0.25;
-}
-
-.musicImgs.buffering .img.active {
-  opacity: 0.8;
-  filter: blur(2px);
-  -webkit-filter: blur(2px);
-}
-
-.musicImgs.buffering .bufferBox {
-  opacity: 1;
+@media screen and (max-width: 960px) {
+  .player {
+    left: 6px;
+  }
 }

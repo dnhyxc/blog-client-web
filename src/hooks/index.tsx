@@ -22,7 +22,7 @@ import {
 export const useDebounce = (
   fn: Function,
   delay: number,
-  dep: any[],
+  dep?: any[],
   immediate: boolean = false
 ) => {
   const { current } = useRef<any>({ fn, timer: null, count: 0 });
@@ -45,7 +45,7 @@ export const useDebounce = (
         current.count += 1;
       }, delay);
     }
-  }, dep);
+  }, dep || []);
 };
 
 // 节流函数
@@ -63,7 +63,7 @@ export const useThrottle = (fn: Function, delay: number, dep: any[] = []) => {
       }, delay);
       current.fn(...args);
     }
-  }, dep);
+  }, dep || []);
 };
 
 // 实时获取页面宽度的hooks
