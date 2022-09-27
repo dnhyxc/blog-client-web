@@ -17,13 +17,15 @@ const Audio: React.FC = () => {
   const [audioInfo, setAudioInfo] = useState<AudioInfo>({
     position: 0,
     duration: 0.001,
-    progress: ''
+    progress: '',
   });
 
   const coverRef = useRef<HTMLImageElement | null>(null);
   const seekBarRef = useRef<HTMLDivElement | null>(null);
   const hoverBarRef = useRef<HTMLDivElement | null>(null);
   const insTimeRef = useRef<HTMLDivElement | null>(null);
+  const playContentRef = useRef<HTMLDivElement | null>(null);
+  const playerRef = useRef<HTMLDivElement | null>(null);
   const animationRef = useRef<number>(0);
 
   useEffect(() => {
@@ -47,6 +49,10 @@ const Audio: React.FC = () => {
 
     player.onPause.listen(() => {
       setIsPlay(false);
+    });
+
+    player.onVolume.listen(() => {
+      console.log('set volume');
     });
   }, []);
 
@@ -98,13 +104,16 @@ const Audio: React.FC = () => {
 
   // 计算鼠标位于左侧的距离
   const onHoverProgress = (e: any) => {
-    // 减去135是因为鼠标hover的元素本身向左偏移了135
-    const pageX = e.pageX - 135;
-    setPageLeft(pageX);
+    const playContentOffsetleft = playContentRef.current?.offsetLeft || 0;
+    const playerOffsetleft = playerRef.current?.offsetLeft || 0;
+    // 115 为progress元素的marginLeft
+    const offsetLeftSum = playContentOffsetleft + playerOffsetleft + 115;
+    const position = e.pageX - offsetLeftSum || 0;
+    setPageLeft(position);
     // 设置insTime的偏移量
-    insTimeRef.current!.style.left = `${pageX - 18}px`;
-    // 计算当前位置的比例
-    const currentPercentage = pageLeft / 140;
+    insTimeRef.current!.style.left = `${position - 18}px`;
+    // 计算当前位置的比例，145为progress元素的总长度
+    const currentPercentage = pageLeft / 145;
     // 计算position
     const currentPosition = player.duration * currentPercentage;
     setCurPosition(currentPosition);
@@ -116,8 +125,8 @@ const Audio: React.FC = () => {
 
   // 设置播放位置
   const setPosition = () => {
-    // 计算当前位置的比例
-    const currentPercentage = pageLeft / 140;
+    // 计算当前位置的比例，145为progress元素的总长度
+    const currentPercentage = pageLeft / 145;
     // 计算position
     const currentPosition = player.duration * currentPercentage;
     // 设置当前position
@@ -128,10 +137,16 @@ const Audio: React.FC = () => {
     seekBarRef.current!.style.width = progress;
   };
 
+  // 调节音量
+  const onVolume = () => {
+    console.log('111');
+    player.volume(0.21);
+  };
+
   return (
-    <div id="player" className={styles.player}>
+    <div id="player" className={styles.player} ref={playerRef}>
       {/* 歌曲信息模块 */}
-      <div className={styles.playerContent1}>
+      <div className={styles.playerContent1} ref={playContentRef}>
         <div className={styles.nameInfo}>
           {/* 歌曲名 */}
           <div className={styles.musicName}>on a slow boat to china</div>
@@ -146,11 +161,17 @@ const Audio: React.FC = () => {
           onMouseMove={onHoverProgress}
         >
           {/* 鼠标移动到进度条上，显示的时间信息 */}
-          <div className={styles.insTime} ref={insTimeRef}>{formatTime(curPosition)}</div>
+          <div className={styles.insTime} ref={insTimeRef}>
+            {formatTime(curPosition)}
+          </div>
           {/* 鼠标移动到进度条上，进度条变暗部分 */}
           <div className={styles.sHover} ref={hoverBarRef} />
           {/* 表示当前歌曲播放进度的蓝色进度条 */}
-          <div className={styles.seekBar} ref={seekBarRef} style={{ width: audioInfo.progress }} />
+          <div
+            className={styles.seekBar}
+            ref={seekBarRef}
+            style={{ width: audioInfo.progress }}
+          />
         </div>
         {/* 歌曲时间 */}
         <div className={styles.time}>
@@ -180,6 +201,13 @@ const Audio: React.FC = () => {
         </div>
         {/* 右侧歌曲操作模块 */}
         <div className={styles.playerControls}>
+          <div className={classname(styles.btn)}>
+            <MIcons
+              name="icon-24gl-repeat2"
+              className={styles.controlBtn}
+              onClick={() => onPlayNext()}
+            />
+          </div>
           {/* 上一首按钮 */}
           <div className={classname(styles.btn, styles.prevBtn)}>
             <MIcons
@@ -202,6 +230,13 @@ const Audio: React.FC = () => {
               name="icon-xiayishou"
               className={styles.next}
               onClick={() => onPlayNext()}
+            />
+          </div>
+          <div className={classname(styles.btn)}>
+            <MIcons
+              name="icon-yinliang-jianshao"
+              className={styles.controlBtn}
+              onClick={() => onVolume()}
             />
           </div>
         </div>

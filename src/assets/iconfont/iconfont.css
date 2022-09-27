@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3511354 */
-  src: url('iconfont.woff2?t=1663921865802') format('woff2'),
-       url('iconfont.woff?t=1663921865802') format('woff'),
-       url('iconfont.ttf?t=1663921865802') format('truetype');
+  src: url('iconfont.woff2?t=1664264153021') format('woff2'),
+       url('iconfont.woff?t=1664264153021') format('woff'),
+       url('iconfont.ttf?t=1664264153021') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,34 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-yinliang-jianshao:before {
+  content: "\e748";
+}
+
+.icon-24gl-shuffle:before {
+  content: "\ea75";
+}
+
+.icon-24gl-repeat2:before {
+  content: "\ea76";
+}
+
+.icon-24gl-repeatOnce2:before {
+  content: "\ea77";
+}
+
+.icon-Headphones:before {
+  content: "\e6ae";
+}
+
+.icon-bofangliebiao:before {
+  content: "\e6a7";
+}
+
+.icon-bofangzhong:before {
+  content: "\e617";
 }
 
 .icon-play-filling:before {

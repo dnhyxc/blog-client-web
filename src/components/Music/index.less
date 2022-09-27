@@ -66,9 +66,9 @@
       position: absolute;
       height: 6px;
       border-radius: 6px;
-      width: 140px;
-      max-width: 140px;
-      margin-left: 120px;
+      width: 145px;
+      max-width: 145px;
+      margin-left: 115px;
       bottom: 0;
       background-color: #afcbc2;
       cursor: pointer;
@@ -115,16 +115,6 @@
     }
   }
 
-  &.active {
-    top: -85px;
-  }
-
-  .time.active .currentTime,
-  .time.active .totalTime {
-    color: rgb(54, 127, 196);
-    background-color: transparent;
-  }
-
   .playerContent2 {
     position: relative;
     width: 278px;
@@ -140,7 +130,7 @@
       top: -42px;
       width: 90px;
       height: 90px;
-      margin-left: 30px;
+      margin-left: 25px;
       transform: rotateZ(0);
       transition: 0.3s ease all;
       box-shadow: 0 0 0 10px #fff, 0px -10px 10px 0px #c9c9c9;
@@ -217,37 +207,63 @@
     }
 
     .playerControls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       position: absolute;
-      top: 16px;
-      left: 140px;
+      top: 50%;
+      left: 125px;
+      transform: translateY(-50%);
 
       .btn {
-        float: left;
-        width: 40px;
-        height: 36px;
-        line-height: 36px;
+        height: 32px;
+        line-height: 32px;
+        padding: 0 5px;
+        cursor: pointer;
+      }
+
+      .play {
         font-size: 24px;
-        color: #d6dee7;
-        text-align: center;
-
-        .play,
-        .prev,
-        .next {
-          color: @menu-active;
-          font-size: 24px;
-          cursor: pointer;
-        }
-
-        .prev,
-        .next {
-          font-size: 20px;
-        }
+        color: @menu-active;
       }
 
-      .prevBtn,
-      .nextBtn {
-        line-height: 33px;
+      .prev,
+      .next {
+        font-size: 20px;
+        color: @menu-active;
       }
+
+      .controlBtn {
+        color: @menu-active;
+      }
+
+      // .btn {
+      //   float: left;
+      //   width: 40px;
+      //   height: 36px;
+      //   line-height: 36px;
+      //   font-size: 24px;
+      //   color: #d6dee7;
+      //   text-align: center;
+
+      //   .play,
+      //   .prev,
+      //   .next {
+      //     color: @menu-active;
+      //     font-size: 24px;
+      //     cursor: pointer;
+      //   }
+
+      //   .prev,
+      //   .next {
+      //     font-size: 20px;
+      //   }
+      // }
+
+      // .prevBtn,
+      // .nextBtn {
+      //   line-height: 33px;
+      // }
     }
   }
 
