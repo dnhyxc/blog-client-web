@@ -171,7 +171,7 @@ const Audio: React.FC = () => {
           <div className={styles.artistName}>dnhyxc</div>
         </div>
         <div
-          className={styles.sArea}
+          className={styles.progress}
           onMouseMove={onHoverProgress}
         >
           <div className={styles.insTime} ref={insTimeRef}>
