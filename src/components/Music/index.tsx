@@ -13,11 +13,10 @@ import styles from './index.less';
 
 const Audio: React.FC = () => {
   const [isPlay, setIsPlay] = useState<boolean>(false);
-  const [pageLeft] = useState<number>(0);
-  // const [pageLeft, setPageLeft] = useState<number>(0);
   const [curPosition, setCurPosition] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
   const [volume, setVolume] = useState<number>(50);
+  const [hoverTime, setHoverTime] = useState<number>(0);
   const [audioInfo, setAudioInfo] = useState<AudioInfo>({
     position: 0,
     duration: 0.001,
@@ -25,12 +24,11 @@ const Audio: React.FC = () => {
   });
 
   const coverRef = useRef<HTMLImageElement | null>(null);
-  // const seekBarRef = useRef<HTMLDivElement | null>(null);
-  // const hoverBarRef = useRef<HTMLDivElement | null>(null);
   const insTimeRef = useRef<HTMLDivElement | null>(null);
   const musicInfoRef = useRef<HTMLDivElement | null>(null);
   const playerRef = useRef<HTMLDivElement | null>(null);
   const animationRef = useRef<number>(0);
+  const timerRef = useRef<any>(null);
 
   useEffect(() => {
     MUSIC_PATHS.forEach((i) => {
@@ -40,12 +38,10 @@ const Audio: React.FC = () => {
     player.onReady.listen(() => {
       // this.changeCover();
       setIsReady(true);
-      console.log('onReady');
     });
 
     player.onChange.listen(() => {
       // this.changeCover();
-      console.log('onChange');
     });
 
     player.onPlay.listen(() => {
@@ -56,9 +52,7 @@ const Audio: React.FC = () => {
       setIsPlay(false);
     });
 
-    player.onVolume.listen(() => {
-      console.log('set volume');
-    });
+    player.onVolume.listen(() => { });
   }, []);
 
   useEffect(() => {
@@ -74,6 +68,7 @@ const Audio: React.FC = () => {
     };
   }, [isPlay]);
 
+  // 监听volume，设置音量
   useEffect(() => {
     player.volume(volume / 100);
   }, [volume]);
@@ -116,51 +111,28 @@ const Audio: React.FC = () => {
   // 设置时间
   const onChangePosition = (value: number) => {
     setCurPosition(value);
-  };
-
-  const onPositionAfterChange = (value: number) => {
-    console.log(value, 'onPositionAfterChange');
-    setCurPosition(value);
-    // 计算position
     const currentPosition = player.duration * (value / 100);
-    console.log(currentPosition, 'currentPosition');
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
     // 设置当前position
     player.position = currentPosition;
   };
 
   // 计算鼠标位于左侧的距离
-  // const onHoverProgress = (e: any) => {
-  //   const musicInfoOffsetleft = musicInfoRef.current?.offsetLeft || 0;
-  //   const playerOffsetleft = playerRef.current?.offsetLeft || 0;
-  //   // 115 为progress元素的marginLeft
-  //   const offsetLeftSum = musicInfoOffsetleft + playerOffsetleft + 115;
-  //   const position = e.pageX - offsetLeftSum || 0;
-  //   setPageLeft(position);
-  //   // 设置insTime的偏移量
-  //   insTimeRef.current!.style.left = `${position - 18}px`;
-  //   // 计算当前位置的比例，145为progress元素的总长度
-  //   const currentPercentage = pageLeft / 145;
-  //   // 计算position
-  //   const currentPosition = player.duration * currentPercentage;
-  //   setCurPosition(currentPosition);
-  //   // 计算progress
-  //   const progress = `${(currentPercentage * 100).toFixed(2)}%`;
-  //   // 设置进度条的宽度
-  //   hoverBarRef.current!.style.width = progress;
-  // };
-
-  // 设置播放位置
-  const setPosition = () => {
+  const onHoverProgress = (e: any) => {
+    const musicInfoOffsetleft = musicInfoRef.current?.offsetLeft || 0;
+    const playerOffsetleft = playerRef.current?.offsetLeft || 0;
+    // 115 为progress元素的marginLeft
+    const offsetLeftSum = musicInfoOffsetleft + playerOffsetleft + 116;
+    const position = e.pageX - offsetLeftSum || 0;
+    // 设置insTime的偏移量
+    insTimeRef.current!.style.left = `${position - 18}px`;
     // 计算当前位置的比例，145为progress元素的总长度
-    const currentPercentage = pageLeft / 145;
+    const currentPercentage = position / 145;
     // 计算position
     const currentPosition = player.duration * currentPercentage;
-    // 设置当前position
-    player.position = currentPosition;
-    // 计算progress
-    // const progress = `${(currentPercentage * 100).toFixed(2)}%`;
-    // 设置进度条的宽度
-    // seekBarRef.current!.style.width = progress;
+    setHoverTime(currentPosition);
   };
 
   const style: React.CSSProperties = {
@@ -169,7 +141,6 @@ const Audio: React.FC = () => {
   };
 
   const onSliderChange = (value: number) => {
-    console.log(value, 'sssss');
     setVolume(value);
   };
 
@@ -200,25 +171,16 @@ const Audio: React.FC = () => {
           <div className={styles.artistName}>dnhyxc</div>
         </div>
         <div
-          id="s-area"
           className={styles.sArea}
-          onClick={setPosition}
-          // onMouseMove={onHoverProgress}
+          onMouseMove={onHoverProgress}
         >
           <div className={styles.insTime} ref={insTimeRef}>
-            {formatTime(curPosition)}
+            {formatTime(hoverTime < 0 ? 0 : hoverTime)}
           </div>
-          {/* <div className={styles.sHover} ref={hoverBarRef} />
-          <div
-            className={styles.seekBar}
-            ref={seekBarRef}
-            style={{ width: audioInfo.progress }}
-          /> */}
           <Slider
             className={styles.timeSlider}
             value={curPosition}
             onChange={onChangePosition}
-            onAfterChange={onPositionAfterChange}
           />
         </div>
         <div className={styles.time}>
