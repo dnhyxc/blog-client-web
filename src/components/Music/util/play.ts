@@ -103,8 +103,8 @@ class Player {
   }
 
   play() {
-    const { source, buffer, gainNode, offset } = this.current;
-    if (!this.playList.length || source) return;
+    const { buffer, gainNode, offset } = this.current;
+    if (!this.playList.length || this.current.source) return;
     // 创建音频容器对象
     const bufferSource = this.audioContext.createBufferSource();
     bufferSource.buffer = buffer;

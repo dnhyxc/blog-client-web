@@ -7,10 +7,9 @@
   width: 278px;
   z-index: 99;
 
-  /* 歌曲信息模块 */
-  .playerContent1 {
+  .musicInfo {
     position: absolute;
-    left: 10px;
+    left: 9px;
     bottom: 70px;
     width: 260px;
     height: 80px;
@@ -63,14 +62,24 @@
     }
 
     .sArea {
+      // position: absolute;
+      // height: auto;
+      // // height: 6px;
+      // border-radius: 6px;
+      // width: 145px;
+      // max-width: 145px;
+      // margin-left: 115px;
+      // bottom: 0;
+      // background-color: #afcbc2;
+      // cursor: pointer;
       position: absolute;
-      height: 6px;
+      height: auto;
       border-radius: 6px;
       width: 145px;
       max-width: 145px;
-      margin-left: 115px;
+      margin-left: 116px;
       bottom: 0;
-      background-color: #afcbc2;
+      // background-color: #afcbc2;
       cursor: pointer;
 
       &:hover {
@@ -95,6 +104,11 @@
         }
       }
 
+      .timeSlider {
+        margin: 0 0 -5px 0;
+        z-index: 9;
+      }
+
       .seekBar {
         height: 6px;
         border-radius: 6px;
@@ -115,7 +129,7 @@
     }
   }
 
-  .playerContent2 {
+  .playerContent {
     position: relative;
     width: 278px;
     height: 70px;
@@ -124,7 +138,6 @@
     border-radius: 10px;
     box-shadow: 0 10px 60px #c9c9c9;
 
-    /* 左侧封面图模块 */
     .musicImgs {
       position: absolute;
       top: -42px;
@@ -174,12 +187,10 @@
       }
     }
 
-    /* 左侧封面图模块添加了active类名 */
     .musicImgs.active {
       top: -50px;
       box-shadow: 0 0 0 4px #e8f5ff, 0 30px 50px -15px #afb7c1;
 
-      /* 封面图模块添加了active类名后，图片div的样式添加 */
       &.img {
         z-index: 1;
         -webkit-animation: rotateAlbumArt 3s linear 0s infinite forwards;
@@ -190,20 +201,15 @@
     .bufferBox {
       position: absolute;
       top: 50%;
-      right: 0;
-      left: 0;
-      height: 13px;
-      color: #1f1f1f;
-      font-size: 13px;
-      font-family: Helvetica;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      height: 20px;
+      line-height: 20px;
+      font-size: 12px;
       text-align: center;
-      font-weight: bold;
-      line-height: 1;
-      padding: 6px;
-      margin: -12px auto 0 auto;
-      background-color: rgba(255, 255, 255, 0.19);
-      opacity: 0;
-      z-index: 2;
+      background-color: @menu-hover;
+      z-index: 9;
     }
 
     .playerControls {
@@ -216,6 +222,7 @@
       transform: translateY(-50%);
 
       .btn {
+        position: relative;
         height: 32px;
         line-height: 32px;
         padding: 0 5px;
@@ -236,54 +243,46 @@
       .controlBtn {
         color: @menu-active;
       }
-
-      // .btn {
-      //   float: left;
-      //   width: 40px;
-      //   height: 36px;
-      //   line-height: 36px;
-      //   font-size: 24px;
-      //   color: #d6dee7;
-      //   text-align: center;
-
-      //   .play,
-      //   .prev,
-      //   .next {
-      //     color: @menu-active;
-      //     font-size: 24px;
-      //     cursor: pointer;
-      //   }
-
-      //   .prev,
-      //   .next {
-      //     font-size: 20px;
-      //   }
-      // }
-
-      // .prevBtn,
-      // .nextBtn {
-      //   line-height: 33px;
-      // }
     }
   }
+}
 
-  .musicImgs .img,
-  .bufferBox {
-    transition: 0.1s linear all;
+.dropdown {
+  :global {
+    .ant-dropdown-menu-item {
+      padding: 10px 0 5px 0;
+
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
+}
+
+.volume {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 120px;
+
+  .volumeProgress {
+    height: 120px;
+    width: 6px;
+    border-radius: 6px;
+    background-color: @menu-active;
   }
 
-  .musicImgs.buffering .img {
-    opacity: 0.25;
+  .count {
+    margin-top: 15px;
+    min-width: 38px;
+    text-align: center;
   }
+}
 
-  .musicImgs.buffering .img.active {
-    opacity: 0.8;
-    filter: blur(2px);
-    -webkit-filter: blur(2px);
-  }
-
-  .musicImgs.buffering .bufferBox {
-    opacity: 1;
+:global {
+  .ant-tooltip {
+    display: none !important;
   }
 }
 
