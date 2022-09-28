@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Dropdown, Menu, Slider } from 'antd';
 import classname from 'classname';
-import { CYWL_URL, MUSIC_PATHS } from '@/constant';
+import { CYWL_URL, MUSIC_PATHS, MUSIC_ORDER_ICONS } from '@/constant';
 import { formatTime } from '@/utils';
 // import { formatTime, formatName } from '@/utils';
 import { AudioInfo } from '@/typings/component';
@@ -10,6 +10,7 @@ import MIcons from '../Icons';
 import styles from './index.less';
 
 // https://cloud.tencent.com/developer/article/2098058
+// https://segmentfault.com/a/1190000017090438
 
 const Audio: React.FC = () => {
   const [isPlay, setIsPlay] = useState<boolean>(false);
@@ -17,6 +18,7 @@ const Audio: React.FC = () => {
   const [isReady, setIsReady] = useState<boolean>(false);
   const [volume, setVolume] = useState<number>(50);
   const [hoverTime, setHoverTime] = useState<number>(0);
+  const [playIconIndex, setPlayIconIndex] = useState<number>(0);
   const [audioInfo, setAudioInfo] = useState<AudioInfo>({
     position: 0,
     duration: 0.001,
@@ -53,6 +55,9 @@ const Audio: React.FC = () => {
     });
 
     player.onVolume.listen(() => { });
+
+    player.onStochastic.listen(() => {
+    });
   }, []);
 
   useEffect(() => {
@@ -144,6 +149,16 @@ const Audio: React.FC = () => {
     setVolume(value);
   };
 
+  // 切换播放图标
+  const onChangePlayIcon = () => {
+    if (playIconIndex >= 2) {
+      setPlayIconIndex(0);
+    } else {
+      setPlayIconIndex(playIconIndex + 1);
+    }
+    player.stochastic(playIconIndex, MUSIC_PATHS);
+  };
+
   // 音量气泡框
   const volumeContent = (
     <Menu
@@ -203,9 +218,9 @@ const Audio: React.FC = () => {
         <div className={styles.playerControls}>
           <div className={classname(styles.btn)}>
             <MIcons
-              name="icon-24gl-repeat2"
+              name={MUSIC_ORDER_ICONS[playIconIndex]}
               className={styles.controlBtn}
-              onClick={() => onPlayNext()}
+              onClick={() => onChangePlayIcon()}
             />
           </div>
           <div className={classname(styles.btn, styles.prevBtn)}>

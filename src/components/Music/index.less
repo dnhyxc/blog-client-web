@@ -64,26 +64,40 @@
     .progress {
       position: absolute;
       height: auto;
-      border-radius: 6px;
+      border-radius: 5px;
       width: 145px;
       max-width: 145px;
-      margin-left: 116px;
+      margin-left: 115px;
       bottom: 0;
       cursor: pointer;
 
       &:hover {
-        .sHover {
+        .hoverBar {
+          position: relative;
           display: block;
-          height: 6px;
-          border-radius: 6px;
-          background-color: @menu-deep;
+          height: 5px;
+          border-radius: 5px;
+          background-color: @menu-active;
+          // background-color: @menu-deep;
           z-index: 9;
+
+          &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            background-color: @menu-active;
+          }
         }
 
         .insTime {
           display: block;
           position: absolute;
-          top: -20px;
+          top: -26px;
           background-color: #e8f5ff;
           font-size: 12px;
           white-space: pre;
@@ -99,14 +113,14 @@
       }
 
       .seekBar {
-        height: 6px;
-        border-radius: 6px;
+        height: 5px;
+        border-radius: 5px;
         background-color: @menu-active;
         z-index: 9;
         width: 0;
       }
 
-      .sHover {
+      .hoverBar {
         width: 0;
         display: none;
       }
@@ -264,7 +278,7 @@
 
   .count {
     margin-top: 15px;
-    min-width: 40px;
+    min-width: 38px;
     text-align: center;
   }
 }

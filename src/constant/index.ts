@@ -21,7 +21,15 @@ export {
   BOAT_TO_CHINA_LRC,
 };
 
+// 歌曲url
 export const MUSIC_PATHS = [BOAT_TO_CHINA_MP3, MCDGB_MP3];
+
+// 播放顺序图标
+export const MUSIC_ORDER_ICONS = [
+  'icon-24gl-repeat2',
+  'icon-24gl-shuffle',
+  'icon-24gl-repeatOnce2',
+];
 
 // 每页数量
 export const PAGESIZE = 20;

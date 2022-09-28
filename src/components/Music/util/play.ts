@@ -19,6 +19,8 @@ class Player {
 
   onVolume: Dispatcher;
 
+  onStochastic: Dispatcher;
+
   constructor() {
     this.audioContext = new AudioContext();
     this.playList = [];
@@ -38,6 +40,7 @@ class Player {
     this.onChange = new Dispatcher();
     this.onReady = new Dispatcher();
     this.onVolume = new Dispatcher();
+    this.onStochastic = new Dispatcher();
   }
 
   get isEmpty() {
@@ -100,6 +103,61 @@ class Player {
     if (isEmpty) {
       this.onReady.emit(this);
     }
+  }
+
+  async stochastic(type: number, MUSIC_PATHS: string[]) {
+    this.playList = [
+      { ...this.playList[0] },
+      {
+        url: MUSIC_PATHS[0],
+        offset: 0,
+        start: null,
+        source: null,
+        buffer: await this.readAudioBuffer(MUSIC_PATHS[0]),
+        gainNode: this.audioContext.createGain(), // 创建音频处理模块
+      },
+      {
+        url: MUSIC_PATHS[1],
+        offset: 0,
+        start: null,
+        source: null,
+        buffer: await this.readAudioBuffer(MUSIC_PATHS[1]),
+        gainNode: this.audioContext.createGain(), // 创建音频处理模块
+      },
+      {
+        url: MUSIC_PATHS[1],
+        offset: 0,
+        start: null,
+        source: null,
+        buffer: await this.readAudioBuffer(MUSIC_PATHS[1]),
+        gainNode: this.audioContext.createGain(), // 创建音频处理模块
+      },
+    ];
+    this.onStochastic.emit(this);
+
+    console.log(this.playList, 'playList');
+    // switch (type) {
+    //   case 0:
+    //     MUSIC_PATHS.forEach((i) => {
+    //       this.append(i);
+    //     });
+    //     break;
+    //   case 1:
+    //     MUSIC_PATHS.sort(() => Math.random() - 0.5);
+    //     MUSIC_PATHS.forEach((i: string) => {
+    //       this.append(i);
+    //     });
+    //     break;
+    //   case 2:
+    //     this.playList = [];
+    //     [this.current.url || MUSIC_PATHS[0]].forEach((i) => {
+    //       this.append(i);
+    //     });
+    //     break;
+
+    //   default:
+    //     break;
+    // }
   }
 
   play() {
