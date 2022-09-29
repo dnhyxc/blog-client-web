@@ -44,6 +44,8 @@ const Audio: React.FC = () => {
 
     player.onChange.listen(() => {
       // this.changeCover();
+      console.log(playIconIndex, 'change', player.playIndex);
+      player.stochastic(playIconIndex);
     });
 
     player.onPlay.listen(() => {
@@ -54,11 +56,12 @@ const Audio: React.FC = () => {
       setIsPlay(false);
     });
 
-    player.onVolume.listen(() => { });
+    player.onVolume.listen(() => {});
 
-    player.onStochastic.listen(() => {
-    });
-  }, []);
+    player.onStochastic.listen(() => {});
+
+    player.onClose.listen(() => {});
+  }, [playIconIndex]);
 
   useEffect(() => {
     if (isPlay) {
@@ -105,11 +108,13 @@ const Audio: React.FC = () => {
 
   // 上一首
   const onPlayPrev = () => {
+    if (player.isEmpty) return;
     player.prev();
   };
 
   // 下一首
   const onPlayNext = () => {
+    if (player.isEmpty) return;
     player.next();
   };
 
@@ -156,7 +161,6 @@ const Audio: React.FC = () => {
     } else {
       setPlayIconIndex(playIconIndex + 1);
     }
-    player.stochastic(playIconIndex, MUSIC_PATHS);
   };
 
   // 音量气泡框
@@ -185,10 +189,7 @@ const Audio: React.FC = () => {
           <div className={styles.musicName}>on a slow boat to china</div>
           <div className={styles.artistName}>dnhyxc</div>
         </div>
-        <div
-          className={styles.progress}
-          onMouseMove={onHoverProgress}
-        >
+        <div className={styles.progress} onMouseMove={onHoverProgress}>
           <div className={styles.insTime} ref={insTimeRef}>
             {formatTime(hoverTime < 0 ? 0 : hoverTime)}
           </div>
