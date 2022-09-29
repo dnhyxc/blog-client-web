@@ -7,7 +7,10 @@ import MAIN_COVER from '@/assets/images/mainCover.png';
 import CYWL_URL from '@/assets/images/cywl.jpg';
 import BOAT_TO_CHINA_MP3 from '@/assets/music/boatToChina.mp3';
 import MCDGB_MP3 from '@/assets/music/mcdgb.mp3';
+import LX_MP3 from '@/assets/music/lx.mp3';
+import CHUNSANYUE_MP3 from '@/assets/music/chunsanyue.mp3';
 import BOAT_TO_CHINA_LRC from '@/assets/music/lrc/boatToChina.lrc';
+import NEWBOY_MP3 from '@/assets/music/newBoy.mp3';
 
 export {
   ABOUTME,
@@ -18,11 +21,20 @@ export {
   CYWL_URL,
   BOAT_TO_CHINA_MP3,
   MCDGB_MP3,
+  NEWBOY_MP3,
+  CHUNSANYUE_MP3,
+  LX_MP3,
   BOAT_TO_CHINA_LRC,
 };
 
 // 歌曲url
-export const MUSIC_PATHS = [BOAT_TO_CHINA_MP3, MCDGB_MP3];
+export const MUSIC_PATHS = [
+  BOAT_TO_CHINA_MP3,
+  MCDGB_MP3,
+  NEWBOY_MP3,
+  CHUNSANYUE_MP3,
+  LX_MP3,
+];
 
 // 播放顺序图标
 export const MUSIC_ORDER_ICONS = [

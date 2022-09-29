@@ -20,6 +20,8 @@ class Player {
 
   onReady: Dispatcher;
 
+  onSetPosition: Dispatcher;
+
   onVolume: Dispatcher;
 
   onStochastic: Dispatcher;
@@ -46,6 +48,7 @@ class Player {
     this.onChange = new Dispatcher();
     this.onReady = new Dispatcher();
     this.onVolume = new Dispatcher();
+    this.onSetPosition = new Dispatcher();
     this.onStochastic = new Dispatcher();
     this.onClose = new Dispatcher();
   }
@@ -66,16 +69,6 @@ class Player {
       this.current.offset +
       (this.current.start !== null ? this.audioContext.currentTime - this.current.start : 0)
     );
-  }
-
-  set position(val) {
-    if (!this.playList.length) {
-      return;
-    }
-    this.stop();
-    this.current.offset = val;
-    this.current.start = null;
-    this.play();
   }
 
   get duration() {
@@ -118,6 +111,7 @@ class Player {
     // 创建音频容器对象
     const bufferSource = this.audioContext.createBufferSource();
     bufferSource.buffer = buffer;
+    // 播放结束后，自动播放下一首
     bufferSource.onended = this.next.bind(this);
     // 连接音频对象
     bufferSource.connect(gainNode);
@@ -165,25 +159,20 @@ class Player {
     this.onChange.emit(this);
   }
 
-  stochastic(value: number) {
-    console.log(value, 'value');
+  stochastic(value: number, playIndex: number) {
     this.stop();
     switch (value) {
       case 0: // 顺序播放
+        const index = this.playIndex;
+        this.playIndex = index;
         break;
       case 1: // 随机播放
-        const count = getRandomNumber(0, 1);
-        console.log(count, 'count');
+        const count = getRandomNumber(0, 5);
         this.playIndex = count;
         break;
       case 2: // 单曲循环
-        this.playIndex--;
-        if (this.playIndex < 0) {
-          // const index = Math.max(this.playList.length - 1, 0);
-          this.playIndex = 1;
-        }
+        this.playIndex = playIndex;
         break;
-
       default:
         break;
     }
@@ -191,6 +180,18 @@ class Player {
     this.onStochastic.emit(this);
   }
 
+  setPosition(val: number) {
+    if (!this.playList.length) {
+      return;
+    }
+    this.stop();
+    this.current.offset = val;
+    this.current.start = null;
+    this.play();
+    this.onSetPosition.emit(this);
+  }
+
+  // 设置声音大小
   volume(value: number) {
     if (!this.current.gainNode) return;
     this.current.gainNode.gain.value = value;

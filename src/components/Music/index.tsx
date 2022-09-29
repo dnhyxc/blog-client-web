@@ -31,8 +31,15 @@ const Audio: React.FC = () => {
   const playerRef = useRef<HTMLDivElement | null>(null);
   const animationRef = useRef<number>(0);
   const timerRef = useRef<any>(null);
+  const playIconNoRef = useRef<number>(0);
+  const playIndexRef = useRef<number>(player.playIndex || 0);
 
   useEffect(() => {
+    // 当播放状态为单曲循环时，记录当前播放歌曲的索引
+    if (playIconIndex === 2) {
+      playIndexRef.current = player.playIndex;
+    }
+
     MUSIC_PATHS.forEach((i) => {
       player.append(i);
     });
@@ -42,10 +49,10 @@ const Audio: React.FC = () => {
       setIsReady(true);
     });
 
+    // 切换事件触发时，动态更改当前播放歌曲的索引，以达到随机播放及单曲循环的效果
     player.onChange.listen(() => {
       // this.changeCover();
-      console.log(playIconIndex, 'change', player.playIndex);
-      player.stochastic(playIconIndex);
+      player.stochastic(playIconNoRef.current, playIndexRef.current);
     });
 
     player.onPlay.listen(() => {
@@ -56,11 +63,16 @@ const Audio: React.FC = () => {
       setIsPlay(false);
     });
 
-    player.onVolume.listen(() => {});
+    player.onVolume.listen(() => { });
 
-    player.onStochastic.listen(() => {});
+    // 滑动时间轴时关闭声音
+    player.onSetPosition.listen(() => {
+      player.volume(0);
+    });
 
-    player.onClose.listen(() => {});
+    player.onStochastic.listen(() => { });
+
+    player.onClose.listen(() => { });
   }, [playIconIndex]);
 
   useEffect(() => {
@@ -126,7 +138,7 @@ const Audio: React.FC = () => {
       clearTimeout(timerRef.current);
     }
     // 设置当前position
-    player.position = currentPosition;
+    player.setPosition(currentPosition);
   };
 
   // 计算鼠标位于左侧的距离
@@ -145,20 +157,22 @@ const Audio: React.FC = () => {
     setHoverTime(currentPosition);
   };
 
-  const style: React.CSSProperties = {
-    display: 'inline-block',
-    height: 300,
-  };
-
   const onSliderChange = (value: number) => {
     setVolume(value);
   };
 
+  // 鼠标抬起时恢复声音
+  const onAfterChange = () => {
+    player.volume(volume / 100);
+  };
+
   // 切换播放图标
   const onChangePlayIcon = () => {
-    if (playIconIndex >= 2) {
+    if (playIconNoRef.current >= 2) {
+      playIconNoRef.current = 0;
       setPlayIconIndex(0);
     } else {
+      playIconNoRef.current += 1;
       setPlayIconIndex(playIconIndex + 1);
     }
   };
@@ -171,7 +185,7 @@ const Audio: React.FC = () => {
           key: '1',
           label: (
             <div className={styles.volume}>
-              <div style={style}>
+              <div className={styles.sliderWrap}>
                 <Slider vertical onChange={onSliderChange} defaultValue={50} />
               </div>
               <div className={styles.count}>{volume}%</div>
@@ -197,6 +211,7 @@ const Audio: React.FC = () => {
             className={styles.timeSlider}
             value={curPosition}
             onChange={onChangePosition}
+            onAfterChange={onAfterChange}
           />
         </div>
         <div className={styles.time}>
