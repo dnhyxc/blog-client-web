@@ -3,16 +3,16 @@ import { Dropdown, Menu, Slider } from 'antd';
 import classname from 'classname';
 import { MUSIC_PATHS, MUSIC_ORDER_ICONS, MUSIC_LIST_INFO } from '@/constant';
 import { formatTime } from '@/utils';
-// import { formatTime, formatName } from '@/utils';
 import { AudioInfo } from '@/typings/component';
 import { player } from './util/play';
 import MIcons from '../Icons';
 import styles from './index.less';
 
-// https://cloud.tencent.com/developer/article/2098058
-// https://segmentfault.com/a/1190000017090438
+interface IProps {
+  toggleAudio?: boolean;
+}
 
-const Audio: React.FC = () => {
+const Audio: React.FC<IProps> = ({ toggleAudio }) => {
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const [curPosition, setCurPosition] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
@@ -53,13 +53,11 @@ const Audio: React.FC = () => {
     });
 
     player.onReady.listen(() => {
-      // this.changeCover();
       setIsReady(true);
     });
 
     // 切换事件触发时，动态更改当前播放歌曲的索引，以达到随机播放及单曲循环的效果
     player.onChange.listen(() => {
-      // this.changeCover();
       player.stochastic(playIconNoRef.current, playIndexRef.current);
     });
 
@@ -201,8 +199,11 @@ const Audio: React.FC = () => {
   );
 
   return (
-    <div className={styles.player} ref={playerRef}>
-      <div className={styles.musicInfo} ref={musicInfoRef}>
+    <div className={classname(!toggleAudio && styles.toggle, styles.player)} ref={playerRef}>
+      <div
+        className={classname(styles.musicInfo, !isPlay && styles.hideMusicInfo)}
+        ref={musicInfoRef}
+      >
         <div className={styles.nameInfo}>
           <div className={styles.musicName}>{MUSIC_LIST_INFO[playIndex]?.name}</div>
           <div className={styles.artistName}>{MUSIC_LIST_INFO[playIndex]?.author}</div>

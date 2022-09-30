@@ -5,10 +5,11 @@
  * @LastEditors: dnh
  * @FilePath: \src\router\index.tsx
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { useRoutes, BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import Audio from '@/components/Music';
+import MusicIcon from '@/components/Music/MusicIcon';
 import zhCN from 'antd/lib/locale/zh_CN';
 import routeConfig from './config';
 
@@ -17,12 +18,19 @@ const RouterConfig = () => {
 };
 
 const App: React.FC = () => {
+  const [toggleAudio, setToggleAudio] = useState<boolean>(false);
+
+  const onToggleAudio = () => {
+    setToggleAudio(!toggleAudio);
+  };
+
   return (
     <ConfigProvider locale={zhCN}>
-      <Audio />
+      <Audio toggleAudio={toggleAudio} />
       <BrowserRouter>
         <RouterConfig />
       </BrowserRouter>
+      <MusicIcon onClick={onToggleAudio} />
     </ConfigProvider>
   );
 };

@@ -6,6 +6,7 @@
   right: 26px;
   width: 278px;
   z-index: 99;
+  transition: all 0.3s ease-in-out;
 
   .musicInfo {
     position: absolute;
@@ -13,10 +14,10 @@
     bottom: 70px;
     width: 260px;
     height: 80px;
-    background: rgb(209, 226, 245);
+    background: @sky-blue;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    transition: top 0.3s ease;
+    transition: all 0.3s ease-in-out;
 
     .nameInfo {
       width: 100%;
@@ -65,9 +66,6 @@
       position: absolute;
       height: auto;
       border-radius: 5px;
-      // width: 145px;
-      // max-width: 145px;
-      // margin-left: 115px;
       width: 144px;
       max-width: 144px;
       margin-left: 116px;
@@ -112,7 +110,7 @@
 
       .timeSlider {
         margin: 0 0 -5px 0;
-        z-index: 9;
+        visibility: visible;
       }
 
       .seekBar {
@@ -131,6 +129,24 @@
       .insTime {
         left: 0;
         display: none;
+      }
+
+      :global {
+        .ant-slider:hover .ant-slider-rail {
+          background-color: @light-green;
+        }
+      }
+    }
+  }
+
+  .hideMusicInfo {
+    bottom: 5px;
+    height: 60px;
+    transition: all 0.3s ease-in-out;
+
+    .progress {
+      .timeSlider {
+        visibility: hidden;
       }
     }
   }
@@ -215,7 +231,7 @@
       line-height: 20px;
       font-size: 12px;
       text-align: center;
-      background-color: @menu-hover;
+      background-color: rgba(225, 225, 225, 0.85);
       z-index: 9;
     }
 
@@ -252,6 +268,11 @@
       }
     }
   }
+}
+
+.toggle {
+  right: -305px;
+  transition: all 0.3s ease-in-out;
 }
 
 .dropdown {
@@ -338,5 +359,11 @@
 @media screen and (max-width: 960px) {
   .player {
     left: 6px;
+  }
+
+  .toggle {
+    right: initial;
+    left: -305px;
+    transition: all 0.3s ease-in-out;
   }
 }
