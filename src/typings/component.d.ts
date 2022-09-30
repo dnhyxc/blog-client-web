@@ -12,5 +12,4 @@ export interface ScrollEvent {
 export interface AudioInfo {
   position: number;
   duration: number;
-  progress: string;
 }

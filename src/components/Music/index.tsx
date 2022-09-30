@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Dropdown, Menu, Slider } from 'antd';
 import classname from 'classname';
-import { CYWL_URL, MUSIC_PATHS, MUSIC_ORDER_ICONS } from '@/constant';
+import { MUSIC_PATHS, MUSIC_ORDER_ICONS, MUSIC_LIST_INFO } from '@/constant';
 import { formatTime } from '@/utils';
 // import { formatTime, formatName } from '@/utils';
 import { AudioInfo } from '@/typings/component';
@@ -22,7 +22,6 @@ const Audio: React.FC = () => {
   const [audioInfo, setAudioInfo] = useState<AudioInfo>({
     position: 0,
     duration: 0.001,
-    progress: '',
   });
 
   const coverRef = useRef<HTMLImageElement | null>(null);
@@ -33,6 +32,15 @@ const Audio: React.FC = () => {
   const timerRef = useRef<any>(null);
   const playIconNoRef = useRef<number>(0);
   const playIndexRef = useRef<number>(player.playIndex || 0);
+
+  // 计算当前播放的索引
+  const playIndex = useMemo(() => {
+    if (player.current.url) {
+      const index = MUSIC_PATHS.findIndex((i) => i === player.current.url);
+      return index;
+    }
+    return 0;
+  }, [player.current.url]);
 
   useEffect(() => {
     // 当播放状态为单曲循环时，记录当前播放歌曲的索引
@@ -63,17 +71,17 @@ const Audio: React.FC = () => {
       setIsPlay(false);
     });
 
-    player.onVolume.listen(() => { });
+    player.onVolume.listen(() => {});
 
     // 滑动时间轴时关闭声音
     player.onSetPosition.listen(() => {
       player.volume(0);
     });
 
-    player.onStochastic.listen(() => { });
+    player.onStochastic.listen(() => {});
 
-    player.onClose.listen(() => { });
-  }, [playIconIndex]);
+    player.onClose.listen(() => {});
+  }, [playIconIndex, playIndex]);
 
   useEffect(() => {
     if (isPlay) {
@@ -95,12 +103,8 @@ const Audio: React.FC = () => {
 
   const draw = () => {
     animationRef.current = requestAnimationFrame(draw);
-    const time = player.position / player.duration;
-    const progress = `${(time * 100).toFixed(2)}%`;
-    const { position } = player;
-    const { duration } = player;
+    const { position, duration } = player;
     setAudioInfo({
-      progress,
       position,
       duration,
     });
@@ -145,13 +149,13 @@ const Audio: React.FC = () => {
   const onHoverProgress = (e: any) => {
     const musicInfoOffsetleft = musicInfoRef.current?.offsetLeft || 0;
     const playerOffsetleft = playerRef.current?.offsetLeft || 0;
-    // 115 为progress元素的marginLeft
+    // 116 为progress元素的marginLeft
     const offsetLeftSum = musicInfoOffsetleft + playerOffsetleft + 116;
     const position = e.pageX - offsetLeftSum || 0;
     // 设置insTime的偏移量
     insTimeRef.current!.style.left = `${position - 18}px`;
-    // 计算当前位置的比例，145为progress元素的总长度
-    const currentPercentage = position / 145;
+    // 计算当前位置的比例，144为progress元素的总长度
+    const currentPercentage = position / 144;
     // 计算position
     const currentPosition = player.duration * currentPercentage;
     setHoverTime(currentPosition);
@@ -197,11 +201,11 @@ const Audio: React.FC = () => {
   );
 
   return (
-    <div id="player" className={styles.player} ref={playerRef}>
+    <div className={styles.player} ref={playerRef}>
       <div className={styles.musicInfo} ref={musicInfoRef}>
         <div className={styles.nameInfo}>
-          <div className={styles.musicName}>on a slow boat to china</div>
-          <div className={styles.artistName}>dnhyxc</div>
+          <div className={styles.musicName}>{MUSIC_LIST_INFO[playIndex]?.name}</div>
+          <div className={styles.artistName}>{MUSIC_LIST_INFO[playIndex]?.author}</div>
         </div>
         <div className={styles.progress} onMouseMove={onHoverProgress}>
           <div className={styles.insTime} ref={insTimeRef}>
@@ -223,7 +227,7 @@ const Audio: React.FC = () => {
         <div className={styles.musicImgs}>
           <div className={styles.img}>
             <img
-              src={CYWL_URL}
+              src={MUSIC_LIST_INFO[playIndex]?.cover}
               alt=""
               ref={coverRef}
               className={classname(styles.cover, isPlay && styles.coverRotate)}

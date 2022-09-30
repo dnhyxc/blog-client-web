@@ -1,4 +1,5 @@
 import { getRandomNumber } from '@/utils';
+import { MUSIC_PATHS } from '@/constant';
 import { Dispatcher } from './dispatcher';
 
 class Player {
@@ -107,7 +108,7 @@ class Player {
 
   play() {
     const { buffer, gainNode, offset } = this.current;
-    if (!this.playList.length || this.current.source) return;
+    if (!this.playList.length || this.current.source || !gainNode) return;
     // 创建音频容器对象
     const bufferSource = this.audioContext.createBufferSource();
     bufferSource.buffer = buffer;
@@ -159,12 +160,17 @@ class Player {
     this.onChange.emit(this);
   }
 
+  // 设置随机播放
   stochastic(value: number, playIndex: number) {
     this.stop();
     switch (value) {
       case 0: // 顺序播放
-        const index = this.playIndex;
-        this.playIndex = index;
+        if (this.playIndex >= MUSIC_PATHS.length) {
+          this.playIndex = 0;
+        } else {
+          const index = this.playIndex;
+          this.playIndex = index;
+        }
         break;
       case 1: // 随机播放
         const count = getRandomNumber(0, 5);

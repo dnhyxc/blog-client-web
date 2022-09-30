@@ -11,6 +11,11 @@ import LX_MP3 from '@/assets/music/lx.mp3';
 import CHUNSANYUE_MP3 from '@/assets/music/chunsanyue.mp3';
 import BOAT_TO_CHINA_LRC from '@/assets/music/lrc/boatToChina.lrc';
 import NEWBOY_MP3 from '@/assets/music/newBoy.mp3';
+import BOAT_TO_CHINA_COVER from '@/assets/images/boatToChina.jpg';
+import CHUNSANYUE_COVER from '@/assets/images/chunsanyue.jpg';
+import LX_COVER from '@/assets/images/lx.jpg';
+import MCDGB_COVER from '@/assets/images/mcdgb.jpg';
+import NEWBOY_COVER from '@/assets/images/newBoy.jpg';
 
 export {
   ABOUTME,
@@ -34,6 +39,45 @@ export const MUSIC_PATHS = [
   NEWBOY_MP3,
   CHUNSANYUE_MP3,
   LX_MP3,
+];
+
+// 歌曲列表信息
+export const MUSIC_LIST_INFO = [
+  {
+    [BOAT_TO_CHINA_MP3]: BOAT_TO_CHINA_MP3,
+    name: 'On a Slow Boat to China',
+    author: 'Luke Thompson',
+    lrc: '',
+    cover: BOAT_TO_CHINA_COVER,
+  },
+  {
+    [MCDGB_MP3]: MCDGB_MP3,
+    name: '漫长的告白',
+    author: '双笙',
+    lrc: '',
+    cover: MCDGB_COVER,
+  },
+  {
+    [NEWBOY_MP3]: NEWBOY_MP3,
+    name: 'New Boy',
+    author: '房东的猫',
+    lrc: '',
+    cover: NEWBOY_COVER,
+  },
+  {
+    [CHUNSANYUE_MP3]: CHUNSANYUE_MP3,
+    name: '春三月',
+    author: '司南',
+    lrc: '',
+    cover: CHUNSANYUE_COVER,
+  },
+  {
+    [LX_MP3]: LX_MP3,
+    name: '旅行',
+    author: '许巍',
+    lrc: '',
+    cover: LX_COVER,
+  },
 ];
 
 // 播放顺序图标
