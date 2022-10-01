@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
-import Alert from './confirm';
+import MAlert from '../MAlert';
 
-class Confirm {
+class MRender {
   public root: any;
 
   /*
@@ -10,17 +10,21 @@ class Confirm {
       - 返回一个ReactDOMRoot的实例。
   */
   createRoot = (node?: HTMLElement | null) => {
+    // 创建root时先卸载root，防止控制台报错
+    if (this.root) {
+      this.root.unmount();
+    }
     this.root = ReactDOM.createRoot(
       node || (document.getElementById('confirm') as HTMLElement)
     );
   };
 
   // 将Alert渲染到confirm元素中
-  show = () => {
-    const confirm = document.getElementById('confirm');
+  show = (node?: string) => {
+    const confirm = document.getElementById(node || 'confirm');
     if (confirm?.childElementCount) return;
     this.createRoot();
-    this.root.render(<Alert close={this.close} />);
+    this.root.render(<MAlert close={this.close} type="render" />);
   };
 
   // 调用unmount防止出现重复createRoot的报错
@@ -31,6 +35,6 @@ class Confirm {
   };
 }
 
-const { show, close } = new Confirm();
+const { show, close } = new MRender();
 
 export { show, close };
