@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Dropdown, Menu, Slider } from 'antd';
 import classname from 'classname';
+import MusicIcon from '@/components/Music/MusicIcon';
 import { MUSIC_PATHS, MUSIC_ORDER_ICONS, MUSIC_LIST_INFO } from '@/constant';
 import { formatTime } from '@/utils';
 import { AudioInfo } from '@/typings/component';
@@ -9,10 +10,11 @@ import MIcons from '../Icons';
 import styles from './index.less';
 
 interface IProps {
-  toggleAudio?: boolean;
+  close?: Function;
 }
 
-const Audio: React.FC<IProps> = ({ toggleAudio }) => {
+const Audio: React.FC<IProps> = () => {
+  const [toggleAudio, setToggleAudio] = useState<boolean>(false);
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const [curPosition, setCurPosition] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
@@ -179,6 +181,11 @@ const Audio: React.FC<IProps> = ({ toggleAudio }) => {
     }
   };
 
+  // 切换Audio
+  const onToggleAudio = () => {
+    setToggleAudio(!toggleAudio);
+  };
+
   // 音量气泡框
   const volumeContent = (
     <Menu
@@ -199,86 +206,92 @@ const Audio: React.FC<IProps> = ({ toggleAudio }) => {
   );
 
   return (
-    <div className={classname(!toggleAudio && styles.toggle, styles.player)} ref={playerRef}>
+    <>
+      <MusicIcon onClick={onToggleAudio} />
       <div
-        className={classname(styles.musicInfo, !isPlay && styles.hideMusicInfo)}
-        ref={musicInfoRef}
+        className={classname(!toggleAudio && styles.toggle, styles.player)}
+        ref={playerRef}
       >
-        <div className={styles.nameInfo}>
-          <div className={styles.musicName}>{MUSIC_LIST_INFO[playIndex]?.name}</div>
-          <div className={styles.artistName}>{MUSIC_LIST_INFO[playIndex]?.author}</div>
-        </div>
-        <div className={styles.progress} onMouseMove={onHoverProgress}>
-          <div className={styles.insTime} ref={insTimeRef}>
-            {formatTime(hoverTime < 0 ? 0 : hoverTime)}
+        <div
+          className={classname(styles.musicInfo, !isPlay && styles.hideMusicInfo)}
+          ref={musicInfoRef}
+        >
+          <div className={styles.nameInfo}>
+            <div className={styles.musicName}>{MUSIC_LIST_INFO[playIndex]?.name}</div>
+            <div className={styles.artistName}>{MUSIC_LIST_INFO[playIndex]?.author}</div>
           </div>
-          <Slider
-            className={styles.timeSlider}
-            value={curPosition}
-            onChange={onChangePosition}
-            onAfterChange={onAfterChange}
-          />
+          <div className={styles.progress} onMouseMove={onHoverProgress}>
+            <div className={styles.insTime} ref={insTimeRef}>
+              {formatTime(hoverTime < 0 ? 0 : hoverTime)}
+            </div>
+            <Slider
+              className={styles.timeSlider}
+              value={curPosition}
+              onChange={onChangePosition}
+              onAfterChange={onAfterChange}
+            />
+          </div>
+          <div className={styles.time}>
+            <div className={styles.currentTime}>{formatTime(audioInfo.position)}</div>
+            <div className={styles.totalTime}>{formatTime(audioInfo.duration)}</div>
+          </div>
         </div>
-        <div className={styles.time}>
-          <div className={styles.currentTime}>{formatTime(audioInfo.position)}</div>
-          <div className={styles.totalTime}>{formatTime(audioInfo.duration)}</div>
+        <div className={styles.playerContent}>
+          <div className={styles.musicImgs}>
+            <div className={styles.img}>
+              <img
+                src={MUSIC_LIST_INFO[playIndex]?.cover}
+                alt=""
+                ref={coverRef}
+                className={classname(styles.cover, isPlay && styles.coverRotate)}
+              />
+            </div>
+            {!isReady && <div className={styles.bufferBox}>缓冲中...</div>}
+          </div>
+          <div className={styles.playerControls}>
+            <div className={classname(styles.btn)}>
+              <MIcons
+                name={MUSIC_ORDER_ICONS[playIconIndex]}
+                className={styles.controlBtn}
+                onClick={() => onChangePlayIcon()}
+              />
+            </div>
+            <div className={classname(styles.btn, styles.prevBtn)}>
+              <MIcons
+                name="icon-shangyishou"
+                className={styles.prev}
+                onClick={() => onPlayPrev()}
+              />
+            </div>
+            <div className={classname(styles.btn)}>
+              <MIcons
+                name={!isPlay ? 'icon-play-filling' : 'icon-pause-fill'}
+                className={styles.play}
+                onClick={onPlay}
+              />
+            </div>
+            <div className={classname(styles.btn, styles.nextBtn)}>
+              <MIcons
+                name="icon-xiayishou"
+                className={styles.next}
+                onClick={() => onPlayNext()}
+              />
+            </div>
+            <div className={classname(styles.btn)}>
+              <Dropdown
+                overlayClassName={styles.dropdown}
+                overlay={volumeContent}
+                placement="top"
+                trigger={['click']}
+                arrow
+              >
+                <MIcons name="icon-yinliang-jianshao" className={styles.controlBtn} />
+              </Dropdown>
+            </div>
+          </div>
         </div>
       </div>
-      <div className={styles.playerContent}>
-        <div className={styles.musicImgs}>
-          <div className={styles.img}>
-            <img
-              src={MUSIC_LIST_INFO[playIndex]?.cover}
-              alt=""
-              ref={coverRef}
-              className={classname(styles.cover, isPlay && styles.coverRotate)}
-            />
-          </div>
-          {!isReady && <div className={styles.bufferBox}>缓冲中...</div>}
-        </div>
-        <div className={styles.playerControls}>
-          <div className={classname(styles.btn)}>
-            <MIcons
-              name={MUSIC_ORDER_ICONS[playIconIndex]}
-              className={styles.controlBtn}
-              onClick={() => onChangePlayIcon()}
-            />
-          </div>
-          <div className={classname(styles.btn, styles.prevBtn)}>
-            <MIcons
-              name="icon-shangyishou"
-              className={styles.prev}
-              onClick={() => onPlayPrev()}
-            />
-          </div>
-          <div className={classname(styles.btn)}>
-            <MIcons
-              name={!isPlay ? 'icon-play-filling' : 'icon-pause-fill'}
-              className={styles.play}
-              onClick={onPlay}
-            />
-          </div>
-          <div className={classname(styles.btn, styles.nextBtn)}>
-            <MIcons
-              name="icon-xiayishou"
-              className={styles.next}
-              onClick={() => onPlayNext()}
-            />
-          </div>
-          <div className={classname(styles.btn)}>
-            <Dropdown
-              overlayClassName={styles.dropdown}
-              overlay={volumeContent}
-              placement="top"
-              trigger={['click']}
-              arrow
-            >
-              <MIcons name="icon-yinliang-jianshao" className={styles.controlBtn} />
-            </Dropdown>
-          </div>
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

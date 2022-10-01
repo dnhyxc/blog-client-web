@@ -1,28 +1,34 @@
 import ReactDOM from 'react-dom/client';
 import MAlert from '../MAlert';
+import Audio from '../Music';
 
 class MRender {
   public root: any;
+
+  public audioRoot: any;
 
   /*
     createRoot：
       - 创建rootFiber和FiberRoot，将他们连接起来，并且初始化rootFiber的updateQueue。
       - 返回一个ReactDOMRoot的实例。
   */
-  createRoot = (node?: HTMLElement | null) => {
+  createRoot = (tagName?: string) => {
     // 创建root时先卸载root，防止控制台报错
     if (this.root) {
       this.root.unmount();
     }
-    this.root = ReactDOM.createRoot(
-      node || (document.getElementById('confirm') as HTMLElement)
-    );
+    if (this.audioRoot) {
+      this.audioRoot.unmount();
+    }
+    if (tagName) {
+      this.audioRoot = ReactDOM.createRoot(document.getElementById(tagName) as HTMLElement);
+    } else {
+      this.root = ReactDOM.createRoot(document.getElementById('confirm') as HTMLElement);
+    }
   };
 
   // 将Alert渲染到confirm元素中
-  show = (node?: string) => {
-    const confirm = document.getElementById(node || 'confirm');
-    if (confirm?.childElementCount) return;
+  show = () => {
     this.createRoot();
     this.root.render(<MAlert close={this.close} type="render" />);
   };
@@ -33,8 +39,21 @@ class MRender {
       this.root.unmount();
     }
   };
+
+  // 渲染Audio
+  showAudio = () => {
+    this.createRoot('audio');
+    this.audioRoot.render(<Audio close={close} />);
+  };
+
+  // 渲染Audio
+  closeAudio = () => {
+    if (this.audioRoot) {
+      this.audioRoot.unmount();
+    }
+  };
 }
 
-const { show, close } = new MRender();
+const { show, close, showAudio, closeAudio } = new MRender();
 
-export { show, close };
+export { show, close, showAudio, closeAudio };
