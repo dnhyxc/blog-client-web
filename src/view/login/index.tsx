@@ -12,7 +12,7 @@ import classname from 'classname';
 import useStore from '@/store';
 import { register, login, verify, resetPassword } from '@/service';
 import { normalizeResult, useCookies, encrypt, decrypt, success, error } from '@/utils';
-import { close } from '@/components/Confirm';
+import { close } from '@/components/Render';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 

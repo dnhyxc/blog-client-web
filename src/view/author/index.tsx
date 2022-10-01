@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Tabs, Timeline } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import Header from '@/components/Header';
-import MAlert from '@/components/Alert';
+import MAlert from '@/components/MAlert';
 import MIcons from '@/components/Icons';
 import Content from '@/components/Content';
 import Card from '@/components/Card';

@@ -5,7 +5,7 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { error } from '@/utils';
-import { close } from '@/components/Confirm';
+import { close } from '@/components/Render';
 import {
   ArticleDetailParams,
   ScrollEvent,

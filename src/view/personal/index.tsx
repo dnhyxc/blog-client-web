@@ -12,7 +12,7 @@ import Content from '@/components/Content';
 import Image from '@/components/Image';
 import Card from '@/components/Card';
 import MIcons from '@/components/Icons';
-import MAlert from '@/components/Alert';
+import MAlert from '@/components/MAlert';
 import Header from '@/components/Header';
 import BackTop from '@/components/BackTop';
 import * as Service from '@/service';

@@ -1,7 +1,7 @@
 import commonStore, { Auth } from '@/store/common';
 import fetch from 'isomorphic-fetch';
 import { stringify } from 'query-string';
-import { show } from '@/components/Confirm';
+import { show } from '@/components/Render';
 import { addGatewayPattern } from './urlTool';
 import { error } from './message';
 

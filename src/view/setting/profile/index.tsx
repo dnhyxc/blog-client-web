@@ -5,7 +5,7 @@ import useStore from '@/store';
 import { useLoginStatus, useHtmlWidth, useVerifyToken } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, storage, success, error, info } from '@/utils';
-import MAlert from '@/components/Alert';
+import MAlert from '@/components/MAlert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
 import Image from '@/components/Image';

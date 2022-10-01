@@ -5,7 +5,7 @@ import Content from '@/components/Content';
 import Header from '@/components/Header';
 import RightBar from '@/components/RightBar';
 import Card from '@/components/Card';
-import MAlert from '@/components/Alert';
+import MAlert from '@/components/MAlert';
 import BackTop from '@/components/BackTop';
 import MSegmented from '@/components/Segmented';
 import MIcons from '@/components/Icons';

@@ -15,7 +15,7 @@ import type { MenuProps } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import UploadFile from '@/components/Upload';
-import MAlert from '@/components/Alert';
+import MAlert from '@/components/MAlert';
 import useStore from '@/store';
 import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Server from '@/service';

@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Content from '@/components/Content';
 import Card from '@/components/Card';
 import RightBar from '@/components/RightBar';
-import MAlert from '@/components/Alert';
+import MAlert from '@/components/MAlert';
 import MIcons from '@/components/Icons';
 import useStore from '@/store';
 import { PAGESIZE } from '@/constant';

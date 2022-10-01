@@ -8,7 +8,7 @@ import { normalizeResult } from '@/utils/tools';
 import { formatGapTime, error } from '@/utils';
 import { HEAD_UEL } from '@/constant';
 import MIcons from '@/components/Icons';
-import MAlert from '@/components/Alert';
+import MAlert from '@/components/MAlert';
 import { useLoginStatus, useScroll } from '@/hooks';
 import { CommentParams, GiveLikeResult, DeleteCommentResult } from '@/typings/common';
 import DraftInput from '../DraftInput';

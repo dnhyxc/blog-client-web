@@ -13,7 +13,7 @@ import Header from '@/components/Header';
 import RightBar from '@/components/RightBar';
 import Card from '@/components/Card';
 import MIcons from '@/components/Icons';
-import MAlert from '@/components/Alert';
+import MAlert from '@/components/MAlert';
 import MSearch from '@/components/MSearch';
 import BackTop from '@/components/BackTop';
 import {

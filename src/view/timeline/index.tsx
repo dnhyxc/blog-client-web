@@ -7,7 +7,7 @@ import Card from '@/components/Card';
 import RightBar from '@/components/RightBar';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
-import MAlert from '@/components/Alert';
+import MAlert from '@/components/MAlert';
 import Empty from '@/components/Empty';
 import BackTop from '@/components/BackTop';
 import MIcons from '@/components/Icons';

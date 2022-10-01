@@ -5,7 +5,7 @@ import classname from 'classname';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import Card from '@/components/Card';
-import MAlert from '@/components/Alert';
+import MAlert from '@/components/MAlert';
 import MIcons from '@/components/Icons';
 import BackTop from '@/components/BackTop';
 import Footer from '@/components/Footer';
