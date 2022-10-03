@@ -29,6 +29,8 @@ class Player {
 
   onClose: Dispatcher;
 
+  onSelectMusic: Dispatcher;
+
   constructor() {
     this.audioContext = new AudioContext();
     this.playList = [];
@@ -52,6 +54,7 @@ class Player {
     this.onSetPosition = new Dispatcher();
     this.onStochastic = new Dispatcher();
     this.onClose = new Dispatcher();
+    this.onSelectMusic = new Dispatcher();
   }
 
   get isEmpty() {
@@ -184,6 +187,13 @@ class Player {
     }
     this.play();
     this.onStochastic.emit(this);
+  }
+
+  selectMusic(value: number) {
+    this.stop();
+    this.playIndex = value;
+    this.play();
+    this.onSelectMusic.emit(this);
   }
 
   setPosition(val: number) {

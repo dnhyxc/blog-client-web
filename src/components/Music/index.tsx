@@ -21,6 +21,7 @@ const Audio: React.FC<IProps> = () => {
   const [volume, setVolume] = useState<number>(50);
   const [hoverTime, setHoverTime] = useState<number>(0);
   const [playIconIndex, setPlayIconIndex] = useState<number>(0);
+  const [showMusicMenu, setShowMusicMenu] = useState<boolean>(false);
   const [audioInfo, setAudioInfo] = useState<AudioInfo>({
     position: 0,
     duration: 0.001,
@@ -81,6 +82,8 @@ const Audio: React.FC<IProps> = () => {
     player.onStochastic.listen(() => {});
 
     player.onClose.listen(() => {});
+
+    player.onSelectMusic.listen(() => {});
   }, [playIconIndex, playIndex]);
 
   useEffect(() => {
@@ -149,13 +152,13 @@ const Audio: React.FC<IProps> = () => {
   const onHoverProgress = (e: any) => {
     const musicInfoOffsetleft = musicInfoRef.current?.offsetLeft || 0;
     const playerOffsetleft = playerRef.current?.offsetLeft || 0;
-    // 116 为progress元素的marginLeft
-    const offsetLeftSum = musicInfoOffsetleft + playerOffsetleft + 116;
+    // 124 为progress元素的marginLeft
+    const offsetLeftSum = musicInfoOffsetleft + playerOffsetleft + 124;
     const position = e.pageX - offsetLeftSum || 0;
     // 设置insTime的偏移量
     insTimeRef.current!.style.left = `${position - 18}px`;
-    // 计算当前位置的比例，144为progress元素的总长度
-    const currentPercentage = position / 144;
+    // 计算当前位置的比例，136 为progress元素的总长度
+    const currentPercentage = position / 136;
     // 计算position
     const currentPosition = player.duration * currentPercentage;
     setHoverTime(currentPosition);
@@ -184,6 +187,16 @@ const Audio: React.FC<IProps> = () => {
   // 切换Audio
   const onToggleAudio = () => {
     setToggleAudio(!toggleAudio);
+  };
+
+  const onShowMusicNemu = () => {
+    setShowMusicMenu(!showMusicMenu);
+  };
+
+  const onSelectItem = (path: string) => {
+    const index = player.playList.findIndex((i) => i.url === path);
+    player.selectMusic(index);
+    setShowMusicMenu(!showMusicMenu);
   };
 
   // 音量气泡框
@@ -236,7 +249,27 @@ const Audio: React.FC<IProps> = () => {
             <div className={styles.totalTime}>{formatTime(audioInfo.duration)}</div>
           </div>
         </div>
+        <div
+          className={classname(styles.musicList, !showMusicMenu && styles.hideMusicList)}
+        >
+          {MUSIC_LIST_INFO.map((i) => (
+            <div
+              className={styles.musicItem}
+              key={i.key}
+              onClick={() => onSelectItem(i.path)}
+            >
+              {i.name}
+            </div>
+          ))}
+        </div>
         <div className={styles.playerContent}>
+          <div className={classname(styles.musicMenu)}>
+            <MIcons
+              name="icon-icon_mulu"
+              className={styles.controlBtn}
+              onClick={() => onShowMusicNemu()}
+            />
+          </div>
           <div className={styles.musicImgs}>
             <div className={styles.img}>
               <img
