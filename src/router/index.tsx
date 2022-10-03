@@ -5,10 +5,9 @@
  * @LastEditors: dnh
  * @FilePath: \src\router\index.tsx
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useRoutes, BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
-import { showAudio } from '@/components/Render';
 import zhCN from 'antd/lib/locale/zh_CN';
 import routeConfig from './config';
 
@@ -17,10 +16,6 @@ const RouterConfig = () => {
 };
 
 const App: React.FC = () => {
-  useEffect(() => {
-    showAudio();
-  }, []);
-
   return (
     <ConfigProvider locale={zhCN}>
       <BrowserRouter>
