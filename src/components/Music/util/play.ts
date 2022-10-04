@@ -79,19 +79,13 @@ class Player {
     return this.current.buffer ? this.current.buffer.duration : 0.001;
   }
 
-  readAudioBuffer = (url: string) => {
-    const request = new XMLHttpRequest();
-    return new Promise((resolve, reject) => {
-      request.open('GET', url, true);
-      request.responseType = 'arraybuffer';
-      request.onload = () => {
-        this.audioContext.decodeAudioData(request.response, (buffer) => {
-          return buffer ? resolve(buffer) : reject('decoding error');
-        });
-      };
-      request.onerror = (error) => reject(error);
-      request.send();
-    });
+  readAudioBuffer = async (url: string) => {
+    try {
+      const arrayBuffer = await fetch(url).then((res) => res.arrayBuffer());
+      return this.audioContext.decodeAudioData(arrayBuffer);
+    } catch (error) {
+      throw new Error('解析失败', error as any);
+    }
   };
 
   async append(url: string) {
