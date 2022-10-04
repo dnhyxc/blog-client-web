@@ -84,7 +84,7 @@ class Player {
       const arrayBuffer = await fetch(url).then((res) => res.arrayBuffer());
       return this.audioContext.decodeAudioData(arrayBuffer);
     } catch (error) {
-      throw new Error('解析失败', error as any);
+      throw new Error('解析失败', error as Error);
     }
   };
 
