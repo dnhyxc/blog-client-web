@@ -18,14 +18,18 @@ const Audio: React.FC<IProps> = () => {
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const [curPosition, setCurPosition] = useState<number>(0);
   const [isReady, setIsReady] = useState<boolean>(false);
-  const [volume, setVolume] = useState<number>(50);
   const [hoverTime, setHoverTime] = useState<number>(0);
   const [playIconIndex, setPlayIconIndex] = useState<number>(0);
   const [showMusicMenu, setShowMusicMenu] = useState<boolean>(false);
+  const [currentLrc, setCurrentLrc] = useState<{ time: number; line: number }>({
+    time: 0,
+    line: 0,
+  });
   const [audioInfo, setAudioInfo] = useState<AudioInfo>({
     position: 0,
     duration: 0.001,
   });
+  const [showLrc, setShowLrc] = useState<boolean>(false);
 
   const coverRef = useRef<HTMLImageElement | null>(null);
   const insTimeRef = useRef<HTMLDivElement | null>(null);
@@ -35,6 +39,8 @@ const Audio: React.FC<IProps> = () => {
   const timerRef = useRef<any>(null);
   const playIconNoRef = useRef<number>(0);
   const playIndexRef = useRef<number>(player.playIndex || 0);
+  const lrcRef = useRef<HTMLDivElement | null>(null);
+  const volumeRef = useRef<number>(50);
 
   // 计算当前播放的索引
   const playIndex = useMemo(() => {
@@ -62,6 +68,7 @@ const Audio: React.FC<IProps> = () => {
     // 切换事件触发时，动态更改当前播放歌曲的索引，以达到随机播放及单曲循环的效果
     player.onChange.listen(() => {
       player.stochastic(playIconNoRef.current, playIndexRef.current);
+      player.volume(volumeRef.current / 100);
     });
 
     player.onPlay.listen(() => {
@@ -87,6 +94,17 @@ const Audio: React.FC<IProps> = () => {
   }, [playIconIndex, playIndex]);
 
   useEffect(() => {
+    player.current?.lrc?.ms?.forEach((i: any, index: number) => {
+      if (i.t <= player.position) {
+        setCurrentLrc({
+          time: i.t,
+          line: index,
+        });
+      }
+    });
+  }, [lrcRef, player.current.lrc, player.position]);
+
+  useEffect(() => {
     if (isPlay) {
       draw();
     } else {
@@ -98,11 +116,6 @@ const Audio: React.FC<IProps> = () => {
       }
     };
   }, [isPlay]);
-
-  // 监听volume，设置音量
-  useEffect(() => {
-    player.volume(volume / 100);
-  }, [volume]);
 
   const draw = () => {
     animationRef.current = requestAnimationFrame(draw);
@@ -165,12 +178,13 @@ const Audio: React.FC<IProps> = () => {
   };
 
   const onSliderChange = (value: number) => {
-    setVolume(value);
+    volumeRef.current = value;
+    player.volume(volumeRef.current / 100);
   };
 
   // 鼠标抬起时恢复声音
   const onAfterChange = () => {
-    player.volume(volume / 100);
+    player.volume(volumeRef.current / 100);
   };
 
   // 切换播放图标
@@ -199,6 +213,10 @@ const Audio: React.FC<IProps> = () => {
     setShowMusicMenu(!showMusicMenu);
   };
 
+  const onShowLrc = () => {
+    setShowLrc(!showLrc);
+  };
+
   // 音量气泡框
   const volumeContent = (
     <Menu
@@ -210,7 +228,7 @@ const Audio: React.FC<IProps> = () => {
               <div className={styles.sliderWrap}>
                 <Slider vertical onChange={onSliderChange} defaultValue={50} />
               </div>
-              <div className={styles.count}>{volume}%</div>
+              <div className={styles.count}>{volumeRef.current}%</div>
             </div>
           ),
         },
@@ -230,7 +248,30 @@ const Audio: React.FC<IProps> = () => {
           ref={musicInfoRef}
         >
           <div className={styles.nameInfo}>
-            <div className={styles.musicName}>{MUSIC_LIST_INFO[playIndex]?.name}</div>
+            <div className={styles.musicName}>
+              {player.current.lrc && !showLrc ? (
+                <div
+                  className={styles.musicLrcList}
+                  style={{
+                    transform: `translateY(${-(currentLrc.line * 25)}px)`,
+                  }}
+                >
+                  {player?.current?.lrc?.ms?.map((i: any, index: number) => (
+                    <div
+                      className={classname(
+                        styles.musicLrcItem,
+                        currentLrc.time === i.t && styles.currentLine
+                      )}
+                      key={index}
+                    >
+                      {i.c}
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                MUSIC_LIST_INFO[playIndex]?.name
+              )}
+            </div>
             <div className={styles.artistName}>{MUSIC_LIST_INFO[playIndex]?.author}</div>
           </div>
           <div className={styles.progress} onMouseMove={onHoverProgress}>
@@ -249,6 +290,35 @@ const Audio: React.FC<IProps> = () => {
             <div className={styles.totalTime}>{formatTime(audioInfo.duration)}</div>
           </div>
         </div>
+        {isPlay && (
+          <div className={classname(styles.lrcInfo, showLrc && styles.showLrcInfo)}>
+            <div className={styles.lrcHeader}>
+              <div className={styles.musicTitle}>{MUSIC_LIST_INFO[playIndex]?.name}</div>
+              <div className={styles.authorName}>{MUSIC_LIST_INFO[playIndex]?.author}</div>
+            </div>
+            <div className={classname(styles.musicLrcWrap)} ref={lrcRef}>
+              <div
+                className={styles.musicLrcList}
+                style={{
+                  transform: `translateY(${-(currentLrc.line * 25 - 175)}px)`,
+                }}
+              >
+                {player?.current?.lrc?.ms?.map((i: any, index: number) => (
+                  <div
+                    className={classname(
+                      styles.musicLrcItem,
+                      currentLrc.time === i.t && styles.currentLine
+                    )}
+                    key={index}
+                    title={i.c}
+                  >
+                    {i.c}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
         <div
           className={classname(styles.musicList, !showMusicMenu && styles.hideMusicList)}
         >
@@ -271,6 +341,15 @@ const Audio: React.FC<IProps> = () => {
             />
           </div>
           <div className={styles.musicImgs}>
+            {isPlay && (
+              <div className={styles.lrcMenu}>
+                <MIcons
+                  name={showLrc ? 'icon-shuangjiantou-xia' : 'icon-shuangjiantou-shang'}
+                  className={styles.lrcBtn}
+                  onClick={() => onShowLrc()}
+                />
+              </div>
+            )}
             <div className={styles.img}>
               <img
                 src={MUSIC_LIST_INFO[playIndex]?.cover}
@@ -310,7 +389,7 @@ const Audio: React.FC<IProps> = () => {
                 onClick={() => onPlayNext()}
               />
             </div>
-            <div className={classname(styles.btn)}>
+            <div className={classname(styles.btn, volumeRef.current === 0 && styles.mute)}>
               <Dropdown
                 overlayClassName={styles.dropdown}
                 overlay={volumeContent}

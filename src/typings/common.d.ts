@@ -293,3 +293,13 @@ export interface CreateDraftParamsResult {
   content: string;
   createTime: number;
 }
+
+// 歌词信息
+export interface LrcInfo {
+  ti: string;
+  ar: string;
+  al: string;
+  by: string;
+  offset: number;
+  ms: { t: string; c: string }[];
+}

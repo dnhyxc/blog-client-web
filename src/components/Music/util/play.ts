@@ -1,5 +1,6 @@
 import { getRandomNumber } from '@/utils';
-import { MUSIC_PATHS } from '@/constant';
+import { MUSIC_PATHS, MUSIC_LRCS } from '@/constant';
+import { parseLrc } from './parseLrc';
 import { Dispatcher } from './dispatcher';
 
 class Player {
@@ -44,6 +45,7 @@ class Player {
       source: null,
       buffer: null,
       gainNode: null,
+      lrc: null,
     };
 
     this.onPlay = new Dispatcher();
@@ -97,6 +99,7 @@ class Player {
       source: null,
       buffer: await this.readAudioBuffer(url),
       gainNode: this.audioContext.createGain(), // 创建音频处理模块
+      lrc: await parseLrc(MUSIC_LRCS[url]),
     });
     if (isEmpty) {
       this.onReady.emit(this);

@@ -7,13 +7,17 @@ import MAIN_COVER from '@/assets/images/mainCover.png';
 import CYWL_URL from '@/assets/images/cywl.jpg';
 import BOAT_TO_CHINA_MP3 from '@/assets/music/boatToChina.mp3';
 import MCDGB_MP3 from '@/assets/music/mcdgb.mp3';
-import LX_MP3 from '@/assets/music/lx.mp3';
+import IS_YOU_MP3 from '@/assets/music/isYou.mp3';
 import CHUNSANYUE_MP3 from '@/assets/music/chunsanyue.mp3';
 import BOAT_TO_CHINA_LRC from '@/assets/music/lrc/boatToChina.lrc';
+import CHUNSANYUE_LRC from '@/assets/music/lrc/chunsanyue.lrc';
+import IS_YOU_LRC from '@/assets/music/lrc/isYou.lrc';
+import MCDGB_LRC from '@/assets/music/lrc/mcdgb.lrc';
+import NEWBOY_LRC from '@/assets/music/lrc/newBoy.lrc';
 import NEWBOY_MP3 from '@/assets/music/newBoy.mp3';
 import BOAT_TO_CHINA_COVER from '@/assets/images/boatToChina.jpg';
 import CHUNSANYUE_COVER from '@/assets/images/chunsanyue.jpg';
-import LX_COVER from '@/assets/images/lx.jpg';
+import IS_YOU_COVER from '@/assets/images/isYou.jpg';
 import MCDGB_COVER from '@/assets/images/mcdgb.jpg';
 import NEWBOY_COVER from '@/assets/images/newBoy.jpg';
 
@@ -28,8 +32,16 @@ export {
   MCDGB_MP3,
   NEWBOY_MP3,
   CHUNSANYUE_MP3,
-  LX_MP3,
+  IS_YOU_MP3,
   BOAT_TO_CHINA_LRC,
+};
+
+export const MUSIC_LRCS = {
+  [BOAT_TO_CHINA_MP3]: BOAT_TO_CHINA_LRC,
+  [MCDGB_MP3]: MCDGB_LRC,
+  [NEWBOY_MP3]: NEWBOY_LRC,
+  [CHUNSANYUE_MP3]: CHUNSANYUE_LRC,
+  [IS_YOU_MP3]: IS_YOU_LRC,
 };
 
 // 歌曲url
@@ -38,7 +50,7 @@ export const MUSIC_PATHS = [
   MCDGB_MP3,
   NEWBOY_MP3,
   CHUNSANYUE_MP3,
-  LX_MP3,
+  IS_YOU_MP3,
 ];
 
 // 歌曲列表信息
@@ -81,12 +93,12 @@ export const MUSIC_LIST_INFO = [
   },
   {
     key: '5',
-    [LX_MP3]: LX_MP3,
-    path: LX_MP3,
-    name: '旅行',
-    author: '许巍',
+    [IS_YOU_MP3]: IS_YOU_MP3,
+    path: IS_YOU_MP3,
+    name: '是你',
+    author: '梦然',
     lrc: '',
-    cover: LX_COVER,
+    cover: IS_YOU_COVER,
   },
 ];
 

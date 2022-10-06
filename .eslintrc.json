@@ -68,7 +68,10 @@
     "jsx-a11y/control-has-associated-label": 0,
     "no-plusplus": 0,
     "eslintno-case-declarations": 0,
-    "no-case-declarations": 0
+    "no-case-declarations": 0,
+    "guard-for-in": 0,
+    "react/no-array-index-key": 0,
+    "no-restricted-syntax": 0
   },
   "settings": {
     "import/parsers": {
