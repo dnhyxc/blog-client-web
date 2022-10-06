@@ -342,7 +342,7 @@ const Audio: React.FC<IProps> = () => {
           </div>
           <div className={styles.musicImgs}>
             {isPlay && (
-              <div className={styles.lrcMenu}>
+              <div className={styles.lrcMenu} onClick={() => onShowLrc()}>
                 <MIcons
                   name={showLrc ? 'icon-shuangjiantou-xia' : 'icon-shuangjiantou-shang'}
                   className={styles.lrcBtn}
