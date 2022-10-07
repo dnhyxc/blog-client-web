@@ -211,9 +211,7 @@ const Author: React.FC<IProps> = () => {
         {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
         <div className={styles.headerWrap}>
           <Header needLeft excludesWidth right={rightNode()}>
-            <div className={styles.headerContent}>
-              <div>关于博主</div>
-            </div>
+            <div className={styles.headerContent}>关于博主</div>
           </Header>
         </div>
         <Content

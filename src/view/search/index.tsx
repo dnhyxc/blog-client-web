@@ -187,9 +187,7 @@ const Search: React.FC<IProps> = () => {
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth>
-          <div className={styles.headerContent}>
-            <div>文章搜索</div>
-          </div>
+          <div className={styles.headerContent}>文章搜索</div>
         </Header>
       </div>
       <Content

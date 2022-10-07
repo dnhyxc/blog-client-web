@@ -18,9 +18,7 @@ const Setting: React.FC<IProps> = () => {
     <div className={styles.Setting}>
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth>
-          <div className={styles.headerContent}>
-            <div>我的主页</div>
-          </div>
+          <div className={styles.headerContent}>我的主页</div>
         </Header>
       </div>
       <Layout className={styles.layout}>
