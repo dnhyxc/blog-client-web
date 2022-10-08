@@ -5,7 +5,7 @@
  * @LastEditors: dnh
  * @FilePath: \src\view\detail\index.tsx
  */
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Affix, BackTop, Spin, Button } from 'antd';
 import classname from 'classname';
@@ -23,18 +23,50 @@ import AnotherArticle from '@/components/AnotherArticle';
 import { useGetArticleDetail, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
 import { formatGapTime } from '@/utils';
-import { ArticleDetailParams } from '@/typings/common';
+import { ArticleDetailParams, CommentParams } from '@/typings/common';
 import styles from './index.less';
 
 const ArticleDetail: React.FC = () => {
+  const [commentCount, setCommentCount] = useState<number>(0);
   const { id } = useParams();
   const navigate = useNavigate();
-
   const { detail, loading } = useGetArticleDetail({ id });
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
+  const commentRef = useRef<HTMLDivElement | null>(null);
+
+  // 高级搜索
+  const toSearch = () => {
+    navigate('/search');
+  };
+
+  // 渲染右侧搜索
+  const rightNode = () => (
+    <div className={styles.searchWrap}>
+      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
+    </div>
+  );
+
+  // 文章点赞
+  const onLikeArticle = () => {
+    console.log(id, '点赞');
+  };
+
+  // 分享
+  const onShare = () => {
+    console.log(id, '分享');
+  };
+
+  const getCommentLength = (comments: CommentParams[]) => {
+    let count = 0;
+    comments.forEach((i) => {
+      const length: number = i.replyList?.length || 0;
+      count += length + 1;
+    });
+    setCommentCount(count);
+  };
 
   // 编辑文章
   const onEditArticle = () => {
@@ -44,6 +76,13 @@ const ArticleDetail: React.FC = () => {
   // 去我的主页
   const toSetting = (authorId: string | undefined) => {
     navigate(`/personal?id=${authorId}`);
+  };
+
+  // 滚动到评论
+  const onScrollToComment = () => {
+    if (!commentRef.current) return;
+    const { offsetTop } = commentRef.current;
+    document.documentElement.scrollTop = offsetTop;
   };
 
   const renderCoverImg = (detail: ArticleDetailParams) => {
@@ -81,28 +120,6 @@ const ArticleDetail: React.FC = () => {
     );
   };
 
-  // 高级搜索
-  const toSearch = () => {
-    navigate('/search');
-  };
-
-  // 渲染右侧搜索
-  const rightNode = () => (
-    <div className={styles.searchWrap}>
-      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
-    </div>
-  );
-
-  // 文章点赞
-  const onLikeArticle = () => {
-    console.log(id, '点赞');
-  };
-
-  // 分享
-  const onShare = () => {
-    console.log(id, '分享');
-  };
-
   return (
     <Spin spinning={loading} className={styles.spinWrap} tip="正在卖力加载中...">
       <div
@@ -120,22 +137,25 @@ const ArticleDetail: React.FC = () => {
           <div className={styles.content}>
             <div className={styles.preview}>
               <div className={styles.multibar}>
-                <div className={styles.actionBtn} onClick={onLikeArticle}>
+                <div className={styles.actionBtn}>
                   <MIcons
                     name="icon-24gf-thumbsUp2"
                     className={styles.actionIcon}
                     onClick={onLikeArticle}
                     customStyle
                   />
-                  <span>{detail.likeCount}</span>
+                  <span className={styles.likeCount}>{detail?.likeCount}</span>
                 </div>
-                <div className={styles.actionBtn} onClick={onLikeArticle}>
+                <div className={styles.actionBtn}>
                   <MIcons
                     name="icon-pinglun1"
                     className={styles.commentIcon}
-                    onClick={onLikeArticle}
+                    onClick={onScrollToComment}
                     customStyle
                   />
+                  <span className={styles.likeCount}>
+                    {commentCount > 999 ? <span title={(commentCount && JSON.stringify(commentCount)) || ''}>999+</span> : commentCount}
+                  </span>
                 </div>
                 <div className={styles.actionBtn}>
                   <MIcons
@@ -169,8 +189,8 @@ const ArticleDetail: React.FC = () => {
               <div className={styles.anotherArticle}>
                 <AnotherArticle id={id} />
               </div>
-              <div className={styles.commentList}>
-                <Comments authorId={detail.authorId} />
+              <div className={styles.commentList} ref={commentRef}>
+                <Comments authorId={detail.authorId} getCommentLength={getCommentLength} />
               </div>
             </div>
             <div className={styles.rightBar}>

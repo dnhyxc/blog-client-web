@@ -32,6 +32,8 @@ class Player {
 
   onSelectMusic: Dispatcher;
 
+  static instance: Player;
+
   constructor() {
     this.audioContext = new AudioContext();
     this.playList = [];
@@ -57,6 +59,14 @@ class Player {
     this.onStochastic = new Dispatcher();
     this.onClose = new Dispatcher();
     this.onSelectMusic = new Dispatcher();
+  }
+
+  // 单例模式
+  static getInstance() {
+    if (!this.instance) {
+      this.instance = new Player();
+    }
+    return this.instance;
   }
 
   get isEmpty() {
@@ -217,4 +227,4 @@ class Player {
   }
 }
 
-export const player = new Player();
+export const player = Player.getInstance();
