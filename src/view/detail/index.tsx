@@ -93,6 +93,16 @@ const ArticleDetail: React.FC = () => {
     </div>
   );
 
+  // 文章点赞
+  const onLikeArticle = () => {
+    console.log(id, '点赞');
+  };
+
+  // 分享
+  const onShare = () => {
+    console.log(id, '分享');
+  };
+
   return (
     <Spin spinning={loading} className={styles.spinWrap} tip="正在卖力加载中...">
       <div
@@ -109,6 +119,33 @@ const ArticleDetail: React.FC = () => {
         {detail && (
           <div className={styles.content}>
             <div className={styles.preview}>
+              <div className={styles.multibar}>
+                <div className={styles.actionBtn} onClick={onLikeArticle}>
+                  <MIcons
+                    name="icon-24gf-thumbsUp2"
+                    className={styles.actionIcon}
+                    onClick={onLikeArticle}
+                    customStyle
+                  />
+                  <span>{detail.likeCount}</span>
+                </div>
+                <div className={styles.actionBtn} onClick={onLikeArticle}>
+                  <MIcons
+                    name="icon-pinglun1"
+                    className={styles.commentIcon}
+                    onClick={onLikeArticle}
+                    customStyle
+                  />
+                </div>
+                <div className={styles.actionBtn}>
+                  <MIcons
+                    name="icon-tiaoguofenxiang"
+                    className={styles.shareIcon}
+                    onClick={onShare}
+                    customStyle
+                  />
+                </div>
+              </div>
               <Preview
                 className={styles.previewContent}
                 mackdown={detail.content}

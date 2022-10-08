@@ -330,11 +330,12 @@ const Audio: React.FC = () => {
           </div>
           <div className={styles.musicImgs}>
             {isPlay && (
-              <div className={styles.lrcMenu} onClick={() => onShowLrc()}>
+              <div className={styles.lrcMenu}>
                 <MIcons
                   name={showLrc ? 'icon-shuangjiantou-xia' : 'icon-shuangjiantou-shang'}
                   className={styles.lrcBtn}
                   onClick={() => onShowLrc()}
+                  customStyle
                 />
               </div>
             )}

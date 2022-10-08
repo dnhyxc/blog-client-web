@@ -11,11 +11,8 @@ interface IProps {
 
 const MusicIcon: React.FC<IProps> = ({ icon = 'icon-yinle', type, onClick }) => {
   return (
-    <div
-      className={classname(styles.MusicIcon, type && styles.show)}
-      onClick={() => onClick()}
-    >
-      <MIcons name={icon} className={styles.icon} onClick={() => onClick()} />
+    <div className={classname(styles.MusicIcon, type && styles.show)}>
+      <MIcons name={icon} className={styles.icon} onClick={() => onClick()} customStyle />
     </div>
   );
 };

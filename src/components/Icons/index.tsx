@@ -10,6 +10,7 @@ interface IProps {
   className?: string;
   iconWrapClass?: string;
   onClick?: () => void;
+  customStyle?: boolean;
 }
 
 const MIcons: React.FC<IProps> = ({
@@ -20,10 +21,11 @@ const MIcons: React.FC<IProps> = ({
   iconWrapClass,
   onClick,
   title,
+  customStyle,
 }) => {
   return (
     <span
-      className={classname(styles.MIcons, iconWrapClass)}
+      className={classname(styles.MIcons, iconWrapClass, customStyle && styles.customStyle)}
       id="ON_REPLAY"
       onClick={(e) => {
         e.stopPropagation();
