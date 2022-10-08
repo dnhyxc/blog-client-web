@@ -75,18 +75,10 @@ const Audio: React.FC = () => {
       setIsPlay(false);
     });
 
-    player.onVolume.listen(() => {});
-
     // 滑动时间轴时关闭声音
     player.onSetPosition.listen(() => {
       player.volume(0);
     });
-
-    player.onStochastic.listen(() => {});
-
-    player.onClose.listen(() => {});
-
-    player.onSelectMusic.listen(() => {});
   }, [playIconIndex, playIndex]);
 
   useEffect(() => {

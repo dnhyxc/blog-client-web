@@ -71,7 +71,8 @@
     "no-case-declarations": 0,
     "guard-for-in": 0,
     "react/no-array-index-key": 0,
-    "no-restricted-syntax": 0
+    "no-restricted-syntax": 0,
+    "no-constructor-return": 0
   },
   "settings": {
     "import/parsers": {
