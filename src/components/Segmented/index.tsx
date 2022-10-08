@@ -1,18 +1,25 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from 'react';
 import classname from 'classname';
 import { ARTICLE_CLASSIFY } from '@/constant';
 import styles from './index.less';
 
 interface IProps {
-  // eslint-disable-next-line no-unused-vars
   onClick: (tagName: string) => void;
-  // eslint-disable-next-line no-unused-vars
   getOffsetHeight?: (height: number) => void;
   className?: string;
+  classify?: string | null;
 }
 
-const MSegmented: React.FC<IProps> = ({ onClick, className, getOffsetHeight }) => {
-  const [tagIndex, setTagIndex] = useState<number>(0);
+const MSegmented: React.FC<IProps> = ({
+  onClick,
+  className,
+  getOffsetHeight,
+  classify,
+}) => {
+  const [tagIndex, setTagIndex] = useState<number>(
+    ARTICLE_CLASSIFY.findIndex((i) => i === classify) || 0
+  );
   const [offsetTop, setOffsetTop] = useState<number>(0);
   const [offsetLeft, setOffsetLeft] = useState<number>(0);
   const [clientWidth, setClientWidth] = useState<number>(0);
@@ -32,6 +39,16 @@ const MSegmented: React.FC<IProps> = ({ onClick, className, getOffsetHeight }) =
       window.removeEventListener('resize', onResize);
     };
   }, [tagIndex]);
+
+  useEffect(() => {
+    const index = ARTICLE_CLASSIFY.findIndex((i) => i === classify);
+    // const defaultTags = tagRef?.current?.children;
+    // const selectTag = defaultTags?.[index];
+    // const { offsetTop, offsetLeft, clientWidth } = selectTag;
+    // setSelectSize({ offsetTop, offsetLeft, clientWidth });
+    // getOffsetHeight && getOffsetHeight(tagRef?.current?.offsetHeight);
+    onResize(null, index);
+  }, [classify]);
 
   const onSelectTag = (e: any, tag: string, index: number) => {
     const { offsetTop, offsetLeft, clientWidth } = e.target;
@@ -54,12 +71,14 @@ const MSegmented: React.FC<IProps> = ({ onClick, className, getOffsetHeight }) =
     setClientWidth(clientWidth);
   };
 
-  const onResize = () => {
+  const onResize = (e: any, index?: number) => {
     const defaultTags = tagRef?.current?.children;
-    const selectTag = defaultTags?.[tagIndex];
-    const { offsetTop, offsetLeft, clientWidth } = selectTag;
-    setSelectSize({ offsetTop, offsetLeft, clientWidth });
-    getOffsetHeight && getOffsetHeight(tagRef?.current?.offsetHeight);
+    const selectTag = defaultTags?.[index || tagIndex];
+    if (selectTag) {
+      const { offsetTop, offsetLeft, clientWidth } = selectTag;
+      setSelectSize({ offsetTop, offsetLeft, clientWidth });
+      getOffsetHeight && getOffsetHeight(tagRef?.current?.offsetHeight);
+    }
   };
 
   return (

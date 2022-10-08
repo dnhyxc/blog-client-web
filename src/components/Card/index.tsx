@@ -1,4 +1,5 @@
 import React, { CSSProperties } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Skeleton, Popover } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
@@ -56,6 +57,7 @@ const Card: React.FC<IProps> = ({
     userInfoStore: { getUserInfo },
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
+  const navigate = useNavigate();
 
   const content = (item: ArticleItem) => {
     return (
@@ -83,6 +85,21 @@ const Card: React.FC<IProps> = ({
   const onDelete = (e: any, item: ArticleItem) => {
     e.stopPropagation();
     deleteArticle && deleteArticle(item.id);
+  };
+
+  const toClassify = (e: Event, classify: string) => {
+    e.stopPropagation();
+    navigate(`/classify?classify=${classify}`);
+  };
+
+  const toTagList = (e: MouseEvent, tag: string) => {
+    e.stopPropagation();
+    navigate(`/tag/list?tagName=${tag}`);
+  };
+
+  const toPersonal = (e: MouseEvent, id: string) => {
+    e.stopPropagation();
+    navigate(`/personal?id=${id}`);
   };
 
   return (
@@ -144,12 +161,17 @@ const Card: React.FC<IProps> = ({
               )}
               {showClassify && htmlWidth > 960 && (
                 <div className={styles.classifyInfo}>
-                  <span>{i?.authorName}</span>
-                  <span className={styles.classify}>
+                  <span onClick={(e) => toPersonal(e as unknown as MouseEvent, i.authorId)}>
+                    {i?.authorName}
+                  </span>
+                  <span
+                    className={styles.classify}
+                    onClick={(e) => toTagList(e as unknown as MouseEvent, i.tag)}
+                  >
                     标签：
                     {i.tag}
                   </span>
-                  <span>
+                  <span onClick={(e) => toClassify(e as unknown as MouseEvent, i.classify)}>
                     分类：
                     {i.classify}
                   </span>
@@ -175,8 +197,17 @@ const Card: React.FC<IProps> = ({
                   </div>
                   {htmlWidth < 960 && (
                     <div className={styles.classifyWrap}>
-                      <span>{i?.authorName?.length > 10 ? `${i?.authorName.slice(0, 10)}...` : i?.authorName}</span>
-                      <span className={styles.classifyTag}>{i.classify}</span>
+                      <span>
+                        {i?.authorName?.length > 10
+                          ? `${i?.authorName.slice(0, 10)}...`
+                          : i?.authorName}
+                      </span>
+                      <span
+                        className={styles.classifyTag}
+                        onClick={(e) => toClassify(e as unknown as MouseEvent, i.classify)}
+                      >
+                        {i.classify}
+                      </span>
                     </div>
                   )}
                 </div>

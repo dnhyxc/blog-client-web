@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import classname from 'classname';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
@@ -18,8 +18,12 @@ import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
 const Classify: React.FC = () => {
+  const [search] = useSearchParams();
+  const classify = search.get('classify');
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState<boolean>(false);
-  const [selectClassify, setSelectClassify] = useState<string | number>('前端');
+  const [selectClassify, setSelectClassify] = useState<string | number>(classify || '前端');
   const [height, setHeight] = useState<number>(34);
   const [classifyList, setClassifyList] = useState<ArticleListResult>({
     list: [],
@@ -27,7 +31,6 @@ const Classify: React.FC = () => {
     count: 0,
   });
 
-  const navigate = useNavigate();
   const listRef = useRef<ArticleItem[]>([]);
   const { pageNo, setPageNo, onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad(
     {
@@ -148,7 +151,11 @@ const Classify: React.FC = () => {
         <div className={classname(styles.content, styles.contentPadding)}>
           <div className={styles.filterList}>
             <div className={styles.segmentedWrap}>
-              <MSegmented onClick={onSelectClassify} getOffsetHeight={getOffsetHeight} />
+              <MSegmented
+                onClick={onSelectClassify}
+                getOffsetHeight={getOffsetHeight}
+                classify={classify}
+              />
             </div>
             <Card
               wrapClass={styles.wrapClass}

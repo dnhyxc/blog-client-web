@@ -1,6 +1,5 @@
 import ReactDOM from 'react-dom/client';
 import MAlert from '../MAlert';
-import Audio from '../Music';
 
 class MRender {
   public root: any;
@@ -39,21 +38,8 @@ class MRender {
       this.root.unmount();
     }
   };
-
-  // 渲染Audio
-  showAudio = () => {
-    this.createRoot('audio');
-    this.audioRoot.render(<Audio close={close} />);
-  };
-
-  // 渲染Audio
-  closeAudio = () => {
-    if (this.audioRoot) {
-      this.audioRoot.unmount();
-    }
-  };
 }
 
-const { show, close, showAudio, closeAudio } = new MRender();
+const { show, close } = new MRender();
 
-export { show, close, showAudio, closeAudio };
+export { show, close };

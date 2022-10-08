@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Dropdown, Menu, Slider } from 'antd';
 import classname from 'classname';
-import MusicIcon from '@/components/Music/MusicIcon';
+import MusicIcon from '@/components/Audio/MusicIcon';
 import { MUSIC_PATHS, MUSIC_ORDER_ICONS, MUSIC_LIST_INFO } from '@/constant';
 import { formatTime } from '@/utils';
 import { AudioInfo } from '@/typings/component';
@@ -9,11 +9,7 @@ import { player } from './util/play';
 import MIcons from '../Icons';
 import styles from './index.less';
 
-interface IProps {
-  close?: Function;
-}
-
-const Audio: React.FC<IProps> = () => {
+const Audio: React.FC = () => {
   const [toggleAudio, setToggleAudio] = useState<boolean>(false);
   const [isPlay, setIsPlay] = useState<boolean>(false);
   const [curPosition, setCurPosition] = useState<number>(0);
