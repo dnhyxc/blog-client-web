@@ -103,12 +103,7 @@ const ArticleDetail: React.FC = () => {
       >
         <div className={styles.wechart}>
           <div>
-            <MIcons
-              name="icon-weixin1"
-              className={styles.wechartIcon}
-              onClick={onShare}
-              customStyle
-            />
+            <MIcons name="icon-weixin1" className={styles.wechartIcon} />
           </div>
           <span>微信</span>
         </div>
@@ -121,8 +116,7 @@ const ArticleDetail: React.FC = () => {
           <MIcons
             name="icon-xinlangweibo"
             className={styles.weiboIcon}
-            onClick={onShare}
-            customStyle
+            onClick={() => shareSinaWeiBo(detail?.title!, detail?.coverImage)}
           />
         </div>
         <span>新浪微博</span>
@@ -135,8 +129,7 @@ const ArticleDetail: React.FC = () => {
           <MIcons
             name="icon-qq"
             className={styles.qqIcon}
-            onClick={onShare}
-            customStyle
+            onClick={() => shareQQ(detail?.title!, detail?.coverImage)}
           />
         </div>
         <span>QQ</span>
