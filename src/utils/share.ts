@@ -6,8 +6,6 @@
  * @return {[type]}       [description]
  */
 export const shareSinaWeiBo = (title: string, pic?: string, url?: string) => {
-  console.log(pic, 'pic');
-
   const param = {
     url: url || window.location.href,
     type: '3',
