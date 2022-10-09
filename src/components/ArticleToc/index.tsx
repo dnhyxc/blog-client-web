@@ -23,7 +23,7 @@ const Toc: React.FC<IProps> = ({ mackdown }) => {
     const scrollRefScrollHeight = scrollRef?.current?.getScrollHeight();
     const htmlScrollTop = document.documentElement?.scrollTop;
     const htmlScrollHeight = document.documentElement?.scrollHeight;
-    const percent = (scrollRefScrollHeight - 500) / htmlScrollHeight;
+    const percent = scrollRefScrollHeight / htmlScrollHeight;
     const needScrollTop = percent * htmlScrollTop;
     scrollRef?.current?.scrollTop(needScrollTop);
   };
@@ -48,6 +48,7 @@ const Toc: React.FC<IProps> = ({ mackdown }) => {
           renderThumbVertical={renderThumb}
           autoHeight
           autoHeightMax="calc(100vh - 124px)"
+          className={styles.scrollbar}
         >
           <MarkNav
             className={styles.tocList}

@@ -8,8 +8,14 @@
   border-radius: 5px;
 
   .mackNav {
-    // height: calc(100vh - 135px);
     background-color: @background;
+
+    .scrollbar {
+      & > :first-child {
+        // 如何禁止子元素滚动触发父元素滚动
+        overscroll-behavior: contain;
+      }
+    }
   }
 
   .tocText {
