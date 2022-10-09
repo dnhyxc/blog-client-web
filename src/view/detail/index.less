@@ -75,6 +75,7 @@
         top: 125px;
         margin-left: -85px;
         width: 50px;
+        z-index: 999;
 
         .actionBtn {
           position: relative;
@@ -114,6 +115,14 @@
             border-radius: 18px;
             font-size: 12px;
             background-color: @menu-hover;
+          }
+        }
+
+        .shareOverlayClassName {
+          :global {
+            .ant-popover-inner-content {
+              padding: 10px 0;
+            }
           }
         }
       }
@@ -225,6 +234,51 @@
       .desc {
         margin-top: 10px;
         margin-bottom: 30px;
+      }
+    }
+
+    .shareContent {
+      min-width: 125px;
+
+      .wechart,
+      .weibo,
+      .shareQZon {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        height: 45px;
+        line-height: 45px;
+        padding: 0 20px;
+        text-align: center;
+        cursor: pointer;
+
+        .weiboIcon,
+        .wechartIcon,
+        .qqIcon {
+          margin-right: 10px;
+        }
+
+        .wechartIcon {
+          font-size: 17px;
+        }
+
+        .qqIcon {
+          margin-top: -4px;
+        }
+
+        &:hover {
+          background-color: @menu-hover;
+        }
+      }
+
+      .overlayClassName {
+        :global {
+          .ant-popover-content {
+            .ant-popover-arrow {
+              display: none;
+            }
+          }
+        }
       }
     }
 

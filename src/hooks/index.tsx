@@ -155,8 +155,6 @@ export const useScroll = (needScroll: string | null) => {
     }
   }, [commentOffsetTop, needScroll]);
 
-  console.log(commentOffsetTop, 'commentOffsetTop');
-
   return { commentRef, commentOffsetTop };
 };
 

@@ -7,7 +7,7 @@
  */
 import React, { useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Affix, BackTop, Spin, Button } from 'antd';
+import { Affix, BackTop, Spin, Button, Popover } from 'antd';
 import classname from 'classname';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import Preview from '@/components/Preview';
@@ -20,9 +20,10 @@ import RightBar from '@/components/RightBar';
 import Toc from '@/components/ArticleToc';
 import Comments from '@/components/Comments';
 import AnotherArticle from '@/components/AnotherArticle';
+import Qrcode from '@/components/Qrcode';
 import { useGetArticleDetail, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
-import { formatGapTime } from '@/utils';
+import { formatGapTime, shareQQ, shareSinaWeiBo } from '@/utils';
 import { ArticleDetailParams, CommentParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -84,6 +85,64 @@ const ArticleDetail: React.FC = () => {
     const { offsetTop } = commentRef.current;
     document.documentElement.scrollTop = offsetTop;
   };
+
+  const qrcodeContent = (
+    <div className={styles.qrcodeWrap}>
+      <Qrcode />
+    </div>
+  );
+
+  const shareContent = (
+    <div className={styles.shareContent}>
+      <Popover
+        placement="top"
+        trigger="hover"
+        getPopupContainer={(triggerNode) => triggerNode as HTMLElement}
+        content={qrcodeContent}
+        overlayClassName={styles.overlayClassName}
+      >
+        <div className={styles.wechart}>
+          <div>
+            <MIcons
+              name="icon-weixin1"
+              className={styles.wechartIcon}
+              onClick={onShare}
+              customStyle
+            />
+          </div>
+          <span>微信</span>
+        </div>
+      </Popover>
+      <div
+        className={styles.weibo}
+        onClick={() => shareSinaWeiBo(detail?.title!, detail?.coverImage)}
+      >
+        <div>
+          <MIcons
+            name="icon-xinlangweibo"
+            className={styles.weiboIcon}
+            onClick={onShare}
+            customStyle
+          />
+        </div>
+        <span>新浪微博</span>
+      </div>
+      <div
+        className={styles.shareQZon}
+        onClick={() => shareQQ(detail?.title!, detail?.coverImage)}
+      >
+        <div>
+          <MIcons
+            name="icon-qq"
+            className={styles.qqIcon}
+            onClick={onShare}
+            customStyle
+          />
+        </div>
+        <span>QQ</span>
+      </div>
+    </div>
+  );
 
   const renderCoverImg = (detail: ArticleDetailParams) => {
     return (
@@ -163,14 +222,22 @@ const ArticleDetail: React.FC = () => {
                     )}
                   </span>
                 </div>
-                <div className={styles.actionBtn}>
-                  <MIcons
-                    name="icon-tiaoguofenxiang"
-                    className={styles.shareIcon}
-                    onClick={onShare}
-                    customStyle
-                  />
-                </div>
+                <Popover
+                  placement="rightTop"
+                  trigger="hover"
+                  getPopupContainer={(triggerNode) => triggerNode.parentNode as HTMLElement}
+                  content={shareContent}
+                  overlayClassName={styles.shareOverlayClassName}
+                >
+                  <div className={styles.actionBtn}>
+                    <MIcons
+                      name="icon-tiaoguofenxiang"
+                      className={styles.shareIcon}
+                      onClick={onShare}
+                      customStyle
+                    />
+                  </div>
+                </Popover>
               </div>
               <Preview
                 className={styles.previewContent}
