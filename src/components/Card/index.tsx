@@ -178,7 +178,7 @@ const Card: React.FC<IProps> = ({
                   <span className={styles.date}>{formatGapTime(i.createTime)}</span>
                 </div>
               )}
-              <div className={styles.action} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.action}>
                 <div className={styles.icons}>
                   <div>
                     <MIcons

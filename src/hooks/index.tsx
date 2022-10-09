@@ -148,11 +148,18 @@ export const useScroll = (needScroll: string | null) => {
   }, [commentRef]);
 
   useEffect(() => {
+    let timer: any = null;
     if (needScroll === '1') {
-      setTimeout(() => {
+      if (timer) {
+        clearInterval(timer);
+      }
+      timer = setTimeout(() => {
         document.documentElement.scrollTop = commentOffsetTop;
       }, 100);
     }
+    return () => {
+      clearInterval(timer);
+    };
   }, [commentOffsetTop, needScroll]);
 
   return { commentRef, commentOffsetTop };

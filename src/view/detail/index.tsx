@@ -5,14 +5,15 @@
  * @LastEditors: dnh
  * @FilePath: \src\view\detail\index.tsx
  */
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Affix, BackTop, Spin, Button, Popover } from 'antd';
+import { Affix, BackTop, Spin, Button } from 'antd';
 import classname from 'classname';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import Preview from '@/components/Preview';
 import Header from '@/components/Header';
 import Image from '@/components/Image';
+import Multibar from '@/components/Multibar';
 import Footer from '@/components/Footer';
 import MIcons from '@/components/Icons';
 import { HEAD_UEL, CARD_URL } from '@/constant';
@@ -20,19 +21,14 @@ import RightBar from '@/components/RightBar';
 import Toc from '@/components/ArticleToc';
 import Comments from '@/components/Comments';
 import AnotherArticle from '@/components/AnotherArticle';
-import Qrcode from '@/components/Qrcode';
 import { useGetArticleDetail, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
-import * as Service from '@/service';
-import { normalizeResult } from '@/utils/tools';
-import { formatGapTime, shareQQ, shareSinaWeiBo } from '@/utils';
+import { formatGapTime } from '@/utils';
 import { ArticleDetailParams, CommentParams } from '@/typings/common';
 import styles from './index.less';
 
 const ArticleDetail: React.FC = () => {
   const [commentCount, setCommentCount] = useState<number>(0);
-  const [likeCount, setLikeCount] = useState<number | undefined>(0);
-  const [isLike, setIsLike] = useState<boolean | undefined>(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -42,11 +38,6 @@ const ArticleDetail: React.FC = () => {
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
   const commentRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    setLikeCount(detail?.likeCount);
-    setIsLike(detail?.isLike);
-  }, [detail]);
 
   // 高级搜索
   const toSearch = () => {
@@ -59,21 +50,6 @@ const ArticleDetail: React.FC = () => {
       <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
     </div>
   );
-
-  // 文章点赞
-  const onLikeArticle = async () => {
-    if (!id) return;
-    const res = normalizeResult<{ id: string; isLike: boolean }>(
-      await Service.likeArticle({ id, userId: getUserInfo.userId })
-    );
-    if (!res.success) return;
-    setIsLike(res.data.isLike);
-    if (isLike) {
-      setLikeCount(likeCount! - 1);
-    } else {
-      setLikeCount(likeCount! + 1);
-    }
-  };
 
   // 获取评论数
   const getCommentLength = (comments: CommentParams[]) => {
@@ -94,58 +70,6 @@ const ArticleDetail: React.FC = () => {
   const toSetting = (authorId: string | undefined) => {
     navigate(`/personal?id=${authorId}`);
   };
-
-  // 滚动到评论
-  const onScrollToComment = () => {
-    if (!commentRef.current) return;
-    const { offsetTop } = commentRef.current;
-    document.documentElement.scrollTop = offsetTop;
-  };
-
-  const shareContent = (
-    <div className={styles.shareContent}>
-      <Popover
-        placement="top"
-        trigger="hover"
-        getPopupContainer={(triggerNode) => triggerNode as HTMLElement}
-        content={<Qrcode />}
-        overlayClassName={styles.overlayClassName}
-      >
-        <div className={styles.wechart}>
-          <div>
-            <MIcons name="icon-weixin1" className={styles.wechartIcon} />
-          </div>
-          <span>微信</span>
-        </div>
-      </Popover>
-      <div
-        className={styles.weibo}
-        onClick={() => shareSinaWeiBo(detail?.title!, detail?.coverImage)}
-      >
-        <div>
-          <MIcons
-            name="icon-xinlangweibo"
-            className={styles.weiboIcon}
-            onClick={() => shareSinaWeiBo(detail?.title!, detail?.coverImage)}
-          />
-        </div>
-        <span>新浪微博</span>
-      </div>
-      <div
-        className={styles.shareQZon}
-        onClick={() => shareQQ(detail?.title!, detail?.coverImage)}
-      >
-        <div>
-          <MIcons
-            name="icon-qq"
-            className={styles.qqIcon}
-            onClick={() => shareQQ(detail?.title!, detail?.coverImage)}
-          />
-        </div>
-        <span>QQ</span>
-      </div>
-    </div>
-  );
 
   const renderCoverImg = (detail: ArticleDetailParams) => {
     return (
@@ -198,49 +122,7 @@ const ArticleDetail: React.FC = () => {
         {detail && (
           <div className={styles.content}>
             <div className={styles.preview}>
-              <div className={styles.multibar}>
-                <div className={styles.actionBtn}>
-                  <MIcons
-                    name="icon-24gf-thumbsUp2"
-                    className={styles.actionIcon}
-                    onClick={onLikeArticle}
-                    customStyle
-                  />
-                  <span className={styles.likeCount}>{likeCount}</span>
-                </div>
-                <div className={styles.actionBtn}>
-                  <MIcons
-                    name="icon-pinglun1"
-                    className={styles.commentIcon}
-                    onClick={onScrollToComment}
-                    customStyle
-                  />
-                  <span className={styles.likeCount}>
-                    {commentCount > 999 ? (
-                      <span title={(commentCount && JSON.stringify(commentCount)) || ''}>
-                        999+
-                      </span>
-                    ) : (
-                      commentCount
-                    )}
-                  </span>
-                </div>
-                <Popover
-                  placement="rightTop"
-                  trigger="hover"
-                  getPopupContainer={(triggerNode) => triggerNode.parentNode as HTMLElement}
-                  content={shareContent}
-                  overlayClassName={styles.shareOverlayClassName}
-                >
-                  <div className={styles.actionBtn}>
-                    <MIcons
-                      name="icon-tiaoguofenxiang"
-                      className={styles.shareIcon}
-                      customStyle
-                    />
-                  </div>
-                </Popover>
-              </div>
+              <Multibar id={id as string} detail={detail} commentRef={commentRef} commentCount={commentCount} />
               <Preview
                 className={styles.previewContent}
                 mackdown={detail.content}
