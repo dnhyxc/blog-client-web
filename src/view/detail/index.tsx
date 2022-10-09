@@ -5,7 +5,7 @@
  * @LastEditors: dnh
  * @FilePath: \src\view\detail\index.tsx
  */
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Affix, BackTop, Spin, Button, Popover } from 'antd';
 import classname from 'classname';
@@ -23,20 +23,30 @@ import AnotherArticle from '@/components/AnotherArticle';
 import Qrcode from '@/components/Qrcode';
 import { useGetArticleDetail, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
+import * as Service from '@/service';
+import { normalizeResult } from '@/utils/tools';
 import { formatGapTime, shareQQ, shareSinaWeiBo } from '@/utils';
 import { ArticleDetailParams, CommentParams } from '@/typings/common';
 import styles from './index.less';
 
 const ArticleDetail: React.FC = () => {
   const [commentCount, setCommentCount] = useState<number>(0);
-  const { id } = useParams();
+  const [likeCount, setLikeCount] = useState<number | undefined>(0);
+  const [isLike, setIsLike] = useState<boolean | undefined>(false);
+
   const navigate = useNavigate();
+  const { id } = useParams();
   const { detail, loading } = useGetArticleDetail({ id });
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
   const commentRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    setLikeCount(detail?.likeCount);
+    setIsLike(detail?.isLike);
+  }, [detail]);
 
   // 高级搜索
   const toSearch = () => {
@@ -51,15 +61,21 @@ const ArticleDetail: React.FC = () => {
   );
 
   // 文章点赞
-  const onLikeArticle = () => {
-    console.log(id, '点赞');
+  const onLikeArticle = async () => {
+    if (!id) return;
+    const res = normalizeResult<{ id: string; isLike: boolean }>(
+      await Service.likeArticle({ id, userId: getUserInfo.userId })
+    );
+    if (!res.success) return;
+    setIsLike(res.data.isLike);
+    if (isLike) {
+      setLikeCount(likeCount! - 1);
+    } else {
+      setLikeCount(likeCount! + 1);
+    }
   };
 
-  // 分享
-  const onShare = () => {
-    console.log(id, '分享');
-  };
-
+  // 获取评论数
   const getCommentLength = (comments: CommentParams[]) => {
     let count = 0;
     comments.forEach((i) => {
@@ -86,19 +102,13 @@ const ArticleDetail: React.FC = () => {
     document.documentElement.scrollTop = offsetTop;
   };
 
-  const qrcodeContent = (
-    <div className={styles.qrcodeWrap}>
-      <Qrcode />
-    </div>
-  );
-
   const shareContent = (
     <div className={styles.shareContent}>
       <Popover
         placement="top"
         trigger="hover"
         getPopupContainer={(triggerNode) => triggerNode as HTMLElement}
-        content={qrcodeContent}
+        content={<Qrcode />}
         overlayClassName={styles.overlayClassName}
       >
         <div className={styles.wechart}>
@@ -196,7 +206,7 @@ const ArticleDetail: React.FC = () => {
                     onClick={onLikeArticle}
                     customStyle
                   />
-                  <span className={styles.likeCount}>{detail?.likeCount}</span>
+                  <span className={styles.likeCount}>{likeCount}</span>
                 </div>
                 <div className={styles.actionBtn}>
                   <MIcons
@@ -226,7 +236,6 @@ const ArticleDetail: React.FC = () => {
                     <MIcons
                       name="icon-tiaoguofenxiang"
                       className={styles.shareIcon}
-                      onClick={onShare}
                       customStyle
                     />
                   </div>

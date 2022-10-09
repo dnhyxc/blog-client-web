@@ -121,6 +121,7 @@ export interface ArticleDetailParams {
   authorId: string;
   replyCount?: number;
   likeCount: number;
+  isLike: boolean;
 }
 
 export interface UseGetArticleDetailParams {
