@@ -154,7 +154,13 @@ const ArticleDetail: React.FC = () => {
                     customStyle
                   />
                   <span className={styles.likeCount}>
-                    {commentCount > 999 ? <span title={(commentCount && JSON.stringify(commentCount)) || ''}>999+</span> : commentCount}
+                    {commentCount > 999 ? (
+                      <span title={(commentCount && JSON.stringify(commentCount)) || ''}>
+                        999+
+                      </span>
+                    ) : (
+                      commentCount
+                    )}
                   </span>
                 </div>
                 <div className={styles.actionBtn}>
@@ -189,7 +195,7 @@ const ArticleDetail: React.FC = () => {
               <div className={styles.anotherArticle}>
                 <AnotherArticle id={id} />
               </div>
-              <div className={styles.commentList} ref={commentRef}>
+              <div ref={commentRef}>
                 <Comments authorId={detail.authorId} getCommentLength={getCommentLength} />
               </div>
             </div>

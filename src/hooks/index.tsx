@@ -139,7 +139,7 @@ export const useLoginStatus = () => {
 export const useScroll = (needScroll: string | null) => {
   const [commentOffsetTop, setCommentOffsetTop] = useState<number>(0);
 
-  const commentRef: any = useRef(null);
+  const commentRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (commentRef && commentRef.current) {
@@ -149,9 +149,13 @@ export const useScroll = (needScroll: string | null) => {
 
   useEffect(() => {
     if (needScroll === '1') {
-      document.documentElement.scrollTop = commentOffsetTop;
+      setTimeout(() => {
+        document.documentElement.scrollTop = commentOffsetTop;
+      }, 100);
     }
   }, [commentOffsetTop, needScroll]);
+
+  console.log(commentOffsetTop, 'commentOffsetTop');
 
   return { commentRef, commentOffsetTop };
 };
