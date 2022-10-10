@@ -8,18 +8,21 @@ import { shareQQ, shareSinaWeiBo, error } from '@/utils';
 import { ArticleDetailParams } from '@/typings/common';
 import Qrcode from '../Qrcode';
 import MIcons from '../Icons';
+import CollectionModal from './Collection';
+import AddCollection from './AddCollection';
 import styles from './index.less';
 
 interface IProps {
-  id: string,
-  detail: ArticleDetailParams,
-  commentRef: any,
-  commentCount: number
+  id: string;
+  detail: ArticleDetailParams;
+  commentRef: any;
+  commentCount: number;
 }
 
 const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) => {
   const [likeCount, setLikeCount] = useState<number | undefined>(0);
   const [isLike, setIsLike] = useState<boolean | undefined>(false);
+  const [visible, setVisible] = useState<boolean>(false);
 
   const {
     userInfoStore: { getUserInfo },
@@ -46,6 +49,12 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
     } else {
       setLikeCount(likeCount! + 1);
     }
+  };
+
+  // 收藏
+  const onCollection = () => {
+    console.log('收藏');
+    setVisible(true);
   };
 
   // 滚动到评论
@@ -121,14 +130,20 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
         {commentCount && (
           <span className={styles.likeCount}>
             {commentCount > 999 ? (
-              <span title={(commentCount && JSON.stringify(commentCount)) || ''}>
-                999+
-              </span>
+              <span title={(commentCount && JSON.stringify(commentCount)) || ''}>999+</span>
             ) : (
               commentCount
             )}
           </span>
         )}
+      </div>
+      <div className={styles.actionBtn}>
+        <MIcons
+          name="icon-31shoucangxuanzhong"
+          className={styles.collectionIcon}
+          onClick={onCollection}
+          customStyle
+        />
       </div>
       <Popover
         placement="rightTop"
@@ -138,13 +153,11 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
         overlayClassName={styles.shareOverlayClassName}
       >
         <div className={styles.actionBtn}>
-          <MIcons
-            name="icon-tiaoguofenxiang"
-            className={styles.shareIcon}
-            customStyle
-          />
+          <MIcons name="icon-tiaoguofenxiang" className={styles.shareIcon} customStyle />
         </div>
       </Popover>
+      <CollectionModal visible={visible} onCancel={() => setVisible(false)} />
+      <AddCollection />
     </div>
   );
 };

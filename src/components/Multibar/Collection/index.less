@@ -1,0 +1,57 @@
+@import '~@styles/common.less';
+
+.title {
+  .info {
+    font-size: 12px;
+    color: @font-3;
+  }
+}
+
+.containerClassName {
+  height: 320px;
+
+  .scrollWrapStyle {
+    background-color: #fff !important;
+  }
+
+  .contentStyle {
+    padding: 0 !important;
+    height: 320px !important;
+  }
+
+  .collectionList {
+    .collectionItem {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 75px;
+      padding: 10px;
+      background-color: #fff;
+      border-bottom: 1px solid @background;
+
+      .collectionName {
+        font-size: 16px;
+        margin-bottom: 8px;
+        font-weight: 600;
+
+        .lockIcon {
+          margin-left: 5px;
+          font-size: 12px;
+          color: @font-4;
+        }
+      }
+
+      .collectionCount {
+        color: @font-4;
+      }
+    }
+  }
+}
+
+.wrapClassName {
+  :global {
+    .ant-modal-body {
+      padding: 10px 10px;
+    }
+  }
+}
