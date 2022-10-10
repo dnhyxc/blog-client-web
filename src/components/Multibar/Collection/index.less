@@ -49,6 +49,21 @@
 }
 
 .wrapClassName {
+  .actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .addIcon {
+      margin-right: 3px;
+      color: @menu-active;
+    }
+
+    .action {
+      width: 88px;
+    }
+  }
+
   :global {
     .ant-modal-body {
       padding: 10px 10px;

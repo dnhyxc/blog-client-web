@@ -23,6 +23,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
   const [likeCount, setLikeCount] = useState<number | undefined>(0);
   const [isLike, setIsLike] = useState<boolean | undefined>(false);
   const [visible, setVisible] = useState<boolean>(false);
+  const [addVisible, setAddVisible] = useState<boolean>(false);
 
   const {
     userInfoStore: { getUserInfo },
@@ -64,6 +65,10 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
     document.documentElement.scrollTop = offsetTop;
   };
 
+  const getAddVisible = (value: boolean) => {
+    setAddVisible(value);
+  };
+
   const shareContent = (
     <div className={styles.shareContent}>
       <Popover
@@ -88,7 +93,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
           <MIcons
             name="icon-xinlangweibo"
             className={styles.weiboIcon}
-            onClick={() => shareSinaWeiBo(detail?.title!, detail?.coverImage)}
+            noStopPropagation
           />
         </div>
         <span>新浪微博</span>
@@ -101,7 +106,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
           <MIcons
             name="icon-qq"
             className={styles.qqIcon}
-            onClick={() => shareQQ(detail?.title!, detail?.coverImage)}
+            noStopPropagation
           />
         </div>
         <span>QQ</span>
@@ -156,8 +161,8 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
           <MIcons name="icon-tiaoguofenxiang" className={styles.shareIcon} customStyle />
         </div>
       </Popover>
-      <CollectionModal visible={visible} onCancel={() => setVisible(false)} />
-      <AddCollection />
+      <CollectionModal visible={visible} onCancel={() => setVisible(false)} getAddVisible={getAddVisible} />
+      <AddCollection visible={addVisible} onCancel={() => setAddVisible(false)} showCollection={onCollection} />
     </div>
   );
 };
