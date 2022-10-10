@@ -208,27 +208,30 @@ const Personal = () => {
               </div>
               <div className={styles.actions}>
                 <div className={styles.icons}>
-                  {ICONLINKS.map((i) => (
-                    <a
-                      href={getUserInfo?.[i.label]}
-                      target="_blank"
-                      rel="noreferrer"
-                      key={i.name}
-                      className={styles.link}
-                      style={
-                        getUserInfo?.[i.label]
-                          ? { display: 'inline-block' }
-                          : { display: 'none' }
-                      }
-                    >
-                      <MIcons
-                        name={i.name}
-                        className={styles[i.className]}
-                        iconWrapClass={styles.iconWrap}
-                        title={i.title}
-                      />
-                    </a>
-                  ))}
+                  {ICONLINKS.map(
+                    (i) =>
+                      getUserInfo?.[i.label] && (
+                        <a
+                          href={getUserInfo?.[i.label]}
+                          target="_blank"
+                          rel="noreferrer"
+                          key={i.name}
+                          className={styles.link}
+                          style={
+                            getUserInfo?.[i.label]
+                              ? { display: 'inline-block' }
+                              : { display: 'none' }
+                          }
+                        >
+                          <MIcons
+                            name={i.name}
+                            className={styles[i.className]}
+                            iconWrapClass={styles.iconWrap}
+                            title={i.title}
+                          />
+                        </a>
+                      )
+                  )}
                 </div>
                 {(authorId === getUserInfo.userId || !authorId) && (
                   <Button type="primary" ghost onClick={toSetting}>
