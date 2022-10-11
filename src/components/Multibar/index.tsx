@@ -54,7 +54,6 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
 
   // 收藏
   const onCollection = () => {
-    console.log('收藏');
     setVisible(true);
   };
 

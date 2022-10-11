@@ -305,3 +305,10 @@ export interface LrcInfo {
   offset: number;
   ms: { t: string; c: string }[];
 }
+
+// 创建收藏集接口参数
+export interface CreateCollectionParams {
+  name: string;
+  desc: string;
+  status: number;
+}

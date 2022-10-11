@@ -86,6 +86,9 @@ const GET_NEXT_ARTICLE = '/api/getNextArticle';
 // 校验token是否过期
 const VERIFY = '/api/verify';
 
+// 创建收藏集
+const CREATE_COLLECTION = '/api/createCollection';
+
 export {
   REGISTER,
   LOGIN,
@@ -124,4 +127,5 @@ export {
   GET_PREV_ARTICLE,
   GET_NEXT_ARTICLE,
   VERIFY,
+  CREATE_COLLECTION,
 };

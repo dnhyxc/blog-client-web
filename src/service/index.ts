@@ -34,6 +34,7 @@ import {
   resetPassword,
   verify,
 } from './user';
+import { createCollection } from './collection';
 
 export {
   register,
@@ -70,4 +71,5 @@ export {
   getNextArticle,
   verify,
   advancedSearch,
+  createCollection,
 };

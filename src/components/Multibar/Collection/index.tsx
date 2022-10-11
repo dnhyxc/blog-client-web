@@ -11,21 +11,23 @@ interface IProps {
 }
 
 const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible }) => {
-  const [checked, setChecked] = useState<string[]>([]);
+  const [checkedItem, setCheckedItem] = useState<string[]>([]);
 
   // 选择需要加入的收藏夹
   const onCheckedItem = (id: string) => {
-    const res = checked.find((i) => i === id);
+    console.log(id, 'id>>>>>');
+
+    const res = checkedItem.find((i) => i === id);
     console.log(res, 'index');
 
     if (res) {
-      const filter = checked.filter((i) => i !== id);
+      const filter = checkedItem.filter((i) => i !== id);
       console.log(filter, 'filter');
 
-      setChecked([...filter]);
+      setCheckedItem([...filter]);
     } else {
-      checked.push(id);
-      setChecked([...checked]);
+      checkedItem.push(id);
+      setCheckedItem([...checkedItem]);
     }
   };
 
@@ -35,7 +37,7 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
     onCancel();
   };
 
-  console.log(checked, 'checked');
+  console.log(checkedItem, 'checkedItem');
 
   const onSubmit = () => {
     console.log('确定');
@@ -86,14 +88,14 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
           {['React', 'Vue'].map((i) => {
             return (
               <div key={i} className={styles.collectionItem}>
-                <div>
+                <div className={styles.desc} onClick={() => onCheckedItem(i)}>
                   <div className={styles.collectionName}>
                     <span>{i}</span>
                     <MIcons name="icon-lock-full" className={styles.lockIcon} />
                   </div>
                   <div className={styles.collectionCount}>13篇文章</div>
                 </div>
-                <Checkbox checked={checked.includes(i)} onChange={() => onCheckedItem(i)} />
+                <Checkbox checked={checkedItem.includes(i)} onChange={() => onCheckedItem(i)} />
               </div>
             );
           })}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Form, Input, Radio, Button } from 'antd';
+import * as Service from '@/service';
 import styles from './index.less';
 
 interface IProps {
@@ -24,9 +25,10 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
     showCollection();
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const values = form.getFieldsValue();
-    console.log(values, 'values');
+    const res = await Service.createCollection(values);
+    console.log(res, 'res');
     onCancel();
   };
 
@@ -65,15 +67,15 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
             name="name"
           // initialValue={initialValue?.title}
           >
-            <Input placeholder="请输入文章标题" maxLength={50} value={collectionName} onChange={(e) => onChangeCollectionName(e)} />
+            <Input placeholder="请输入收藏集名称" maxLength={50} value={collectionName} onChange={(e) => onChangeCollectionName(e)} />
           </Form.Item>
           <Form.Item
             label="描述"
-            name="abstract"
+            name="desc"
           // initialValue={initialValue?.abstract}
           >
             <TextArea
-              placeholder="请输入文章摘要"
+              placeholder="请输入收藏集描述"
               rows={5}
               autoSize={{ minRows: 5, maxRows: 10 }}
               maxLength={100}
@@ -83,14 +85,14 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
           <Form.Item
             name="status"
             wrapperCol={{ offset: 1, span: 20 }}
-            initialValue="1"
+            initialValue={1}
           >
             <Radio.Group className={styles.radioGroup}>
-              <Radio value="1" className={styles.radio}>
+              <Radio value={1} className={styles.radio}>
                 <span>公开</span>
                 <span className={styles.info}>当其他人关注此收藏集后不可再更改为隐私</span>
               </Radio>
-              <Radio value="2">
+              <Radio value={2}>
                 <span>隐私</span>
                 <span className={styles.info}>仅自己可见此收藏集</span>
               </Radio>
