@@ -312,3 +312,21 @@ export interface CreateCollectionParams {
   desc: string;
   status: number;
 }
+
+// 获取收藏集列表参数
+export interface GetCollectionListParams {
+  userId: string;
+  pageNo: number;
+  pageSize: number;
+}
+
+// 创建收藏集返回值
+export interface AddCollectionRes {
+  id: string;
+  name: string;
+  status: number;
+  createTime: string;
+  count: number;
+  desc: string;
+  articleIds: string[];
+}

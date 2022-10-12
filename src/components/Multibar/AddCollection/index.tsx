@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Modal, Form, Input, Radio, Button } from 'antd';
+import useStore from '@/store';
 import * as Service from '@/service';
+import { normalizeResult, error, success } from '@/utils';
+import { AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
 
 interface IProps {
-  visible: boolean,
-  onCancel: Function,
-  showCollection: Function,
+  visible: boolean;
+  onCancel: Function;
+  showCollection: Function;
 }
 
 const { TextArea } = Input;
@@ -14,6 +17,9 @@ const { TextArea } = Input;
 const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) => {
   const [collectionName, setCollectionName] = useState<string>('');
   const [form] = Form.useForm();
+  const {
+    userInfoStore: { getUserInfo },
+  } = useStore();
 
   const onChangeCollectionName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
@@ -26,10 +32,17 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
   };
 
   const onSubmit = async () => {
+    if (!getUserInfo?.userId) return;
     const values = form.getFieldsValue();
-    const res = await Service.createCollection(values);
-    console.log(res, 'res');
-    onCancel();
+    const res = normalizeResult<AddCollectionRes>(
+      await Service.createCollection({ ...values, userId: getUserInfo?.userId })
+    );
+    if (!res.success) {
+      error(res.message);
+    } else {
+      success(res.message);
+      onCancel();
+    }
   };
 
   return (
@@ -39,6 +52,7 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
       centered
       visible={visible}
       wrapClassName={styles.wrapClassName}
+      onCancel={onClose}
       footer={[
         <Button key="back" type="primary" ghost className={styles.action} onClick={onClose}>
           取消
@@ -65,14 +79,19 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
           <Form.Item
             label="名称"
             name="name"
-          // initialValue={initialValue?.title}
+            // initialValue={initialValue?.title}
           >
-            <Input placeholder="请输入收藏集名称" maxLength={50} value={collectionName} onChange={(e) => onChangeCollectionName(e)} />
+            <Input
+              placeholder="请输入收藏集名称"
+              maxLength={50}
+              value={collectionName}
+              onChange={(e) => onChangeCollectionName(e)}
+            />
           </Form.Item>
           <Form.Item
             label="描述"
             name="desc"
-          // initialValue={initialValue?.abstract}
+            // initialValue={initialValue?.abstract}
           >
             <TextArea
               placeholder="请输入收藏集描述"
@@ -82,11 +101,7 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
               showCount
             />
           </Form.Item>
-          <Form.Item
-            name="status"
-            wrapperCol={{ offset: 1, span: 20 }}
-            initialValue={1}
-          >
+          <Form.Item name="status" wrapperCol={{ offset: 1, span: 20 }} initialValue={1}>
             <Radio.Group className={styles.radioGroup}>
               <Radio value={1} className={styles.radio}>
                 <span>公开</span>

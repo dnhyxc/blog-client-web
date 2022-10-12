@@ -88,6 +88,8 @@ const VERIFY = '/api/verify';
 
 // 创建收藏集
 const CREATE_COLLECTION = '/api/createCollection';
+// 获取收藏集列表
+const GET_COLLECTION_LIST = '/api/getCollectionList';
 
 export {
   REGISTER,
@@ -128,4 +130,5 @@ export {
   GET_NEXT_ARTICLE,
   VERIFY,
   CREATE_COLLECTION,
+  GET_COLLECTION_LIST,
 };
