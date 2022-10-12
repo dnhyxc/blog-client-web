@@ -90,6 +90,8 @@ const VERIFY = '/api/verify';
 const CREATE_COLLECTION = '/api/createCollection';
 // 获取收藏集列表
 const GET_COLLECTION_LIST = '/api/getCollectionList';
+// 收藏文章
+const COLLECT_ARTICLES = '/api/collectArticles';
 
 export {
   REGISTER,
@@ -131,4 +133,5 @@ export {
   VERIFY,
   CREATE_COLLECTION,
   GET_COLLECTION_LIST,
+  COLLECT_ARTICLES,
 };

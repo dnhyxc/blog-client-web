@@ -11,3 +11,12 @@ export async function getCollectionList(params: GetCollectionListParams) {
   const res = await post(API.GET_COLLECTION_LIST, params);
   return res;
 }
+
+export async function collectArticles(params: {
+  ids: string[];
+  articleId: string;
+  userId: string;
+}) {
+  const res = await post(API.COLLECT_ARTICLES, params);
+  return res;
+}

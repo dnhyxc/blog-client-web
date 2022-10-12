@@ -42,6 +42,7 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
     } else {
       success(res.message);
       onCancel();
+      showCollection();
     }
   };
 
@@ -79,7 +80,7 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
           <Form.Item
             label="名称"
             name="name"
-            // initialValue={initialValue?.title}
+          // initialValue={initialValue?.title}
           >
             <Input
               placeholder="请输入收藏集名称"
@@ -91,7 +92,7 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
           <Form.Item
             label="描述"
             name="desc"
-            // initialValue={initialValue?.abstract}
+          // initialValue={initialValue?.abstract}
           >
             <TextArea
               placeholder="请输入收藏集描述"

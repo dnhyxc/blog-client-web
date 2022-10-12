@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import { useParams } from 'react-router-dom';
 import { Checkbox, Modal, Button } from 'antd';
 import Content from '@/components/Content';
 import MIcons from '@/components/Icons';
 import useStore from '@/store';
+import { useScrollLoad } from '@/hooks';
 import * as Service from '@/service';
-import { PAGESIZE } from '@/constant';
-// import { normalizeResult, error, success } from '@/utils';
-// import { AddCollectionRes } from '@/typings/common';
+import { normalizeResult, error } from '@/utils';
+import { CollectionListRes, AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
 
 interface IProps {
@@ -17,39 +18,70 @@ interface IProps {
 
 const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible }) => {
   const [checkedItem, setCheckedItem] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [collectionList, setCollectionList] = useState<CollectionListRes>({
+    list: [],
+    total: 0,
+    count: 0,
+  });
 
+  const { id: articleId } = useParams();
+  const listRef = useRef<AddCollectionRes[]>([]);
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  // scrollRef：用户设置rightbar的吸顶效果，scrollbarRef：scrollbar 滚动到顶部，scrollTop：回到顶部
+  const { pageNo, setPageNo, onScroll } = useScrollLoad(
+    {
+      data: collectionList,
+      loading,
+      pageSize: 10,
+    }
+  );
 
   useEffect(() => {
     if (visible) {
       getCollectionList();
+    } else {
+      setPageNo(1);
+      listRef.current = [];
+      setCollectionList({
+        list: listRef.current,
+        total: 0,
+        count: 0,
+      });
     }
-  }, [visible]);
+  }, [visible, pageNo]);
 
+  // 获取收藏集列表
   const getCollectionList = async () => {
     if (!getUserInfo?.userId) return;
-    const res = await Service.getCollectionList({
-      pageNo: 1,
-      pageSize: PAGESIZE,
-      userId: getUserInfo.userId,
-    });
-
-    console.log(res, 'res');
+    setLoading(true);
+    const res = normalizeResult<CollectionListRes>(await Service.getCollectionList({
+      pageNo,
+      pageSize: 10,
+      userId: getUserInfo?.userId,
+    }));
+    setLoading(false);
+    if (res.success) {
+      const { total, list } = res.data;
+      // 使用ref暂存list，防止滚动加载时，list添加错乱问题
+      listRef.current = [...listRef.current, ...list];
+      setCollectionList({
+        list: listRef.current,
+        total,
+        count: list.length,
+      });
+    } else {
+      error(res.message);
+    }
   };
 
   // 选择需要加入的收藏夹
   const onCheckedItem = (id: string) => {
-    console.log(id, 'id>>>>>');
-
     const res = checkedItem.find((i) => i === id);
-    console.log(res, 'index');
-
     if (res) {
       const filter = checkedItem.filter((i) => i !== id);
-      console.log(filter, 'filter');
-
       setCheckedItem([...filter]);
     } else {
       checkedItem.push(id);
@@ -63,10 +95,17 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
     onCancel();
   };
 
-  console.log(checkedItem, 'checkedItem');
+  // 收藏文章
+  const onSubmit = async () => {
+    console.log(checkedItem, 'checkedItem');
+    if (!getUserInfo?.userId || !articleId || !checkedItem.length) return;
+    const res = await Service.collectArticles({
+      ids: checkedItem,
+      articleId,
+      userId: getUserInfo?.userId
+    });
 
-  const onSubmit = () => {
-    console.log('确定');
+    console.log(res, 'res');
   };
 
   const renderTitle = (
@@ -116,21 +155,22 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
         className={styles.scrollWrapStyle}
         wrapClassName={styles.contentStyle}
         containerClassName={styles.containerClassName}
+        onScroll={onScroll}
       >
         <div className={styles.collectionList}>
-          {['React', 'Vue'].map((i) => {
+          {collectionList?.list.map((i) => {
             return (
-              <div key={i} className={styles.collectionItem}>
-                <div className={styles.desc} onClick={() => onCheckedItem(i)}>
+              <div key={i.id} className={styles.collectionItem}>
+                <div className={styles.desc} onClick={() => onCheckedItem(i.id)}>
                   <div className={styles.collectionName}>
-                    <span>{i}</span>
-                    <MIcons name="icon-lock-full" className={styles.lockIcon} />
+                    <span>{i.name}</span>
+                    {i.status === 2 && <MIcons name="icon-lock-full" className={styles.lockIcon} />}
                   </div>
-                  <div className={styles.collectionCount}>13篇文章</div>
+                  <div className={styles.collectionCount}>{i.count}篇文章</div>
                 </div>
                 <Checkbox
-                  checked={checkedItem.includes(i)}
-                  onChange={() => onCheckedItem(i)}
+                  checked={checkedItem.includes(i.id)}
+                  onChange={() => onCheckedItem(i.id)}
                 />
               </div>
             );

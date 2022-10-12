@@ -330,3 +330,10 @@ export interface AddCollectionRes {
   desc: string;
   articleIds: string[];
 }
+
+// 创建收藏集返回值
+export interface CollectionListRes {
+  total: number;
+  count: number;
+  list: AddCollectionRes[];
+}
