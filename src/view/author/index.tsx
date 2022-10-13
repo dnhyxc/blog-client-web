@@ -32,7 +32,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-interface IProps {}
+interface IProps { }
 
 const Author: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -102,6 +102,7 @@ const Author: React.FC<IProps> = () => {
       pageSize: PAGESIZE,
       accessUserId: getUserInfo?.userId,
     };
+    // 保存至storage用于根据不同页面进入详情时，针对性的进行上下篇文章的获取（如：分类页面上下篇、标签页面上下篇）
     storage.locSetItem(
       'params',
       JSON.stringify({ accessUserId: getUserInfo?.userId, selectKey, from: 'author' })
@@ -126,6 +127,7 @@ const Author: React.FC<IProps> = () => {
 
   // 获取时间轴列表
   const getAuthorTimeline = async () => {
+    // 保存至storage用于根据不同页面进入详情时，针对性的进行上下篇文章的获取（如：分类页面上下篇、标签页面上下篇）
     storage.locSetItem(
       'params',
       JSON.stringify({ accessUserId: getUserInfo?.userId, selectKey, from: 'author' })
@@ -301,18 +303,18 @@ const Author: React.FC<IProps> = () => {
                           {(i.value !== '3' ||
                             !timelineList.length ||
                             (timelineList.length && !timelineList[0].articles.length)) && (
-                            <Card
-                              list={articleList.list}
-                              wrapClass={styles.wrapClass}
-                              toDetail={toDetail}
-                              likeArticle={likeArticle}
-                              deleteArticle={deleteArticle}
-                              onEditArticle={onEditArticle}
-                              showInfo={articleList.list.length === articleList.total}
-                              loadText="地主家也没余粮了"
-                              loading={loading}
-                            />
-                          )}
+                              <Card
+                                list={articleList.list}
+                                wrapClass={styles.wrapClass}
+                                toDetail={toDetail}
+                                likeArticle={likeArticle}
+                                deleteArticle={deleteArticle}
+                                onEditArticle={onEditArticle}
+                                showInfo={articleList.list.length === articleList.total}
+                                loadText="地主家也没余粮了"
+                                loading={loading}
+                              />
+                            )}
                           {i.value === '3' &&
                             timelineList.length > 0 &&
                             timelineList[0].articles.length > 0 && (

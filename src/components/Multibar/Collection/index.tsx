@@ -6,7 +6,7 @@ import MIcons from '@/components/Icons';
 import useStore from '@/store';
 import { useScrollLoad } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult, error, success } from '@/utils';
+import { normalizeResult, error, success, info } from '@/utils';
 import { CollectionListRes, AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
 
@@ -98,6 +98,7 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
 
   // 收藏文章
   const onSubmit = async () => {
+    if (!checkedItem.length) info('请选择一个收藏集');
     if (!getUserInfo?.userId || !articleId || !checkedItem.length) return;
     const res = normalizeResult<string>(
       await Service.collectArticles({

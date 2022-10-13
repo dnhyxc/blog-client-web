@@ -49,6 +49,7 @@ const TagList: React.FC<IProps> = () => {
   const onGetArticleByTagName = async () => {
     setLoading(true);
     const params = { tagName, pageNo, pageSize: PAGESIZE, userId: getUserInfo?.userId };
+    // 保存至storage用于根据不同页面进入详情时，针对性的进行上下篇文章的获取（如：分类页面上下篇、标签页面上下篇）
     storage.locSetItem(
       'params',
       JSON.stringify({ tagName, userId: getUserInfo?.userId, from: 'tag' })

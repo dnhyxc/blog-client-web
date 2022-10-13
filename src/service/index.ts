@@ -40,6 +40,7 @@ import {
   collectArticles,
   checkCollectionStatus,
   cancelCollected,
+  getCollectedTotal,
 } from './collection';
 
 export {
@@ -82,4 +83,5 @@ export {
   collectArticles,
   checkCollectionStatus,
   cancelCollected,
+  getCollectedTotal,
 };

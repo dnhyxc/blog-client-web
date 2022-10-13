@@ -17,7 +17,7 @@ import Header from '@/components/Header';
 import BackTop from '@/components/BackTop';
 import * as Service from '@/service';
 import useStore from '@/store';
-import { normalizeResult, storage, error } from '@/utils';
+import { normalizeResult, storage, error, formatDate } from '@/utils';
 import {
   ABOUT_ME_TABS,
   ABOUT_TABS,
@@ -41,6 +41,7 @@ const { TabPane } = Tabs;
 const Personal = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectKey, setSelectKey] = useState<string>('1');
+  const [collectedCount, setCollectedCount] = useState<number>(0);
   const [articleList, setArticleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
@@ -76,7 +77,21 @@ const Personal = () => {
     onGetPersonalInfo();
   }, [authorId]);
 
-  // 获取我的文章及点赞文章列表
+  useEffect(() => {
+    getCollectedTotal();
+  }, []);
+
+  // 获取收藏总条数
+  const getCollectedTotal = async () => {
+    const res = normalizeResult<{ total: number }>(await Service.getCollectedTotal({ userId: getUserInfo?.userId }));
+    if (res.success) {
+      setCollectedCount(res.data.total);
+    }
+  };
+
+  console.log(collectedCount, 'collectedCount');
+
+  // 获取我的文章、点赞文章列表、我的收藏列表
   const getMyArticleList = async () => {
     setLoading(true);
     const params = {
@@ -85,6 +100,7 @@ const Personal = () => {
       userId: authorId || getUserInfo?.userId,
       accessUserId: getUserInfo?.userId,
     };
+    // 保存至storage用于根据不同页面进入详情时，针对性的进行上下篇文章的获取（如：分类页面上下篇、标签页面上下篇）
     storage.locSetItem(
       'params',
       JSON.stringify({
@@ -245,7 +261,7 @@ const Personal = () => {
                 {getTabList().map((i) => {
                   return (
                     <TabPane tab={i.name} key={i.value}>
-                      <Card
+                      {i.value !== '3' ? <Card
                         list={articleList.list}
                         wrapClass={styles.wrapClass}
                         toDetail={toDetail}
@@ -254,7 +270,24 @@ const Personal = () => {
                         onEditArticle={onEditArticle}
                         showInfo={articleList.list.length === articleList.total}
                         loading={loading}
-                      />
+                      /> : (
+                        articleList?.list.map((i) => {
+                          return (
+                            <div key={i.id} className={styles.collectionItem}>
+                              <div className={styles.desc}>
+                                <div className={styles.collectionName}>
+                                  <span>{i.name}</span>
+                                  {i.status === 2 && (
+                                    <MIcons name="icon-lock-full" className={styles.lockIcon} />
+                                  )}
+                                </div>
+                                <div className={styles.collectDesc}>{i.desc}</div>
+                                <div className={styles.collectionCount}>{formatDate(i.createTime, 'YYYY-DD-MM')}更新 · {i.count}篇文章</div>
+                              </div>
+                            </div>
+                          );
+                        })
+                      )}
                     </TabPane>
                   );
                 })}

@@ -8,7 +8,7 @@ import { HEAD_UEL, USER_MENU } from '@/constant';
 import { storage } from '@/utils';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const User: React.FC<IProps> = () => {
   const navigate = useNavigate();

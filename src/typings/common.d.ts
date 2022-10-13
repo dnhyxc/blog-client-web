@@ -84,7 +84,7 @@ export interface GetArticleListParams {
   filter?: any;
   userId?: string;
 }
-export interface ArticleItem {
+export interface ArticleItem extends AddCollectionRes {
   abstract: string;
   authorId: string;
   authorName: string;

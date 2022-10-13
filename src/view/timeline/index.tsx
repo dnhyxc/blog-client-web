@@ -46,6 +46,7 @@ const TimeLine: React.FC = () => {
   // 获取时间轴列表
   const getTimelineList = async () => {
     const params = { userId: getUserInfo?.userId };
+    // 保存至storage用于根据不同页面进入详情时，针对性的进行上下篇文章的获取（如：分类页面上下篇、标签页面上下篇）
     storage.locSetItem('params', JSON.stringify({ ...params, from: 'timeline' }));
     const res = normalizeResult<TimelineResult[]>(await Service.getTimelineList(params));
     if (res.success) {

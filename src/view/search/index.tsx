@@ -24,8 +24,6 @@ import {
   ArticleListResult,
   SearchTypeParams,
   ArticleItem,
-  // TimelineResult,
-  // UserInfoParams,
 } from '@/typings/common';
 import styles from './index.less';
 

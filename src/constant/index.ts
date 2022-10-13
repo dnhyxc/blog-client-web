@@ -188,7 +188,12 @@ export const ABOUT_ME_TABS = [
     name: '点赞文章',
     value: '2',
   },
+  {
+    name: '我的收藏',
+    value: '3',
+  },
 ];
+
 export const AUTHOR_TABS = [
   {
     name: '博主文章',
@@ -215,6 +220,7 @@ export const ABOUT_TABS = [
 export const ABOUT_ME_API_PATH = {
   1: API.GET_MY_ARTICLE_LIST,
   2: API.GET_LIKE_ARTICLE_LIST,
+  3: API.GET_COLLECTION_LIST,
 };
 
 // 关于博主页面接口path

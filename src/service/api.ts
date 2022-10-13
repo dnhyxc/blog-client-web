@@ -96,6 +96,8 @@ const COLLECT_ARTICLES = '/api/collectArticles';
 const CHECK_COLLECTION_STATUS = '/api/checkCollectionStatus';
 // 取消收藏
 const CANCEL_COLLECTED = '/api/cancelCollected';
+// 获取收藏文章总条数
+const GET_COLLECTED_TOTAL = '/api/getCollectedTotal';
 
 export {
   REGISTER,
@@ -140,4 +142,5 @@ export {
   COLLECT_ARTICLES,
   CHECK_COLLECTION_STATUS,
   CANCEL_COLLECTED,
+  GET_COLLECTED_TOTAL,
 };

@@ -30,3 +30,8 @@ export async function cancelCollected(params: { articleId: string; userId: strin
   const res = await post(API.CANCEL_COLLECTED, params);
   return res;
 }
+
+export async function getCollectedTotal(params: { userId: string }) {
+  const res = await post(API.GET_COLLECTED_TOTAL, params);
+  return res;
+}
