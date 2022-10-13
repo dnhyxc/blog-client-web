@@ -6,7 +6,7 @@ import MIcons from '@/components/Icons';
 import useStore from '@/store';
 import { useScrollLoad } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult, error } from '@/utils';
+import { normalizeResult, error, success } from '@/utils';
 import { CollectionListRes, AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
 
@@ -31,13 +31,11 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
     userInfoStore: { getUserInfo },
   } = useStore();
   // scrollRef：用户设置rightbar的吸顶效果，scrollbarRef：scrollbar 滚动到顶部，scrollTop：回到顶部
-  const { pageNo, setPageNo, onScroll } = useScrollLoad(
-    {
-      data: collectionList,
-      loading,
-      pageSize: 10,
-    }
-  );
+  const { pageNo, setPageNo, onScroll } = useScrollLoad({
+    data: collectionList,
+    loading,
+    pageSize: 10,
+  });
 
   useEffect(() => {
     if (visible) {
@@ -50,6 +48,7 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
         total: 0,
         count: 0,
       });
+      setCheckedItem([]);
     }
   }, [visible, pageNo]);
 
@@ -57,11 +56,13 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
   const getCollectionList = async () => {
     if (!getUserInfo?.userId) return;
     setLoading(true);
-    const res = normalizeResult<CollectionListRes>(await Service.getCollectionList({
-      pageNo,
-      pageSize: 10,
-      userId: getUserInfo?.userId,
-    }));
+    const res = normalizeResult<CollectionListRes>(
+      await Service.getCollectionList({
+        pageNo,
+        pageSize: 10,
+        userId: getUserInfo?.userId,
+      })
+    );
     setLoading(false);
     if (res.success) {
       const { total, list } = res.data;
@@ -97,15 +98,20 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
 
   // 收藏文章
   const onSubmit = async () => {
-    console.log(checkedItem, 'checkedItem');
     if (!getUserInfo?.userId || !articleId || !checkedItem.length) return;
-    const res = await Service.collectArticles({
-      ids: checkedItem,
-      articleId,
-      userId: getUserInfo?.userId
-    });
-
-    console.log(res, 'res');
+    const res = normalizeResult<string>(
+      await Service.collectArticles({
+        ids: checkedItem,
+        articleId,
+        userId: getUserInfo?.userId,
+      })
+    );
+    if (res.success) {
+      onCancel();
+      success(res.message);
+    } else {
+      error(res.message);
+    }
   };
 
   const renderTitle = (
@@ -164,7 +170,9 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
                 <div className={styles.desc} onClick={() => onCheckedItem(i.id)}>
                   <div className={styles.collectionName}>
                     <span>{i.name}</span>
-                    {i.status === 2 && <MIcons name="icon-lock-full" className={styles.lockIcon} />}
+                    {i.status === 2 && (
+                      <MIcons name="icon-lock-full" className={styles.lockIcon} />
+                    )}
                   </div>
                   <div className={styles.collectionCount}>{i.count}篇文章</div>
                 </div>

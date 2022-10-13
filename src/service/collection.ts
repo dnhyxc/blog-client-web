@@ -20,3 +20,13 @@ export async function collectArticles(params: {
   const res = await post(API.COLLECT_ARTICLES, params);
   return res;
 }
+
+export async function checkCollectionStatus(params: { articleId: string; userId: string }) {
+  const res = await post(API.CHECK_COLLECTION_STATUS, params);
+  return res;
+}
+
+export async function cancelCollected(params: { articleId: string; userId: string }) {
+  const res = await post(API.CANCEL_COLLECTED, params);
+  return res;
+}

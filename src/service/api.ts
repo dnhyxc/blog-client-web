@@ -92,6 +92,10 @@ const CREATE_COLLECTION = '/api/createCollection';
 const GET_COLLECTION_LIST = '/api/getCollectionList';
 // 收藏文章
 const COLLECT_ARTICLES = '/api/collectArticles';
+// 收藏文章
+const CHECK_COLLECTION_STATUS = '/api/checkCollectionStatus';
+// 取消收藏
+const CANCEL_COLLECTED = '/api/cancelCollected';
 
 export {
   REGISTER,
@@ -134,4 +138,6 @@ export {
   CREATE_COLLECTION,
   GET_COLLECTION_LIST,
   COLLECT_ARTICLES,
+  CHECK_COLLECTION_STATUS,
+  CANCEL_COLLECTED,
 };

@@ -24,6 +24,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
   const [isLike, setIsLike] = useState<boolean | undefined>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [addVisible, setAddVisible] = useState<boolean>(false);
+  const [collected, setCollected] = useState<boolean>(false);
 
   const {
     userInfoStore: { getUserInfo },
@@ -33,6 +34,12 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
     setLikeCount(detail?.likeCount);
     setIsLike(detail?.isLike);
   }, [detail]);
+
+  useEffect(() => {
+    if (!visible) {
+      getCollectionStatus();
+    }
+  }, [visible]);
 
   // 文章点赞
   const onLikeArticle = async () => {
@@ -68,6 +75,34 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
     setAddVisible(value);
   };
 
+  // 获取收藏状态
+  const getCollectionStatus = async () => {
+    const res = normalizeResult<{ collected: boolean }>(
+      await Service.checkCollectionStatus({
+        articleId: id,
+        userId: getUserInfo?.userId,
+      })
+    );
+    if (res.success) {
+      setCollected(res.data.collected);
+    }
+  };
+
+  // 取消收藏
+  const cancelCollected = async () => {
+    const res = normalizeResult<number>(
+      await Service.cancelCollected({
+        articleId: id,
+        userId: getUserInfo?.userId,
+      })
+    );
+    if (res.success) {
+      getCollectionStatus();
+    } else {
+      error(res.message);
+    }
+  };
+
   const shareContent = (
     <div className={styles.shareContent}>
       <Popover
@@ -89,11 +124,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
         onClick={() => shareSinaWeiBo(detail?.title!, detail?.coverImage)}
       >
         <div>
-          <MIcons
-            name="icon-xinlangweibo"
-            className={styles.weiboIcon}
-            noStopPropagation
-          />
+          <MIcons name="icon-xinlangweibo" className={styles.weiboIcon} noStopPropagation />
         </div>
         <span>新浪微博</span>
       </div>
@@ -102,11 +133,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
         onClick={() => shareQQ(detail?.title!, detail?.coverImage)}
       >
         <div>
-          <MIcons
-            name="icon-qq"
-            className={styles.qqIcon}
-            noStopPropagation
-          />
+          <MIcons name="icon-qq" className={styles.qqIcon} noStopPropagation />
         </div>
         <span>QQ</span>
       </div>
@@ -144,8 +171,8 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
       <div className={styles.actionBtn}>
         <MIcons
           name="icon-31shoucangxuanzhong"
-          className={styles.collectionIcon}
-          onClick={onCollection}
+          className={classname(styles.collectionIcon, collected && styles.collectedIcon)}
+          onClick={collected ? cancelCollected : onCollection}
           customStyle
         />
       </div>
@@ -160,8 +187,16 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
           <MIcons name="icon-tiaoguofenxiang" className={styles.shareIcon} customStyle />
         </div>
       </Popover>
-      <CollectionModal visible={visible} onCancel={() => setVisible(false)} getAddVisible={getAddVisible} />
-      <AddCollection visible={addVisible} onCancel={() => setAddVisible(false)} showCollection={onCollection} />
+      <CollectionModal
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        getAddVisible={getAddVisible}
+      />
+      <AddCollection
+        visible={addVisible}
+        onCancel={() => setAddVisible(false)}
+        showCollection={onCollection}
+      />
     </div>
   );
 };
