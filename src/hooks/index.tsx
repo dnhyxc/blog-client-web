@@ -16,6 +16,7 @@ import {
   TimelineResult,
   useLikeArticleParams,
   UseGetArticleDetailParams,
+  useUpdateCollectedParams,
 } from '@/typings/common';
 
 // 防抖函数
@@ -458,4 +459,37 @@ export const useVerifyToken = () => {
       navigate(`/login?verify=${pathname.slice(1)}`);
     }
   };
+};
+
+// 更新收藏列表hooks
+export const useUpdateCollectedList = ({
+  params,
+  articleList,
+  setArticleList,
+  listRef,
+}: useUpdateCollectedParams) => {
+  useEffect(() => {
+    if (params?.id) {
+      console.log(articleList, 'articleList');
+
+      const cloneList: ArticleItem[] = JSON.parse(JSON.stringify(listRef.current));
+
+      const list =
+        cloneList.length < articleList.total + 1
+          ? cloneList.slice(0, cloneList.length - 1)
+          : cloneList;
+
+      console.log(list, 'list', cloneList.length - 1);
+
+      list.unshift(params);
+
+      listRef.current = list;
+
+      setArticleList({
+        ...articleList,
+        total: articleList.total + 1,
+        list: listRef.current,
+      });
+    }
+  }, [params]);
 };

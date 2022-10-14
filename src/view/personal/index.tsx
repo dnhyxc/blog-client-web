@@ -5,19 +5,20 @@
  * @LastEditors: dnh
  * @FilePath: \src\view\personal\index.tsx
  */
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Tabs } from 'antd';
 import Content from '@/components/Content';
 import Image from '@/components/Image';
 import Card from '@/components/Card';
+import MList from '@/components/MList';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/MAlert';
 import Header from '@/components/Header';
 import BackTop from '@/components/BackTop';
 import * as Service from '@/service';
 import useStore from '@/store';
-import { normalizeResult, storage, error, formatDate } from '@/utils';
+import { normalizeResult, storage, error } from '@/utils';
 import {
   ABOUT_ME_TABS,
   ABOUT_TABS,
@@ -32,8 +33,14 @@ import {
   useScrollLoad,
   useDeleteArticle,
   useVerifyToken,
+  useUpdateCollectedList,
 } from '@/hooks';
-import { ArticleListResult, ArticleItem, UserInfoParams } from '@/typings/common';
+import {
+  ArticleListResult,
+  ArticleItem,
+  UserInfoParams,
+  AddCollectionRes,
+} from '@/typings/common';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -42,10 +49,14 @@ const Personal = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [selectKey, setSelectKey] = useState<string>('1');
   const [collectedCount, setCollectedCount] = useState<number>(0);
+  const [collectVisible, setCollecVisible] = useState<boolean>(false);
+  const [addCollectRes, setAddCollectRes] = useState<AddCollectionRes>({
+    id: '',
+  });
   const [articleList, setArticleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
-    count: 0,
+    count: PAGESIZE,
   });
   const [personalInfo, setPersonalInfo] = useState<UserInfoParams>({
     userId: '',
@@ -68,6 +79,16 @@ const Personal = () => {
     pageSize: PAGESIZE,
   });
 
+  // 添加收藏集之后，前端更新收藏列表的hooks
+  useUpdateCollectedList({
+    params: addCollectRes as unknown as ArticleItem,
+    articleList,
+    setArticleList,
+    listRef,
+  });
+
+  console.log(articleList.total, 'articleList');
+
   useEffect(() => {
     getMyArticleList();
   }, [selectKey, pageNo]);
@@ -83,13 +104,18 @@ const Personal = () => {
 
   // 获取收藏总条数
   const getCollectedTotal = async () => {
-    const res = normalizeResult<{ total: number }>(await Service.getCollectedTotal({ userId: getUserInfo?.userId }));
+    const res = normalizeResult<{ total: number }>(
+      await Service.getCollectedTotal({ userId: getUserInfo?.userId })
+    );
     if (res.success) {
       setCollectedCount(res.data.total);
     }
   };
 
-  console.log(collectedCount, 'collectedCount');
+  // 获取创建收藏集的返回值
+  const getAddCollectRes = (params: AddCollectionRes) => {
+    setAddCollectRes(params);
+  };
 
   // 获取我的文章、点赞文章列表、我的收藏列表
   const getMyArticleList = async () => {
@@ -193,12 +219,12 @@ const Personal = () => {
   };
 
   // 根据authorId获取对应的tabs
-  const getTabList = () => {
+  const getTabList = useMemo(() => {
     if (authorId && authorId !== getUserInfo?.userId) {
       return ABOUT_TABS;
     }
     return ABOUT_ME_TABS;
-  };
+  }, [collectedCount]);
 
   return (
     <div className={styles.Personal}>
@@ -258,35 +284,30 @@ const Personal = () => {
             </div>
             <div className={styles.tabsWrap}>
               <Tabs defaultActiveKey="1" onChange={onChange}>
-                {getTabList().map((i) => {
+                {getTabList.map((i) => {
                   return (
                     <TabPane tab={i.name} key={i.value}>
-                      {i.value !== '3' ? <Card
-                        list={articleList.list}
-                        wrapClass={styles.wrapClass}
-                        toDetail={toDetail}
-                        deleteArticle={deleteArticle}
-                        likeArticle={likeArticle}
-                        onEditArticle={onEditArticle}
-                        showInfo={articleList.list.length === articleList.total}
-                        loading={loading}
-                      /> : (
-                        articleList?.list.map((i) => {
-                          return (
-                            <div key={i.id} className={styles.collectionItem}>
-                              <div className={styles.desc}>
-                                <div className={styles.collectionName}>
-                                  <span>{i.name}</span>
-                                  {i.status === 2 && (
-                                    <MIcons name="icon-lock-full" className={styles.lockIcon} />
-                                  )}
-                                </div>
-                                <div className={styles.collectDesc}>{i.desc}</div>
-                                <div className={styles.collectionCount}>{formatDate(i.createTime, 'YYYY-DD-MM')}更新 · {i.count}篇文章</div>
-                              </div>
-                            </div>
-                          );
-                        })
+                      {i.value !== '3' ? (
+                        <Card
+                          list={articleList.list}
+                          wrapClass={styles.wrapClass}
+                          toDetail={toDetail}
+                          deleteArticle={deleteArticle}
+                          likeArticle={likeArticle}
+                          onEditArticle={onEditArticle}
+                          showInfo={articleList.list.length === articleList.total}
+                          loading={loading}
+                        />
+                      ) : (
+                        <MList
+                          list={articleList.list}
+                          loading={loading}
+                          collectedCount={collectedCount}
+                          visible={collectVisible}
+                          onHide={() => setCollecVisible(false)}
+                          onShow={() => setCollecVisible(true)}
+                          getAddRes={getAddCollectRes}
+                        />
                       )}
                     </TabPane>
                   );

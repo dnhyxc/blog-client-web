@@ -255,6 +255,13 @@ export interface useDeleteArticleParams {
   setAlertStatus: Function;
 }
 
+export interface useUpdateCollectedParams {
+  params: ArticleItem;
+  articleList: ArticleListResult;
+  setArticleList: Function;
+  listRef: any;
+}
+
 export interface useDeleteTimelineParams {
   timelineList: TimelineResult[];
   setTimelineList: Function;
@@ -323,12 +330,12 @@ export interface GetCollectionListParams {
 // 创建收藏集返回值
 export interface AddCollectionRes {
   id: string;
-  name: string;
-  status: number;
-  createTime: string;
-  count: number;
-  desc: string;
-  articleIds: string[];
+  name?: string;
+  createTime?: string;
+  count?: number;
+  status?: number;
+  desc?: string;
+  articleIds?: string[];
 }
 
 // 创建收藏集返回值

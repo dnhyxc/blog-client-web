@@ -222,7 +222,7 @@ const Card: React.FC<IProps> = ({
         </div>
       )}
       {showInfo &&
-        (!loading ? (
+        (!loading && list.length !== 0 ? (
           <div className={styles.noMore}>
             {list.length > 0
               ? `共(${list.length})

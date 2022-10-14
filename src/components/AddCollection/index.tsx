@@ -9,12 +9,18 @@ import styles from './index.less';
 interface IProps {
   visible: boolean;
   onCancel: Function;
-  showCollection: Function;
+  showCollection?: Function;
+  callback?: Function;
 }
 
 const { TextArea } = Input;
 
-const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) => {
+const AddCollection: React.FC<IProps> = ({
+  visible,
+  onCancel,
+  showCollection,
+  callback,
+}) => {
   const [collectionName, setCollectionName] = useState<string>('');
   const [form] = Form.useForm();
   const {
@@ -28,7 +34,7 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
 
   const onClose = () => {
     onCancel();
-    showCollection();
+    showCollection && showCollection();
   };
 
   const onSubmit = async () => {
@@ -42,7 +48,8 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
     } else {
       success(res.message);
       onCancel();
-      showCollection();
+      showCollection && showCollection();
+      callback && callback(res.data);
     }
   };
 
@@ -80,7 +87,7 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
           <Form.Item
             label="名称"
             name="name"
-          // initialValue={initialValue?.title}
+            // initialValue={initialValue?.title}
           >
             <Input
               placeholder="请输入收藏集名称"
@@ -92,7 +99,7 @@ const AddCollection: React.FC<IProps> = ({ visible, onCancel, showCollection }) 
           <Form.Item
             label="描述"
             name="desc"
-          // initialValue={initialValue?.abstract}
+            // initialValue={initialValue?.abstract}
           >
             <TextArea
               placeholder="请输入收藏集描述"

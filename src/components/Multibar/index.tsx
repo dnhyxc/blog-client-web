@@ -9,7 +9,7 @@ import { ArticleDetailParams } from '@/typings/common';
 import Qrcode from '../Qrcode';
 import MIcons from '../Icons';
 import CollectionModal from './Collection';
-import AddCollection from './AddCollection';
+import AddCollection from '../AddCollection';
 import styles from './index.less';
 
 interface IProps {

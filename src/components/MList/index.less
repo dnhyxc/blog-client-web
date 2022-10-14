@@ -1,0 +1,82 @@
+@import '~@styles/common.less';
+
+.collectionWrap {
+  .collectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 0 10px 10px;
+
+    .collectCount {
+      display: flex;
+      justify-content: space-between;
+
+      .listCount,
+      .count {
+        height: 100%;
+        width: auto;
+        padding: 5px 10px;
+        background-color: @menu-light;
+        margin-right: 15px;
+        border-radius: 10px;
+        color: @menu-active;
+      }
+    }
+
+    .addCollect {
+      padding: 4px 10px;
+    }
+
+    .addIcon {
+      font-size: 14px;
+      color: @menu-active;
+    }
+  }
+
+  .collectionItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto;
+    padding-right: 10px;
+    text-align: left;
+    background-color: #fff;
+    border-bottom: 1px solid @background;
+
+    .desc {
+      flex: 1;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .collectionName {
+      font-size: 16px;
+      margin-bottom: 8px;
+      font-weight: 600;
+
+      .lockIcon {
+        margin-left: 5px;
+        font-size: 14px;
+        color: @font-4;
+      }
+    }
+
+    .collectDesc {
+      margin-bottom: 7px;
+      color: @font-4;
+    }
+
+    .collectionCount {
+      color: @font-4;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  .loading {
+    padding-top: 10px;
+  }
+}
