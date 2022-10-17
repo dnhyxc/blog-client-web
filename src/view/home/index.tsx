@@ -30,7 +30,7 @@ import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -114,6 +114,8 @@ const Home: React.FC<IProps> = () => {
     getArticleList,
     setAlertStatus,
     listRef,
+    pageNo,
+    keyword,
   });
 
   // 文章点赞
@@ -121,7 +123,7 @@ const Home: React.FC<IProps> = () => {
     setAlertStatus,
     articleList,
     updateList: setArticleList,
-    listRef
+    listRef,
   });
 
   // 文章搜索

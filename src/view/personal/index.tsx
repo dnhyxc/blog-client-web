@@ -114,7 +114,7 @@ const Personal = () => {
       pageNo,
       pageSize: PAGESIZE,
       userId: authorId || getUserInfo?.userId,
-      accessUserId: getUserInfo?.userId,
+      accessUserId: getUserInfo?.userId, // accessUserId有值，说明是访问别人的主页，需要通过accessUserId去获取点赞状态
     };
     // 保存至storage用于根据不同页面进入详情时，针对性的进行上下篇文章的获取（如：分类页面上下篇、标签页面上下篇）
     storage.locSetItem(
@@ -172,6 +172,7 @@ const Personal = () => {
     articleList,
     updateList: setArticleList,
     isAboutMe: selectKey === '2',
+    listRef,
   });
 
   // 删除文章
@@ -181,8 +182,10 @@ const Personal = () => {
     getArticleList: getMyArticleList,
     setAlertStatus,
     delType: selectKey,
-    userId: getUserInfo?.userId,
-    listRef
+    listRef,
+    pageNo,
+    authorId: authorId as string,
+    accessUserId: getUserInfo?.userId,
   });
 
   // 编辑文章

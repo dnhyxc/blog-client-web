@@ -23,7 +23,7 @@ const Classify: React.FC = () => {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState<boolean>(false);
-  const [selectClassify, setSelectClassify] = useState<string | number>(classify || '前端');
+  const [selectClassify, setSelectClassify] = useState<string>(classify || '前端');
   const [height, setHeight] = useState<number>(34);
   const [classifyList, setClassifyList] = useState<ArticleListResult>({
     list: [],
@@ -101,7 +101,9 @@ const Classify: React.FC = () => {
     setArticleList: setClassifyList,
     getArticleList: getClassifyList,
     setAlertStatus,
-    listRef
+    listRef,
+    pageNo,
+    classify: selectClassify,
   });
 
   // 文章点赞
@@ -109,7 +111,7 @@ const Classify: React.FC = () => {
     setAlertStatus,
     articleList: classifyList,
     updateList: setClassifyList,
-    listRef
+    listRef,
   });
 
   const toDetail = (id: string, needScroll: boolean): void => {
@@ -167,7 +169,6 @@ const Classify: React.FC = () => {
               likeArticle={likeArticle}
               deleteArticle={deleteArticle}
               onEditArticle={onEditArticle}
-              showInfo={classifyList.list.length === classifyList.total}
               loading={loading}
               style={{ paddingTop: `${height + 10}px` }}
             />

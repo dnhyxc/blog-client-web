@@ -49,7 +49,21 @@ export async function getDraftList(params: GetArticleListParams) {
   return res;
 }
 
-export async function deleteArticle(params: { articleId: string }) {
+export async function deleteArticle(params: {
+  articleId: string;
+  pageNo?: number;
+  pageSize?: number;
+  type?: string;
+  keyword?: string;
+  classify?: string;
+  userId?: string;
+  tagName?: string;
+  accessUserId?: string;
+  delType?: string;
+  authorPage?: boolean;
+  authorLike?: boolean;
+  filterList?: string[];
+}) {
   const res = await post(API.DELETE_ARTICLE, params);
   return res;
 }

@@ -256,7 +256,15 @@ export interface useDeleteArticleParams {
   setAlertStatus: Function;
   listRef: any;
   delType?: string;
-  userId?: string;
+  pageNo?: any;
+  keyword?: string;
+  classify?: string;
+  tagName?: string;
+  authorId?: string;
+  accessUserId?: string;
+  authorPage?: boolean;
+  authorLike?: boolean;
+  filterList?: string[];
 }
 
 export interface useUpdateCollectedParams {

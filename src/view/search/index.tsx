@@ -20,14 +20,10 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { PAGESIZE, SEARCH_TYPE } from '@/constant';
 import { info, error, normalizeResult } from '@/utils';
-import {
-  ArticleListResult,
-  SearchTypeParams,
-  ArticleItem,
-} from '@/typings/common';
+import { ArticleListResult, SearchTypeParams, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Search: React.FC<IProps> = () => {
   const [showMore, setShowMore] = useState<boolean>(false);
@@ -76,10 +72,10 @@ const Search: React.FC<IProps> = () => {
   // 高级搜索接口
   const advancedSearch = async () => {
     const params = {
-      keyword,
       userId: getUserInfo?.userId,
       pageNo,
       pageSize: PAGESIZE,
+      keyword,
       filterList: filterValues,
     };
     setLoading(true);
@@ -165,7 +161,10 @@ const Search: React.FC<IProps> = () => {
     setArticleList,
     getArticleList: advancedSearch,
     setAlertStatus,
-    listRef
+    listRef,
+    pageNo,
+    keyword,
+    filterList: filterValues,
   });
 
   const toDetail = (id: string, needScroll: boolean): void => {

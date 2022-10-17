@@ -32,7 +32,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-interface IProps { }
+interface IProps {}
 
 const Author: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -149,7 +149,7 @@ const Author: React.FC<IProps> = () => {
     updateList: selectKey !== '3' ? setArticleList : setTimelineList,
     isAboutMe: getUserInfo?.auth === 1 && selectKey === '2',
     isTimeLine: selectKey === '3',
-    listRef
+    listRef,
   });
 
   // 点击进入详情
@@ -183,7 +183,10 @@ const Author: React.FC<IProps> = () => {
     setArticleList,
     getArticleList: getAuthorArticleList,
     setAlertStatus,
-    listRef
+    listRef,
+    pageNo,
+    authorPage: selectKey === '1',
+    authorLike: selectKey === '2',
   });
 
   const { deleteTimeline } = useDeleteTimelineArticle({
@@ -305,17 +308,17 @@ const Author: React.FC<IProps> = () => {
                           {(i.value !== '3' ||
                             !timelineList.length ||
                             (timelineList.length && !timelineList[0].articles.length)) && (
-                              <Card
-                                list={articleList.list}
-                                wrapClass={styles.wrapClass}
-                                toDetail={toDetail}
-                                likeArticle={likeArticle}
-                                deleteArticle={deleteArticle}
-                                onEditArticle={onEditArticle}
-                                loadText="地主家也没余粮了"
-                                loading={loading}
-                              />
-                            )}
+                            <Card
+                              list={articleList.list}
+                              wrapClass={styles.wrapClass}
+                              toDetail={toDetail}
+                              likeArticle={likeArticle}
+                              deleteArticle={deleteArticle}
+                              onEditArticle={onEditArticle}
+                              loadText="地主家也没余粮了"
+                              loading={loading}
+                            />
+                          )}
                           {i.value === '3' &&
                             timelineList.length > 0 &&
                             timelineList[0].articles.length > 0 && (

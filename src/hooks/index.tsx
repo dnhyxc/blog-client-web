@@ -5,6 +5,7 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, Result } from '@/utils/tools';
 import { error } from '@/utils';
+import { PAGESIZE } from '@/constant';
 import { close } from '@/components/Render';
 import {
   ArticleDetailParams,
@@ -16,6 +17,7 @@ import {
   TimelineResult,
   useLikeArticleParams,
   UseGetArticleDetailParams,
+  ArticleListResult,
 } from '@/typings/common';
 
 // 防抖函数
@@ -359,9 +361,21 @@ export const useDeleteArticle = ({
   setArticleList,
   setAlertStatus,
   delType,
-  userId,
   listRef,
+  pageNo,
+  keyword, // 首页搜索输入内容
+  filterList, // 高级搜索列表
+  classify, // 文章分类页面搜索条件
+  tagName, // 标签页选中的标签
+  authorId, // 我的主页作者id
+  accessUserId, // 我的主页登录人id
+  authorPage, // 代表博主页面
+  authorLike, // 代表博主页面博主点赞列表
 }: useDeleteArticleParams) => {
+  const {
+    userInfoStore: { getUserInfo },
+  } = useStore();
+
   const deleteArticle = (id: string) => {
     Modal.confirm(modalConfig(id));
   };
@@ -369,10 +383,12 @@ export const useDeleteArticle = ({
   // 删除收藏集
   const delCollection = async (id: string) => {
     console.log(id, 'id>>>>>delCollection');
-    const res = normalizeResult<{ id: string }>(await Service.delCollection({
-      id,
-      userId
-    }));
+    const res = normalizeResult<{ id: string }>(
+      await Service.delCollection({
+        id,
+        userId: getUserInfo?.userId,
+      })
+    );
     console.log(res, 'res');
 
     return res;
@@ -380,13 +396,27 @@ export const useDeleteArticle = ({
 
   // 删除文章
   const delArticle = async (articleId: string) => {
-    const res = normalizeResult<{ id: string }>(
-      await Service.deleteArticle({ articleId })
+    const res = normalizeResult<ArticleListResult>(
+      await Service.deleteArticle({
+        articleId,
+        pageNo,
+        pageSize: PAGESIZE,
+        keyword,
+        classify,
+        tagName,
+        userId: authorId || getUserInfo?.userId,
+        accessUserId,
+        delType: delType === '2' ? delType : '',
+        authorPage,
+        authorLike,
+        filterList,
+      })
     );
-    if (res.success) {
-      const list = articleList.list.filter((i) => i.id !== articleId);
-      listRef.current = list;
 
+    if (res.success) {
+      const nextPageOne = res?.data?.list[0] || '';
+      const list = articleList.list.filter((i) => i.id !== articleId);
+      listRef.current = nextPageOne ? [...list, nextPageOne] : list;
       setArticleList({
         ...articleList,
         list: listRef.current,
@@ -399,7 +429,7 @@ export const useDeleteArticle = ({
     return {
       title: '确定删除该文章吗？',
       async onOk() {
-        let res = {} as Result<{ id: string }>;
+        let res = {} as Result<{ id: string } | ArticleListResult>;
         if (delType !== '3') {
           res = await delArticle(articleId);
         } else {
@@ -434,7 +464,7 @@ export const useDeleteTimelineArticle = ({
       title: '确定删除该文章吗？',
       async onOk() {
         const res = normalizeResult<{ id: string }>(
-          await Service.deleteArticle({ articleId })
+          await Service.deleteArticle({ articleId, type: 'timeline' })
         );
         if (res.success) {
           const list = timelineList.map((i) => {
