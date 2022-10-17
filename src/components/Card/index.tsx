@@ -27,7 +27,6 @@ interface IProps {
   likeArticle?: Function;
   onEditArticle?: Function;
   showClassify?: boolean;
-  showInfo?: boolean;
   loadText?: string;
   loading?: boolean;
   style?: CSSProperties;
@@ -48,7 +47,6 @@ const Card: React.FC<IProps> = ({
   likeArticle,
   onEditArticle,
   showClassify = true,
-  showInfo,
   loadText,
   loading,
   style,
@@ -221,8 +219,8 @@ const Card: React.FC<IProps> = ({
           <Skeleton active title paragraph={{ rows: skeletonRows }} />
         </div>
       )}
-      {showInfo &&
-        (!loading && list.length !== 0 ? (
+      {
+        !loading && list.length !== 0 ? (
           <div className={styles.noMore}>
             {list.length > 0
               ? `共(${list.length})
@@ -232,7 +230,8 @@ const Card: React.FC<IProps> = ({
           </div>
         ) : (
           <div className={styles.noMore}>loading...</div>
-        ))}
+        )
+      }
     </div>
   );
 };

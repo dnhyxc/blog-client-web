@@ -18,7 +18,7 @@ import Header from '@/components/Header';
 import BackTop from '@/components/BackTop';
 import * as Service from '@/service';
 import useStore from '@/store';
-import { normalizeResult, storage, error } from '@/utils';
+import { normalizeResult, storage, error, uniqueFunc } from '@/utils';
 import {
   ABOUT_ME_TABS,
   ABOUT_TABS,
@@ -33,7 +33,6 @@ import {
   useScrollLoad,
   useDeleteArticle,
   useVerifyToken,
-  useUpdateCollectedList,
 } from '@/hooks';
 import {
   ArticleListResult,
@@ -50,9 +49,6 @@ const Personal = () => {
   const [selectKey, setSelectKey] = useState<string>('1');
   const [collectedCount, setCollectedCount] = useState<number>(0);
   const [collectVisible, setCollecVisible] = useState<boolean>(false);
-  const [addCollectRes, setAddCollectRes] = useState<AddCollectionRes>({
-    id: '',
-  });
   const [articleList, setArticleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
@@ -79,16 +75,6 @@ const Personal = () => {
     pageSize: PAGESIZE,
   });
 
-  // 添加收藏集之后，前端更新收藏列表的hooks
-  useUpdateCollectedList({
-    params: addCollectRes as unknown as ArticleItem,
-    articleList,
-    setArticleList,
-    listRef,
-  });
-
-  console.log(articleList.total, 'articleList');
-
   useEffect(() => {
     getMyArticleList();
   }, [selectKey, pageNo]);
@@ -114,7 +100,11 @@ const Personal = () => {
 
   // 获取创建收藏集的返回值
   const getAddCollectRes = (params: AddCollectionRes) => {
-    setAddCollectRes(params);
+    listRef.current = [params as any, ...listRef.current];
+    setArticleList({
+      ...articleList,
+      list: listRef.current,
+    });
   };
 
   // 获取我的文章、点赞文章列表、我的收藏列表
@@ -152,6 +142,13 @@ const Personal = () => {
     }
   };
 
+  // 列表去重
+  const dataList = useMemo(() => {
+    // 由于创建收藏集时，手动添加了新增的一项到列表。由于添加新的数据之后，没有立即重新请求列表，在后续滚动加载时，每页请求的数据会存在重复的，因此需要去重
+    const filterList = uniqueFunc(articleList.list, 'id');
+    return filterList;
+  }, [articleList.list]);
+
   // 获取用户信息
   const onGetPersonalInfo = async () => {
     const res = normalizeResult<UserInfoParams>(
@@ -183,6 +180,9 @@ const Personal = () => {
     setArticleList,
     getArticleList: getMyArticleList,
     setAlertStatus,
+    delType: selectKey,
+    userId: getUserInfo?.userId,
+    listRef
   });
 
   // 编辑文章
@@ -289,24 +289,24 @@ const Personal = () => {
                     <TabPane tab={i.name} key={i.value}>
                       {i.value !== '3' ? (
                         <Card
-                          list={articleList.list}
+                          list={dataList}
                           wrapClass={styles.wrapClass}
                           toDetail={toDetail}
                           deleteArticle={deleteArticle}
                           likeArticle={likeArticle}
                           onEditArticle={onEditArticle}
-                          showInfo={articleList.list.length === articleList.total}
                           loading={loading}
                         />
                       ) : (
                         <MList
-                          list={articleList.list}
+                          list={dataList}
                           loading={loading}
                           collectedCount={collectedCount}
                           visible={collectVisible}
                           onHide={() => setCollecVisible(false)}
                           onShow={() => setCollecVisible(true)}
                           getAddRes={getAddCollectRes}
+                          delCollection={deleteArticle}
                         />
                       )}
                     </TabPane>

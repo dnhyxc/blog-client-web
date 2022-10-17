@@ -14,6 +14,12 @@ export const formatDate = (date: number, format = 'YYYY/MM/DD HH:mm:ss') => {
   return moment(date).format(format);
 };
 
+// 数组去重方法
+export const uniqueFunc = (arr: any, uniId: string) => {
+  const res = new Map();
+  return arr.filter((item: any) => !res.has(item[uniId]) && res.set(item[uniId], 1));
+};
+
 // 格式化歌曲时间
 export const formatTime = (val: number) => {
   const min = Math.floor(val / 60);

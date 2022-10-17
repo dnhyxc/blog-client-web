@@ -15,7 +15,7 @@ import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const TagList: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -75,6 +75,7 @@ const TagList: React.FC<IProps> = () => {
     setArticleList,
     getArticleList: onGetArticleByTagName,
     setAlertStatus,
+    listRef
   });
 
   // 文章点赞
@@ -82,6 +83,7 @@ const TagList: React.FC<IProps> = () => {
     setAlertStatus,
     articleList,
     updateList: setArticleList,
+    listRef
   });
 
   // 跳转详情
@@ -129,7 +131,6 @@ const TagList: React.FC<IProps> = () => {
             deleteArticle={deleteArticle}
             toDetail={toDetail}
             onEditArticle={onEditArticle}
-            showInfo={articleList.list.length === articleList.total}
             loading={loading}
           />
           <RightBar

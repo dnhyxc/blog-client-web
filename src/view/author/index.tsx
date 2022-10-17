@@ -149,6 +149,7 @@ const Author: React.FC<IProps> = () => {
     updateList: selectKey !== '3' ? setArticleList : setTimelineList,
     isAboutMe: getUserInfo?.auth === 1 && selectKey === '2',
     isTimeLine: selectKey === '3',
+    listRef
   });
 
   // 点击进入详情
@@ -182,6 +183,7 @@ const Author: React.FC<IProps> = () => {
     setArticleList,
     getArticleList: getAuthorArticleList,
     setAlertStatus,
+    listRef
   });
 
   const { deleteTimeline } = useDeleteTimelineArticle({
@@ -310,7 +312,6 @@ const Author: React.FC<IProps> = () => {
                                 likeArticle={likeArticle}
                                 deleteArticle={deleteArticle}
                                 onEditArticle={onEditArticle}
-                                showInfo={articleList.list.length === articleList.total}
                                 loadText="地主家也没余粮了"
                                 loading={loading}
                               />

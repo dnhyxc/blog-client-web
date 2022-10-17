@@ -27,7 +27,7 @@ import {
 } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const Search: React.FC<IProps> = () => {
   const [showMore, setShowMore] = useState<boolean>(false);
@@ -165,6 +165,7 @@ const Search: React.FC<IProps> = () => {
     setArticleList,
     getArticleList: advancedSearch,
     setAlertStatus,
+    listRef
   });
 
   const toDetail = (id: string, needScroll: boolean): void => {
@@ -253,7 +254,6 @@ const Search: React.FC<IProps> = () => {
               likeArticle={likeArticle}
               deleteArticle={deleteArticle}
               onEditArticle={onEditArticle}
-              showInfo={articleList.list.length === articleList.total}
               loadText="地主家也没余粮了"
               loading={loading}
             />

@@ -30,7 +30,7 @@ import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -113,6 +113,7 @@ const Home: React.FC<IProps> = () => {
     setArticleList,
     getArticleList,
     setAlertStatus,
+    listRef,
   });
 
   // 文章点赞
@@ -120,6 +121,7 @@ const Home: React.FC<IProps> = () => {
     setAlertStatus,
     articleList,
     updateList: setArticleList,
+    listRef
   });
 
   // 文章搜索
@@ -233,7 +235,6 @@ const Home: React.FC<IProps> = () => {
               deleteArticle={deleteArticle}
               likeArticle={likeArticle}
               onEditArticle={onEditArticle}
-              showInfo={articleList.list.length === articleList.total}
               loading={loading}
             />
             <RightBar

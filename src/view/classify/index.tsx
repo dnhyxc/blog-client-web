@@ -101,6 +101,7 @@ const Classify: React.FC = () => {
     setArticleList: setClassifyList,
     getArticleList: getClassifyList,
     setAlertStatus,
+    listRef
   });
 
   // 文章点赞
@@ -108,6 +109,7 @@ const Classify: React.FC = () => {
     setAlertStatus,
     articleList: classifyList,
     updateList: setClassifyList,
+    listRef
   });
 
   const toDetail = (id: string, needScroll: boolean): void => {

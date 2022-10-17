@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Modal } from 'antd';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { normalizeResult } from '@/utils/tools';
+import { normalizeResult, Result } from '@/utils/tools';
 import { error } from '@/utils';
 import { close } from '@/components/Render';
 import {
@@ -16,7 +16,6 @@ import {
   TimelineResult,
   useLikeArticleParams,
   UseGetArticleDetailParams,
-  useUpdateCollectedParams,
 } from '@/typings/common';
 
 // 防抖函数
@@ -229,6 +228,7 @@ export const useLikeArticle = ({
   updateList,
   isTimeLine,
   isAboutMe,
+  listRef,
 }: useLikeArticleParams) => {
   const {
     userInfoStore: { getUserInfo },
@@ -280,18 +280,20 @@ export const useLikeArticle = ({
           return i;
         });
 
+        listRef.current = list;
+
         // isAboutMe为true，就是用户自己的主页或博主自己进入博主主页，此时点赞需要删除取消点赞的文章
         if (isAboutMe) {
           const likes = list.filter((i) => i.isLike);
+          listRef.current = likes;
           updateList({
             ...articleList,
-            total: likes.length,
-            list: likes,
+            list: listRef.current,
           });
         } else {
           updateList({
             ...articleList,
-            list,
+            list: listRef.current,
           });
         }
       }
@@ -356,26 +358,54 @@ export const useDeleteArticle = ({
   articleList,
   setArticleList,
   setAlertStatus,
+  delType,
+  userId,
+  listRef,
 }: useDeleteArticleParams) => {
-  const deleteArticle = (articleId: string) => {
-    Modal.confirm(modalConfig(articleId));
+  const deleteArticle = (id: string) => {
+    Modal.confirm(modalConfig(id));
+  };
+
+  // 删除收藏集
+  const delCollection = async (id: string) => {
+    console.log(id, 'id>>>>>delCollection');
+    const res = normalizeResult<{ id: string }>(await Service.delCollection({
+      id,
+      userId
+    }));
+    console.log(res, 'res');
+
+    return res;
+  };
+
+  // 删除文章
+  const delArticle = async (articleId: string) => {
+    const res = normalizeResult<{ id: string }>(
+      await Service.deleteArticle({ articleId })
+    );
+    if (res.success) {
+      const list = articleList.list.filter((i) => i.id !== articleId);
+      listRef.current = list;
+
+      setArticleList({
+        ...articleList,
+        list: listRef.current,
+      });
+    }
+    return res;
   };
 
   const modalConfig = (articleId: string) => {
     return {
       title: '确定删除该文章吗？',
       async onOk() {
-        const res = normalizeResult<{ id: string }>(
-          await Service.deleteArticle({ articleId })
-        );
-        if (res.success) {
-          const list = articleList.list.filter((i) => i.id !== articleId);
-          setArticleList({
-            ...articleList,
-            total: articleList.total - 1,
-            list,
-          });
+        let res = {} as Result<{ id: string }>;
+        if (delType !== '3') {
+          res = await delArticle(articleId);
+        } else {
+          res = await delCollection(articleId);
         }
+
         if (!res.success && res.code === 409) {
           setAlertStatus(true);
         }
@@ -459,37 +489,4 @@ export const useVerifyToken = () => {
       navigate(`/login?verify=${pathname.slice(1)}`);
     }
   };
-};
-
-// 更新收藏列表hooks
-export const useUpdateCollectedList = ({
-  params,
-  articleList,
-  setArticleList,
-  listRef,
-}: useUpdateCollectedParams) => {
-  useEffect(() => {
-    if (params?.id) {
-      console.log(articleList, 'articleList');
-
-      const cloneList: ArticleItem[] = JSON.parse(JSON.stringify(listRef.current));
-
-      const list =
-        cloneList.length < articleList.total + 1
-          ? cloneList.slice(0, cloneList.length - 1)
-          : cloneList;
-
-      console.log(list, 'list', cloneList.length - 1);
-
-      list.unshift(params);
-
-      listRef.current = list;
-
-      setArticleList({
-        ...articleList,
-        total: articleList.total + 1,
-        list: listRef.current,
-      });
-    }
-  }, [params]);
 };

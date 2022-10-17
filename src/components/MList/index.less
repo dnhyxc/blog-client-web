@@ -46,7 +46,7 @@
 
     .desc {
       flex: 1;
-      padding: 10px;
+      padding: 10px 0 10px 10px;
       cursor: pointer;
     }
 
@@ -68,7 +68,19 @@
     }
 
     .collectionCount {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       color: @font-4;
+
+      .acrions {
+        display: flex;
+        justify-content: space-between;
+
+        .edit {
+          margin-right: 10px;
+        }
+      }
     }
 
     &:last-child {

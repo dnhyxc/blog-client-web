@@ -25,6 +25,7 @@ const Profile = lazy(() => import('@/view/setting/profile'));
 const Account = lazy(() => import('@/view/setting/account'));
 const Author = lazy(() => import('@/view/author'));
 const Search = lazy(() => import('@/view/search'));
+const Collection = lazy(() => import('@/view/collection'));
 
 const lazyLoad = (children: ReactNode, needSpin = true): ReactNode => {
   return (
@@ -62,6 +63,10 @@ const children = [
   {
     path: 'create',
     element: lazyLoad(<Mackdown />),
+  },
+  {
+    path: 'collection/:id',
+    element: lazyLoad(<Collection />),
   },
 ];
 

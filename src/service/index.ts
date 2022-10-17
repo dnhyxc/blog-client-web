@@ -41,6 +41,7 @@ import {
   checkCollectionStatus,
   cancelCollected,
   getCollectedTotal,
+  delCollection,
 } from './collection';
 
 export {
@@ -84,4 +85,5 @@ export {
   checkCollectionStatus,
   cancelCollected,
   getCollectedTotal,
+  delCollection,
 };

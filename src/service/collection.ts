@@ -35,3 +35,8 @@ export async function getCollectedTotal(params: { userId: string }) {
   const res = await post(API.GET_COLLECTED_TOTAL, params);
   return res;
 }
+
+export async function delCollection(params: { id: string; userId?: string }) {
+  const res = await post(API.DEL_COLLECTION, params);
+  return res;
+}

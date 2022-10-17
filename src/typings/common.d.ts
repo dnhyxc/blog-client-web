@@ -239,6 +239,7 @@ export interface useLikeArticleParams {
   updateList: Function;
   isTimeLine?: boolean;
   isAboutMe?: boolean;
+  listRef?: any;
 }
 
 export interface useScrollLoadParams<T> {
@@ -253,6 +254,9 @@ export interface useDeleteArticleParams {
   setArticleList: Function;
   getArticleList: Function;
   setAlertStatus: Function;
+  listRef: any;
+  delType?: string;
+  userId?: string;
 }
 
 export interface useUpdateCollectedParams {
@@ -260,6 +264,7 @@ export interface useUpdateCollectedParams {
   articleList: ArticleListResult;
   setArticleList: Function;
   listRef: any;
+  pageNo: number;
 }
 
 export interface useDeleteTimelineParams {

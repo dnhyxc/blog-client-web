@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import { formatDate } from '@/utils';
 import { ArticleItem } from '@/typings/common';
@@ -14,6 +15,7 @@ interface IProps {
   onHide?: Function;
   onShow?: Function;
   getAddRes?: Function;
+  delCollection?: Function;
 }
 
 const MList: React.FC<IProps> = ({
@@ -24,7 +26,23 @@ const MList: React.FC<IProps> = ({
   onHide,
   onShow,
   getAddRes,
+  delCollection,
 }) => {
+  const navigate = useNavigate();
+
+  const toClolection = (id: string) => {
+    navigate(`/collection/${id}`);
+  };
+
+  const onEdit = (id: string) => {
+    console.log(id, 'id>>>edit');
+  };
+
+  const onDelete = (id: string) => {
+    console.log(id, 'id>>>delete');
+    delCollection && delCollection(id);
+  };
+
   return (
     <div className={styles.collectionWrap}>
       {list?.length > 0 && (
@@ -47,7 +65,7 @@ const MList: React.FC<IProps> = ({
       )}
       {list.map((i) => {
         return (
-          <div key={i.id} className={styles.collectionItem}>
+          <div key={i.id} className={styles.collectionItem} onClick={() => toClolection(i.id)}>
             <div className={styles.desc}>
               <div className={styles.collectionName}>
                 <span>{i.name}</span>
@@ -57,8 +75,18 @@ const MList: React.FC<IProps> = ({
               </div>
               <div className={styles.collectDesc}>{i.desc}</div>
               <div className={styles.collectionCount}>
-                {formatDate(i.createTime, 'YYYY-DD-MM')}更新 · {i.count}
-                篇文章
+                <span>
+                  {formatDate(i.createTime, 'YYYY-DD-MM')}更新 · {i.count}
+                  篇文章
+                </span>
+                <div className={styles.acrions}>
+                  <span className={styles.edit}>
+                    <MIcons name="icon-icon_bianji" className={styles.lockIcon} text="编辑" customStyle onClick={() => onEdit(i.id)} />
+                  </span>
+                  <span className={styles.delete}>
+                    <MIcons name="icon-shanchu" className={styles.lockIcon} text="删除" customStyle onClick={() => onDelete(i.id)} />
+                  </span>
+                </div>
               </div>
             </div>
           </div>
