@@ -99,7 +99,7 @@ const Card: React.FC<IProps> = ({
 
   const toPersonal = (e: MouseEvent, id: string) => {
     e.stopPropagation();
-    if (fromPage) {
+    if (fromPage || id !== getUserInfo?.userId) {
       window.location.href = `/personal?id=${id}`;
     } else {
       navigate(`/personal?id=${id}`);

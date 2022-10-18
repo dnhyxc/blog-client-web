@@ -43,6 +43,7 @@ import {
   getCollectedTotal,
   delCollection,
   updateCollection,
+  getCollectInfo,
 } from './collection';
 
 export {
@@ -88,4 +89,5 @@ export {
   getCollectedTotal,
   delCollection,
   updateCollection,
+  getCollectInfo,
 };

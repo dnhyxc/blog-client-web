@@ -16,9 +16,9 @@ import MIcons from '@/components/Icons';
 import MAlert from '@/components/MAlert';
 import Header from '@/components/Header';
 import BackTop from '@/components/BackTop';
-import * as Service from '@/service';
 import useStore from '@/store';
-import { normalizeResult, storage, error, uniqueFunc } from '@/utils';
+import * as Service from '@/service';
+import { normalizeResult, storage, uniqueFunc } from '@/utils';
 import {
   ABOUT_ME_TABS,
   ABOUT_TABS,
@@ -33,11 +33,11 @@ import {
   useScrollLoad,
   useDeleteArticle,
   useVerifyToken,
+  useGetUserInfo,
 } from '@/hooks';
 import {
   ArticleListResult,
   ArticleItem,
-  UserInfoParams,
   AddCollectionRes,
   PerGetArticlesParams,
 } from '@/typings/common';
@@ -54,9 +54,6 @@ const Personal = () => {
     list: [],
     total: 0,
     count: PAGESIZE,
-  });
-  const [personalInfo, setPersonalInfo] = useState<UserInfoParams>({
-    userId: '',
   });
 
   // 校验token是否过期
@@ -75,6 +72,7 @@ const Personal = () => {
     loading,
     pageSize: PAGESIZE,
   });
+  const { userInfo } = useGetUserInfo(authorId as string);
 
   useEffect(() => {
     getMyArticleList();
@@ -92,7 +90,7 @@ const Personal = () => {
       });
       return;
     }
-    onGetPersonalInfo();
+    // onGetPersonalInfo();
     getCollectedTotal();
   }, [authorId]);
 
@@ -160,23 +158,6 @@ const Personal = () => {
     const filterList = uniqueFunc(articleList.list, 'id');
     return filterList;
   }, [articleList.list]);
-
-  // 获取用户信息
-  const onGetPersonalInfo = async () => {
-    const res = normalizeResult<UserInfoParams>(
-      await Service.getUserInfo({
-        userId: authorId,
-      })
-    );
-    if (res.success) {
-      setPersonalInfo(res.data);
-      return;
-    }
-    if (res.code === 406) {
-      error(res.message);
-      navigate('home');
-    }
-  };
 
   // 文章点赞
   const { likeArticle } = useLikeArticle({
@@ -274,14 +255,14 @@ const Personal = () => {
           <div className={styles.wrap}>
             <div className={styles.userInfo}>
               <Image
-                url={(authorId ? personalInfo?.headUrl : getUserInfo?.headUrl) || HEAD_UEL}
+                url={(authorId ? userInfo?.headUrl : getUserInfo?.headUrl) || HEAD_UEL}
                 transitionImg={HEAD_UEL}
                 className={styles.image}
               />
               <div className={styles.user}>
                 <div className={styles.userName}>{getUserInfo?.username}</div>
-                <div>{personalInfo?.job || getUserInfo?.job}</div>
-                <div>{personalInfo?.motto || getUserInfo?.motto}</div>
+                <div>{userInfo?.job || getUserInfo?.job}</div>
+                <div>{userInfo?.motto || getUserInfo?.motto}</div>
               </div>
               <div className={styles.actions}>
                 <div className={styles.icons}>
@@ -344,7 +325,7 @@ const Personal = () => {
                           getAddRes={getAddCollectRes}
                           delCollection={deleteArticle}
                           updateCollection={updateCollection}
-                          authorId={authorId}
+                          authorId={authorId || getUserInfo?.userId}
                         />
                       )}
                     </TabPane>

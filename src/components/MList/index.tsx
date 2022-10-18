@@ -40,7 +40,7 @@ const MList: React.FC<IProps> = ({
   } = useStore();
 
   const toClolection = (id: string) => {
-    navigate(`/collection/${id}&authorId=${authorId}`);
+    navigate(`/collection/${id}?authorId=${authorId || getUserInfo?.userId}`);
   };
 
   const onEdit = (i: AddCollectionRes) => {

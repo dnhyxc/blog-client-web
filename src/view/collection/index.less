@@ -52,7 +52,6 @@
     justify-content: flex-start;
     background-color: #fff;
     align-items: center;
-    z-index: 99;
 
     .headerContent {
       display: flex;
@@ -69,6 +68,9 @@
     min-height: calc(100vh - 70px);
 
     .infoWrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       position: relative;
       width: 100%;
       height: 200px;
@@ -79,6 +81,66 @@
       // background: linear-gradient(135deg, #e9defa, #fbfcdb, #a8edea, #e0c3fc, #d1e8f3);
       background-size: 200% 200%;
       animation: bgmove 5s infinite;
+      padding: 40px 50px;
+
+      .name {
+        display: flex;
+        justify-content: space-between;
+        font-size: 24px;
+        cursor: pointer;
+
+        &:hover {
+          .acrions {
+            display: flex;
+            justify-content: space-between;
+            line-height: 30px;
+
+            .edit {
+              margin-right: 10px;
+            }
+          }
+        }
+
+        .acrions {
+          display: none;
+        }
+      }
+
+      .userInfo {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .avatar {
+          width: 50px;
+          height: 50px;
+
+          .image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+          }
+        }
+
+        .username {
+          margin-left: 10px;
+          font-size: 16px;
+
+          .userdesc {
+            cursor: pointer;
+          }
+
+          .moreCollection {
+            margin-top: 6px;
+            font-size: 13px;
+            cursor: pointer;
+
+            .rightIcon {
+              font-size: 13px;
+            }
+          }
+        }
+      }
     }
 
     .content {

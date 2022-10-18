@@ -50,3 +50,8 @@ export async function updateCollection(params: CreateCollectionParams) {
   const res = await post(API.UPDATE_COLLECTION, params);
   return res;
 }
+
+export async function getCollectInfo(params: { id: string }) {
+  const res = await post(API.GET_COLLECT_INFO, params);
+  return res;
+}

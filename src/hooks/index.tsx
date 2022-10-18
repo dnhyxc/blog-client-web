@@ -18,6 +18,7 @@ import {
   useLikeArticleParams,
   UseGetArticleDetailParams,
   ArticleListResult,
+  UserInfoParams,
 } from '@/typings/common';
 
 // 防抖函数
@@ -527,4 +528,35 @@ export const useVerifyToken = () => {
       navigate(`/login?verify=${pathname.slice(1)}`);
     }
   };
+};
+
+// 获取用户信息hook
+export const useGetUserInfo = (userId: string) => {
+  const [userInfo, setUserInfo] = useState<UserInfoParams>({ userId: '' });
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!userId) return;
+    onGetPersonalInfo();
+  }, [userId]);
+
+  // 获取用户信息
+  const onGetPersonalInfo = async () => {
+    if (!userId) return;
+    const res = normalizeResult<UserInfoParams>(
+      await Service.getUserInfo({
+        userId,
+      })
+    );
+    if (res.success) {
+      setUserInfo(res.data);
+      return;
+    }
+    if (res.code === 406) {
+      error(res.message);
+      navigate('home');
+    }
+  };
+
+  return { userInfo };
 };
