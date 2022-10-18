@@ -357,3 +357,12 @@ export interface CollectionListRes {
   count: number;
   list: AddCollectionRes[];
 }
+
+// 我的主页获取列表数据的参数定义
+export interface PerGetArticlesParams {
+  pageNo: number;
+  pageSize: number;
+  userId: string;
+  accessUserId: string;
+  isVisitor?: boolean;
+}

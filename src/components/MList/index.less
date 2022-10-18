@@ -7,6 +7,8 @@
     align-items: center;
     background-color: #fff;
     padding: 10px 0 10px 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 
     .collectCount {
       display: flex;
@@ -44,10 +46,28 @@
     background-color: #fff;
     border-bottom: 1px solid @background;
 
+    &:nth-last-child(2) {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+    }
+
     .desc {
       flex: 1;
       padding: 10px 0 10px 10px;
       cursor: pointer;
+
+      &:hover {
+        .acrions {
+          display: flex;
+          justify-content: space-between;
+          height: 22px;
+          line-height: 22px;
+
+          .edit {
+            margin-right: 10px;
+          }
+        }
+      }
     }
 
     .collectionName {
@@ -74,12 +94,7 @@
       color: @font-4;
 
       .acrions {
-        display: flex;
-        justify-content: space-between;
-
-        .edit {
-          margin-right: 10px;
-        }
+        display: none;
       }
     }
 

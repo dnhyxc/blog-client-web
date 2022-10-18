@@ -100,6 +100,8 @@ const CANCEL_COLLECTED = '/api/cancelCollected';
 const GET_COLLECTED_TOTAL = '/api/getCollectedTotal';
 // 删除收藏集
 const DEL_COLLECTION = '/api/delCollection';
+// 更新收藏集
+const UPDATE_COLLECTION = '/api/updateCollection';
 
 export {
   REGISTER,
@@ -146,4 +148,5 @@ export {
   CANCEL_COLLECTED,
   GET_COLLECTED_TOTAL,
   DEL_COLLECTION,
+  UPDATE_COLLECTION,
 };

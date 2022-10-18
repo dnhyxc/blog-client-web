@@ -36,7 +36,17 @@ export async function getCollectedTotal(params: { userId: string }) {
   return res;
 }
 
-export async function delCollection(params: { id: string; userId?: string }) {
+export async function delCollection(params: {
+  id: string;
+  userId?: string;
+  pageNo?: number;
+  pageSize?: number;
+}) {
   const res = await post(API.DEL_COLLECTION, params);
+  return res;
+}
+
+export async function updateCollection(params: CreateCollectionParams) {
+  const res = await post(API.UPDATE_COLLECTION, params);
   return res;
 }

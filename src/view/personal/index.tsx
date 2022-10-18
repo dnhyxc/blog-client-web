@@ -39,6 +39,7 @@ import {
   ArticleItem,
   UserInfoParams,
   AddCollectionRes,
+  PerGetArticlesParams,
 } from '@/typings/common';
 import styles from './index.less';
 
@@ -77,21 +78,28 @@ const Personal = () => {
 
   useEffect(() => {
     getMyArticleList();
-  }, [selectKey, pageNo]);
+  }, [selectKey, pageNo, authorId]);
 
   useEffect(() => {
-    if (!authorId) return;
+    // 从自己的主页切换为别人的主业时，首先
+    if (!authorId) {
+      listRef.current = [];
+      setPageNo(1);
+      setArticleList({
+        list: listRef.current,
+        total: 0,
+        count: 0,
+      });
+      return;
+    }
     onGetPersonalInfo();
-  }, [authorId]);
-
-  useEffect(() => {
     getCollectedTotal();
-  }, []);
+  }, [authorId]);
 
   // 获取收藏总条数
   const getCollectedTotal = async () => {
     const res = normalizeResult<{ total: number }>(
-      await Service.getCollectedTotal({ userId: getUserInfo?.userId })
+      await Service.getCollectedTotal({ userId: authorId || getUserInfo?.userId })
     );
     if (res.success) {
       setCollectedCount(res.data.total);
@@ -100,7 +108,7 @@ const Personal = () => {
 
   // 获取创建收藏集的返回值
   const getAddCollectRes = (params: AddCollectionRes) => {
-    listRef.current = [params as any, ...listRef.current];
+    listRef.current = [params as unknown as ArticleItem, ...listRef.current];
     setArticleList({
       ...articleList,
       list: listRef.current,
@@ -110,12 +118,16 @@ const Personal = () => {
   // 获取我的文章、点赞文章列表、我的收藏列表
   const getMyArticleList = async () => {
     setLoading(true);
-    const params = {
+    const params: PerGetArticlesParams = {
       pageNo,
       pageSize: PAGESIZE,
       userId: authorId || getUserInfo?.userId,
       accessUserId: getUserInfo?.userId, // accessUserId有值，说明是访问别人的主页，需要通过accessUserId去获取点赞状态
     };
+    // 访问他人主页时，增加isVisitor参数
+    if (authorId && authorId !== getUserInfo?.userId) {
+      params.isVisitor = true;
+    }
     // 保存至storage用于根据不同页面进入详情时，针对性的进行上下篇文章的获取（如：分类页面上下篇、标签页面上下篇）
     storage.locSetItem(
       'params',
@@ -188,6 +200,26 @@ const Personal = () => {
     accessUserId: getUserInfo?.userId,
   });
 
+  // 更新收藏集
+  const updateCollection = (collectInfo: AddCollectionRes) => {
+    const newData = articleList?.list.map((i) => {
+      if (i.id === collectInfo.id) {
+        return {
+          ...i,
+          ...collectInfo,
+        };
+      }
+      return i;
+    });
+
+    listRef.current = [...newData] as unknown as ArticleItem[];
+
+    setArticleList({
+      ...articleList,
+      list: listRef.current,
+    });
+  };
+
   // 编辑文章
   const onEditArticle = (id: string) => {
     navigate(`/create?id=${id}`);
@@ -212,9 +244,9 @@ const Personal = () => {
       total: 0,
       count: 0,
     });
-    if (scrollTop) {
-      scrollbarRef.current.scrollTop();
-    }
+    // if (scrollTop) {
+    //   scrollbarRef.current.scrollTop();
+    // }
   };
 
   const toSetting = () => {
@@ -227,7 +259,7 @@ const Personal = () => {
       return ABOUT_TABS;
     }
     return ABOUT_ME_TABS;
-  }, [collectedCount]);
+  }, [authorId]);
 
   return (
     <div className={styles.Personal}>
@@ -299,6 +331,7 @@ const Personal = () => {
                           likeArticle={likeArticle}
                           onEditArticle={onEditArticle}
                           loading={loading}
+                          fromPage={!authorId}
                         />
                       ) : (
                         <MList
@@ -310,6 +343,8 @@ const Personal = () => {
                           onShow={() => setCollecVisible(true)}
                           getAddRes={getAddCollectRes}
                           delCollection={deleteArticle}
+                          updateCollection={updateCollection}
+                          authorId={authorId}
                         />
                       )}
                     </TabPane>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Form, Input, Radio, Button } from 'antd';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -9,8 +9,10 @@ import styles from './index.less';
 interface IProps {
   visible: boolean;
   onCancel: Function;
+  collectInfo?: AddCollectionRes;
   showCollection?: Function;
   callback?: Function;
+  updateCollection?: Function;
 }
 
 const { TextArea } = Input;
@@ -20,12 +22,20 @@ const AddCollection: React.FC<IProps> = ({
   onCancel,
   showCollection,
   callback,
+  collectInfo = null,
+  updateCollection,
 }) => {
   const [collectionName, setCollectionName] = useState<string>('');
   const [form] = Form.useForm();
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+
+  useEffect(() => {
+    if (collectInfo?.name) {
+      setCollectionName(collectInfo?.name);
+    }
+  }, [collectInfo]);
 
   const onChangeCollectionName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
@@ -37,8 +47,8 @@ const AddCollection: React.FC<IProps> = ({
     showCollection && showCollection();
   };
 
-  const onSubmit = async () => {
-    if (!getUserInfo?.userId) return;
+  // 新建
+  const create = async () => {
     const values = form.getFieldsValue();
     const res = normalizeResult<AddCollectionRes>(
       await Service.createCollection({ ...values, userId: getUserInfo?.userId })
@@ -53,6 +63,35 @@ const AddCollection: React.FC<IProps> = ({
     }
   };
 
+  // 更新
+  const update = async () => {
+    if (!collectInfo?.id) return;
+    const values = form.getFieldsValue();
+    const res = normalizeResult<{ id: string }>(
+      await Service.updateCollection({
+        ...values,
+        userId: getUserInfo?.userId,
+        id: collectInfo?.id,
+      })
+    );
+    if (res.success) {
+      success(res.message);
+      onCancel();
+      updateCollection && updateCollection({ ...values, id: collectInfo?.id });
+    } else {
+      error(res.message);
+    }
+  };
+
+  const onSubmit = async () => {
+    if (!getUserInfo?.userId) return;
+    if (!collectInfo?.id) {
+      create();
+    } else {
+      update();
+    }
+  };
+
   return (
     <Modal
       title="新建收藏集"
@@ -61,6 +100,8 @@ const AddCollection: React.FC<IProps> = ({
       visible={visible}
       wrapClassName={styles.wrapClassName}
       onCancel={onClose}
+      keyboard
+      maskClosable={false}
       footer={[
         <Button key="back" type="primary" ghost className={styles.action} onClick={onClose}>
           取消
@@ -84,11 +125,7 @@ const AddCollection: React.FC<IProps> = ({
           form={form}
           name="form"
         >
-          <Form.Item
-            label="名称"
-            name="name"
-            // initialValue={initialValue?.title}
-          >
+          <Form.Item label="名称" name="name" initialValue={collectInfo?.name}>
             <Input
               placeholder="请输入收藏集名称"
               maxLength={50}
@@ -96,11 +133,7 @@ const AddCollection: React.FC<IProps> = ({
               onChange={(e) => onChangeCollectionName(e)}
             />
           </Form.Item>
-          <Form.Item
-            label="描述"
-            name="desc"
-            // initialValue={initialValue?.abstract}
-          >
+          <Form.Item label="描述" name="desc" initialValue={collectInfo?.desc}>
             <TextArea
               placeholder="请输入收藏集描述"
               rows={5}
@@ -109,7 +142,11 @@ const AddCollection: React.FC<IProps> = ({
               showCount
             />
           </Form.Item>
-          <Form.Item name="status" wrapperCol={{ offset: 1, span: 20 }} initialValue={1}>
+          <Form.Item
+            name="status"
+            wrapperCol={{ offset: 1, span: 20 }}
+            initialValue={collectInfo?.status || 1}
+          >
             <Radio.Group className={styles.radioGroup}>
               <Radio value={1} className={styles.radio}>
                 <span>公开</span>

@@ -35,18 +35,18 @@ const { TabPane } = Tabs;
 interface IProps {}
 
 const Author: React.FC<IProps> = () => {
-  const [loading, setLoading] = useState<boolean>(false);
   const [selectKey, setSelectKey] = useState<string>('1');
   const [timelineList, setTimelineList] = useState<TimelineResult[]>([]);
   const [authorInfo, setAuthorInfo] = useState<UserInfoParams>({
     userId: '',
   });
+  const [showMoreInfo, setShowMoreInfo] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [articleList, setArticleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
     count: 0,
   });
-  const [showMoreInfo, setShowMoreInfo] = useState<boolean>(false);
 
   const listRef = useRef<ArticleItem[]>([]);
   const navigate = useNavigate();
@@ -213,158 +213,156 @@ const Author: React.FC<IProps> = () => {
   );
 
   return (
-    <>
-      <div className={styles.AuthorContainer}>
-        {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-        <div className={styles.headerWrap}>
-          <Header needLeft excludesWidth right={rightNode()}>
-            <div className={styles.headerContent}>关于博主</div>
-          </Header>
-        </div>
-        <Content
-          containerClassName={styles.containerClassName}
-          wrapClassName={styles.wrapClassName}
-          className={styles.scrollWrap}
-          onScroll={onScroll}
-          scrollbarRef={scrollbarRef}
-        >
-          <div className={styles.wrap}>
-            <div className={styles.infoWrap}>
-              <div className={styles.mainCover}>
-                <Image
-                  url={authorInfo?.mainCover || MAIN_COVER}
-                  transitionImg={MAIN_COVER}
-                  className={styles.image}
-                  imageWrapStyle={styles.imageWrapStyle}
-                />
-              </div>
-              <div className={styles.headImg}>
-                <Image
-                  url={authorInfo?.headUrl || HEAD_UEL}
-                  transitionImg={HEAD_UEL}
-                  className={styles.image}
-                />
-              </div>
-              <div className={styles.mainInfo}>
-                <div className={styles.username}>{authorInfo?.username}</div>
-                <div className={styles.info}>{authorInfo?.job}</div>
-              </div>
+    <div className={styles.AuthorContainer}>
+      {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
+      <div className={styles.headerWrap}>
+        <Header needLeft excludesWidth right={rightNode()}>
+          <div className={styles.headerContent}>关于博主</div>
+        </Header>
+      </div>
+      <Content
+        containerClassName={styles.containerClassName}
+        wrapClassName={styles.wrapClassName}
+        className={styles.scrollWrap}
+        onScroll={onScroll}
+        scrollbarRef={scrollbarRef}
+      >
+        <div className={styles.wrap}>
+          <div className={styles.infoWrap}>
+            <div className={styles.mainCover}>
+              <Image
+                url={authorInfo?.mainCover || MAIN_COVER}
+                transitionImg={MAIN_COVER}
+                className={styles.image}
+                imageWrapStyle={styles.imageWrapStyle}
+              />
             </div>
-            <div className={styles.viewMore}>
-              {showMoreInfo && (
-                <div>
-                  <div className={styles.info}>{authorInfo?.introduce}</div>
-                  <div className={styles.info}>{authorInfo?.motto}</div>
-                  <a
-                    href={authorInfo?.github}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={styles.info}
-                  >
-                    {authorInfo?.github}
-                  </a>
-                  <a
-                    href={authorInfo?.juejin}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={styles.info}
-                  >
-                    {authorInfo?.juejin}
-                  </a>
-                  <a
-                    className={styles.info}
-                    href={authorInfo?.zhihu}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {authorInfo?.zhihu}
-                  </a>
-                  <a
-                    className={styles.info}
-                    href={authorInfo?.blog}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {authorInfo?.blog}
-                  </a>
-                </div>
-              )}
-              <div className={styles.moreInfo} onClick={onViewMoreInfo}>
-                <MIcons
-                  className={styles.downIcon}
-                  name={!showMoreInfo ? 'icon-xiajiantou' : 'icon-shangjiantou'}
-                  onClick={onViewMoreInfo}
-                />
-                <span className={styles.viewMoreInfo}>查看详细资料</span>
-              </div>
+            <div className={styles.headImg}>
+              <Image
+                url={authorInfo?.headUrl || HEAD_UEL}
+                transitionImg={HEAD_UEL}
+                className={styles.image}
+              />
             </div>
-            <div className={styles.content}>
-              <div className={styles.tabList}>
-                <div className={styles.tab}>
-                  <Tabs defaultActiveKey="1" onChange={onChangeTabs}>
-                    {AUTHOR_TABS.map((i) => {
-                      return (
-                        <TabPane tab={i.name} key={i.value}>
-                          {(i.value !== '3' ||
-                            !timelineList.length ||
-                            (timelineList.length && !timelineList[0].articles.length)) && (
-                            <Card
-                              list={articleList.list}
-                              wrapClass={styles.wrapClass}
-                              toDetail={toDetail}
-                              likeArticle={likeArticle}
-                              deleteArticle={deleteArticle}
-                              onEditArticle={onEditArticle}
-                              loadText="地主家也没余粮了"
-                              loading={loading}
-                            />
+            <div className={styles.mainInfo}>
+              <div className={styles.username}>{authorInfo?.username}</div>
+              <div className={styles.info}>{authorInfo?.job}</div>
+            </div>
+          </div>
+          <div className={styles.viewMore}>
+            {showMoreInfo && (
+              <div>
+                <div className={styles.info}>{authorInfo?.introduce}</div>
+                <div className={styles.info}>{authorInfo?.motto}</div>
+                <a
+                  href={authorInfo?.github}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.info}
+                >
+                  {authorInfo?.github}
+                </a>
+                <a
+                  href={authorInfo?.juejin}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={styles.info}
+                >
+                  {authorInfo?.juejin}
+                </a>
+                <a
+                  className={styles.info}
+                  href={authorInfo?.zhihu}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {authorInfo?.zhihu}
+                </a>
+                <a
+                  className={styles.info}
+                  href={authorInfo?.blog}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {authorInfo?.blog}
+                </a>
+              </div>
+            )}
+            <div className={styles.moreInfo} onClick={onViewMoreInfo}>
+              <MIcons
+                className={styles.downIcon}
+                name={!showMoreInfo ? 'icon-xiajiantou' : 'icon-shangjiantou'}
+                onClick={onViewMoreInfo}
+              />
+              <span className={styles.viewMoreInfo}>查看详细资料</span>
+            </div>
+          </div>
+          <div className={styles.content}>
+            <div className={styles.tabList}>
+              <div className={styles.tab}>
+                <Tabs defaultActiveKey="1" onChange={onChangeTabs}>
+                  {AUTHOR_TABS.map((i) => {
+                    return (
+                      <TabPane tab={i.name} key={i.value}>
+                        {(i.value !== '3' ||
+                          !timelineList.length ||
+                          (timelineList.length && !timelineList[0].articles.length)) && (
+                          <Card
+                            list={articleList.list}
+                            wrapClass={styles.wrapClass}
+                            toDetail={toDetail}
+                            likeArticle={likeArticle}
+                            deleteArticle={deleteArticle}
+                            onEditArticle={onEditArticle}
+                            loadText="地主家也没余粮了"
+                            loading={loading}
+                          />
+                        )}
+                        {i.value === '3' &&
+                          timelineList.length > 0 &&
+                          timelineList[0].articles.length > 0 && (
+                            <Timeline className={styles.timelineContent}>
+                              {timelineList.map((i) => {
+                                return (
+                                  <Timeline.Item
+                                    className={styles.timelineItem}
+                                    key={i.date}
+                                    color="green"
+                                    dot={
+                                      <ClockCircleOutlined style={{ fontSize: '16px' }} />
+                                    }
+                                  >
+                                    <div className={styles.cardList}>
+                                      <div className={styles.date}>{i.date}</div>
+                                      {i.articles && i.articles.length > 0 && (
+                                        <Card
+                                          list={i.articles}
+                                          wrapClass={styles.wrapClass}
+                                          itemClass={styles.itemClass}
+                                          descClass={styles.descClass}
+                                          toDetail={toDetail}
+                                          likeArticle={likeArticle}
+                                          deleteArticle={deleteTimeline}
+                                        />
+                                      )}
+                                    </div>
+                                  </Timeline.Item>
+                                );
+                              })}
+                            </Timeline>
                           )}
-                          {i.value === '3' &&
-                            timelineList.length > 0 &&
-                            timelineList[0].articles.length > 0 && (
-                              <Timeline className={styles.timelineContent}>
-                                {timelineList.map((i) => {
-                                  return (
-                                    <Timeline.Item
-                                      className={styles.timelineItem}
-                                      key={i.date}
-                                      color="green"
-                                      dot={
-                                        <ClockCircleOutlined style={{ fontSize: '16px' }} />
-                                      }
-                                    >
-                                      <div className={styles.cardList}>
-                                        <div className={styles.date}>{i.date}</div>
-                                        {i.articles && i.articles.length > 0 && (
-                                          <Card
-                                            list={i.articles}
-                                            wrapClass={styles.wrapClass}
-                                            itemClass={styles.itemClass}
-                                            descClass={styles.descClass}
-                                            toDetail={toDetail}
-                                            likeArticle={likeArticle}
-                                            deleteArticle={deleteTimeline}
-                                          />
-                                        )}
-                                      </div>
-                                    </Timeline.Item>
-                                  );
-                                })}
-                              </Timeline>
-                            )}
-                        </TabPane>
-                      );
-                    })}
-                  </Tabs>
-                </div>
+                      </TabPane>
+                    );
+                  })}
+                </Tabs>
               </div>
             </div>
           </div>
-        </Content>
-        {htmlWidth <= 960 && <Footer />}
-        <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
-      </div>
-    </>
+        </div>
+      </Content>
+      {htmlWidth <= 960 && <Footer />}
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
+    </div>
   );
 };
 

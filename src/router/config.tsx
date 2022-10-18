@@ -29,7 +29,11 @@ const Collection = lazy(() => import('@/view/collection'));
 
 const lazyLoad = (children: ReactNode, needSpin = true): ReactNode => {
   return (
-    <Suspense fallback={needSpin ? <Spin className={styles.loading} tip="正在卖力加载中..." /> : null}>
+    <Suspense
+      fallback={
+        needSpin ? <Spin className={styles.loading} tip="正在卖力加载中..." /> : null
+      }
+    >
       {children}
     </Suspense>
   );
@@ -64,10 +68,6 @@ const children = [
     path: 'create',
     element: lazyLoad(<Mackdown />),
   },
-  {
-    path: 'collection/:id',
-    element: lazyLoad(<Collection />),
-  },
 ];
 
 const routes: RouteObject[] = [
@@ -101,6 +101,10 @@ const routes: RouteObject[] = [
   {
     path: 'author',
     element: lazyLoad(<Author />),
+  },
+  {
+    path: 'collection/:id',
+    element: lazyLoad(<Collection />),
   },
   {
     path: 'login',

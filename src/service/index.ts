@@ -42,6 +42,7 @@ import {
   cancelCollected,
   getCollectedTotal,
   delCollection,
+  updateCollection,
 } from './collection';
 
 export {
@@ -86,4 +87,5 @@ export {
   cancelCollected,
   getCollectedTotal,
   delCollection,
+  updateCollection,
 };

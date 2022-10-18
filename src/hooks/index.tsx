@@ -382,15 +382,23 @@ export const useDeleteArticle = ({
 
   // 删除收藏集
   const delCollection = async (id: string) => {
-    console.log(id, 'id>>>>>delCollection');
-    const res = normalizeResult<{ id: string }>(
+    const res = normalizeResult<ArticleListResult>(
       await Service.delCollection({
         id,
         userId: getUserInfo?.userId,
+        pageNo,
+        pageSize: PAGESIZE,
       })
     );
-    console.log(res, 'res');
-
+    if (res.success) {
+      const nextPageOne = res?.data?.list[0] || '';
+      const list = articleList.list.filter((i) => i.id !== id);
+      listRef.current = nextPageOne ? [...list, nextPageOne] : list;
+      setArticleList({
+        ...articleList,
+        list: listRef.current,
+      });
+    }
     return res;
   };
 

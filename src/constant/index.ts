@@ -110,7 +110,7 @@ export const MUSIC_ORDER_ICONS = [
 ];
 
 // 每页数量
-export const PAGESIZE = 5;
+export const PAGESIZE = 10;
 
 // 文件上传路径
 export const UPLOADURL = '/api/upload';
@@ -214,9 +214,13 @@ export const ABOUT_TABS = [
     name: '他的文章',
     value: '1',
   },
+  {
+    name: '他的收藏',
+    value: '3',
+  },
 ];
 
-// 我的主页页面path
+// 我的主页页面API
 export const ABOUT_ME_API_PATH = {
   1: API.GET_MY_ARTICLE_LIST,
   2: API.GET_LIKE_ARTICLE_LIST,

@@ -30,6 +30,7 @@ interface IProps {
   loadText?: string;
   loading?: boolean;
   style?: CSSProperties;
+  fromPage?: boolean;
 }
 
 const Card: React.FC<IProps> = ({
@@ -50,6 +51,7 @@ const Card: React.FC<IProps> = ({
   loadText,
   loading,
   style,
+  fromPage,
 }) => {
   const {
     userInfoStore: { getUserInfo },
@@ -97,7 +99,11 @@ const Card: React.FC<IProps> = ({
 
   const toPersonal = (e: MouseEvent, id: string) => {
     e.stopPropagation();
-    navigate(`/personal?id=${id}`);
+    if (fromPage) {
+      window.location.href = `/personal?id=${id}`;
+    } else {
+      navigate(`/personal?id=${id}`);
+    }
   };
 
   return (
@@ -219,19 +225,17 @@ const Card: React.FC<IProps> = ({
           <Skeleton active title paragraph={{ rows: skeletonRows }} />
         </div>
       )}
-      {
-        !loading && list.length !== 0 ? (
-          <div className={styles.noMore}>
-            {list.length > 0
-              ? `共(${list.length})
+      {!loading && list.length !== 0 ? (
+        <div className={styles.noMore}>
+          {list.length > 0
+            ? `共(${list.length})
           篇，${loadText || '已是全部家当'}～～～`
-              : `共(${list.length})
+            : `共(${list.length})
             篇，空空如也～～～`}
-          </div>
-        ) : (
-          <div className={styles.noMore}>loading...</div>
-        )
-      }
+        </div>
+      ) : (
+        <div className={styles.noMore}>loading...</div>
+      )}
     </div>
   );
 };

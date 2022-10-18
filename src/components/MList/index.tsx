@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
+import useStore from '@/store';
 import { formatDate } from '@/utils';
-import { ArticleItem } from '@/typings/common';
+import { ArticleItem, AddCollectionRes } from '@/typings/common';
 import MIcons from '../Icons';
 import AddCollection from '../AddCollection';
 import styles from './index.less';
@@ -16,6 +17,8 @@ interface IProps {
   onShow?: Function;
   getAddRes?: Function;
   delCollection?: Function;
+  updateCollection?: Function;
+  authorId?: string | null;
 }
 
 const MList: React.FC<IProps> = ({
@@ -27,19 +30,25 @@ const MList: React.FC<IProps> = ({
   onShow,
   getAddRes,
   delCollection,
+  updateCollection,
+  authorId,
 }) => {
+  const [collectInfo, setCollectInfo] = useState<AddCollectionRes>({ id: '' });
   const navigate = useNavigate();
+  const {
+    userInfoStore: { getUserInfo },
+  } = useStore();
 
   const toClolection = (id: string) => {
-    navigate(`/collection/${id}`);
+    navigate(`/collection/${id}&authorId=${authorId}`);
   };
 
-  const onEdit = (id: string) => {
-    console.log(id, 'id>>>edit');
+  const onEdit = (i: AddCollectionRes) => {
+    setCollectInfo(i);
+    onShow && onShow();
   };
 
   const onDelete = (id: string) => {
-    console.log(id, 'id>>>delete');
     delCollection && delCollection(id);
   };
 
@@ -51,21 +60,27 @@ const MList: React.FC<IProps> = ({
             <div className={styles.listCount}>{`我收藏的 ${list?.length}`}</div>
             <div className={styles.count}>{`我收藏的文章共 ${collectedCount} 篇`}</div>
           </div>
-          <div>
-            <Button
-              type="link"
-              className={styles.addCollect}
-              onClick={() => onShow && onShow()}
-            >
-              <MIcons name="icon-add" className={styles.addIcon} />
-              &nbsp;新建收藏集
-            </Button>
-          </div>
+          {(!authorId || authorId === getUserInfo?.userId) && (
+            <div>
+              <Button
+                type="link"
+                className={styles.addCollect}
+                onClick={() => onShow && onShow()}
+              >
+                <MIcons name="icon-add" className={styles.addIcon} />
+                &nbsp;新建收藏集
+              </Button>
+            </div>
+          )}
         </div>
       )}
       {list.map((i) => {
         return (
-          <div key={i.id} className={styles.collectionItem} onClick={() => toClolection(i.id)}>
+          <div
+            key={i.id}
+            className={styles.collectionItem}
+            onClick={() => toClolection(i.id)}
+          >
             <div className={styles.desc}>
               <div className={styles.collectionName}>
                 <span>{i.name}</span>
@@ -81,10 +96,22 @@ const MList: React.FC<IProps> = ({
                 </span>
                 <div className={styles.acrions}>
                   <span className={styles.edit}>
-                    <MIcons name="icon-icon_bianji" className={styles.lockIcon} text="编辑" customStyle onClick={() => onEdit(i.id)} />
+                    <MIcons
+                      name="icon-icon_bianji"
+                      className={styles.lockIcon}
+                      text="编辑"
+                      customStyle
+                      onClick={() => onEdit(i as unknown as AddCollectionRes)}
+                    />
                   </span>
                   <span className={styles.delete}>
-                    <MIcons name="icon-shanchu" className={styles.lockIcon} text="删除" customStyle onClick={() => onDelete(i.id)} />
+                    <MIcons
+                      name="icon-shanchu"
+                      className={styles.lockIcon}
+                      text="删除"
+                      customStyle
+                      onClick={() => onDelete(i.id)}
+                    />
                   </span>
                 </div>
               </div>
@@ -100,11 +127,15 @@ const MList: React.FC<IProps> = ({
       ) : (
         <div className={styles.loading}>loading...</div>
       )}
-      <AddCollection
-        visible={!!visible}
-        onCancel={() => onHide && onHide()}
-        callback={getAddRes}
-      />
+      {visible && (
+        <AddCollection
+          visible={!!visible}
+          onCancel={() => onHide && onHide()}
+          callback={getAddRes}
+          updateCollection={updateCollection}
+          collectInfo={collectInfo}
+        />
+      )}
     </div>
   );
 };
