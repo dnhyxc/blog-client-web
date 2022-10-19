@@ -12,7 +12,7 @@ import CollectionModal from '@/components/CollectionModel';
 import AddCollection from '@/components/AddCollection';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { error, normalizeResult, success } from '@/utils';
+import { error, normalizeResult } from '@/utils';
 import {
   useVerifyToken,
   useLikeArticle,
@@ -25,7 +25,7 @@ import { PAGESIZE, HEAD_UEL } from '@/constant';
 import { ArticleListResult, ArticleItem, AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const Collection: React.FC<IProps> = () => {
   const [collectInfo, setCollectInfo] = useState<AddCollectionRes>({ id: '' });
@@ -124,9 +124,7 @@ const Collection: React.FC<IProps> = () => {
         userId: getUserInfo?.userId,
       })
     );
-    if (res.success) {
-      success(res.message);
-    } else {
+    if (!res.success) {
       error(res.message);
     }
   };
@@ -219,8 +217,8 @@ const Collection: React.FC<IProps> = () => {
                     name="icon-icon_bianji"
                     className={styles.lockIcon}
                     text="编辑"
-                    // customStyle
-                    // onClick={() => onEdit(i as unknown as AddCollectionRes)}
+                  // customStyle
+                  // onClick={() => onEdit(i as unknown as AddCollectionRes)}
                   />
                 </span>
                 <span className={styles.delete}>
@@ -228,7 +226,7 @@ const Collection: React.FC<IProps> = () => {
                     name="icon-shanchu"
                     className={styles.lockIcon}
                     text="删除"
-                    // onClick={() => onDelete(i.id)}
+                  // onClick={() => onDelete(i.id)}
                   />
                 </span>
               </div>
@@ -248,7 +246,7 @@ const Collection: React.FC<IProps> = () => {
                   <MIcons
                     name="icon-arrow-right-bold"
                     className={styles.rightIcon}
-                    // onClick={() => onEdit(i as unknown as AddCollectionRes)}
+                  // onClick={() => onEdit(i as unknown as AddCollectionRes)}
                   />
                 </div>
               </div>

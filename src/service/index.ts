@@ -46,6 +46,7 @@ import {
   getCollectInfo,
   getCollectArticles,
   removeCollectArticle,
+  getCollectTotal,
 } from './collection';
 
 export {
@@ -94,4 +95,5 @@ export {
   getCollectInfo,
   getCollectArticles,
   removeCollectArticle,
+  getCollectTotal,
 };

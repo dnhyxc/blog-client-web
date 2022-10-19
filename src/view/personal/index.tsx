@@ -50,6 +50,7 @@ const Personal = () => {
   const [selectKey, setSelectKey] = useState<string>('1');
   const [collectedCount, setCollectedCount] = useState<number>(0);
   const [collectVisible, setCollecVisible] = useState<boolean>(false);
+  const [collectTotal, setCollecTotal] = useState<number>(0);
   const [articleList, setArticleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
@@ -94,10 +95,19 @@ const Personal = () => {
   useEffect(() => {
     if (selectKey === '3') {
       getCollectedTotal();
+      getCollectionTotal();
     }
   }, [selectKey]);
 
-  // 获取收藏总条数
+  // 获取收藏集总数
+  const getCollectionTotal = async () => {
+    const res = normalizeResult<number>(await Service.getCollectTotal({ userId: getUserInfo?.userId }));
+    if (res.success) {
+      setCollecTotal(res.data);
+    }
+  };
+
+  // 获取收藏文章总条数
   const getCollectedTotal = async () => {
     const res = normalizeResult<{ total: number }>(
       await Service.getCollectedTotal({ userId: authorId || getUserInfo?.userId })
@@ -182,6 +192,7 @@ const Personal = () => {
     pageNo,
     authorId: authorId as string,
     accessUserId: getUserInfo?.userId,
+    getCollectionTotal: selectKey === '3' ? getCollectionTotal : () => { },
   });
 
   // 更新收藏集
@@ -320,6 +331,7 @@ const Personal = () => {
                       ) : (
                         <MList
                           list={dataList}
+                          collectTotal={collectTotal}
                           loading={loading}
                           collectedCount={collectedCount}
                           visible={collectVisible}

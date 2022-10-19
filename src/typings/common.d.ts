@@ -265,6 +265,7 @@ export interface useDeleteArticleParams {
   authorPage?: boolean;
   authorLike?: boolean;
   filterList?: string[];
+  getCollectionTotal?: Function;
 }
 
 export interface useUpdateCollectedParams {

@@ -73,3 +73,8 @@ export async function removeCollectArticle(params: {
   const res = await post(API.REMOVE_COLLECT_ARTICLE, params);
   return res;
 }
+
+export async function getCollectTotal(params: { userId: string }) {
+  const res = await post(API.GET_COLLECT_TOTAL, params);
+  return res;
+}

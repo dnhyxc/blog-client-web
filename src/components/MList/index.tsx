@@ -11,6 +11,7 @@ import styles from './index.less';
 interface IProps {
   list: ArticleItem[];
   loading: boolean;
+  collectTotal?: number;
   visible?: boolean;
   collectedCount?: number;
   onHide?: Function;
@@ -23,6 +24,7 @@ interface IProps {
 
 const MList: React.FC<IProps> = ({
   list,
+  collectTotal,
   loading,
   collectedCount,
   visible,
@@ -57,7 +59,7 @@ const MList: React.FC<IProps> = ({
       {list?.length > 0 && (
         <div className={styles.collectionHeader}>
           <div className={styles.collectCount}>
-            <div className={styles.listCount}>{`我收藏的 ${list?.length}`}</div>
+            <div className={styles.listCount}>{`我收藏的 ${collectTotal}`}</div>
             <div className={styles.count}>{`我收藏的文章共 ${collectedCount} 篇`}</div>
           </div>
           {(!authorId || authorId === getUserInfo?.userId) && (

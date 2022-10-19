@@ -372,6 +372,7 @@ export const useDeleteArticle = ({
   accessUserId, // 我的主页登录人id
   authorPage, // 代表博主页面
   authorLike, // 代表博主页面博主点赞列表
+  getCollectionTotal, // 获取收藏集总数的方法
 }: useDeleteArticleParams) => {
   const {
     userInfoStore: { getUserInfo },
@@ -399,6 +400,8 @@ export const useDeleteArticle = ({
         ...articleList,
         list: listRef.current,
       });
+      // 如果是收藏集tab，getCollectionTotal有值，需要实时获取删除后的收藏集总条数
+      getCollectionTotal && getCollectionTotal();
     }
     return res;
   };

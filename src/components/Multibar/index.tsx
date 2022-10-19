@@ -39,7 +39,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
     if (!visible) {
       getCollectionStatus();
     }
-  }, [visible]);
+  }, [visible, id]);
 
   // 文章点赞
   const onLikeArticle = async () => {
@@ -192,11 +192,13 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
         onCancel={() => setVisible(false)}
         getAddVisible={getAddVisible}
       />
-      <AddCollection
-        visible={addVisible}
-        onCancel={() => setAddVisible(false)}
-        showCollection={onCollection}
-      />
+      {addVisible && (
+        <AddCollection
+          visible={addVisible}
+          onCancel={() => setAddVisible(false)}
+          showCollection={onCollection}
+        />
+      )}
     </div>
   );
 };
