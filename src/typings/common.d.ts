@@ -366,3 +366,10 @@ export interface PerGetArticlesParams {
   accessUserId: string;
   isVisitor?: boolean;
 }
+
+export interface getCollectArticlesParams {
+  pageNo: number;
+  pageSize: number;
+  userId: string;
+  articleIds?: string[];
+}

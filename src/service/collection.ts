@@ -1,6 +1,10 @@
 import { post } from '@/utils/request';
 import * as API from './api';
-import { CreateCollectionParams, GetCollectionListParams } from '@/typings/common';
+import {
+  CreateCollectionParams,
+  GetCollectionListParams,
+  getCollectArticlesParams,
+} from '@/typings/common';
 
 export async function createCollection(params: CreateCollectionParams) {
   const res = await post(API.CREATE_COLLECTION, params);
@@ -53,5 +57,19 @@ export async function updateCollection(params: CreateCollectionParams) {
 
 export async function getCollectInfo(params: { id: string }) {
   const res = await post(API.GET_COLLECT_INFO, params);
+  return res;
+}
+
+export async function getCollectArticles(params: getCollectArticlesParams) {
+  const res = await post(API.GET_COLLECT_ARTICLES, params);
+  return res;
+}
+
+export async function removeCollectArticle(params: {
+  articleId: string;
+  userId: string;
+  id: string; // 收藏集id
+}) {
+  const res = await post(API.REMOVE_COLLECT_ARTICLE, params);
   return res;
 }

@@ -44,6 +44,8 @@ import {
   delCollection,
   updateCollection,
   getCollectInfo,
+  getCollectArticles,
+  removeCollectArticle,
 } from './collection';
 
 export {
@@ -90,4 +92,6 @@ export {
   delCollection,
   updateCollection,
   getCollectInfo,
+  getCollectArticles,
+  removeCollectArticle,
 };

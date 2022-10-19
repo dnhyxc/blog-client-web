@@ -30,8 +30,8 @@ import {
 import {
   useLoginStatus,
   useLikeArticle,
-  useScrollLoad,
   useDeleteArticle,
+  useScrollLoad,
   useVerifyToken,
   useGetUserInfo,
 } from '@/hooks';
@@ -88,11 +88,14 @@ const Personal = () => {
         total: 0,
         count: 0,
       });
-      return;
     }
-    // onGetPersonalInfo();
-    getCollectedTotal();
   }, [authorId]);
+
+  useEffect(() => {
+    if (selectKey === '3') {
+      getCollectedTotal();
+    }
+  }, [selectKey]);
 
   // 获取收藏总条数
   const getCollectedTotal = async () => {

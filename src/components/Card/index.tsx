@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
 import React, { CSSProperties } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Skeleton, Popover } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
@@ -25,12 +26,15 @@ interface IProps {
   skeletonAvatar?: string;
   deleteArticle?: Function;
   likeArticle?: Function;
+  removeArticle?: (id: string) => void;
   onEditArticle?: Function;
+  moveTo?(id: string): void;
   showClassify?: boolean;
   loadText?: string;
   loading?: boolean;
   style?: CSSProperties;
   fromPage?: boolean;
+  customRender?: boolean;
 }
 
 const Card: React.FC<IProps> = ({
@@ -52,12 +56,40 @@ const Card: React.FC<IProps> = ({
   loading,
   style,
   fromPage,
+  customRender,
+  moveTo,
+  removeArticle,
 }) => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
   const navigate = useNavigate();
+  const [search] = useSearchParams();
+  const authorId = search.get('authorId');
+
+  const renderAction = (id: string) => {
+    return (
+      <div className={styles.actions}>
+        <span className={styles.edit}>
+          <MIcons
+            name="icon-table_move-o"
+            className={styles.lockIcon}
+            text="转移"
+            onClick={() => moveTo && moveTo(id)}
+          />
+        </span>
+        <span className={styles.delete}>
+          <MIcons
+            name="icon-shanchu"
+            className={styles.lockIcon}
+            text="移除"
+            onClick={() => removeArticle && removeArticle(id)}
+          />
+        </span>
+      </div>
+    );
+  };
 
   const content = (item: ArticleItem) => {
     return (
@@ -131,21 +163,24 @@ const Card: React.FC<IProps> = ({
             <div className={styles.info}>
               <div className={styles.name}>
                 <span>{i.title}</span>
-                {(getUserInfo?.userId === i.authorId || getUserInfo?.auth === 1) && (
-                  <Popover
-                    placement="left"
-                    content={() => content(i)}
-                    trigger="hover"
-                    className={styles.popover}
-                    zIndex={12}
-                  >
-                    <EllipsisOutlined
-                      onClick={(e) => {
-                        e.stopPropagation();
-                      }}
-                    />
-                  </Popover>
-                )}
+                {(getUserInfo?.userId === i.authorId || getUserInfo?.auth === 1) &&
+                  (customRender ? (
+                    authorId === getUserInfo?.userId && renderAction(i.id)
+                  ) : (
+                    <Popover
+                      placement="left"
+                      content={() => content(i)}
+                      trigger="hover"
+                      className={styles.popover}
+                      zIndex={12}
+                    >
+                      <EllipsisOutlined
+                        onClick={(e) => {
+                          e.stopPropagation();
+                        }}
+                      />
+                    </Popover>
+                  ))}
               </div>
               {htmlWidth > 960 && (
                 <div className={descClass || styles.desc}>{i.abstract}</div>

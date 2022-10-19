@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
 import Content from '@/components/Content';
 import MAlert from '@/components/MAlert';
@@ -8,67 +8,178 @@ import Image from '@/components/Image';
 import Card from '@/components/Card';
 import BackTop from '@/components/BackTop';
 import Footer from '@/components/Footer';
+import CollectionModal from '@/components/CollectionModel';
+import AddCollection from '@/components/AddCollection';
 import useStore from '@/store';
 import * as Service from '@/service';
-import { error, normalizeResult } from '@/utils';
-import { useLoginStatus, useHtmlWidth, useScrollLoad, useGetUserInfo } from '@/hooks';
-import { PAGESIZE, HEAD_UEL } from '@/constant';
+import { error, normalizeResult, success } from '@/utils';
 import {
-  ArticleListResult,
-  // ArticleItem,
-  // TimelineResult,
-  // UserInfoParams,
-  AddCollectionRes
-} from '@/typings/common';
+  useVerifyToken,
+  useLikeArticle,
+  useLoginStatus,
+  useHtmlWidth,
+  useScrollLoad,
+  useGetUserInfo,
+} from '@/hooks';
+import { PAGESIZE, HEAD_UEL } from '@/constant';
+import { ArticleListResult, ArticleItem, AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Collection: React.FC<IProps> = () => {
   const [collectInfo, setCollectInfo] = useState<AddCollectionRes>({ id: '' });
-  const [loading] = useState<boolean>(false);
-  const [articleList] = useState<ArticleListResult>({
+  const [loading, setLoading] = useState<boolean>(false);
+  const [visible, setVisible] = useState<boolean>(false);
+  const [addVisible, setAddVisible] = useState<boolean>(false);
+  const [moveArticleId, setMoveArticleId] = useState<string>('');
+  const [isSelected, setIsSelected] = useState<boolean>(false);
+  const [articleList, setArticleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
     count: 0,
   });
-  // const [loading, setLoading] = useState<boolean>(false);
-  // const [articleList, setArticleList] = useState<ArticleListResult>({
-  //   list: [1, 2, 3, 4, 5],
-  //   total: 0,
-  //   count: 0,
-  // });
 
+  const listRef = useRef<ArticleItem[]>([]);
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const authorId: string | null = search.get('authorId'); // 创建该收藏集的用户id
   const { id } = useParams(); // 收藏集id
-
+  // 校验token是否过期
+  useVerifyToken();
   const { htmlWidth } = useHtmlWidth();
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  const { showAlert, toLogin, onCloseAlert } = useLoginStatus();
-  // const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
-  const { onScroll, scrollbarRef, scrollTop } = useScrollLoad({
+  const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
+  const { pageNo, onScroll, scrollbarRef, scrollTop } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
   });
-  const { userInfo } = useGetUserInfo(authorId as string || getUserInfo?.userId);
+  const { userInfo } = useGetUserInfo((authorId as string) || getUserInfo?.userId);
 
   useEffect(() => {
     getCollectInfo();
   }, [id]);
 
+  useEffect(() => {
+    getCollectArticles();
+  }, [pageNo, collectInfo]);
+
   // 获取收藏集详情
   const getCollectInfo = async () => {
-    const res = normalizeResult<AddCollectionRes>(await Service.getCollectInfo({ id: id as string }));
+    const res = normalizeResult<AddCollectionRes>(
+      await Service.getCollectInfo({ id: id as string })
+    );
     if (res.success) {
       setCollectInfo(res.data);
     } else {
       error(res.message);
     }
+  };
+
+  // 获取收藏集中收藏的文章
+  const getCollectArticles = async () => {
+    if (!collectInfo?.articleIds?.length) return;
+    setLoading(true);
+    const res = normalizeResult<ArticleListResult>(
+      await Service.getCollectArticles({
+        pageNo,
+        pageSize: PAGESIZE,
+        userId: getUserInfo?.userId,
+        articleIds: collectInfo?.articleIds,
+      })
+    );
+    setLoading(false);
+    if (res.success) {
+      const { total, list } = res.data;
+      // 使用ref暂存list，防止滚动加载时，list添加错乱问题
+      listRef.current = [...listRef.current, ...list];
+      setArticleList({
+        list: listRef.current,
+        total,
+        count: list.length,
+      });
+    } else {
+      error(res.message);
+    }
+  };
+
+  // 文章点赞
+  const { likeArticle } = useLikeArticle({
+    setAlertStatus,
+    articleList,
+    updateList: setArticleList,
+    listRef,
+  });
+
+  // 取消收藏
+  const cancelCollected = async (articleId: string) => {
+    if (!id) return;
+    const res = normalizeResult<number>(
+      await Service.removeCollectArticle({
+        id,
+        articleId,
+        userId: getUserInfo?.userId,
+      })
+    );
+    if (res.success) {
+      success(res.message);
+    } else {
+      error(res.message);
+    }
+  };
+
+  // 将收藏集中的文章移除，注意：并不是删除文章
+  const removeArticle = (id: string) => {
+    // 如果需要移入的收藏集包含了当前收藏集，那么就不需要删除当前收藏集中这条文章
+    if (isSelected) return;
+    const filterList = articleList.list.filter((i) => i.id !== id);
+    listRef.current = [...filterList];
+    setArticleList({
+      ...articleList,
+      list: listRef.current,
+    });
+    cancelCollected(id);
+  };
+
+  // 点击进入详情
+  const toDetail = (id: string, needScroll: boolean): void => {
+    if (needScroll) {
+      navigate(`/detail/${id}?needScroll=1`);
+    } else {
+      navigate(`/detail/${id}`);
+    }
+  };
+
+  // 移动到别的收藏集
+  const moveTo = (id: string) => {
+    setVisible(true);
+    setMoveArticleId(id);
+  };
+
+  // 获取创建收藏集弹窗显示状态
+  const getAddVisible = (value: boolean) => {
+    setAddVisible(value);
+  };
+
+  // 收藏
+  const onCollection = () => {
+    setVisible(true);
+  };
+
+  // 获取转移成功回调
+  const getCollectRes = (id: string) => {
+    if (id) {
+      removeArticle(id);
+    }
+  };
+
+  // 获取选中的收藏集ids
+  const getSelectCollectIds = (ids: string[]) => {
+    const isSelect = ids.includes(id as string);
+    setIsSelected(isSelect);
   };
 
   // 高级搜索
@@ -102,14 +213,14 @@ const Collection: React.FC<IProps> = () => {
           <div className={styles.infoWrap}>
             <div className={styles.name}>
               <span>{collectInfo?.name}</span>
-              <div className={styles.acrions}>
+              <div className={styles.actions}>
                 <span className={styles.edit}>
                   <MIcons
                     name="icon-icon_bianji"
                     className={styles.lockIcon}
                     text="编辑"
-                  // customStyle
-                  // onClick={() => onEdit(i as unknown as AddCollectionRes)}
+                    // customStyle
+                    // onClick={() => onEdit(i as unknown as AddCollectionRes)}
                   />
                 </span>
                 <span className={styles.delete}>
@@ -117,8 +228,7 @@ const Collection: React.FC<IProps> = () => {
                     name="icon-shanchu"
                     className={styles.lockIcon}
                     text="删除"
-                  // customStyle
-                  // onClick={() => onDelete(i.id)}
+                    // onClick={() => onDelete(i.id)}
                   />
                 </span>
               </div>
@@ -138,8 +248,7 @@ const Collection: React.FC<IProps> = () => {
                   <MIcons
                     name="icon-arrow-right-bold"
                     className={styles.rightIcon}
-                  // customStyle
-                  // onClick={() => onEdit(i as unknown as AddCollectionRes)}
+                    // onClick={() => onEdit(i as unknown as AddCollectionRes)}
                   />
                 </div>
               </div>
@@ -149,18 +258,34 @@ const Collection: React.FC<IProps> = () => {
             <Card
               list={articleList.list}
               wrapClass={styles.wrapClass}
-              // toDetail={toDetail}
-              // likeArticle={likeArticle}
-              // deleteArticle={deleteArticle}
+              likeArticle={likeArticle}
+              toDetail={toDetail}
               // onEditArticle={onEditArticle}
               loadText="地主家也没余粮了"
               loading={loading}
+              customRender
+              moveTo={moveTo}
+              removeArticle={removeArticle}
             />
           </div>
         </div>
       </Content>
       {htmlWidth <= 960 && <Footer />}
       <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
+      <CollectionModal
+        visible={visible}
+        onCancel={() => setVisible(false)}
+        getAddVisible={getAddVisible}
+        moveArticleId={moveArticleId}
+        getCollectRes={getCollectRes}
+        getSelectCollectIds={getSelectCollectIds}
+        selectCollectId={id}
+      />
+      <AddCollection
+        visible={addVisible}
+        onCancel={() => setAddVisible(false)}
+        showCollection={onCollection}
+      />
     </div>
   );
 };

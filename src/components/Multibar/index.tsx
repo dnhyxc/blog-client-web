@@ -8,7 +8,7 @@ import { shareQQ, shareSinaWeiBo, error } from '@/utils';
 import { ArticleDetailParams } from '@/typings/common';
 import Qrcode from '../Qrcode';
 import MIcons from '../Icons';
-import CollectionModal from './Collection';
+import CollectionModal from '../CollectionModel';
 import AddCollection from '../AddCollection';
 import styles from './index.less';
 

@@ -14,9 +14,21 @@ interface IProps {
   visible: boolean;
   onCancel: Function;
   getAddVisible: Function;
+  getCollectRes?: Function;
+  getSelectCollectIds?: Function;
+  moveArticleId?: string;
+  selectCollectId?: string;
 }
 
-const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible }) => {
+const CollectionModal: React.FC<IProps> = ({
+  visible,
+  onCancel,
+  getAddVisible,
+  getCollectRes,
+  moveArticleId,
+  getSelectCollectIds,
+  selectCollectId,
+}) => {
   const [checkedItem, setCheckedItem] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [collectionList, setCollectionList] = useState<CollectionListRes>({
@@ -40,6 +52,7 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
   useEffect(() => {
     if (visible) {
       getCollectionList();
+      setCheckedItem([selectCollectId] as string[]);
     } else {
       setPageNo(1);
       listRef.current = [];
@@ -50,7 +63,11 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
       });
       setCheckedItem([]);
     }
-  }, [visible, pageNo]);
+  }, [visible, pageNo, selectCollectId]);
+
+  useEffect(() => {
+    getSelectCollectIds && getSelectCollectIds(checkedItem);
+  }, [checkedItem]);
 
   // 获取收藏集列表
   const getCollectionList = async () => {
@@ -103,13 +120,14 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
     const res = normalizeResult<string>(
       await Service.collectArticles({
         ids: checkedItem,
-        articleId,
+        articleId: moveArticleId || articleId,
         userId: getUserInfo?.userId,
       })
     );
     if (res.success) {
       onCancel();
       success(res.message);
+      getCollectRes && getCollectRes(res.data);
     } else {
       error(res.message);
     }
@@ -175,7 +193,7 @@ const CollectionModal: React.FC<IProps> = ({ visible, onCancel, getAddVisible })
                       <MIcons name="icon-lock-full" className={styles.lockIcon} />
                     )}
                   </div>
-                  <div className={styles.collectionCount}>{i.count}篇文章</div>
+                  <div className={styles.collectionCount}>{i.articleIds?.length}篇文章</div>
                 </div>
                 <Checkbox
                   checked={checkedItem.includes(i.id)}

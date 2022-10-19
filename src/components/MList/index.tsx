@@ -91,7 +91,7 @@ const MList: React.FC<IProps> = ({
               <div className={styles.collectDesc}>{i.desc}</div>
               <div className={styles.collectionCount}>
                 <span>
-                  {formatDate(i.createTime, 'YYYY-DD-MM')}更新 · {i.count}
+                  {formatDate(i.createTime, 'YYYY-DD-MM')}更新 · {i.articleIds?.length}
                   篇文章
                 </span>
                 <div className={styles.acrions}>

@@ -102,8 +102,12 @@ const GET_COLLECTED_TOTAL = '/api/getCollectedTotal';
 const DEL_COLLECTION = '/api/delCollection';
 // 更新收藏集
 const UPDATE_COLLECTION = '/api/updateCollection';
-// 更新收藏集
+// 收藏集详情
 const GET_COLLECT_INFO = '/api/getCollectInfo';
+// 获取收藏集中收藏的文章列表
+const GET_COLLECT_ARTICLES = '/api/getCollectArticles';
+// 移除收藏集中的文章
+const REMOVE_COLLECT_ARTICLE = '/api/removeCollectArticle';
 
 export {
   REGISTER,
@@ -152,4 +156,6 @@ export {
   DEL_COLLECTION,
   UPDATE_COLLECTION,
   GET_COLLECT_INFO,
+  GET_COLLECT_ARTICLES,
+  REMOVE_COLLECT_ARTICLE,
 };
