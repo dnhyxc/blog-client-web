@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { CSSProperties } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { Skeleton, Popover } from 'antd';
+import { Skeleton, Popover, Modal } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
 import { formatGapTime } from '@/utils';
@@ -69,6 +69,16 @@ const Card: React.FC<IProps> = ({
   const authorId = search.get('authorId');
 
   const renderAction = (id: string) => {
+    const onRemoveArticle = (id: string) => {
+      Modal.confirm({
+        title: '确定移除该文章吗？',
+        content: '移除后，该文章将从当前收藏集中删除',
+        onOk() {
+          removeArticle && removeArticle(id);
+        }
+      });
+    };
+
     return (
       <div className={styles.actions}>
         <span className={styles.edit}>
@@ -84,7 +94,7 @@ const Card: React.FC<IProps> = ({
             name="icon-shanchu"
             className={styles.lockIcon}
             text="移除"
-            onClick={() => removeArticle && removeArticle(id)}
+            onClick={() => onRemoveArticle(id)}
           />
         </span>
       </div>
@@ -133,6 +143,7 @@ const Card: React.FC<IProps> = ({
     e.stopPropagation();
     if (fromPage || id !== getUserInfo?.userId) {
       window.location.href = `/personal?id=${id}`;
+      // navigate(`/personal?id=${id}&tab=1`);
     } else {
       navigate(`/personal?id=${id}`);
     }

@@ -439,7 +439,8 @@ export const useDeleteArticle = ({
 
   const modalConfig = (articleId: string) => {
     return {
-      title: '确定删除该文章吗？',
+      title: delType !== '3' ? '确定删除该文章吗？' : '确定删除该收藏集吗？',
+      content: delType === '3' ? '删除收藏集同时也会移除收藏集中的文章' : null,
       async onOk() {
         let res = {} as Result<{ id: string } | ArticleListResult>;
         if (delType !== '3') {
@@ -534,14 +535,18 @@ export const useVerifyToken = () => {
 };
 
 // 获取用户信息hook
-export const useGetUserInfo = (userId: string) => {
-  const [userInfo, setUserInfo] = useState<UserInfoParams>({ userId: '' });
+export const useGetUserInfo = ({ userId, authorId, clearInfo }: { userId: string, authorId: string, clearInfo?: boolean }) => {
+  const [userInfo, setUserInfo] = useState<UserInfoParams | null>({ userId: '' });
   const navigate = useNavigate();
 
   useEffect(() => {
+    if ((userId === authorId || !userId) && clearInfo) {
+      setUserInfo(null);
+      return;
+    }
     if (!userId) return;
     onGetPersonalInfo();
-  }, [userId]);
+  }, [userId, authorId, clearInfo]);
 
   // 获取用户信息
   const onGetPersonalInfo = async () => {

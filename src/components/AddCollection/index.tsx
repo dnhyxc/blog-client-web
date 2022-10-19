@@ -9,10 +9,11 @@ import styles from './index.less';
 interface IProps {
   visible: boolean;
   onCancel: Function;
-  collectInfo?: AddCollectionRes;
+  collectInfo?: AddCollectionRes | null;
   showCollection?: Function;
   callback?: Function;
   updateCollection?: Function;
+  hideCollectModel?: boolean;
 }
 
 const { TextArea } = Input;
@@ -24,6 +25,7 @@ const AddCollection: React.FC<IProps> = ({
   callback,
   collectInfo = null,
   updateCollection,
+  hideCollectModel,
 }) => {
   const [collectionName, setCollectionName] = useState<string>('');
   const [form] = Form.useForm();
@@ -44,7 +46,10 @@ const AddCollection: React.FC<IProps> = ({
 
   const onClose = () => {
     onCancel();
-    showCollection && showCollection();
+    // 当从收藏集详情中点击编辑时不打开创建弹窗
+    if (!hideCollectModel) {
+      showCollection && showCollection();
+    }
   };
 
   // 新建

@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
+import { Modal } from 'antd';
 import Content from '@/components/Content';
 import MAlert from '@/components/MAlert';
 import MIcons from '@/components/Icons';
@@ -22,16 +23,18 @@ import {
   useGetUserInfo,
 } from '@/hooks';
 import { PAGESIZE, HEAD_UEL } from '@/constant';
-import { ArticleListResult, ArticleItem, AddCollectionRes } from '@/typings/common';
+import { ArticleListResult, ArticleItem, AddCollectionRes, updateCollectParams } from '@/typings/common';
 import styles from './index.less';
 
 interface IProps { }
 
 const Collection: React.FC<IProps> = () => {
   const [collectInfo, setCollectInfo] = useState<AddCollectionRes>({ id: '' });
+  const [updateCollectInfo, setUpdateCollectInfo] = useState<updateCollectParams>({});
   const [loading, setLoading] = useState<boolean>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [addVisible, setAddVisible] = useState<boolean>(false);
+  const [hideCollectModel, setHideCollectModel] = useState<boolean>(false);
   const [moveArticleId, setMoveArticleId] = useState<string>('');
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -57,7 +60,7 @@ const Collection: React.FC<IProps> = () => {
     loading,
     pageSize: PAGESIZE,
   });
-  const { userInfo } = useGetUserInfo((authorId as string) || getUserInfo?.userId);
+  const { userInfo } = useGetUserInfo({ userId: authorId as string, authorId: getUserInfo?.userId });
 
   useEffect(() => {
     getCollectInfo();
@@ -159,6 +162,8 @@ const Collection: React.FC<IProps> = () => {
 
   // 获取创建收藏集弹窗显示状态
   const getAddVisible = (value: boolean) => {
+    // 从文章列表点击转移打开创建弹窗时，关闭隐藏允许点击创建弹窗取消后打开收藏集弹窗
+    setHideCollectModel(false);
     setAddVisible(value);
   };
 
@@ -185,6 +190,51 @@ const Collection: React.FC<IProps> = () => {
     navigate('/search');
   };
 
+  // 返回收藏集
+  const goBackToCollection = () => {
+    if (userInfo?.userId !== getUserInfo?.userId) {
+      navigate(`/personal?id=${userInfo?.userId}&tab=3`);
+    } else {
+      navigate('/personal?tab=3');
+    }
+  };
+
+  // 更新收藏集
+  const updateCollection = (newData: AddCollectionRes) => {
+    setUpdateCollectInfo(newData);
+  };
+
+  // 在头部编辑收藏集
+  const onHeadEditCollection = () => {
+    setAddVisible(true);
+    setHideCollectModel(true);
+  };
+
+  // 删除收藏集
+  const onDeleteCollect = async () => {
+    Modal.confirm({
+      title: '确定删除该收藏集吗？',
+      content: '删除收藏集同时也会移除收藏集中的文章',
+      async onOk() {
+        const res = normalizeResult<ArticleListResult>(
+          await Service.delCollection({
+            id: collectInfo?.id,
+            userId: getUserInfo?.userId,
+          })
+        );
+        if (res.success) {
+          navigate('/personal?tab=3');
+        } else {
+          error(res.message);
+        }
+      },
+    });
+  };
+
+  const newCollectInfo = useMemo(() => {
+    return { ...collectInfo, ...updateCollectInfo };
+  }, [updateCollectInfo, collectInfo]);
+
   // 渲染右侧搜索
   const rightNode = () => (
     <div className={styles.searchWrap}>
@@ -210,26 +260,27 @@ const Collection: React.FC<IProps> = () => {
         <div className={styles.wrap}>
           <div className={styles.infoWrap}>
             <div className={styles.name}>
-              <span>{collectInfo?.name}</span>
-              <div className={styles.actions}>
-                <span className={styles.edit}>
-                  <MIcons
-                    name="icon-icon_bianji"
-                    className={styles.lockIcon}
-                    text="编辑"
-                  // customStyle
-                  // onClick={() => onEdit(i as unknown as AddCollectionRes)}
-                  />
-                </span>
-                <span className={styles.delete}>
-                  <MIcons
-                    name="icon-shanchu"
-                    className={styles.lockIcon}
-                    text="删除"
-                  // onClick={() => onDelete(i.id)}
-                  />
-                </span>
-              </div>
+              <span>{updateCollectInfo?.name || collectInfo?.name}</span>
+              {userInfo?.userId === getUserInfo?.userId && (
+                <div className={styles.actions}>
+                  <span className={styles.edit}>
+                    <MIcons
+                      name="icon-icon_bianji"
+                      className={styles.lockIcon}
+                      text="编辑"
+                      onClick={onHeadEditCollection}
+                    />
+                  </span>
+                  <span className={styles.delete}>
+                    <MIcons
+                      name="icon-shanchu"
+                      className={styles.lockIcon}
+                      text="删除"
+                      onClick={onDeleteCollect}
+                    />
+                  </span>
+                </div>
+              )}
             </div>
             <div className={styles.userInfo}>
               <div className={styles.avatar}>
@@ -241,12 +292,11 @@ const Collection: React.FC<IProps> = () => {
               </div>
               <div className={styles.username}>
                 <div className={styles.userdesc}>{userInfo?.username}</div>
-                <div className={styles.moreCollection}>
+                <div className={styles.moreCollection} onClick={goBackToCollection}>
                   <span>更多收藏集</span>
                   <MIcons
                     name="icon-arrow-right-bold"
                     className={styles.rightIcon}
-                  // onClick={() => onEdit(i as unknown as AddCollectionRes)}
                   />
                 </div>
               </div>
@@ -258,7 +308,6 @@ const Collection: React.FC<IProps> = () => {
               wrapClass={styles.wrapClass}
               likeArticle={likeArticle}
               toDetail={toDetail}
-              // onEditArticle={onEditArticle}
               loadText="地主家也没余粮了"
               loading={loading}
               customRender
@@ -279,11 +328,16 @@ const Collection: React.FC<IProps> = () => {
         getSelectCollectIds={getSelectCollectIds}
         selectCollectId={id}
       />
-      <AddCollection
-        visible={addVisible}
-        onCancel={() => setAddVisible(false)}
-        showCollection={onCollection}
-      />
+      {addVisible && (
+        <AddCollection
+          visible={addVisible}
+          onCancel={() => setAddVisible(false)}
+          showCollection={onCollection}
+          hideCollectModel={hideCollectModel}
+          collectInfo={hideCollectModel ? newCollectInfo : null}
+          updateCollection={updateCollection}
+        />
+      )}
     </div>
   );
 };

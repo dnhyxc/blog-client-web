@@ -46,8 +46,12 @@ import styles from './index.less';
 const { TabPane } = Tabs;
 
 const Personal = () => {
+  const [search] = useSearchParams();
+  const authorId: string | null = search.get('id');
+  const tabKey: string | null = search.get('tab');
+
   const [loading, setLoading] = useState<boolean>(false);
-  const [selectKey, setSelectKey] = useState<string>('1');
+  const [selectKey, setSelectKey] = useState<string>(tabKey || '1');
   const [collectedCount, setCollectedCount] = useState<number>(0);
   const [collectVisible, setCollecVisible] = useState<boolean>(false);
   const [collectTotal, setCollecTotal] = useState<number>(0);
@@ -60,8 +64,6 @@ const Personal = () => {
   // 校验token是否过期
   useVerifyToken();
   const navigate = useNavigate();
-  const [search] = useSearchParams();
-  const authorId: string | null = search.get('id');
 
   const listRef = useRef<ArticleItem[]>([]);
   const {
@@ -73,7 +75,13 @@ const Personal = () => {
     loading,
     pageSize: PAGESIZE,
   });
-  const { userInfo } = useGetUserInfo(authorId as string);
+  const { userInfo } = useGetUserInfo({ userId: authorId as string, authorId: getUserInfo?.userId, clearInfo: true });
+
+  useEffect(() => {
+    if (tabKey) {
+      setSelectKey(tabKey);
+    }
+  }, [tabKey]);
 
   useEffect(() => {
     getMyArticleList();
@@ -274,9 +282,9 @@ const Personal = () => {
                 className={styles.image}
               />
               <div className={styles.user}>
-                <div className={styles.userName}>{getUserInfo?.username}</div>
-                <div>{userInfo?.job || getUserInfo?.job}</div>
-                <div>{userInfo?.motto || getUserInfo?.motto}</div>
+                <div className={styles.userName}>{userInfo?.username || getUserInfo?.username}</div>
+                <div>{userInfo ? (userInfo?.job || '-') : getUserInfo?.job}</div>
+                <div> {userInfo ? (userInfo?.motto || '-') : getUserInfo?.motto}</div>
               </div>
               <div className={styles.actions}>
                 <div className={styles.icons}>
@@ -313,7 +321,7 @@ const Personal = () => {
               </div>
             </div>
             <div className={styles.tabsWrap}>
-              <Tabs defaultActiveKey="1" onChange={onChange}>
+              <Tabs defaultActiveKey={tabKey || '1'} onChange={onChange}>
                 {getTabList.map((i) => {
                   return (
                     <TabPane tab={i.name} key={i.value}>

@@ -352,6 +352,12 @@ export interface AddCollectionRes {
   articleIds?: string[];
 }
 
+export interface updateCollectParams {
+  name?: string;
+  desc?: string;
+  status?: number;
+}
+
 // 创建收藏集返回值
 export interface CollectionListRes {
   total: number;
