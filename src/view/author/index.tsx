@@ -32,7 +32,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-interface IProps {}
+interface IProps { }
 
 const Author: React.FC<IProps> = () => {
   const [selectKey, setSelectKey] = useState<string>('1');
@@ -307,17 +307,18 @@ const Author: React.FC<IProps> = () => {
                         {(i.value !== '3' ||
                           !timelineList.length ||
                           (timelineList.length && !timelineList[0].articles.length)) && (
-                          <Card
-                            list={articleList.list}
-                            wrapClass={styles.wrapClass}
-                            toDetail={toDetail}
-                            likeArticle={likeArticle}
-                            deleteArticle={deleteArticle}
-                            onEditArticle={onEditArticle}
-                            loadText="地主家也没余粮了"
-                            loading={loading}
-                          />
-                        )}
+                            <Card
+                              list={articleList.list}
+                              total={articleList.total}
+                              wrapClass={styles.wrapClass}
+                              toDetail={toDetail}
+                              likeArticle={likeArticle}
+                              deleteArticle={deleteArticle}
+                              onEditArticle={onEditArticle}
+                              loadText="地主家也没余粮了"
+                              loading={loading}
+                            />
+                          )}
                         {i.value === '3' &&
                           timelineList.length > 0 &&
                           timelineList[0].articles.length > 0 && (

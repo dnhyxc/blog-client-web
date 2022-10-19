@@ -248,6 +248,7 @@ const Search: React.FC<IProps> = () => {
           <div className={styles.content}>
             <Card
               list={articleList.list}
+              total={articleList.total}
               wrapClass={styles.wrapClass}
               toDetail={toDetail}
               likeArticle={likeArticle}

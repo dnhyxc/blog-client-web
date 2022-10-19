@@ -15,6 +15,7 @@ import styles from './index.less';
 
 interface IProps {
   list: ArticleItem[];
+  total?: number;
   toDetail?: Function;
   wrapClass?: string;
   itemClass?: string;
@@ -39,6 +40,7 @@ interface IProps {
 
 const Card: React.FC<IProps> = ({
   list,
+  total,
   toDetail,
   wrapClass,
   itemClass,
@@ -271,14 +273,16 @@ const Card: React.FC<IProps> = ({
           <Skeleton active title paragraph={{ rows: skeletonRows }} />
         </div>
       )}
-      {!loading && list.length !== 0 ? (
-        <div className={styles.noMore}>
-          {list.length > 0
-            ? `共(${list.length})
+      {!loading ? (
+        list.length === total && (
+          <div className={styles.noMore}>
+            {list.length > 0
+              ? `共(${list.length})
           篇，${loadText || '已是全部家当'}～～～`
-            : `共(${list.length})
+              : `共(${list.length})
             篇，空空如也～～～`}
-        </div>
+          </div>
+        )
       ) : (
         <div className={styles.noMore}>loading...</div>
       )}

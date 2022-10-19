@@ -305,6 +305,7 @@ const Collection: React.FC<IProps> = () => {
           <div className={styles.content}>
             <Card
               list={articleList.list}
+              total={articleList.total}
               wrapClass={styles.wrapClass}
               likeArticle={likeArticle}
               toDetail={toDetail}

@@ -165,6 +165,7 @@ const Classify: React.FC = () => {
             <Card
               wrapClass={styles.wrapClass}
               list={classifyList.list}
+              total={classifyList.total}
               toDetail={toDetail}
               likeArticle={likeArticle}
               deleteArticle={deleteArticle}

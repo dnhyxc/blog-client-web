@@ -328,6 +328,7 @@ const Personal = () => {
                       {i.value !== '3' ? (
                         <Card
                           list={dataList}
+                          total={articleList.total}
                           wrapClass={styles.wrapClass}
                           toDetail={toDetail}
                           deleteArticle={deleteArticle}

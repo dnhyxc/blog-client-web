@@ -129,6 +129,7 @@ const TagList: React.FC<IProps> = () => {
         <div className={styles.content}>
           <Card
             list={articleList.list}
+            total={articleList.total}
             likeArticle={likeArticle}
             deleteArticle={deleteArticle}
             toDetail={toDetail}
