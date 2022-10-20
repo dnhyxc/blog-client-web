@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
 import useStore from '@/store';
-import { EventBus } from '@/event';
+import { useGetSiderVisible } from '@/hooks';
 import { formatGapTime, error } from '@/utils';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
@@ -15,23 +15,14 @@ interface IProps {
 }
 
 const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
-  const {
-    userInfoStore: { getUserInfo },
-    siderStore
-  } = useStore();
-
-  const [headMenuVisible, setHeadMenuVisible] = useState<boolean>(
-    siderStore.toggleSider || false
-  );
   const [recommendList, setRecommendList] = useState<ArticleItem[]>([]);
 
   const navigate = useNavigate();
+  const {
+    userInfoStore: { getUserInfo },
+  } = useStore();
 
-  useEffect(() => {
-    EventBus.onToggleSider.listen(() => {
-      setHeadMenuVisible(EventBus.visible);
-    });
-  }, []);
+  const { siderVisible } = useGetSiderVisible();
 
   useEffect(() => {
     getArticleByRandom();
@@ -57,7 +48,7 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
 
   return (
     <div
-      className={classname(styles.NewArticles, headMenuVisible && styles.hide)}
+      className={classname(styles.NewArticles, siderVisible && styles.hide)}
       ref={scrollRef}
     >
       <div className={styles.contant}>

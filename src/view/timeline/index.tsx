@@ -99,7 +99,7 @@ const TimeLine: React.FC = () => {
   return (
     <div className={styles.TimeLine}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header right={rightNode()}>时间轴</Header>
+      <Header right={rightNode()}>时间轴线</Header>
       <Content
         className={styles.contentWrap}
         onScroll={onScroll}

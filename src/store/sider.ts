@@ -8,8 +8,6 @@ class SiderStore {
   toggleSider = false;
 
   onToggleSider(value: boolean) {
-    console.log(value, 'vbalue');
-
     this.toggleSider = value;
   }
 }

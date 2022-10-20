@@ -19,16 +19,21 @@
     .segmentedWrap {
       position: fixed;
       top: 65px;
-      // left: 195px;
       width: calc(100% - 500px);
       padding-bottom: 10px;
       text-align: center;
       background: @background;
       z-index: 11;
+      transition: all 0.3s ease-in-out;
 
       .segmented {
         background: @menu-hover;
       }
+    }
+
+    .changeWidth {
+      width: calc(100% - 300px);
+      transition: all 0.3s ease-in-out;
     }
 
     .content {

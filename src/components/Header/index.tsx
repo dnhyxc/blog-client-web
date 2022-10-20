@@ -5,12 +5,10 @@
  * @LastEditors: dnh
  * @FilePath: \src\components\Header\index.tsx
  */
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LeftOutlined } from '@ant-design/icons';
-import { useHtmlWidth } from '@/hooks';
-import { EventBus } from '@/event';
-import useStore from '@/store';
+import { useHtmlWidth, useGetSiderVisible } from '@/hooks';
 import MIcons from '../Icons';
 import HeadMenu from '../HeadMenu';
 import User from './User';
@@ -31,20 +29,10 @@ const Header: React.FC<IProps> = ({
   needLeft = true,
   excludesWidth = false,
 }) => {
-  const { siderStore } = useStore();
-
-  const [headMenuVisible, setHeadMenuVisible] = useState<boolean>(
-    siderStore.toggleSider || false
-  );
+  const { siderVisible } = useGetSiderVisible();
 
   const navigate = useNavigate();
   const { htmlWidth } = useHtmlWidth();
-
-  useEffect(() => {
-    EventBus.onToggleSider.listen(() => {
-      setHeadMenuVisible(EventBus.visible);
-    });
-  }, []);
 
   const goBack = () => {
     navigate(-1);
@@ -65,7 +53,7 @@ const Header: React.FC<IProps> = ({
             </div>
           ))}
         <div className={styles.child}>{children}</div>
-        {(excludesWidth || headMenuVisible) && htmlWidth > 960 && <HeadMenu />}
+        {(excludesWidth || siderVisible) && htmlWidth > 960 && <HeadMenu />}
       </div>
       <div className={styles.right}>
         {right && <span>{right}</span>}

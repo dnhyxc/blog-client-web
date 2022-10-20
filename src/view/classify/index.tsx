@@ -9,7 +9,7 @@ import MAlert from '@/components/MAlert';
 import BackTop from '@/components/BackTop';
 import MSegmented from '@/components/Segmented';
 import MIcons from '@/components/Icons';
-import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
+import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle, useGetSiderVisible } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, storage, error } from '@/utils';
@@ -32,6 +32,7 @@ const Classify: React.FC = () => {
   });
 
   const listRef = useRef<ArticleItem[]>([]);
+  const { siderVisible } = useGetSiderVisible();
   const { pageNo, setPageNo, onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad(
     {
       data: classifyList,
@@ -155,7 +156,7 @@ const Classify: React.FC = () => {
       >
         <div className={classname(styles.content, styles.contentPadding)}>
           <div className={styles.filterList}>
-            <div className={styles.segmentedWrap}>
+            <div className={classname(styles.segmentedWrap, siderVisible && styles.changeWidth)}>
               <MSegmented
                 onClick={onSelectClassify}
                 getOffsetHeight={getOffsetHeight}

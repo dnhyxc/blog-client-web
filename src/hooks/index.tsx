@@ -4,6 +4,7 @@ import { Modal } from 'antd';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, Result } from '@/utils/tools';
+import { EventBus } from '@/event';
 import { error } from '@/utils';
 import { PAGESIZE } from '@/constant';
 import { close } from '@/components/Render';
@@ -577,4 +578,21 @@ export const useGetUserInfo = ({
   };
 
   return { userInfo };
+};
+
+// 实时获取sider的显隐状态
+export const useGetSiderVisible = () => {
+  const { siderStore } = useStore();
+
+  const [siderVisible, setSiderVisible] = useState<boolean>(
+    siderStore.toggleSider || false
+  );
+
+  useEffect(() => {
+    EventBus.onToggleSider.listen(() => {
+      setSiderVisible(EventBus.visible);
+    });
+  }, []);
+
+  return { siderVisible };
 };

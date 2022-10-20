@@ -42,11 +42,6 @@ const MSegmented: React.FC<IProps> = ({
 
   useEffect(() => {
     const index = ARTICLE_CLASSIFY.findIndex((i) => i === classify);
-    // const defaultTags = tagRef?.current?.children;
-    // const selectTag = defaultTags?.[index];
-    // const { offsetTop, offsetLeft, clientWidth } = selectTag;
-    // setSelectSize({ offsetTop, offsetLeft, clientWidth });
-    // getOffsetHeight && getOffsetHeight(tagRef?.current?.offsetHeight);
     onResize(null, index);
   }, [classify]);
 

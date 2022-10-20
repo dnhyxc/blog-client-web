@@ -107,7 +107,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
 
   return (
     <div className={styles.siderContainer}>
-      <MusicIcon className={styles.changeIconWrap} onClick={onToggleSider} />
+      <MusicIcon className={styles.changeIconWrap} onClick={onToggleSider} icon={siderVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'} />
       <Sider
         theme="light"
         trigger={null}

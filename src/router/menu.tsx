@@ -2,10 +2,11 @@ import {
   HomeOutlined,
   ReadOutlined,
   TagsOutlined,
-  // UserOutlined,
+  SolutionOutlined,
   FolderOpenOutlined,
   FieldTimeOutlined,
   IdcardOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
 import styles from './index.less';
 
@@ -35,7 +36,7 @@ const menuList = [
     key: 'timeline',
     icon: <FieldTimeOutlined className={styles.menu_icon} />,
     label: '时间轴线',
-    name: '时间轴',
+    name: '时间轴线',
     path: '/timeline',
   },
   // {
@@ -64,14 +65,14 @@ const menuList = [
 const settingList = [
   {
     key: 'profile',
-    icon: <HomeOutlined className={styles.menu_icon} />,
+    icon: <SolutionOutlined className={styles.menu_icon} />,
     label: '个人资料',
     name: '个人资料',
     path: '/profile',
   },
   {
     key: 'account',
-    icon: <HomeOutlined className={styles.menu_icon} />,
+    icon: <SettingOutlined className={styles.menu_icon} />,
     label: '账号设置',
     name: '账号设置',
     path: '/account',
