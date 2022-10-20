@@ -267,10 +267,15 @@ const Card: React.FC<IProps> = ({
             </div>
           </div>
         ))
-      ) : (
+      ) : htmlWidth > 960 ? (
         <div className={classname(styles.item, itemClass, styles.skeletonWrap)}>
           <Skeleton.Image className={classname(styles.skeletonAvatar, skeletonAvatar)} />
           <Skeleton active title paragraph={{ rows: skeletonRows }} />
+        </div>
+      ) : (
+        <div className={classname(styles.item, itemClass, styles.skeletonWrap)}>
+          <Skeleton active title paragraph={{ rows: skeletonRows }} />
+          <Skeleton.Image className={classname(styles.skeletonAvatar, skeletonAvatar)} />
         </div>
       )}
       {!loading && list.length === total ? (
