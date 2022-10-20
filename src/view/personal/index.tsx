@@ -270,10 +270,22 @@ const Personal = () => {
     return ABOUT_ME_TABS;
   }, [authorId]);
 
+  // 高级搜索
+  const toSearch = () => {
+    navigate('/search');
+  };
+
+  // 渲染右侧搜索
+  const rightNode = () => (
+    <div className={styles.searchWrap}>
+      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
+    </div>
+  );
+
   return (
     <div className={styles.Personal}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header>我的主页</Header>
+      <Header right={rightNode()}>我的主页</Header>
       <Content
         className={styles.contentWrap}
         onScroll={onScroll}

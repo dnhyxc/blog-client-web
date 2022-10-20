@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from 'antd';
+import { Button, Skeleton } from 'antd';
+import classname from 'classname';
 import useStore from '@/store';
 import { formatDate } from '@/utils';
 import { ArticleItem, AddCollectionRes } from '@/typings/common';
@@ -21,6 +22,8 @@ interface IProps {
   delCollection?: Function;
   updateCollection?: Function;
   authorId?: string | null;
+  itemClass?: string;
+  skeletonRows?: number;
 }
 
 const MList: React.FC<IProps> = ({
@@ -36,6 +39,8 @@ const MList: React.FC<IProps> = ({
   delCollection,
   updateCollection,
   authorId,
+  itemClass, // 骨架样式
+  skeletonRows = 2,
 }) => {
   const [collectInfo, setCollectInfo] = useState<AddCollectionRes>({ id: '' });
   const navigate = useNavigate();
@@ -78,51 +83,57 @@ const MList: React.FC<IProps> = ({
           )}
         </div>
       )}
-      {list.map((i) => {
-        return (
-          <div
-            key={i.id}
-            className={styles.collectionItem}
-            onClick={() => toClolection(i.id)}
-          >
-            <div className={styles.desc}>
-              <div className={styles.collectionName}>
-                <span>{i.name}</span>
-                {i.status === 2 && (
-                  <MIcons name="icon-lock-full" className={styles.lockIcon} />
-                )}
-              </div>
-              <div className={styles.collectDesc}>{i.desc}</div>
-              <div className={styles.collectionCount}>
-                <span>
-                  {formatDate(i.createTime, 'YYYY-DD-MM')}更新 · {i.articleIds?.length}
-                  篇文章
-                </span>
-                <div className={styles.acrions}>
-                  <span className={styles.edit}>
-                    <MIcons
-                      name="icon-icon_bianji"
-                      className={styles.lockIcon}
-                      text="编辑"
-                      customStyle
-                      onClick={() => onEdit(i as unknown as AddCollectionRes)}
-                    />
+      {list?.length ? (
+        list.map((i) => {
+          return (
+            <div
+              key={i.id}
+              className={styles.collectionItem}
+              onClick={() => toClolection(i.id)}
+            >
+              <div className={styles.desc}>
+                <div className={styles.collectionName}>
+                  <span>{i.name}</span>
+                  {i.status === 2 && (
+                    <MIcons name="icon-lock-full" className={styles.lockIcon} />
+                  )}
+                </div>
+                <div className={styles.collectDesc}>{i.desc}</div>
+                <div className={styles.collectionCount}>
+                  <span>
+                    {formatDate(i.createTime, 'YYYY-DD-MM')}更新 · {i.articleIds?.length}
+                    篇文章
                   </span>
-                  <span className={styles.delete}>
-                    <MIcons
-                      name="icon-shanchu"
-                      className={styles.lockIcon}
-                      text="删除"
-                      customStyle
-                      onClick={() => onDelete(i.id)}
-                    />
-                  </span>
+                  <div className={styles.acrions}>
+                    <span className={styles.edit}>
+                      <MIcons
+                        name="icon-icon_bianji"
+                        className={styles.lockIcon}
+                        text="编辑"
+                        customStyle
+                        onClick={() => onEdit(i as unknown as AddCollectionRes)}
+                      />
+                    </span>
+                    <span className={styles.delete}>
+                      <MIcons
+                        name="icon-shanchu"
+                        className={styles.lockIcon}
+                        text="删除"
+                        customStyle
+                        onClick={() => onDelete(i.id)}
+                      />
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })
+      ) : (
+        <div className={classname(styles.collectionItem, itemClass, styles.skeletonWrap)}>
+          <Skeleton active title paragraph={{ rows: skeletonRows }} />
+        </div>
+      )}
       {!loading && total === list?.length ? (
         <div className={styles.loading}>
           {`共(${list?.length})
