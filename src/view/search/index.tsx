@@ -97,13 +97,16 @@ const Search: React.FC<IProps> = () => {
 
   // 搜索
   const onSearch = async (value: string) => {
-    setPageNo(1);
-    listRef.current = [];
-    setArticleList({
-      list: listRef.current,
-      total: 0,
-      count: 0,
-    });
+    // 当搜索的内容与之前的不同时，清除列表数据
+    if (value !== keyword) {
+      setPageNo(1);
+      listRef.current = [];
+      setArticleList({
+        list: listRef.current,
+        total: 0,
+        count: 0,
+      });
+    }
     if (value) {
       setKeyWord(value);
     } else {
@@ -153,6 +156,7 @@ const Search: React.FC<IProps> = () => {
     setAlertStatus,
     articleList,
     updateList: setArticleList,
+    listRef,
   });
 
   // 删除文章
