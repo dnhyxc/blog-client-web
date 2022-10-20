@@ -311,7 +311,11 @@ const Collection: React.FC<IProps> = () => {
                 <div className={styles.userdesc}>{userInfo?.username}</div>
                 <div className={styles.moreCollection} onClick={goBackToCollection}>
                   <span>更多收藏集</span>
-                  <MIcons name="icon-arrow-right-bold" className={styles.rightIcon} />
+                  <MIcons
+                    name="icon-arrow-right-bold"
+                    customStyle
+                    className={styles.rightIcon}
+                  />
                 </div>
               </div>
             </div>

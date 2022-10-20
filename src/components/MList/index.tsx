@@ -66,8 +66,8 @@ const MList: React.FC<IProps> = ({
       {list?.length > 0 && (
         <div className={styles.collectionHeader}>
           <div className={styles.collectCount}>
-            <div className={styles.listCount}>{`我收藏的 ${collectTotal}`}</div>
-            <div className={styles.count}>{`我收藏的文章共 ${collectedCount} 篇`}</div>
+            <div className={styles.listCount}>{`我创建的 ${collectTotal}`}</div>
+            <div className={styles.count}>{`我收藏的文章 ${collectedCount}`}</div>
           </div>
           {(!authorId || authorId === getUserInfo?.userId) && (
             <div>

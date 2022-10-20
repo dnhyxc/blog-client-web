@@ -114,7 +114,7 @@
           .image {
             width: 50px;
             height: 50px;
-            border-radius: 50px;
+            border-radius: 5px;
           }
         }
 
@@ -163,5 +163,31 @@
   }
   100% {
     background-position: 0% 0%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .Collection {
+    max-width: 960px;
+    padding-top: 50px;
+    padding-bottom: 0;
+
+    .containerClassName {
+      height: calc(100vh - 50px);
+    }
+
+    .wrapClassName {
+      padding: 6px;
+      width: 100%;
+      height: calc(100% - 50px);
+    }
+
+    .wrap {
+      padding: 0;
+
+      .content {
+        width: 100%;
+      }
+    }
   }
 }
