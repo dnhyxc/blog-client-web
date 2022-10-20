@@ -2,6 +2,12 @@
   width: 20px;
   height: 100%;
   background-color: #fff;
+  transition: all 0.3s ease-in-out;
+}
+
+.hide {
+  width: 0;
+  transition: all 0.3s ease-in-out;
 }
 
 @media screen and (max-width: 960px) {

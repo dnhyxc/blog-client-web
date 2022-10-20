@@ -5,7 +5,10 @@
  * @LastEditors: dnh
  * @FilePath: \src\components\Decorator\index.tsx
  */
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState, useEffect } from 'react';
+import classname from 'classname';
+import { EventBus } from '@/event';
+import useStore from '@/store';
 import styles from './index.scss';
 
 interface IProps {
@@ -14,7 +17,25 @@ interface IProps {
 }
 
 const Decorator: React.FC<IProps> = ({ children, className }) => {
-  return <div className={className || styles.container}>{children}</div>;
+  const { siderStore } = useStore();
+
+  const [headMenuVisible, setHeadMenuVisible] = useState<boolean>(
+    siderStore.toggleSider || false
+  );
+
+  useEffect(() => {
+    EventBus.onToggleSider.listen(() => {
+      setHeadMenuVisible(EventBus.visible);
+    });
+  }, []);
+
+  return (
+    <div
+      className={classname(className || styles.container, headMenuVisible && styles.hide)}
+    >
+      {children}
+    </div>
+  );
 };
 
 export default Decorator;

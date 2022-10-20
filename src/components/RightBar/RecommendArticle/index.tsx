@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import classname from 'classname';
 import useStore from '@/store';
+import { EventBus } from '@/event';
 import { formatGapTime, error } from '@/utils';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
@@ -13,12 +15,23 @@ interface IProps {
 }
 
 const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
+  const {
+    userInfoStore: { getUserInfo },
+    siderStore
+  } = useStore();
+
+  const [headMenuVisible, setHeadMenuVisible] = useState<boolean>(
+    siderStore.toggleSider || false
+  );
   const [recommendList, setRecommendList] = useState<ArticleItem[]>([]);
 
   const navigate = useNavigate();
-  const {
-    userInfoStore: { getUserInfo },
-  } = useStore();
+
+  useEffect(() => {
+    EventBus.onToggleSider.listen(() => {
+      setHeadMenuVisible(EventBus.visible);
+    });
+  }, []);
 
   useEffect(() => {
     getArticleByRandom();
@@ -43,7 +56,10 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
   };
 
   return (
-    <div className={styles.NewArticles} ref={scrollRef}>
+    <div
+      className={classname(styles.NewArticles, headMenuVisible && styles.hide)}
+      ref={scrollRef}
+    >
       <div className={styles.contant}>
         <div className={styles.header}>文章推荐</div>
         {recommendList.length > 0 &&

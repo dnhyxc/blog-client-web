@@ -11,8 +11,10 @@ import { Menu, Layout } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
 import Image from '@/components/Image';
+import MusicIcon from '@/components/MusicIcon';
 import { menuList, settingList } from '@/router/menu';
 import { CARD_URL } from '@/constant';
+import { EventBus } from '@/event';
 import styles from './index.less';
 
 const { Sider } = Layout;
@@ -24,14 +26,19 @@ interface IProps {
 }
 
 const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
+  const {
+    userInfoStore: { getUserInfo },
+    siderStore,
+  } = useStore();
+
+  const [siderVisible, setSiderVisible] = useState<boolean>(
+    siderStore?.toggleSider || false
+  );
   const [selectMenu, setSelectMenu] = useState<string>('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [search] = useSearchParams();
   const id = search.get('id');
-  const {
-    userInfoStore: { getUserInfo },
-  } = useStore();
 
   useEffect(() => {
     const sliceName = pathname !== '/' ? pathname.slice(1) : pathname;
@@ -91,28 +98,43 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
     navigate(value.key);
   };
 
+  // 切换menu
+  const onToggleSider = () => {
+    setSiderVisible(!siderVisible);
+    siderStore?.onToggleSider(!siderVisible);
+    EventBus.toggle(!siderVisible);
+  };
+
   return (
-    <Sider
-      theme="light"
-      trigger={null}
-      collapsible
-      width={width}
-      className={classname(className, styles.siderWrap, type && styles.settingSiderWrap)}
-    >
-      {!type && (
-        <div className={styles.logo}>
-          <Image url={CARD_URL} transitionImg={CARD_URL} className={styles.icon} />
-          <span>DNHYXC</span>
-        </div>
-      )}
-      <Menu
-        mode="inline"
-        defaultSelectedKeys={type ? ['home'] : ['profile']}
-        selectedKeys={[selectMenu]}
-        items={type ? settingList : filterMenus}
-        onClick={(e) => onSelectMenu(e)}
-      />
-    </Sider>
+    <div className={styles.siderContainer}>
+      <MusicIcon className={styles.changeIconWrap} onClick={onToggleSider} />
+      <Sider
+        theme="light"
+        trigger={null}
+        collapsible
+        width={width}
+        className={classname(
+          siderVisible && !type && styles.hideSider,
+          className,
+          styles.siderWrap,
+          type && styles.settingSiderWrap
+        )}
+      >
+        {!type && (
+          <div className={styles.logo}>
+            <Image url={CARD_URL} transitionImg={CARD_URL} className={styles.icon} />
+            <span>DNHYXC</span>
+          </div>
+        )}
+        <Menu
+          mode="inline"
+          defaultSelectedKeys={type ? ['home'] : ['profile']}
+          selectedKeys={[selectMenu]}
+          items={type ? settingList : filterMenus}
+          onClick={(e) => onSelectMenu(e)}
+        />
+      </Sider>
+    </div>
   );
 };
 

@@ -30,7 +30,7 @@ import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({

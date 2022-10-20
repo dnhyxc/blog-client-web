@@ -14,7 +14,7 @@ interface IProps {
   children?: ReactNode;
 }
 
-const MenuList: React.FC<IProps> = ({ className, children }) => {
+const HeadMenu: React.FC<IProps> = ({ className, children }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { htmlWidth } = useHtmlWidth();
@@ -96,4 +96,4 @@ const MenuList: React.FC<IProps> = ({ className, children }) => {
   );
 };
 
-export default MenuList;
+export default HeadMenu;

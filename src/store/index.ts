@@ -11,6 +11,7 @@ import detailMobx from './detail';
 import createMobx from './create';
 import commonStore from './common';
 import UserInfo from './user';
+import SiderStore from './sider';
 
 class RootStore {
   detail = detailMobx;
@@ -20,6 +21,8 @@ class RootStore {
   commonStore = commonStore;
 
   userInfoStore = UserInfo;
+
+  siderStore = SiderStore;
 }
 
 const store = new RootStore();

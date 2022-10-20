@@ -11,7 +11,7 @@ import styles from './index.less';
 
 interface IProps {
   className?: string;
-  showRecommendArticle?: boolean
+  showRecommendArticle?: boolean;
 }
 
 const Introduction: React.FC<IProps> = ({ className, showRecommendArticle }) => {
@@ -58,46 +58,48 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle }) => 
     navigate('/author');
   };
 
-  return (
-    authorInfo.userId ? (
-      <div className={classname(styles.introductionWrap, className, showRecommendArticle && styles.needMarginBottom)}>
-        <div className={styles.card}>
-          <Image
-            url={authorInfo?.headUrl || HEAD_UEL}
-            transitionImg={HEAD_UEL}
-            className={styles.image}
-            onClick={toAuthor}
-          />
-        </div>
-        <div className={styles.nameInfo}>
-          <div className={styles.name}>
-            {authorInfo?.username}
-          </div>
-          {/* contentEditable="true"设置当前元素可编辑。suppressContentEditableWarning解决react报错 */}
-          <div suppressContentEditableWarning contentEditable="true" className={styles.desc}>
-            {authorInfo?.motto}
-          </div>
-        </div>
-        <div className={styles.articleInfo}>
-          <div className={styles.statistical}>
-            共发表
-            <span className={styles.articleTotal}>{authorInfo?.articleTotal}</span>
-            篇文章
-          </div>
-        </div>
-        <div className={styles.socialWrap}>
-          <Button className={styles.github} type="primary" onClick={toGithub}>
-            GitHub
-          </Button>
-          <div className={styles.socialList}>
-            {authorInfo?.juejin && <span onClick={toJuejin}>掘金</span>}
-            {authorInfo?.zhihu && <span onClick={toZhihu}>知乎</span>}
-            {authorInfo?.blog && <span onClick={toBlog}>博客</span>}
-          </div>
+  return authorInfo.userId ? (
+    <div
+      className={classname(
+        styles.introductionWrap,
+        className,
+        showRecommendArticle && styles.needMarginBottom
+      )}
+    >
+      <div className={styles.card}>
+        <Image
+          url={authorInfo?.headUrl || HEAD_UEL}
+          transitionImg={HEAD_UEL}
+          className={styles.image}
+          onClick={toAuthor}
+        />
+      </div>
+      <div className={styles.nameInfo}>
+        <div className={styles.name}>{authorInfo?.username}</div>
+        {/* contentEditable="true"设置当前元素可编辑。suppressContentEditableWarning解决react报错 */}
+        <div suppressContentEditableWarning contentEditable="true" className={styles.desc}>
+          {authorInfo?.motto}
         </div>
       </div>
-    ) : null
-  );
+      <div className={styles.articleInfo}>
+        <div className={styles.statistical}>
+          共发表
+          <span className={styles.articleTotal}>{authorInfo?.articleTotal}</span>
+          篇文章
+        </div>
+      </div>
+      <div className={styles.socialWrap}>
+        <Button className={styles.github} type="primary" onClick={toGithub}>
+          GitHub
+        </Button>
+        <div className={styles.socialList}>
+          {authorInfo?.juejin && <span onClick={toJuejin}>掘金</span>}
+          {authorInfo?.zhihu && <span onClick={toZhihu}>知乎</span>}
+          {authorInfo?.blog && <span onClick={toBlog}>博客</span>}
+        </div>
+      </div>
+    </div>
+  ) : null;
 };
 
 export default Introduction;
