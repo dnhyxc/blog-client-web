@@ -12,6 +12,7 @@ interface IProps {
   list: ArticleItem[];
   loading: boolean;
   collectTotal?: number;
+  total?: number;
   visible?: boolean;
   collectedCount?: number;
   onHide?: Function;
@@ -25,6 +26,7 @@ interface IProps {
 const MList: React.FC<IProps> = ({
   list,
   collectTotal,
+  total,
   loading,
   collectedCount,
   visible,
@@ -121,7 +123,7 @@ const MList: React.FC<IProps> = ({
           </div>
         );
       })}
-      {!loading && list.length !== 0 ? (
+      {!loading && total === list?.length ? (
         <div className={styles.loading}>
           {`共(${list?.length})
       条，空空如也～～～`}

@@ -121,6 +121,7 @@ const TimeLine: React.FC = () => {
                       {i.articles && i.articles.length > 0 && (
                         <Card
                           list={i.articles}
+                          total={i.articles.length}
                           wrapClass={styles.wrapClass}
                           imgWrapStyle={styles.imgWrapStyle}
                           itemClass={styles.itemClass}

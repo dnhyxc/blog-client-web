@@ -75,7 +75,11 @@ const Personal = () => {
     loading,
     pageSize: PAGESIZE,
   });
-  const { userInfo } = useGetUserInfo({ userId: authorId as string, authorId: getUserInfo?.userId, clearInfo: true });
+  const { userInfo } = useGetUserInfo({
+    userId: authorId as string,
+    authorId: getUserInfo?.userId,
+    clearInfo: true,
+  });
 
   useEffect(() => {
     if (tabKey) {
@@ -109,7 +113,9 @@ const Personal = () => {
 
   // 获取收藏集总数
   const getCollectionTotal = async () => {
-    const res = normalizeResult<number>(await Service.getCollectTotal({ userId: getUserInfo?.userId }));
+    const res = normalizeResult<number>(
+      await Service.getCollectTotal({ userId: getUserInfo?.userId })
+    );
     if (res.success) {
       setCollecTotal(res.data);
     }
@@ -200,7 +206,7 @@ const Personal = () => {
     pageNo,
     authorId: authorId as string,
     accessUserId: getUserInfo?.userId,
-    getCollectionTotal: selectKey === '3' ? getCollectionTotal : () => { },
+    getCollectionTotal: selectKey === '3' ? getCollectionTotal : () => {},
   });
 
   // 更新收藏集
@@ -282,9 +288,11 @@ const Personal = () => {
                 className={styles.image}
               />
               <div className={styles.user}>
-                <div className={styles.userName}>{userInfo?.username || getUserInfo?.username}</div>
-                <div>{userInfo ? (userInfo?.job || '-') : getUserInfo?.job}</div>
-                <div> {userInfo ? (userInfo?.motto || '-') : getUserInfo?.motto}</div>
+                <div className={styles.userName}>
+                  {userInfo?.username || getUserInfo?.username}
+                </div>
+                <div>{userInfo ? userInfo?.job || '-' : getUserInfo?.job}</div>
+                <div> {userInfo ? userInfo?.motto || '-' : getUserInfo?.motto}</div>
               </div>
               <div className={styles.actions}>
                 <div className={styles.icons}>
@@ -340,6 +348,7 @@ const Personal = () => {
                       ) : (
                         <MList
                           list={dataList}
+                          total={articleList.total}
                           collectTotal={collectTotal}
                           loading={loading}
                           collectedCount={collectedCount}

@@ -77,7 +77,7 @@ const Card: React.FC<IProps> = ({
         content: '移除后，该文章将从当前收藏集中删除',
         onOk() {
           removeArticle && removeArticle(id);
-        }
+        },
       });
     };
 
@@ -273,16 +273,14 @@ const Card: React.FC<IProps> = ({
           <Skeleton active title paragraph={{ rows: skeletonRows }} />
         </div>
       )}
-      {!loading ? (
-        list.length === total && (
-          <div className={styles.noMore}>
-            {list.length > 0
-              ? `共(${list.length})
+      {!loading && list.length === total ? (
+        <div className={styles.noMore}>
+          {list.length > 0
+            ? `共(${list.length})
           篇，${loadText || '已是全部家当'}～～～`
-              : `共(${list.length})
+            : `共(${list.length})
             篇，空空如也～～～`}
-          </div>
-        )
+        </div>
       ) : (
         <div className={styles.noMore}>loading...</div>
       )}

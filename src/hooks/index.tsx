@@ -398,6 +398,7 @@ export const useDeleteArticle = ({
       listRef.current = nextPageOne ? [...list, nextPageOne] : list;
       setArticleList({
         ...articleList,
+        total: articleList.total - 1,
         list: listRef.current,
       });
       // 如果是收藏集tab，getCollectionTotal有值，需要实时获取删除后的收藏集总条数
@@ -431,6 +432,7 @@ export const useDeleteArticle = ({
       listRef.current = nextPageOne ? [...list, nextPageOne] : list;
       setArticleList({
         ...articleList,
+        total: articleList.total - 1,
         list: listRef.current,
       });
     }
@@ -535,7 +537,15 @@ export const useVerifyToken = () => {
 };
 
 // 获取用户信息hook
-export const useGetUserInfo = ({ userId, authorId, clearInfo }: { userId: string, authorId: string, clearInfo?: boolean }) => {
+export const useGetUserInfo = ({
+  userId,
+  authorId,
+  clearInfo,
+}: {
+  userId: string;
+  authorId: string;
+  clearInfo?: boolean;
+}) => {
   const [userInfo, setUserInfo] = useState<UserInfoParams | null>({ userId: '' });
   const navigate = useNavigate();
 

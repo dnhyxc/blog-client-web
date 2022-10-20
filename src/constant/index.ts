@@ -110,7 +110,7 @@ export const MUSIC_ORDER_ICONS = [
 ];
 
 // 每页数量
-export const PAGESIZE = 5;
+export const PAGESIZE = 20;
 
 // 文件上传路径
 export const UPLOADURL = '/api/upload';

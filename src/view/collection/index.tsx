@@ -23,10 +23,15 @@ import {
   useGetUserInfo,
 } from '@/hooks';
 import { PAGESIZE, HEAD_UEL } from '@/constant';
-import { ArticleListResult, ArticleItem, AddCollectionRes, updateCollectParams } from '@/typings/common';
+import {
+  ArticleListResult,
+  ArticleItem,
+  AddCollectionRes,
+  updateCollectParams,
+} from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Collection: React.FC<IProps> = () => {
   const [collectInfo, setCollectInfo] = useState<AddCollectionRes>({ id: '' });
@@ -60,7 +65,10 @@ const Collection: React.FC<IProps> = () => {
     loading,
     pageSize: PAGESIZE,
   });
-  const { userInfo } = useGetUserInfo({ userId: authorId as string, authorId: getUserInfo?.userId });
+  const { userInfo } = useGetUserInfo({
+    userId: authorId as string,
+    authorId: getUserInfo?.userId,
+  });
 
   useEffect(() => {
     getCollectInfo();
@@ -199,6 +207,15 @@ const Collection: React.FC<IProps> = () => {
     }
   };
 
+  // 点击头像去主页
+  const toPersonal = () => {
+    if (userInfo?.userId !== getUserInfo?.userId) {
+      navigate(`/personal?id=${userInfo?.userId}`);
+    } else {
+      navigate('/personal');
+    }
+  };
+
   // 更新收藏集
   const updateCollection = (newData: AddCollectionRes) => {
     setUpdateCollectInfo(newData);
@@ -283,7 +300,7 @@ const Collection: React.FC<IProps> = () => {
               )}
             </div>
             <div className={styles.userInfo}>
-              <div className={styles.avatar}>
+              <div className={styles.avatar} onClick={toPersonal}>
                 <Image
                   url={userInfo?.headUrl || HEAD_UEL}
                   transitionImg={HEAD_UEL}
@@ -294,10 +311,7 @@ const Collection: React.FC<IProps> = () => {
                 <div className={styles.userdesc}>{userInfo?.username}</div>
                 <div className={styles.moreCollection} onClick={goBackToCollection}>
                   <span>更多收藏集</span>
-                  <MIcons
-                    name="icon-arrow-right-bold"
-                    className={styles.rightIcon}
-                  />
+                  <MIcons name="icon-arrow-right-bold" className={styles.rightIcon} />
                 </div>
               </div>
             </div>
