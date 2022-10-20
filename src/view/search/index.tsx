@@ -107,9 +107,9 @@ const Search: React.FC<IProps> = () => {
         count: 0,
       });
     }
-    if (value) {
+    setKeyWord(value);
+    if (!value) {
       setKeyWord(value);
-    } else {
       info('请先输入搜索内容');
     }
   };

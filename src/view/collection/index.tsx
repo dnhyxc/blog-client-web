@@ -313,8 +313,8 @@ const Collection: React.FC<IProps> = () => {
                   <span>更多收藏集</span>
                   <MIcons
                     name="icon-arrow-right-bold"
-                    customStyle
                     className={styles.rightIcon}
+                    onClick={goBackToCollection}
                   />
                 </div>
               </div>
