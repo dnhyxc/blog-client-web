@@ -17,6 +17,7 @@ import {
   useScrollLoad,
   useDeleteTimelineArticle,
   useVerifyToken,
+  useGetSiderVisible
 } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -38,6 +39,7 @@ const TimeLine: React.FC = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const { siderVisible } = useGetSiderVisible();
 
   useEffect(() => {
     getTimelineList();
@@ -105,7 +107,7 @@ const TimeLine: React.FC = () => {
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
       >
-        <div className={styles.wrap}>
+        <div className={classname(styles.wrap, siderVisible && styles.changeWidth)}>
           {timelineList.length > 0 && timelineList[0].articles.length > 0 ? (
             <Timeline className={styles.timelineContent}>
               {timelineList.map((i) => {
