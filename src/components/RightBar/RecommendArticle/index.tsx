@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import classname from 'classname';
 import useStore from '@/store';
-import { useGetSiderVisible } from '@/hooks';
 import { formatGapTime, error } from '@/utils';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
@@ -21,8 +19,6 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-
-  const { siderVisible } = useGetSiderVisible();
 
   useEffect(() => {
     getArticleByRandom();
@@ -47,10 +43,7 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
   };
 
   return (
-    <div
-      className={classname(styles.NewArticles, siderVisible && styles.hide)}
-      ref={scrollRef}
-    >
+    <div className={styles.NewArticles} ref={scrollRef}>
       <div className={styles.contant}>
         <div className={styles.header}>文章推荐</div>
         {recommendList.length > 0 &&
