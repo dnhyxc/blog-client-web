@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import classname from 'classname';
+import { useGetSiderVisible } from '@/hooks';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import styles from './index.less';
@@ -25,10 +26,18 @@ const Content: React.FC<IProps> = ({
   autoHeight,
   autoHeightMax,
 }) => {
+  const { siderVisible } = useGetSiderVisible();
+
   return (
     <div className={classname(styles.container, containerClassName)}>
       <div className={classname(styles.wrap, wrapClassName)}>
-        <div className={classname(styles.scrollWrap, className)}>
+        <div
+          className={classname(
+            styles.scrollWrap,
+            className,
+            siderVisible && styles.contentWidth
+          )}
+        >
           <Scrollbars
             autoHide
             autoHeight={autoHeight}

@@ -230,7 +230,7 @@ const Home: React.FC<IProps> = () => {
           onScroll={onScroll}
           scrollbarRef={scrollbarRef}
         >
-          <div className={styles.content}>
+          <div className={styles.content} id="CONTENT">
             <Card
               list={articleList.list}
               total={articleList.total}

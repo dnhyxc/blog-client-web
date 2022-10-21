@@ -291,7 +291,7 @@ const Personal = () => {
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
       >
-        <div className={styles.content}>
+        <div className={styles.content} id="CONTENT">
           <div className={styles.wrap}>
             <div className={styles.userInfo}>
               <Image

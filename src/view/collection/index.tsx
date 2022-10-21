@@ -320,7 +320,7 @@ const Collection: React.FC<IProps> = () => {
               </div>
             </div>
           </div>
-          <div className={styles.content}>
+          <div className={styles.content} id="CONTENT">
             <Card
               list={articleList.list}
               total={articleList.total}

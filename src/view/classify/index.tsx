@@ -9,7 +9,13 @@ import MAlert from '@/components/MAlert';
 import BackTop from '@/components/BackTop';
 import MSegmented from '@/components/Segmented';
 import MIcons from '@/components/Icons';
-import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle, useGetSiderVisible } from '@/hooks';
+import {
+  useLoginStatus,
+  useLikeArticle,
+  useScrollLoad,
+  useDeleteArticle,
+  useGetSiderVisible,
+} from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, storage, error } from '@/utils';
@@ -154,9 +160,14 @@ const Classify: React.FC = () => {
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
       >
-        <div className={classname(styles.content, styles.contentPadding)}>
+        <div className={classname(styles.content, styles.contentPadding)} id="CONTENT">
           <div className={styles.filterList}>
-            <div className={classname(styles.segmentedWrap, siderVisible && styles.changeWidth)}>
+            <div
+              className={classname(
+                styles.segmentedWrap,
+                siderVisible && styles.changeWidth
+              )}
+            >
               <MSegmented
                 onClick={onSelectClassify}
                 getOffsetHeight={getOffsetHeight}
