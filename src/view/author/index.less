@@ -40,9 +40,9 @@
     padding: 0;
   }
 
-  .scrollWrap {
-    background-color: #fff !important;
-  }
+  // .scrollWrap {
+  //   background-color: #fff !important;
+  // }
 
   .headerWrap {
     position: fixed;
@@ -66,9 +66,9 @@
   }
 
   .wrap {
-    padding: 0 10%;
-    background-color: @background;
     min-height: calc(100vh - 60px);
+    background-color: @background;
+    padding: 0 10%;
 
     .infoWrap {
       position: relative;
@@ -208,6 +208,12 @@
         }
       }
     }
+  }
+
+  .changeWidth {
+    width: 960px;
+    margin: auto;
+    padding: 0;
   }
 
   :global {

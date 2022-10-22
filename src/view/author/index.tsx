@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tabs, Timeline } from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
+import classname from 'classname';
 import Header from '@/components/Header';
 import MAlert from '@/components/MAlert';
 import MIcons from '@/components/Icons';
@@ -32,9 +33,7 @@ import styles from './index.less';
 
 const { TabPane } = Tabs;
 
-interface IProps {}
-
-const Author: React.FC<IProps> = () => {
+const Author: React.FC = () => {
   const [selectKey, setSelectKey] = useState<string>('1');
   const [timelineList, setTimelineList] = useState<TimelineResult[]>([]);
   const [authorInfo, setAuthorInfo] = useState<UserInfoParams>({
@@ -53,6 +52,7 @@ const Author: React.FC<IProps> = () => {
   const { htmlWidth } = useHtmlWidth();
   const {
     userInfoStore: { getUserInfo },
+    siderStore
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const { pageNo, setPageNo, onScroll, scrollbarRef, scrollTop } = useScrollLoad({
@@ -227,7 +227,7 @@ const Author: React.FC<IProps> = () => {
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
       >
-        <div className={styles.wrap}>
+        <div className={classname(styles.wrap, siderStore.toggleSider && styles.changeWidth)}>
           <div className={styles.infoWrap}>
             <div className={styles.mainCover}>
               <Image
@@ -307,18 +307,18 @@ const Author: React.FC<IProps> = () => {
                         {(i.value !== '3' ||
                           !timelineList.length ||
                           (timelineList.length && !timelineList[0].articles.length)) && (
-                          <Card
-                            list={articleList.list}
-                            total={articleList.total}
-                            wrapClass={styles.wrapClass}
-                            toDetail={toDetail}
-                            likeArticle={likeArticle}
-                            deleteArticle={deleteArticle}
-                            onEditArticle={onEditArticle}
-                            loadText="地主家也没余粮了"
-                            loading={loading}
-                          />
-                        )}
+                            <Card
+                              list={articleList.list}
+                              total={articleList.total}
+                              wrapClass={styles.wrapClass}
+                              toDetail={toDetail}
+                              likeArticle={likeArticle}
+                              deleteArticle={deleteArticle}
+                              onEditArticle={onEditArticle}
+                              loadText="地主家也没余粮了"
+                              loading={loading}
+                            />
+                          )}
                         {i.value === '3' &&
                           timelineList.length > 0 &&
                           timelineList[0].articles.length > 0 && (

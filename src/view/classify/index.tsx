@@ -187,7 +187,7 @@ const Classify: React.FC = () => {
             />
           </div>
           <RightBar
-            className={styles.rightbar}
+            className={classname(styles.rightbar, siderVisible && styles.changePadding)}
             showRecommendArticle
             scrollRef={scrollRef}
           />
