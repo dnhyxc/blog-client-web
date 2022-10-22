@@ -280,13 +280,17 @@ const Collection: React.FC<IProps> = () => {
         <div className={classname(styles.wrap, siderVisible && styles.changeWidth)}>
           <div className={styles.infoWrap}>
             <div className={styles.name}>
-              <span>{updateCollectInfo?.name || collectInfo?.name}</span>
+              <span className={styles.collectionName}>
+                {updateCollectInfo?.name || collectInfo?.name}
+                {(updateCollectInfo?.status || collectInfo?.status === 2) && (
+                  <MIcons name="icon-lock-full" className={styles.lockIcon} />
+                )}
+              </span>
               {userInfo?.userId === getUserInfo?.userId && (
                 <div className={styles.actions}>
                   <span className={styles.edit}>
                     <MIcons
                       name="icon-icon_bianji"
-                      className={styles.lockIcon}
                       text="编辑"
                       onClick={onHeadEditCollection}
                     />
@@ -294,7 +298,6 @@ const Collection: React.FC<IProps> = () => {
                   <span className={styles.delete}>
                     <MIcons
                       name="icon-shanchu"
-                      className={styles.lockIcon}
                       text="删除"
                       onClick={onDeleteCollect}
                     />

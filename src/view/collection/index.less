@@ -85,11 +85,16 @@
         font-size: 24px;
         cursor: pointer;
 
+        .collectionName {
+          .ellipsis();
+        }
+
         &:hover {
           .actions {
             display: flex;
             justify-content: space-between;
             line-height: 30px;
+            min-width: 105px;
 
             .edit {
               margin-right: 10px;
@@ -99,6 +104,10 @@
 
         .actions {
           display: none;
+        }
+
+        .lockIcon {
+          font-size: 22px;
         }
       }
 
@@ -197,6 +206,18 @@
 
       .content {
         width: 100%;
+      }
+
+      .infoWrap {
+        padding: 11px 10px 20px 10px;
+
+        .name {
+          flex-direction: column;
+
+          .actions {
+            justify-content: flex-end !important;
+          }
+        }
       }
     }
   }

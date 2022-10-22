@@ -13,6 +13,7 @@ import useStore from '@/store';
 import Image from '@/components/Image';
 import MusicIcon from '@/components/MusicIcon';
 import { menuList, settingList } from '@/router/menu';
+import { useHtmlWidth } from '@/hooks';
 import { CARD_URL } from '@/constant';
 import { EventBus } from '@/event';
 import styles from './index.less';
@@ -39,6 +40,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
   const { pathname } = useLocation();
   const [search] = useSearchParams();
   const id = search.get('id');
+  const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
     const sliceName = pathname !== '/' ? pathname.slice(1) : pathname;
@@ -107,7 +109,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
 
   return (
     <div className={styles.siderContainer}>
-      {!type && <MusicIcon className={styles.changeIconWrap} onClick={onToggleSider} icon={siderVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'} />}
+      {!type && htmlWidth > 960 && <MusicIcon className={styles.changeIconWrap} onClick={onToggleSider} icon={siderVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'} />}
       <Sider
         theme="light"
         trigger={null}
