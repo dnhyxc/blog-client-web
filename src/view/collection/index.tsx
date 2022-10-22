@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate, useSearchParams, useParams } from 'react-router-dom';
 import { Modal } from 'antd';
+import classname from 'classname';
 import Content from '@/components/Content';
 import MAlert from '@/components/MAlert';
 import MIcons from '@/components/Icons';
@@ -21,6 +22,7 @@ import {
   useHtmlWidth,
   useScrollLoad,
   useGetUserInfo,
+  useGetSiderVisible
 } from '@/hooks';
 import { PAGESIZE, HEAD_UEL } from '@/constant';
 import {
@@ -31,7 +33,7 @@ import {
 } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const Collection: React.FC<IProps> = () => {
   const [collectInfo, setCollectInfo] = useState<AddCollectionRes>({ id: '' });
@@ -69,6 +71,7 @@ const Collection: React.FC<IProps> = () => {
     userId: authorId as string,
     authorId: getUserInfo?.userId,
   });
+  const { siderVisible } = useGetSiderVisible();
 
   useEffect(() => {
     getCollectInfo();
@@ -274,7 +277,7 @@ const Collection: React.FC<IProps> = () => {
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
       >
-        <div className={styles.wrap}>
+        <div className={classname(styles.wrap, siderVisible && styles.changeWidth)}>
           <div className={styles.infoWrap}>
             <div className={styles.name}>
               <span>{updateCollectInfo?.name || collectInfo?.name}</span>
@@ -320,7 +323,7 @@ const Collection: React.FC<IProps> = () => {
               </div>
             </div>
           </div>
-          <div className={styles.content} id="CONTENT">
+          <div className={styles.content}>
             <Card
               list={articleList.list}
               total={articleList.total}
