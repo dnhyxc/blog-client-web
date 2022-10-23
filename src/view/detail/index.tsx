@@ -24,6 +24,7 @@ import AnotherArticle from '@/components/AnotherArticle';
 import { useGetArticleDetail, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
 import { formatGapTime } from '@/utils';
+import ActionBar from './ActionBar';
 import { ArticleDetailParams, CommentParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -158,6 +159,7 @@ const ArticleDetail: React.FC = () => {
             </div>
           </div>
         )}
+        {htmlWidth <= 960 && detail && <ActionBar id={id as string} detail={detail} commentRef={commentRef} commentCount={commentCount} />}
         {htmlWidth <= 960 && <Footer />}
       </div>
       {htmlWidth > 960 && (

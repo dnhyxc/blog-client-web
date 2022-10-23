@@ -1,34 +1,28 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Checkbox, Modal, Button } from 'antd';
-import Content from '@/components/Content';
+import { Button, Drawer, Checkbox } from 'antd';
 import MIcons from '@/components/Icons';
+import Content from '@/components/Content';
 import useStore from '@/store';
 import { useScrollLoad } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error, success, info } from '@/utils';
 import { CollectionListRes, AddCollectionRes } from '@/typings/common';
+import CreateDrawer from '../CreateDrawer';
 import styles from './index.less';
 
 interface IProps {
   visible: boolean;
   onCancel: Function;
-  getAddVisible: Function;
   getCollectRes?: Function;
+  showCollectionDrawer?: Function;
   getSelectCollectIds?: Function;
   moveArticleId?: string;
   selectCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时设置选中当前收藏集
 }
 
-const CollectionModal: React.FC<IProps> = ({
-  visible,
-  onCancel,
-  getAddVisible,
-  getCollectRes,
-  moveArticleId,
-  getSelectCollectIds,
-  selectCollectId,
-}) => {
+const CollectionDrawer: React.FC<IProps> = ({ visible, onCancel, showCollectionDrawer, getCollectRes, getSelectCollectIds, moveArticleId, selectCollectId }) => {
+  const [createVisible, setCreateVisible] = useState<boolean>(false);
   const [checkedItem, setCheckedItem] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [collectionList, setCollectionList] = useState<CollectionListRes>({
@@ -107,10 +101,15 @@ const CollectionModal: React.FC<IProps> = ({
     }
   };
 
-  // 点击创建收藏夹打开新建弹窗，同时关闭当前弹窗
-  const onCreate = () => {
-    getAddVisible(true);
-    onCancel();
+  const showCreate = () => {
+    setCreateVisible(true);
+    onCancel && onCancel();
+  };
+
+  const onCloseCreate = (hide: boolean) => {
+    setCreateVisible(false);
+    if (hide) return;
+    showCollectionDrawer && showCollectionDrawer();
   };
 
   // 收藏文章
@@ -134,78 +133,63 @@ const CollectionModal: React.FC<IProps> = ({
   };
 
   const renderTitle = (
-    <div className={styles.title}>
-      <span>选择收藏集</span>
-      <span className={styles.info}>（创建或选择你想添加的收藏集）</span>
+    <div className={styles.titleWrap}>
+      <div className={styles.title}>选择收藏集</div>
+      <Button type="link" onClick={showCreate} className={styles.submit}>
+        <MIcons name="icon-add" className={styles.addIcon} noStopPropagation />
+        <span>新建收藏集</span>
+      </Button>
     </div>
   );
 
   return (
-    <Modal
-      title={renderTitle}
-      width={520}
-      visible={visible}
-      centered
-      wrapClassName={styles.wrapClassName}
-      onCancel={() => onCancel()}
-      footer={[
-        <div key="1" className={styles.actions}>
-          <Button type="link" onClick={onCreate}>
-            <MIcons name="icon-add" className={styles.addIcon} noStopPropagation />
-            <span>新建收藏集</span>
-          </Button>
-          <div>
-            <Button
-              key="back"
-              type="primary"
-              ghost
-              className={styles.action}
-              onClick={() => onCancel()}
-            >
-              取消
-            </Button>
-            <Button
-              key="submit"
-              type="primary"
-              className={styles.action}
-              onClick={onSubmit}
-            >
-              确定
-            </Button>
-          </div>
-        </div>,
-      ]}
-    >
-      <Content
-        className={styles.scrollWrapStyle}
-        wrapClassName={styles.contentStyle}
-        containerClassName={styles.containerClassName}
-        onScroll={onScroll}
+    <div className={styles.CollectionDrawer}>
+      <Drawer
+        title={renderTitle}
+        placement="bottom"
+        closable={false}
+        onClose={() => onCancel()}
+        visible={visible}
+        height={432}
+        footer={[
+          <Button key="submit" type="primary" className={styles.selectSubmit} onClick={onSubmit}>确定</Button>
+        ]}
+        headerStyle={{ padding: '10px' }}
+        bodyStyle={{ padding: '0 0 10px 0', overflow: 'hidden' }}
+        footerStyle={{ padding: '10px', height: '65px' }}
       >
-        <div className={styles.collectionList}>
-          {collectionList?.list.map((i) => {
-            return (
-              <div key={i.id} className={styles.collectionItem}>
-                <div className={styles.desc} onClick={() => onCheckedItem(i.id)}>
-                  <div className={styles.collectionName}>
-                    <span>{i.name}</span>
-                    {i.status === 2 && (
-                      <MIcons name="icon-lock-full" className={styles.lockIcon} />
-                    )}
+        <Content
+          className={styles.scrollWrapStyle}
+          wrapClassName={styles.contentStyle}
+          containerClassName={styles.containerClassName}
+          onScroll={onScroll}
+        >
+          <div className={styles.collectionList}>
+            {collectionList?.list.map((i) => {
+              return (
+                <div key={i.id} className={styles.collectionItem}>
+                  <div className={styles.desc} onClick={() => onCheckedItem(i.id)}>
+                    <div className={styles.collectionName}>
+                      <span>{i.name}</span>
+                      {i.status === 2 && (
+                        <MIcons name="icon-lock-full" className={styles.lockIcon} />
+                      )}
+                    </div>
+                    <div className={styles.collectionCount}>{i.articleIds?.length}篇文章</div>
                   </div>
-                  <div className={styles.collectionCount}>{i.articleIds?.length}篇文章</div>
+                  <Checkbox
+                    checked={checkedItem.includes(i.id)}
+                    onChange={() => onCheckedItem(i.id)}
+                  />
                 </div>
-                <Checkbox
-                  checked={checkedItem.includes(i.id)}
-                  onChange={() => onCheckedItem(i.id)}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </Content>
-    </Modal>
+              );
+            })}
+          </div>
+        </Content>
+      </Drawer>
+      <CreateDrawer visible={createVisible} onCancel={onCloseCreate} />
+    </div>
   );
 };
 
-export default CollectionModal;
+export default CollectionDrawer;

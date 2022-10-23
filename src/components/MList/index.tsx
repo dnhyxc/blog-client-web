@@ -104,26 +104,28 @@ const MList: React.FC<IProps> = ({
                     {formatDate(i.createTime, 'YYYY-DD-MM')}更新 · {i.articleIds?.length}
                     篇文章
                   </span>
-                  <div className={styles.acrions}>
-                    <span className={styles.edit}>
-                      <MIcons
-                        name="icon-icon_bianji"
-                        className={styles.lockIcon}
-                        text="编辑"
-                        customStyle
-                        onClick={() => onEdit(i as unknown as AddCollectionRes)}
-                      />
-                    </span>
-                    <span className={styles.delete}>
-                      <MIcons
-                        name="icon-shanchu"
-                        className={styles.lockIcon}
-                        text="删除"
-                        customStyle
-                        onClick={() => onDelete(i.id)}
-                      />
-                    </span>
-                  </div>
+                  {(!authorId || authorId === getUserInfo?.userId) && (
+                    <div className={styles.acrions}>
+                      <span className={styles.edit}>
+                        <MIcons
+                          name="icon-icon_bianji"
+                          className={styles.lockIcon}
+                          text="编辑"
+                          customStyle
+                          onClick={() => onEdit(i as unknown as AddCollectionRes)}
+                        />
+                      </span>
+                      <span className={styles.delete}>
+                        <MIcons
+                          name="icon-shanchu"
+                          className={styles.lockIcon}
+                          text="删除"
+                          customStyle
+                          onClick={() => onDelete(i.id)}
+                        />
+                      </span>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

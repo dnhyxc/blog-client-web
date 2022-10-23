@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react';
 import { Dropdown, Menu, Slider } from 'antd';
 import classname from 'classname';
-import MusicIcon from '@/components/MusicIcon';
+import ActionIcon from '@/components/ActionIcon';
 import { MUSIC_PATHS, MUSIC_ORDER_ICONS, MUSIC_LIST_INFO } from '@/constant';
 import { formatTime } from '@/utils';
 import { AudioInfo } from '@/typings/component';
@@ -226,7 +226,7 @@ const Audio: React.FC = () => {
 
   return (
     <>
-      <MusicIcon onClick={onToggleAudio} />
+      <ActionIcon onClick={onToggleAudio} />
       <div
         className={classname(!toggleAudio && styles.toggle, styles.player)}
         ref={playerRef}

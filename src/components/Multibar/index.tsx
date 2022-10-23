@@ -149,7 +149,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
           onClick={onLikeArticle}
           customStyle
         />
-        {likeCount && <span className={styles.likeCount}>{likeCount}</span>}
+        {likeCount! > 0 && <span className={styles.likeCount}>{likeCount}</span>}
       </div>
       <div className={styles.actionBtn}>
         <MIcons
@@ -158,7 +158,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
           onClick={onScrollToComment}
           customStyle
         />
-        {commentCount && (
+        {commentCount > 0 && (
           <span className={styles.likeCount}>
             {commentCount > 999 ? (
               <span title={(commentCount && JSON.stringify(commentCount)) || ''}>999+</span>

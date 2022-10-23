@@ -1,0 +1,100 @@
+@import '~@styles/common.less';
+
+.ActionBar {
+  .changeIconWrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    bottom: 64px;
+    width: 12px;
+    height: 70px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background-color: @sky-blue;
+    box-shadow: 0 0 5px #fff;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+    z-index: 10;
+
+    .icon {
+      color: @menu-active;
+      font-size: 12px;
+      transition: all 0.3s ease-in-out;
+    }
+
+    &:hover {
+      width: 20px;
+      transition: all 0.3s ease-in-out;
+
+      .icon {
+        font-size: 16px;
+        transition: all 0.3s ease-in-out;
+      }
+    }
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: fixed;
+    bottom: 64px;
+    right: -305px;
+    width: 278px;
+    height: 70px;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 10px 60px #c9c9c9;
+    z-index: 100;
+    transition: all 0.3s ease-in-out;
+
+    .actionBtn {
+      position: relative;
+      display: flex;
+      justify-content: flex-start;
+      cursor: pointer;
+
+      .commentIcon {
+        padding-top: 4px;
+        font-size: 18px;
+      }
+
+      .actionIcon {
+        font-size: 20px;
+      }
+
+      .collectionIcon {
+        font-size: 23px;
+      }
+
+      .likeActionIcon {
+        color: @menu-active;
+      }
+
+      .collectedIcon {
+        color: @menu-active;
+      }
+
+      .likeCount {
+        position: absolute;
+        left: 13px;
+        top: 2px;
+        padding: 0px 5px;
+        height: 16px;
+        line-height: 15px;
+        border-radius: 18px;
+        font-size: 12px;
+        background-color: @menu-hover;
+      }
+    }
+  }
+
+  .showBar {
+    right: 20px;
+    transition: all 0.3s ease-in-out;
+  }
+}

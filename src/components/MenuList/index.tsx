@@ -11,7 +11,7 @@ import { Menu, Layout } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
 import Image from '@/components/Image';
-import MusicIcon from '@/components/MusicIcon';
+import ActionIcon from '@/components/ActionIcon';
 import { menuList, settingList } from '@/router/menu';
 import { useHtmlWidth } from '@/hooks';
 import { CARD_URL } from '@/constant';
@@ -109,7 +109,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
 
   return (
     <div className={styles.siderContainer}>
-      {!type && htmlWidth > 960 && <MusicIcon className={styles.changeIconWrap} onClick={onToggleSider} icon={siderVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'} />}
+      {!type && htmlWidth > 960 && <ActionIcon className={styles.changeIconWrap} onClick={onToggleSider} icon={siderVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'} />}
       <Sider
         theme="light"
         trigger={null}

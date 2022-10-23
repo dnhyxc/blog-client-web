@@ -249,7 +249,7 @@ const Card: React.FC<IProps> = ({
                   </div>
                   {htmlWidth < 960 && (
                     <div className={styles.classifyWrap}>
-                      <span>
+                      <span onClick={(e) => toPersonal(e as unknown as MouseEvent, i.authorId)}>
                         {i?.authorName?.length > 10
                           ? `${i?.authorName.slice(0, 10)}...`
                           : i?.authorName}
