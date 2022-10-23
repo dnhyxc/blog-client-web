@@ -53,7 +53,7 @@ const CreateDrawer: React.FC<IProps> = ({ visible, onCancel }) => {
         bodyStyle={{ padding: '0 10px' }}
       >
         <div className={styles.createContent}>
-          <Input className={styles.name} placeholder="请输入收藏集名称" bordered={false} value={collectName} onChange={onCollectNameChange} />
+          <Input className={styles.name} placeholder="请输入收藏集名称" maxLength={20} bordered={false} value={collectName} onChange={onCollectNameChange} />
           <Input.TextArea showCount autoSize={{ minRows: 2 }} maxLength={100} className={styles.desc} placeholder="请输入收藏集描述" bordered={false} value={collectDesc} onChange={onCollectDescChange} />
           <Radio.Group className={styles.radioGroup} onChange={onRadioChange} value={status}>
             <Radio value={1} className={styles.radio}>
