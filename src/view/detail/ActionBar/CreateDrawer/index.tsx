@@ -1,18 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Button, Drawer, Input, Radio } from 'antd';
 import MIcons from '@/components/Icons';
+import useStore from '@/store';
+import * as Service from '@/service';
+import { normalizeResult, error, success } from '@/utils';
+import { AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
 
 interface IProps {
-  visible: boolean,
-  onCancel: Function
+  visible: boolean;
+  onCancel: Function;
+  collectInfo?: AddCollectionRes | null;
+  showCollection?: Function;
+  callback?: Function;
+  updateCollection?: Function;
+  hideCollectModel?: boolean;
 }
 
-const CreateDrawer: React.FC<IProps> = ({ visible, onCancel }) => {
+const CreateDrawer: React.FC<IProps> = ({
+  visible,
+  onCancel,
+  showCollection,
+  callback,
+  collectInfo = null,
+  updateCollection,
+  hideCollectModel,
+}) => {
   const [collectName, setCollectName] = useState<string>('');
   const [collectDesc, setCollectDesc] = useState<string>('');
   const [status, setStatus] = useState<number>(1);
+
+  const {
+    userInfoStore: { getUserInfo },
+  } = useStore();
+
+  useEffect(() => {
+    if (collectInfo?.name) {
+      setCollectName(collectInfo?.name);
+    }
+  }, [collectInfo]);
 
   const onCollectNameChange = (e: any) => {
     setCollectName(e.target.value);
@@ -26,8 +53,70 @@ const CreateDrawer: React.FC<IProps> = ({ visible, onCancel }) => {
     setStatus(e.target.value);
   };
 
+  // 新建
+  const create = async () => {
+    const res = normalizeResult<AddCollectionRes>(
+      await Service.createCollection({
+        name: collectName,
+        desc: collectDesc,
+        status,
+        userId: getUserInfo?.userId
+      })
+    );
+    if (!res.success) {
+      error(res.message);
+    } else {
+      success(res.message);
+      onCancel();
+      showCollection && showCollection();
+      callback && callback(res.data);
+    }
+  };
+
+  // 更新
+  const update = async () => {
+    if (!collectInfo?.id) return;
+    const res = normalizeResult<{ id: string }>(
+      await Service.updateCollection({
+        name: collectName,
+        desc: collectDesc,
+        status,
+        userId: getUserInfo?.userId,
+        id: collectInfo?.id,
+      })
+    );
+    if (res.success) {
+      success(res.message);
+      onCancel();
+      updateCollection && updateCollection({
+        name: collectName,
+        desc: collectDesc,
+        status,
+        id: collectInfo?.id
+      });
+    } else {
+      error(res.message);
+    }
+  };
+
   const onSubmit = () => {
+    if (!getUserInfo?.userId) return;
+
+    if (!collectInfo?.id) {
+      create();
+    } else {
+      update();
+    }
+
     onCancel && onCancel();
+  };
+
+  const onClose = () => {
+    onCancel();
+    // 当从收藏集详情中点击编辑时不打开创建弹窗
+    if (!hideCollectModel) {
+      showCollection && showCollection();
+    }
   };
 
   const renderTitle = (
@@ -46,7 +135,7 @@ const CreateDrawer: React.FC<IProps> = ({ visible, onCancel }) => {
         title={renderTitle}
         placement="bottom"
         closable={false}
-        onClose={() => onCancel()}
+        onClose={onClose}
         visible={visible}
         height={432}
         headerStyle={{ padding: '10px' }}

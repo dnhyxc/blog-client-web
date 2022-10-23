@@ -332,6 +332,8 @@ export interface CreateCollectionParams {
   name: string;
   desc: string;
   status: number;
+  userId: string;
+  id?: string;
 }
 
 // 获取收藏集列表参数
