@@ -12,7 +12,8 @@ interface IProps {
   collectInfo?: AddCollectionRes | null;
   showCollection?: Function;
   callback?: Function;
-  updateCollection?: Function;
+  updateCollection?: Function; // 更新收藏集信息
+  getCreateCollectId?: Function; // 获取新建的收藏集Id，用于创建完成立即选中
   hideCollectModel?: boolean;
 }
 
@@ -26,6 +27,7 @@ const AddCollection: React.FC<IProps> = ({
   collectInfo = null,
   updateCollection,
   hideCollectModel,
+  getCreateCollectId,
 }) => {
   const [collectionName, setCollectionName] = useState<string>('');
   const [form] = Form.useForm();
@@ -65,6 +67,7 @@ const AddCollection: React.FC<IProps> = ({
       onCancel();
       showCollection && showCollection();
       callback && callback(res.data);
+      getCreateCollectId && getCreateCollectId(res?.data?.id);
     }
   };
 

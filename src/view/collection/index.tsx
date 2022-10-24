@@ -11,6 +11,7 @@ import Card from '@/components/Card';
 import BackTop from '@/components/BackTop';
 import Footer from '@/components/Footer';
 import CollectionModal from '@/components/CollectionModel';
+import CollectionDrawer from '@/components/CollectionDrawer';
 import CreateCollectModel from '@/components/CreateCollectModel';
 import CreateDrawer from '@/components/CreateDrawer';
 import useStore from '@/store';
@@ -45,6 +46,7 @@ const Collection: React.FC<IProps> = () => {
   const [hideCollectModel, setHideCollectModel] = useState<boolean>(false);
   const [moveArticleId, setMoveArticleId] = useState<string>('');
   const [isSelected, setIsSelected] = useState<boolean>(false);
+  const [createCollectId, setCreateCollectId] = useState<string>('');
   const [articleList, setArticleList] = useState<ArticleListResult>({
     list: [],
     total: 0,
@@ -231,6 +233,17 @@ const Collection: React.FC<IProps> = () => {
     setHideCollectModel(true);
   };
 
+  // 获取新建的收藏集id
+  const getCreateCollectId = (id: string) => {
+    setCreateCollectId(id);
+  };
+
+  // 隐藏CollectionModel
+  const onHideCollectModel = () => {
+    setVisible(false);
+    setCreateCollectId('');
+  };
+
   // 删除收藏集
   const onDeleteCollect = async () => {
     Modal.confirm({
@@ -347,15 +360,27 @@ const Collection: React.FC<IProps> = () => {
       </Content>
       {htmlWidth <= 960 && <Footer />}
       <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
-      <CollectionModal
-        visible={visible}
-        onCancel={() => setVisible(false)}
-        getAddVisible={getAddVisible}
-        moveArticleId={moveArticleId}
-        getCollectRes={getCollectRes}
-        getSelectCollectIds={getSelectCollectIds}
-        selectCollectId={id}
-      />
+      {htmlWidth > 960 ? (
+        <CollectionModal
+          visible={visible}
+          onCancel={onHideCollectModel}
+          getAddVisible={getAddVisible}
+          moveArticleId={moveArticleId}
+          getCollectRes={getCollectRes}
+          getSelectCollectIds={getSelectCollectIds}
+          selectCollectId={id}
+          createCollectId={createCollectId}
+        />
+      ) : (
+        <CollectionDrawer
+          visible={visible}
+          onCancel={onHideCollectModel}
+          moveArticleId={moveArticleId}
+          getCollectRes={getCollectRes}
+          getSelectCollectIds={getSelectCollectIds}
+          selectCollectId={id}
+        />
+      )}
       {htmlWidth > 960 ? (
         <CreateCollectModel
           key={newCollectInfo?.name || newCollectInfo?.desc || newCollectInfo?.status}
@@ -365,6 +390,7 @@ const Collection: React.FC<IProps> = () => {
           hideCollectModel={hideCollectModel}
           collectInfo={hideCollectModel ? newCollectInfo : null}
           updateCollection={updateCollection}
+          getCreateCollectId={getCreateCollectId} // 获取创建时生成的id
         />
       ) : (
         <CreateDrawer

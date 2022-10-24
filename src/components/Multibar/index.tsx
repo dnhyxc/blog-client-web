@@ -25,6 +25,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
   const [visible, setVisible] = useState<boolean>(false);
   const [addVisible, setAddVisible] = useState<boolean>(false);
   const [collected, setCollected] = useState<boolean>(false);
+  const [createCollectId, setCreateCollectId] = useState<string>('');
 
   const {
     userInfoStore: { getUserInfo },
@@ -64,6 +65,11 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
     setVisible(true);
   };
 
+  const onHideCollectModel = () => {
+    setVisible(false);
+    setCreateCollectId('');
+  };
+
   // 滚动到评论
   const onScrollToComment = () => {
     if (!commentRef.current) return;
@@ -101,6 +107,11 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
     } else {
       error(res.message);
     }
+  };
+
+  // 获取新建的收藏集id
+  const getCreateCollectId = (id: string) => {
+    setCreateCollectId(id);
   };
 
   const shareContent = (
@@ -189,14 +200,16 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
       </Popover>
       <CollectionModal
         visible={visible}
-        onCancel={() => setVisible(false)}
+        onCancel={onHideCollectModel}
         getAddVisible={getAddVisible}
+        createCollectId={createCollectId}
       />
       <CreateCollectModel
         key={Math.random()}
         visible={addVisible}
         onCancel={() => setAddVisible(false)}
         showCollection={onCollection}
+        getCreateCollectId={getCreateCollectId}
       />
     </div>
   );

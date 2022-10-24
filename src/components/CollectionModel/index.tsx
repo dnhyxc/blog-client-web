@@ -18,6 +18,7 @@ interface IProps {
   getSelectCollectIds?: Function;
   moveArticleId?: string;
   selectCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时设置选中当前收藏集
+  createCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时设置选中当前收藏集
 }
 
 const CollectionModal: React.FC<IProps> = ({
@@ -28,6 +29,7 @@ const CollectionModal: React.FC<IProps> = ({
   moveArticleId,
   getSelectCollectIds,
   selectCollectId,
+  createCollectId,
 }) => {
   const [checkedItem, setCheckedItem] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -52,7 +54,14 @@ const CollectionModal: React.FC<IProps> = ({
   useEffect(() => {
     if (visible) {
       getCollectionList();
-      setCheckedItem([selectCollectId] as string[]);
+      const selectItems = [];
+      if (selectCollectId) {
+        selectItems.push(selectCollectId);
+      }
+      if (createCollectId) {
+        selectItems.push(createCollectId);
+      }
+      setCheckedItem([...selectItems, ...checkedItem]);
     } else {
       setPageNo(1);
       listRef.current = [];
@@ -63,7 +72,7 @@ const CollectionModal: React.FC<IProps> = ({
       });
       setCheckedItem([]);
     }
-  }, [visible, pageNo, selectCollectId]);
+  }, [visible, pageNo, selectCollectId, createCollectId]);
 
   useEffect(() => {
     getSelectCollectIds && getSelectCollectIds(checkedItem);

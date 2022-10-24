@@ -86,7 +86,7 @@ const Card: React.FC<IProps> = ({
         <span className={styles.edit}>
           <MIcons
             name="icon-table_move-o"
-            className={styles.lockIcon}
+            iconWrapClass={styles.iconWrapClass}
             text="转移"
             onClick={() => moveTo && moveTo(id)}
           />
@@ -94,7 +94,7 @@ const Card: React.FC<IProps> = ({
         <span className={styles.delete}>
           <MIcons
             name="icon-shanchu"
-            className={styles.lockIcon}
+            iconWrapClass={styles.iconWrapClass}
             text="移除"
             onClick={() => onRemoveArticle(id)}
           />
@@ -249,7 +249,9 @@ const Card: React.FC<IProps> = ({
                   </div>
                   {htmlWidth < 960 && (
                     <div className={styles.classifyWrap}>
-                      <span onClick={(e) => toPersonal(e as unknown as MouseEvent, i.authorId)}>
+                      <span
+                        onClick={(e) => toPersonal(e as unknown as MouseEvent, i.authorId)}
+                      >
                         {i?.authorName?.length > 10
                           ? `${i?.authorName.slice(0, 10)}...`
                           : i?.authorName}

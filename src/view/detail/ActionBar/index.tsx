@@ -104,14 +104,6 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =
     }
   };
 
-  // const getAddVisible = (value: boolean) => {
-  //   setAddVisible(value);
-  // };
-
-  // const onClose = () => {
-  //   setVisible(false);
-  // };
-
   return (
     <div className={styles.ActionBar}>
       <ActionIcon
