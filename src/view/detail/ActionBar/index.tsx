@@ -9,6 +9,7 @@ import { error } from '@/utils';
 import CreateCollectModel from '@/components/CreateCollectModel';
 import CollectionDrawer from '@/components/CollectionDrawer';
 import { ArticleDetailParams } from '@/typings/common';
+import TocDrawer from './TocDrawer';
 import styles from './index.less';
 
 interface IProps {
@@ -25,6 +26,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =
   const [visible, setVisible] = useState<boolean>(false);
   const [addVisible, setAddVisible] = useState<boolean>(false);
   const [collected, setCollected] = useState<boolean>(false);
+  const [tocVisible, setTocVisible] = useState<boolean>(false);
 
   const {
     userInfoStore: { getUserInfo },
@@ -51,6 +53,11 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =
     if (!commentRef.current) return;
     const { offsetTop } = commentRef.current;
     document.documentElement.scrollTop = offsetTop;
+  };
+
+  // 显示目录
+  const onShowToc = () => {
+    setTocVisible(true);
   };
 
   // 文章点赞
@@ -112,7 +119,14 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =
         icon={!barVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'}
       />
       <div className={classname(styles.container, barVisible && styles.showBar)}>
-        <div>目录</div>
+        <div className={styles.actionBtn}>
+          <MIcons
+            name="icon-mulu"
+            className={styles.tocIcon}
+            onClick={onShowToc}
+            customStyle
+          />
+        </div>
         <div className={styles.actionBtn}>
           <MIcons
             name="icon-pinglun1"
@@ -160,6 +174,11 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =
         visible={addVisible}
         onCancel={() => setAddVisible(false)}
         showCollection={onCollection}
+      />
+      <TocDrawer
+        detail={detail}
+        visible={tocVisible}
+        onCancel={() => setTocVisible(false)}
       />
     </div>
   );
