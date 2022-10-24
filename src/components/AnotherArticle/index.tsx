@@ -16,7 +16,8 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
 
   const navigate = useNavigate();
 
-  const params: AnotherParams = (storage.locGetItem('params') && JSON.parse(storage.locGetItem('params')!)) || {};
+  const params: AnotherParams =
+    (storage.locGetItem('params') && JSON.parse(storage.locGetItem('params')!)) || {};
 
   useEffect(() => {
     getAnothers();
@@ -49,45 +50,46 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
     navigate(`/detail/${id}`);
   };
 
-  return (
-    (articleList[0]?.id || articleList[1]?.id) ? (
-      <div className={styles.AnotherArticle}>
-        {
-          articleList.map((i, index) => {
-            return (
-              <div
-                key={i.id || index}
-                className={index > 0 ? styles.nextArticle : styles.prevArticle}
-                onClick={() => toDetail && toDetail(i.id)}
-              >
-                {index === 0 && i?.id && (
-                  <div className={styles.icon}>
-                    <MIcons name="icon-arrow-left-bold" />
-                  </div>
-                )}
-                {i.id && (
-                  <div className={styles.item}>
-                    <div className={styles.title}>{i?.title}</div>
-                    <div className={styles.abstract}>{i?.abstract}</div>
-                    <div className={styles.info}>
-                      <span title={i?.authorName}>{i?.authorName?.length > 20 ? `${i?.authorName?.slice(0, 19)}...` : i?.authorName}</span>
-                      <span>{` · ${i?.tag} · `}</span>
-                      <span>{`${i?.classify} · `}</span>
-                      <span>{formatGapTime(i?.createTime!)}</span>
-                    </div>
-                  </div>
-                )}
-                {index > 0 && i?.id && (
-                  <div className={styles.icon}>
-                    <MIcons name="icon-arrow-right-bold" />
-                  </div>
-                )}
+  return articleList[0]?.id || articleList[1]?.id ? (
+    <div className={styles.AnotherArticle}>
+      {articleList.map((i, index) => {
+        return (
+          <div
+            key={i.id || index}
+            className={index > 0 ? styles.nextArticle : styles.prevArticle}
+            onClick={() => toDetail && toDetail(i.id)}
+          >
+            {index === 0 && i?.id && (
+              <div className={styles.icon}>
+                <MIcons name="icon-arrow-left-bold" noStopPropagation />
               </div>
-            );
-          })}
-      </div>
-    ) : null
-  );
+            )}
+            {i.id && (
+              <div className={styles.item}>
+                <div className={styles.title}>{i?.title}</div>
+                <div className={styles.abstract}>{i?.abstract}</div>
+                <div className={styles.info}>
+                  <span title={i?.authorName}>
+                    {i?.authorName?.length > 20
+                      ? `${i?.authorName?.slice(0, 19)}...`
+                      : i?.authorName}
+                  </span>
+                  <span>{` · ${i?.tag} · `}</span>
+                  <span>{`${i?.classify} · `}</span>
+                  <span>{formatGapTime(i?.createTime!)}</span>
+                </div>
+              </div>
+            )}
+            {index > 0 && i?.id && (
+              <div className={styles.icon}>
+                <MIcons name="icon-arrow-right-bold" noStopPropagation />
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  ) : null;
 };
 
 export default AnotherArticle;
