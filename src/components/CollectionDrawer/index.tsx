@@ -21,7 +21,15 @@ interface IProps {
   selectCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时设置选中当前收藏集
 }
 
-const CollectionDrawer: React.FC<IProps> = ({ visible, onCancel, showCollectionDrawer, getCollectRes, getSelectCollectIds, moveArticleId, selectCollectId }) => {
+const CollectionDrawer: React.FC<IProps> = ({
+  visible,
+  onCancel,
+  showCollectionDrawer,
+  getCollectRes,
+  getSelectCollectIds,
+  moveArticleId,
+  selectCollectId,
+}) => {
   const [createVisible, setCreateVisible] = useState<boolean>(false);
   const [checkedItem, setCheckedItem] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -152,7 +160,14 @@ const CollectionDrawer: React.FC<IProps> = ({ visible, onCancel, showCollectionD
         visible={visible}
         height={432}
         footer={[
-          <Button key="submit" type="primary" className={styles.selectSubmit} onClick={onSubmit}>确定</Button>
+          <Button
+            key="submit"
+            type="primary"
+            className={styles.selectSubmit}
+            onClick={onSubmit}
+          >
+            确定
+          </Button>,
         ]}
         headerStyle={{ padding: '10px' }}
         bodyStyle={{ padding: '0 0 10px 0', overflow: 'hidden' }}
@@ -175,7 +190,9 @@ const CollectionDrawer: React.FC<IProps> = ({ visible, onCancel, showCollectionD
                         <MIcons name="icon-lock-full" className={styles.lockIcon} />
                       )}
                     </div>
-                    <div className={styles.collectionCount}>{i.articleIds?.length}篇文章</div>
+                    <div className={styles.collectionCount}>
+                      {i.articleIds?.length}篇文章
+                    </div>
                   </div>
                   <Checkbox
                     checked={checkedItem.includes(i.id)}

@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Skeleton } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
+import { useHtmlWidth } from '@/hooks';
 import { formatDate } from '@/utils';
 import { ArticleItem, AddCollectionRes } from '@/typings/common';
 import MIcons from '../Icons';
-import AddCollection from '../AddCollection';
+import CreateCollectModel from '../CreateCollectModel';
+import CreateDrawer from '../CreateDrawer';
 import styles from './index.less';
 
 interface IProps {
@@ -47,6 +49,7 @@ const MList: React.FC<IProps> = ({
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const { htmlWidth } = useHtmlWidth();
 
   const toClolection = (id: string) => {
     navigate(`/collection/${id}?authorId=${authorId || getUserInfo?.userId}`);
@@ -144,8 +147,18 @@ const MList: React.FC<IProps> = ({
       ) : (
         <div className={styles.loading}>loading...</div>
       )}
-      {visible && (
-        <AddCollection
+      {htmlWidth > 906 ? (
+        <CreateCollectModel
+          key={collectInfo?.name}
+          visible={!!visible}
+          onCancel={() => onHide && onHide()}
+          callback={getAddRes}
+          updateCollection={updateCollection}
+          collectInfo={collectInfo}
+        />
+      ) : (
+        <CreateDrawer
+          key={collectInfo?.name}
           visible={!!visible}
           onCancel={() => onHide && onHide()}
           callback={getAddRes}

@@ -39,6 +39,12 @@ const CreateDrawer: React.FC<IProps> = ({
     if (collectInfo?.name) {
       setCollectName(collectInfo?.name);
     }
+    if (collectInfo?.desc) {
+      setCollectDesc(collectInfo?.desc);
+    }
+    if (collectInfo?.status) {
+      setStatus(collectInfo?.status);
+    }
   }, [collectInfo]);
 
   const onCollectNameChange = (e: any) => {
@@ -60,7 +66,7 @@ const CreateDrawer: React.FC<IProps> = ({
         name: collectName,
         desc: collectDesc,
         status,
-        userId: getUserInfo?.userId
+        userId: getUserInfo?.userId,
       })
     );
     if (!res.success) {
@@ -88,12 +94,13 @@ const CreateDrawer: React.FC<IProps> = ({
     if (res.success) {
       success(res.message);
       onCancel();
-      updateCollection && updateCollection({
-        name: collectName,
-        desc: collectDesc,
-        status,
-        id: collectInfo?.id
-      });
+      updateCollection &&
+        updateCollection({
+          name: collectName,
+          desc: collectDesc,
+          status,
+          id: collectInfo?.id,
+        });
     } else {
       error(res.message);
     }
@@ -125,7 +132,14 @@ const CreateDrawer: React.FC<IProps> = ({
         <MIcons name="icon-arrow-left-bold" className={styles.addIcon} noStopPropagation />
       </div>
       <div className={styles.title}>新建收藏集</div>
-      <Button type="link" onClick={onSubmit} className={styles.submit} disabled={!collectName}>完成</Button>
+      <Button
+        type="link"
+        onClick={onSubmit}
+        className={styles.submit}
+        disabled={!collectName}
+      >
+        完成
+      </Button>
     </div>
   );
 
@@ -142,9 +156,29 @@ const CreateDrawer: React.FC<IProps> = ({
         bodyStyle={{ padding: '0 10px' }}
       >
         <div className={styles.createContent}>
-          <Input className={styles.name} placeholder="请输入收藏集名称" maxLength={20} bordered={false} value={collectName} onChange={onCollectNameChange} />
-          <Input.TextArea showCount autoSize={{ minRows: 2 }} maxLength={100} className={styles.desc} placeholder="请输入收藏集描述" bordered={false} value={collectDesc} onChange={onCollectDescChange} />
-          <Radio.Group className={styles.radioGroup} onChange={onRadioChange} value={status}>
+          <Input
+            className={styles.name}
+            placeholder="请输入收藏集名称"
+            maxLength={20}
+            bordered={false}
+            value={collectName}
+            onChange={onCollectNameChange}
+          />
+          <Input.TextArea
+            showCount
+            autoSize={{ minRows: 2 }}
+            maxLength={100}
+            className={styles.desc}
+            placeholder="请输入收藏集描述"
+            bordered={false}
+            value={collectDesc}
+            onChange={onCollectDescChange}
+          />
+          <Radio.Group
+            className={styles.radioGroup}
+            onChange={onRadioChange}
+            value={status}
+          >
             <Radio value={1} className={styles.radio}>
               <span>公开</span>
               <span className={styles.info}>当其他人关注此收藏集后不可再更改为隐私</span>

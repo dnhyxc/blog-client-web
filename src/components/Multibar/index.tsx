@@ -9,7 +9,7 @@ import { ArticleDetailParams } from '@/typings/common';
 import Qrcode from '../Qrcode';
 import MIcons from '../Icons';
 import CollectionModal from '../CollectionModel';
-import AddCollection from '../AddCollection';
+import CreateCollectModel from '../CreateCollectModel';
 import styles from './index.less';
 
 interface IProps {
@@ -192,13 +192,12 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =>
         onCancel={() => setVisible(false)}
         getAddVisible={getAddVisible}
       />
-      {addVisible && (
-        <AddCollection
-          visible={addVisible}
-          onCancel={() => setAddVisible(false)}
-          showCollection={onCollection}
-        />
-      )}
+      <CreateCollectModel
+        key={Math.random()}
+        visible={addVisible}
+        onCancel={() => setAddVisible(false)}
+        showCollection={onCollection}
+      />
     </div>
   );
 };

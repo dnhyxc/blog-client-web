@@ -11,7 +11,7 @@ import Card from '@/components/Card';
 import BackTop from '@/components/BackTop';
 import Footer from '@/components/Footer';
 import CollectionModal from '@/components/CollectionModel';
-import AddCollection from '@/components/AddCollection';
+import CreateCollectModel from '@/components/CreateCollectModel';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { error, normalizeResult } from '@/utils';
@@ -22,7 +22,7 @@ import {
   useHtmlWidth,
   useScrollLoad,
   useGetUserInfo,
-  useGetSiderVisible
+  useGetSiderVisible,
 } from '@/hooks';
 import { PAGESIZE, HEAD_UEL } from '@/constant';
 import {
@@ -33,7 +33,7 @@ import {
 } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Collection: React.FC<IProps> = () => {
   const [collectInfo, setCollectInfo] = useState<AddCollectionRes>({ id: '' });
@@ -296,11 +296,7 @@ const Collection: React.FC<IProps> = () => {
                     />
                   </span>
                   <span className={styles.delete}>
-                    <MIcons
-                      name="icon-shanchu"
-                      text="删除"
-                      onClick={onDeleteCollect}
-                    />
+                    <MIcons name="icon-shanchu" text="删除" onClick={onDeleteCollect} />
                   </span>
                 </div>
               )}
@@ -353,16 +349,15 @@ const Collection: React.FC<IProps> = () => {
         getSelectCollectIds={getSelectCollectIds}
         selectCollectId={id}
       />
-      {addVisible && (
-        <AddCollection
-          visible={addVisible}
-          onCancel={() => setAddVisible(false)}
-          showCollection={onCollection}
-          hideCollectModel={hideCollectModel}
-          collectInfo={hideCollectModel ? newCollectInfo : null}
-          updateCollection={updateCollection}
-        />
-      )}
+      <CreateCollectModel
+        key={Math.random()}
+        visible={addVisible}
+        onCancel={() => setAddVisible(false)}
+        showCollection={onCollection}
+        hideCollectModel={hideCollectModel}
+        collectInfo={hideCollectModel ? newCollectInfo : null}
+        updateCollection={updateCollection}
+      />
     </div>
   );
 };

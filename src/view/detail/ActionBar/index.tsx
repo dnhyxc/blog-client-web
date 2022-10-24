@@ -6,9 +6,8 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { error } from '@/utils';
-// import CollectionModal from '@/components/CollectionModel';
-import AddCollection from '@/components/AddCollection';
-import CollectionDrawer from './CollectionDrawer';
+import CreateCollectModel from '@/components/CreateCollectModel';
+import CollectionDrawer from '@/components/CollectionDrawer';
 import { ArticleDetailParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -115,7 +114,11 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =
 
   return (
     <div className={styles.ActionBar}>
-      <ActionIcon className={styles.changeIconWrap} onClick={onToggleActionBar} icon={!barVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'} />
+      <ActionIcon
+        className={styles.changeIconWrap}
+        onClick={onToggleActionBar}
+        icon={!barVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'}
+      />
       <div className={classname(styles.container, barVisible && styles.showBar)}>
         <div>目录</div>
         <div className={styles.actionBtn}>
@@ -128,7 +131,9 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =
           {commentCount > 0 && (
             <span className={styles.likeCount}>
               {commentCount > 999 ? (
-                <span title={(commentCount && JSON.stringify(commentCount)) || ''}>999+</span>
+                <span title={(commentCount && JSON.stringify(commentCount)) || ''}>
+                  999+
+                </span>
               ) : (
                 commentCount
               )}
@@ -153,19 +158,17 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =
           />
         </div>
       </div>
-      <CollectionDrawer visible={visible} onCancel={() => setVisible(false)} showCollectionDrawer={onCollection} />
-      {/* <CollectionModal
+      <CollectionDrawer
         visible={visible}
         onCancel={() => setVisible(false)}
-        getAddVisible={getAddVisible}
-      /> */}
-      {addVisible && (
-        <AddCollection
-          visible={addVisible}
-          onCancel={() => setAddVisible(false)}
-          showCollection={onCollection}
-        />
-      )}
+        showCollectionDrawer={onCollection}
+      />
+      <CreateCollectModel
+        key={Math.random()}
+        visible={addVisible}
+        onCancel={() => setAddVisible(false)}
+        showCollection={onCollection}
+      />
     </div>
   );
 };
