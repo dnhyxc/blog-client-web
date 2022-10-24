@@ -16,7 +16,7 @@ interface IProps {
   callback?: Function;
   updateCollection?: Function;
   hideCollectModel?: boolean;
-  onCheckedItem?: Function;
+  onCheckedItem?: Function; // 获取新建收藏集的id
 }
 
 const CreateDrawer: React.FC<IProps> = ({
@@ -38,16 +38,16 @@ const CreateDrawer: React.FC<IProps> = ({
   } = useStore();
 
   useEffect(() => {
-    if (collectInfo?.name) {
+    if (collectInfo?.name && visible) {
       setCollectName(collectInfo?.name);
     }
-    if (collectInfo?.desc) {
+    if (collectInfo?.desc && visible) {
       setCollectDesc(collectInfo?.desc);
     }
-    if (collectInfo?.status) {
+    if (collectInfo?.status && visible) {
       setStatus(collectInfo?.status);
     }
-  }, [collectInfo]);
+  }, [collectInfo, visible]);
 
   const onCollectNameChange = (e: any) => {
     setCollectName(e.target.value);
@@ -80,6 +80,13 @@ const CreateDrawer: React.FC<IProps> = ({
       callback && callback(res.data);
       onCheckedItem && onCheckedItem(res?.data?.id);
     }
+  };
+
+  // 清空表单字段
+  const clearFormData = () => {
+    setCollectName('');
+    setCollectDesc('');
+    setStatus(1);
   };
 
   // 更新
@@ -117,11 +124,14 @@ const CreateDrawer: React.FC<IProps> = ({
     } else {
       update();
     }
-
+    // 编辑创建弹窗时，清空表单字段
+    clearFormData();
     onCancel && onCancel();
   };
 
   const onClose = () => {
+    // 编辑创建弹窗时，清空表单字段
+    clearFormData();
     onCancel();
     // 当从收藏集详情中点击编辑时不打开创建弹窗
     if (!hideCollectModel) {

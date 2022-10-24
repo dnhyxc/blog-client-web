@@ -19,6 +19,8 @@ interface IProps {
   getSelectCollectIds?: Function;
   moveArticleId?: string;
   selectCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时设置选中当前收藏集
+  createCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时打开创建收藏集弹窗新创建的收藏集id
+  showCreateDrawer?: Function;
 }
 
 const CollectionDrawer: React.FC<IProps> = ({
@@ -29,6 +31,8 @@ const CollectionDrawer: React.FC<IProps> = ({
   getSelectCollectIds,
   moveArticleId,
   selectCollectId,
+  createCollectId,
+  showCreateDrawer = null,
 }) => {
   const [createVisible, setCreateVisible] = useState<boolean>(false);
   const [checkedItem, setCheckedItem] = useState<string[]>([]);
@@ -54,7 +58,14 @@ const CollectionDrawer: React.FC<IProps> = ({
   useEffect(() => {
     if (visible) {
       getCollectionList();
-      selectCollectId && setCheckedItem([selectCollectId] as string[]);
+      const selectItems = [];
+      if (createCollectId) {
+        selectItems.push(createCollectId);
+      }
+      if (selectCollectId) {
+        selectItems.push(selectCollectId);
+      }
+      setCheckedItem([...selectItems, ...checkedItem]);
     } else {
       setPageNo(1);
       listRef.current = [];
@@ -65,7 +76,7 @@ const CollectionDrawer: React.FC<IProps> = ({
       });
       setCheckedItem([]);
     }
-  }, [visible, pageNo, selectCollectId]);
+  }, [visible, pageNo, selectCollectId, createCollectId]);
 
   useEffect(() => {
     getSelectCollectIds && getSelectCollectIds(checkedItem);
@@ -111,6 +122,8 @@ const CollectionDrawer: React.FC<IProps> = ({
 
   const showCreate = () => {
     setCreateVisible(true);
+    // 显示创建收藏集弹窗
+    showCreateDrawer && showCreateDrawer(true);
     onCancel && onCancel();
   };
 
@@ -158,7 +171,7 @@ const CollectionDrawer: React.FC<IProps> = ({
         closable={false}
         onClose={() => onCancel()}
         visible={visible}
-        height={432}
+        height={427}
         footer={[
           <Button
             key="submit"
@@ -171,7 +184,7 @@ const CollectionDrawer: React.FC<IProps> = ({
         ]}
         headerStyle={{ padding: '10px' }}
         bodyStyle={{ padding: '0 0 10px 0', overflow: 'hidden' }}
-        footerStyle={{ padding: '10px', height: '65px' }}
+        footerStyle={{ padding: '10px', height: '60px' }}
       >
         <Content
           className={styles.scrollWrapStyle}
@@ -204,11 +217,14 @@ const CollectionDrawer: React.FC<IProps> = ({
           </div>
         </Content>
       </Drawer>
-      <CreateDrawer
-        visible={createVisible}
-        onCancel={onCloseCreate}
-        onCheckedItem={onCheckedItem}
-      />
+      {/* 如果是collection页面唤起的 CreateDrawer 弹窗，则不使用CollectDrawer中的这个CreateDrawer弹窗，使用collection页面自身的CreateDrawer弹窗 */}
+      {!showCreateDrawer && (
+        <CreateDrawer
+          visible={createVisible}
+          onCancel={onCloseCreate}
+          onCheckedItem={onCheckedItem}
+        />
+      )}
     </div>
   );
 };

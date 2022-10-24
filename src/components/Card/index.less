@@ -1,5 +1,39 @@
 @import '~@styles/common.less';
 
+.removeArticleConfirm {
+  :global {
+    .ant-modal-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 20px;
+    }
+    .ant-modal-confirm-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .anticon {
+        display: none;
+      }
+    }
+    .ant-modal-confirm-btns {
+      display: flex;
+      justify-content: center;
+
+      .ant-btn {
+        width: 50%;
+        height: 35px;
+      }
+    }
+    .ant-modal-confirm-content {
+      text-align: center;
+      margin-left: 0 !important;
+    }
+  }
+}
+
 .wrap {
   width: calc(100% - 260px);
 

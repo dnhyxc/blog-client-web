@@ -36,11 +36,27 @@ const AddCollection: React.FC<IProps> = ({
   } = useStore();
 
   useEffect(() => {
-    if (collectInfo?.name) {
+    if (collectInfo?.name && visible) {
       setCollectionName(collectInfo?.name);
+      form.setFieldsValue({
+        name: collectInfo?.name,
+        desc: collectInfo?.desc,
+        status: collectInfo?.status,
+      });
     }
-  }, [collectInfo]);
+  }, [collectInfo, visible]);
 
+  // 清空表单字段
+  const clearFormData = () => {
+    form.setFieldsValue({
+      name: '',
+      desc: '',
+      status: 1,
+    });
+    setCollectionName('');
+  };
+
+  // 收藏集名称输入框事件
   const onChangeCollectionName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
     setCollectionName(value);
@@ -68,6 +84,8 @@ const AddCollection: React.FC<IProps> = ({
       showCollection && showCollection();
       callback && callback(res.data);
       getCreateCollectId && getCreateCollectId(res?.data?.id);
+      // 关闭弹窗时，清空表单字段
+      clearFormData();
     }
   };
 
@@ -86,6 +104,8 @@ const AddCollection: React.FC<IProps> = ({
       success(res.message);
       onCancel();
       updateCollection && updateCollection({ ...values, id: collectInfo?.id });
+      // 关闭弹窗时，清空表单字段
+      clearFormData();
     } else {
       error(res.message);
     }
@@ -110,6 +130,7 @@ const AddCollection: React.FC<IProps> = ({
       onCancel={onClose}
       keyboard
       maskClosable={false}
+      getContainer={false}
       footer={[
         <Button key="back" type="primary" ghost className={styles.action} onClick={onClose}>
           取消

@@ -253,9 +253,6 @@ const Personal = () => {
       total: 0,
       count: 0,
     });
-    // if (scrollTop) {
-    //   scrollbarRef.current.scrollTop();
-    // }
   };
 
   const toSetting = () => {

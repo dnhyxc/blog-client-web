@@ -444,6 +444,7 @@ export const useDeleteArticle = ({
     return {
       title: delType !== '3' ? '确定删除该文章吗？' : '确定删除该收藏集吗？',
       content: delType === '3' ? '删除收藏集同时也会移除收藏集中的文章' : null,
+      centered: true,
       async onOk() {
         let res = {} as Result<{ id: string } | ArticleListResult>;
         if (delType !== '3') {

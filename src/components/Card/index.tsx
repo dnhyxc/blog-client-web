@@ -73,8 +73,11 @@ const Card: React.FC<IProps> = ({
   const renderAction = (id: string) => {
     const onRemoveArticle = (id: string) => {
       Modal.confirm({
+        className: htmlWidth < 960 ? styles.removeArticleConfirm : '',
         title: '确定移除该文章吗？',
         content: '移除后，该文章将从当前收藏集中删除',
+        centered: htmlWidth < 960,
+        width: htmlWidth < 960 ? '80%' : '',
         onOk() {
           removeArticle && removeArticle(id);
         },

@@ -1,5 +1,39 @@
 @import '~@styles/common.less';
 
+.modalConfirm {
+  :global {
+    .ant-modal-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 20px;
+    }
+    .ant-modal-confirm-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .anticon {
+        display: none;
+      }
+    }
+    .ant-modal-confirm-btns {
+      display: flex;
+      justify-content: center;
+
+      .ant-btn {
+        width: 50%;
+        height: 35px;
+      }
+    }
+    .ant-modal-confirm-content {
+      text-align: center;
+      margin-left: 0 !important;
+    }
+  }
+}
+
 .Collection {
   position: relative;
   display: flex;
@@ -61,7 +95,6 @@
   .wrap {
     padding: 0 10%;
     background-color: @background;
-    min-height: calc(100vh - 70px);
 
     .infoWrap {
       display: flex;

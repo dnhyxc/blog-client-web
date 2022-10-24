@@ -247,8 +247,11 @@ const Collection: React.FC<IProps> = () => {
   // 删除收藏集
   const onDeleteCollect = async () => {
     Modal.confirm({
+      className: htmlWidth < 960 ? styles.modalConfirm : '',
+      width: htmlWidth < 960 ? '80%' : '',
       title: '确定删除该收藏集吗？',
       content: '删除收藏集同时也会移除收藏集中的文章',
+      centered: htmlWidth < 960,
       async onOk() {
         const res = normalizeResult<ArticleListResult>(
           await Service.delCollection({
@@ -296,7 +299,7 @@ const Collection: React.FC<IProps> = () => {
             <div className={styles.name}>
               <span className={styles.collectionName}>
                 {updateCollectInfo?.name || collectInfo?.name}
-                {(updateCollectInfo?.status || collectInfo?.status === 2) && (
+                {(updateCollectInfo?.status === 2 || collectInfo?.status === 2) && (
                   <MIcons name="icon-lock-full" className={styles.lockIcon} />
                 )}
               </span>
@@ -379,19 +382,22 @@ const Collection: React.FC<IProps> = () => {
           getCollectRes={getCollectRes}
           getSelectCollectIds={getSelectCollectIds}
           selectCollectId={id}
+          createCollectId={createCollectId}
+          showCreateDrawer={getAddVisible}
         />
       )}
       {htmlWidth > 960 ? (
-        <CreateCollectModel
-          key={newCollectInfo?.name || newCollectInfo?.desc || newCollectInfo?.status}
-          visible={addVisible}
-          onCancel={() => setAddVisible(false)}
-          showCollection={onCollection}
-          hideCollectModel={hideCollectModel}
-          collectInfo={hideCollectModel ? newCollectInfo : null}
-          updateCollection={updateCollection}
-          getCreateCollectId={getCreateCollectId} // 获取创建时生成的id
-        />
+        addVisible && (
+          <CreateCollectModel
+            visible={addVisible}
+            onCancel={() => setAddVisible(false)}
+            showCollection={onCollection}
+            hideCollectModel={hideCollectModel}
+            collectInfo={hideCollectModel ? newCollectInfo : null}
+            updateCollection={updateCollection}
+            getCreateCollectId={getCreateCollectId} // 获取创建时生成的id
+          />
+        )
       ) : (
         <CreateDrawer
           key={newCollectInfo?.name || newCollectInfo?.desc || newCollectInfo?.status}
@@ -401,6 +407,7 @@ const Collection: React.FC<IProps> = () => {
           hideCollectModel={hideCollectModel}
           collectInfo={hideCollectModel ? newCollectInfo : null}
           updateCollection={updateCollection}
+          onCheckedItem={getCreateCollectId} // 获取新建收藏集的id
         />
       )}
     </div>
