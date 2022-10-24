@@ -16,6 +16,7 @@ interface IProps {
   callback?: Function;
   updateCollection?: Function;
   hideCollectModel?: boolean;
+  onCheckedItem?: Function;
 }
 
 const CreateDrawer: React.FC<IProps> = ({
@@ -26,6 +27,7 @@ const CreateDrawer: React.FC<IProps> = ({
   collectInfo = null,
   updateCollection,
   hideCollectModel,
+  onCheckedItem,
 }) => {
   const [collectName, setCollectName] = useState<string>('');
   const [collectDesc, setCollectDesc] = useState<string>('');
@@ -76,6 +78,7 @@ const CreateDrawer: React.FC<IProps> = ({
       onCancel();
       showCollection && showCollection();
       callback && callback(res.data);
+      onCheckedItem && onCheckedItem(res?.data?.id);
     }
   };
 

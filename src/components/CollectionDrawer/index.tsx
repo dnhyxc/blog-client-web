@@ -54,7 +54,7 @@ const CollectionDrawer: React.FC<IProps> = ({
   useEffect(() => {
     if (visible) {
       getCollectionList();
-      setCheckedItem([selectCollectId] as string[]);
+      selectCollectId && setCheckedItem([selectCollectId] as string[]);
     } else {
       setPageNo(1);
       listRef.current = [];
@@ -204,7 +204,11 @@ const CollectionDrawer: React.FC<IProps> = ({
           </div>
         </Content>
       </Drawer>
-      <CreateDrawer visible={createVisible} onCancel={onCloseCreate} />
+      <CreateDrawer
+        visible={createVisible}
+        onCancel={onCloseCreate}
+        onCheckedItem={onCheckedItem}
+      />
     </div>
   );
 };

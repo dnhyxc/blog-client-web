@@ -112,7 +112,7 @@ const MList: React.FC<IProps> = ({
                       <span className={styles.edit}>
                         <MIcons
                           name="icon-icon_bianji"
-                          className={styles.lockIcon}
+                          iconWrapClass={styles.iconWrapClass}
                           text="编辑"
                           customStyle
                           onClick={() => onEdit(i as unknown as AddCollectionRes)}
@@ -121,7 +121,7 @@ const MList: React.FC<IProps> = ({
                       <span className={styles.delete}>
                         <MIcons
                           name="icon-shanchu"
-                          className={styles.lockIcon}
+                          iconWrapClass={styles.iconWrapClass}
                           text="删除"
                           customStyle
                           onClick={() => onDelete(i.id)}
@@ -149,7 +149,7 @@ const MList: React.FC<IProps> = ({
       )}
       {htmlWidth > 906 ? (
         <CreateCollectModel
-          key={collectInfo?.name}
+          key={collectInfo?.name || collectInfo?.desc || collectInfo?.status}
           visible={!!visible}
           onCancel={() => onHide && onHide()}
           callback={getAddRes}
@@ -158,7 +158,7 @@ const MList: React.FC<IProps> = ({
         />
       ) : (
         <CreateDrawer
-          key={collectInfo?.name}
+          key={collectInfo?.name || collectInfo?.desc || collectInfo?.status}
           visible={!!visible}
           onCancel={() => onHide && onHide()}
           callback={getAddRes}

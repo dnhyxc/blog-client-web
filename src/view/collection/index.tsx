@@ -12,6 +12,7 @@ import BackTop from '@/components/BackTop';
 import Footer from '@/components/Footer';
 import CollectionModal from '@/components/CollectionModel';
 import CreateCollectModel from '@/components/CreateCollectModel';
+import CreateDrawer from '@/components/CreateDrawer';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { error, normalizeResult } from '@/utils';
@@ -292,11 +293,17 @@ const Collection: React.FC<IProps> = () => {
                     <MIcons
                       name="icon-icon_bianji"
                       text="编辑"
+                      className={styles.icon}
                       onClick={onHeadEditCollection}
                     />
                   </span>
                   <span className={styles.delete}>
-                    <MIcons name="icon-shanchu" text="删除" onClick={onDeleteCollect} />
+                    <MIcons
+                      name="icon-shanchu"
+                      className={styles.icon}
+                      text="删除"
+                      onClick={onDeleteCollect}
+                    />
                   </span>
                 </div>
               )}
@@ -349,15 +356,27 @@ const Collection: React.FC<IProps> = () => {
         getSelectCollectIds={getSelectCollectIds}
         selectCollectId={id}
       />
-      <CreateCollectModel
-        key={Math.random()}
-        visible={addVisible}
-        onCancel={() => setAddVisible(false)}
-        showCollection={onCollection}
-        hideCollectModel={hideCollectModel}
-        collectInfo={hideCollectModel ? newCollectInfo : null}
-        updateCollection={updateCollection}
-      />
+      {htmlWidth > 960 ? (
+        <CreateCollectModel
+          key={newCollectInfo?.name || newCollectInfo?.desc || newCollectInfo?.status}
+          visible={addVisible}
+          onCancel={() => setAddVisible(false)}
+          showCollection={onCollection}
+          hideCollectModel={hideCollectModel}
+          collectInfo={hideCollectModel ? newCollectInfo : null}
+          updateCollection={updateCollection}
+        />
+      ) : (
+        <CreateDrawer
+          key={newCollectInfo?.name || newCollectInfo?.desc || newCollectInfo?.status}
+          visible={addVisible}
+          onCancel={() => setAddVisible(false)}
+          showCollection={onCollection}
+          hideCollectModel={hideCollectModel}
+          collectInfo={hideCollectModel ? newCollectInfo : null}
+          updateCollection={updateCollection}
+        />
+      )}
     </div>
   );
 };
