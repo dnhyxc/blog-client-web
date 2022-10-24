@@ -8,8 +8,9 @@ import { normalizeResult } from '@/utils/tools';
 import { error } from '@/utils';
 import CreateCollectModel from '@/components/CreateCollectModel';
 import CollectionDrawer from '@/components/CollectionDrawer';
+import TocDrawer from '@/components/TocDrawer';
 import { ArticleDetailParams } from '@/typings/common';
-import TocDrawer from './TocDrawer';
+// import TocDrawer from './TocDrawer';
 import styles from './index.less';
 
 interface IProps {
@@ -176,6 +177,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =
         showCollection={onCollection}
       />
       <TocDrawer
+        key={detail?.content}
         detail={detail}
         visible={tocVisible}
         onCancel={() => setTocVisible(false)}

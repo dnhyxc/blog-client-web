@@ -1,6 +1,23 @@
 @import '~@styles/common.less';
 
 .TocDrawer {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  min-height: 382px;
+  background-color: #fff;
+  z-index: 101;
+
+  .mack {
+    position: absolute;
+    top: -75%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.45);
+  }
+
   .mackNav {
     background-color: @background;
 
@@ -70,4 +87,8 @@
       padding-left: 20px;
     }
   }
+}
+
+.showTocDrawer {
+  bottom: 0;
 }

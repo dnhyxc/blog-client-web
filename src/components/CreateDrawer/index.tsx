@@ -164,7 +164,7 @@ const CreateDrawer: React.FC<IProps> = ({
         closable={false}
         onClose={onClose}
         visible={visible}
-        height={432}
+        height={427}
         headerStyle={{ padding: '10px' }}
         bodyStyle={{ padding: '0 10px' }}
       >

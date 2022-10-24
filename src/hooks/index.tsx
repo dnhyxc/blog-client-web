@@ -597,3 +597,31 @@ export const useGetSiderVisible = () => {
 
   return { siderVisible };
 };
+
+// 计算文章目录滚动位置
+export const useGetTocScrollHeight = ({ tocVisible }: { tocVisible: boolean }) => {
+  const tocScrollRef: any = useRef(null);
+
+  useEffect(() => {
+    if (tocScrollRef && !tocScrollRef.current) return;
+    window.addEventListener('scroll', onHtmlScroll);
+    return () => {
+      window.removeEventListener('scroll', onHtmlScroll);
+    };
+  }, [tocScrollRef, tocVisible]);
+
+  const onHtmlScroll = () => {
+    const scrollRefScrollHeight = tocScrollRef?.current?.getScrollHeight();
+    const htmlScrollTop = document.documentElement?.scrollTop;
+    const htmlScrollHeight = document.documentElement?.scrollHeight;
+    const percent = scrollRefScrollHeight / htmlScrollHeight;
+    const needScrollTop = percent * htmlScrollTop;
+    console.log(needScrollTop, 'needScrollTop');
+
+    tocScrollRef?.current?.scrollTop(needScrollTop);
+  };
+
+  return {
+    tocScrollRef,
+  };
+};
