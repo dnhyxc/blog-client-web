@@ -152,7 +152,7 @@ const MList: React.FC<IProps> = ({
           key={collectInfo?.name || collectInfo?.desc || collectInfo?.status}
           visible={!!visible}
           onCancel={() => onHide && onHide()}
-          callback={getAddRes}
+          getAddRes={getAddRes}
           updateCollection={updateCollection}
           collectInfo={collectInfo}
         />
@@ -161,7 +161,7 @@ const MList: React.FC<IProps> = ({
           key={collectInfo?.name || collectInfo?.desc || collectInfo?.status}
           visible={!!visible}
           onCancel={() => onHide && onHide()}
-          callback={getAddRes}
+          getAddRes={getAddRes}
           updateCollection={updateCollection}
           collectInfo={collectInfo}
         />

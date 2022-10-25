@@ -616,12 +616,8 @@ export const useGetTocScrollHeight = ({ tocVisible }: { tocVisible: boolean }) =
     const htmlScrollHeight = document.documentElement?.scrollHeight;
     const percent = scrollRefScrollHeight / htmlScrollHeight;
     const needScrollTop = percent * htmlScrollTop;
-    console.log(needScrollTop, 'needScrollTop');
-
     tocScrollRef?.current?.scrollTop(needScrollTop);
   };
 
-  return {
-    tocScrollRef,
-  };
+  return { tocScrollRef };
 };

@@ -110,11 +110,12 @@
       // background: linear-gradient(135deg, #e9defa, #fbfcdb, #a8edea, #e0c3fc, #d1e8f3);
       background-size: 200% 200%;
       animation: bgmove 5s infinite;
-      padding: 40px 50px;
+      padding: 20px 30px 25px 30px;
 
       .name {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         font-size: 24px;
         cursor: pointer;
 
@@ -126,7 +127,7 @@
           .actions {
             display: flex;
             justify-content: space-between;
-            line-height: 30px;
+            line-height: 20px;
             min-width: 105px;
 
             .edit {
@@ -142,6 +143,12 @@
         .lockIcon {
           font-size: 22px;
         }
+      }
+
+      .desc {
+        height: 64px;
+        line-height: 28px;
+        .ellipsisMore(2);
       }
 
       .userInfo {
@@ -245,12 +252,11 @@
         padding: 11px 10px 20px 10px;
 
         .name {
-          flex-direction: column;
-
           .actions {
             display: flex;
             justify-content: flex-end !important;
-            line-height: 30px;
+            line-height: 20px;
+            margin-left: 10px;
 
             .edit {
               margin-right: 10px;

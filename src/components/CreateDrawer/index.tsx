@@ -13,7 +13,7 @@ interface IProps {
   onCancel: Function;
   collectInfo?: AddCollectionRes | null;
   showCollection?: Function;
-  callback?: Function;
+  getAddRes?: Function;
   updateCollection?: Function;
   hideCollectModel?: boolean;
   onCheckedItem?: Function; // 获取新建收藏集的id
@@ -23,7 +23,7 @@ const CreateDrawer: React.FC<IProps> = ({
   visible,
   onCancel,
   showCollection,
-  callback,
+  getAddRes,
   collectInfo = null,
   updateCollection,
   hideCollectModel,
@@ -75,10 +75,10 @@ const CreateDrawer: React.FC<IProps> = ({
       error(res.message);
     } else {
       success(res.message);
-      onCancel();
       showCollection && showCollection();
-      callback && callback(res.data);
+      getAddRes && getAddRes(res.data);
       onCheckedItem && onCheckedItem(res?.data?.id);
+      onCancel();
     }
   };
 
@@ -103,7 +103,6 @@ const CreateDrawer: React.FC<IProps> = ({
     );
     if (res.success) {
       success(res.message);
-      onCancel();
       updateCollection &&
         updateCollection({
           name: collectName,
@@ -111,6 +110,7 @@ const CreateDrawer: React.FC<IProps> = ({
           status,
           id: collectInfo?.id,
         });
+      onCancel();
     } else {
       error(res.message);
     }

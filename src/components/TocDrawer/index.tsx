@@ -32,29 +32,28 @@ const TocDrawer: React.FC<IProps> = ({ visible, onCancel, detail }) => {
   return (
     <div className={classname(styles.TocDrawer, visible && styles.showTocDrawer)}>
       <div className={styles.mack} onClick={onHideTocDrawer} />
-      {
-        detail?.content?.includes('#') ? (
-          <div className={styles.mackNav}>
-            {/* renderThumbVertical 用于更改滚动条样式 */}
-            <Scrollbars
-              autoHide
-              ref={tocScrollRef}
-              renderThumbVertical={renderThumb}
-              autoHeight
-              autoHeightMax={382}
-              className={styles.scrollbar}
-            >
-              <MarkNav
-                className={styles.tocList}
-                source={detail?.content}
-                headingTopOffset={60}
-                declarative={false}
-                ordered
-              />
-            </Scrollbars>
-          </div>
-        ) : null
-      }
+      {detail?.content?.includes('#') ? (
+        <div className={styles.mackNav}>
+          <div className={styles.tocTitle}>文章目录</div>
+          {/* renderThumbVertical 用于更改滚动条样式 */}
+          <Scrollbars
+            autoHide
+            ref={tocScrollRef}
+            renderThumbVertical={renderThumb}
+            autoHeight
+            autoHeightMax={350}
+            className={styles.scrollbar}
+          >
+            <MarkNav
+              className={styles.tocList}
+              source={detail?.content}
+              headingTopOffset={60}
+              declarative={false}
+              ordered
+            />
+          </Scrollbars>
+        </div>
+      ) : null}
     </div>
   );
 };

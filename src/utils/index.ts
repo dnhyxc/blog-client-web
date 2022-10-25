@@ -95,6 +95,15 @@ export const getRandomNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+// 元素处于焦点返回true，反之返回false
+export const elementIsInFocus = (el: any) => el === document.activeElement;
+
+// 获取选定的文本
+export const getSelectedText = () => window.getSelection()?.toString();
+
+// 文字复制到剪贴板
+export const copyText = async (text: string) => await navigator.clipboard.writeText(text);
+
 export {
   normalizeResult,
   useCookies,

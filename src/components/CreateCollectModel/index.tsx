@@ -11,7 +11,7 @@ interface IProps {
   onCancel: Function;
   collectInfo?: AddCollectionRes | null;
   showCollection?: Function;
-  callback?: Function;
+  getAddRes?: Function; // 获取新建时返回的收藏集信息
   updateCollection?: Function; // 更新收藏集信息
   getCreateCollectId?: Function; // 获取新建的收藏集Id，用于创建完成立即选中
   hideCollectModel?: boolean;
@@ -23,7 +23,7 @@ const AddCollection: React.FC<IProps> = ({
   visible,
   onCancel,
   showCollection,
-  callback,
+  getAddRes,
   collectInfo = null,
   updateCollection,
   hideCollectModel,
@@ -80,10 +80,10 @@ const AddCollection: React.FC<IProps> = ({
       error(res.message);
     } else {
       success(res.message);
-      onCancel();
       showCollection && showCollection();
-      callback && callback(res.data);
+      getAddRes && getAddRes(res.data);
       getCreateCollectId && getCreateCollectId(res?.data?.id);
+      onCancel();
       // 关闭弹窗时，清空表单字段
       clearFormData();
     }
@@ -102,8 +102,8 @@ const AddCollection: React.FC<IProps> = ({
     );
     if (res.success) {
       success(res.message);
-      onCancel();
       updateCollection && updateCollection({ ...values, id: collectInfo?.id });
+      onCancel();
       // 关闭弹窗时，清空表单字段
       clearFormData();
     } else {

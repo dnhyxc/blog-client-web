@@ -308,7 +308,7 @@ const Collection: React.FC<IProps> = () => {
                   <span className={styles.edit}>
                     <MIcons
                       name="icon-icon_bianji"
-                      text="编辑"
+                      // text="编辑"
                       className={styles.icon}
                       onClick={onHeadEditCollection}
                     />
@@ -317,12 +317,15 @@ const Collection: React.FC<IProps> = () => {
                     <MIcons
                       name="icon-shanchu"
                       className={styles.icon}
-                      text="删除"
+                      // text="删除"
                       onClick={onDeleteCollect}
                     />
                   </span>
                 </div>
               )}
+            </div>
+            <div className={styles.desc}>
+              {updateCollectInfo?.desc || collectInfo?.desc}
             </div>
             <div className={styles.userInfo}>
               <div className={styles.avatar} onClick={toPersonal}>

@@ -10,7 +10,6 @@ import CreateCollectModel from '@/components/CreateCollectModel';
 import CollectionDrawer from '@/components/CollectionDrawer';
 import TocDrawer from '@/components/TocDrawer';
 import { ArticleDetailParams } from '@/typings/common';
-// import TocDrawer from './TocDrawer';
 import styles from './index.less';
 
 interface IProps {
