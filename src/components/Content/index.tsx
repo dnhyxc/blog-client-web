@@ -29,7 +29,7 @@ const Content: React.FC<IProps> = ({
   const { siderVisible } = useGetSiderVisible();
 
   return (
-    <div className={classname(styles.container, containerClassName)}>
+    <div className={classname(styles.container, containerClassName, siderVisible && styles.showContainer)}>
       <div className={classname(styles.wrap, wrapClassName)}>
         <div
           className={classname(

@@ -5,7 +5,7 @@ class SiderStore {
     makeAutoObservable(this);
   }
 
-  toggleSider = false;
+  toggleSider = true;
 
   onToggleSider(value: boolean) {
     this.toggleSider = value;

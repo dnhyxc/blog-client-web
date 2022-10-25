@@ -6,6 +6,8 @@
  * @FilePath: \src\components\Footer\index.tsx
  */
 import React, { ReactNode } from 'react';
+import classname from 'classname';
+import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
 import MenuList from './Menu';
 import styles from './index.less';
 
@@ -14,8 +16,11 @@ interface IProps {
 }
 
 const Footer: React.FC<IProps> = ({ children }) => {
+  const { siderVisible } = useGetSiderVisible();
+  const { htmlWidth } = useHtmlWidth();
+
   return (
-    <div className={styles.footerWrap}>
+    <div className={classname(styles.footerWrap, siderVisible && htmlWidth > 960 && styles.showFooter)}>
       <MenuList />
       {children}
     </div>
