@@ -5,7 +5,7 @@ import { HEAD_UEL } from '@/constant';
 import { Button } from 'antd';
 import Image from '@/components/Image';
 import * as Service from '@/service';
-import { normalizeResult } from '@/utils';
+import { info, normalizeResult } from '@/utils';
 import { UserInfoParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -39,19 +39,35 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle }) => 
   };
 
   const toGithub = () => {
-    window.open(authorInfo?.github);
+    if (authorInfo?.github) {
+      window.open(authorInfo?.github);
+    } else {
+      info('还没设置github地址');
+    }
   };
 
   const toJuejin = () => {
-    window.open(authorInfo?.juejin);
+    if (authorInfo?.juejin) {
+      window.open(authorInfo?.juejin);
+    } else {
+      info('还没设置掘金地址');
+    }
   };
 
   const toZhihu = () => {
-    window.open(authorInfo?.zhihu);
+    if (authorInfo?.juejin) {
+      window.open(authorInfo?.zhihu);
+    } else {
+      info('还没设置知乎地址');
+    }
   };
 
   const toBlog = () => {
-    window.open(authorInfo?.blog);
+    if (authorInfo?.juejin) {
+      window.open(authorInfo?.blog);
+    } else {
+      info('还没设置博客地址');
+    }
   };
 
   const toAuthor = () => {
