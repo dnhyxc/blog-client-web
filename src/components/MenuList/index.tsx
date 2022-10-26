@@ -33,7 +33,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
   } = useStore();
 
   const [siderVisible, setSiderVisible] = useState<boolean>(
-    siderStore?.toggleSider || true
+    siderStore?.toggleSider
   );
   const [selectMenu, setSelectMenu] = useState<string>('');
   const navigate = useNavigate();
