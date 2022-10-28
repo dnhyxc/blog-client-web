@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --config ./config/webpack.dev.config.js",
+    "dev": "webpack serve --config ./config/webpack.dev.config.js",
     "start:prod": "webpack serve --config ./config/webpack.prod.config.js",
     "build": "rimraf dist dist.zip && webpack --config ./config/webpack.prod.config.js",
     "build:dev": "rimraf dist dist.zip && webpack --config ./config/webpack.dev.config.js",

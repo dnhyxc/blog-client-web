@@ -8,16 +8,16 @@ import RightBar from '@/components/RightBar';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import MAlert from '@/components/MAlert';
-import Empty from '@/components/Empty';
 import BackTop from '@/components/BackTop';
 import MIcons from '@/components/Icons';
+import MSkeleton from '@/components/MSkeleton';
 import {
   useLoginStatus,
   useLikeArticle,
   useScrollLoad,
   useDeleteTimelineArticle,
   useVerifyToken,
-  useGetSiderVisible
+  useGetSiderVisible,
 } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -144,13 +144,8 @@ const TimeLine: React.FC = () => {
               })}
             </Timeline>
           ) : (
-            <div
-              className={classname(
-                styles.emptyWrap,
-                timelineList.length > 0 && styles.hasTimeList
-              )}
-            >
-              <Empty />
+            <div className={classname(styles.emptyWrap)}>
+              <MSkeleton />
             </div>
           )}
           {timelineList.length > 0 && (
