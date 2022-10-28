@@ -145,7 +145,7 @@ const TimeLine: React.FC = () => {
             </Timeline>
           ) : (
             <div className={classname(styles.emptyWrap)}>
-              <MSkeleton />
+              <MSkeleton rows={3} terminal="h5" />
             </div>
           )}
           {timelineList.length > 0 && (
