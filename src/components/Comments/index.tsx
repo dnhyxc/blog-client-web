@@ -10,13 +10,14 @@ import { HEAD_UEL } from '@/constant';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/MAlert';
 import { useLoginStatus, useScroll } from '@/hooks';
+import { EventBus } from '@/event';
 import { CommentParams, GiveLikeResult, DeleteCommentResult } from '@/typings/common';
 import DraftInput from '../DraftInput';
 import styles from './index.less';
 
 interface IProps {
   authorId: string;
-  getCommentLength?: Function
+  getCommentLength?: Function;
 }
 
 const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
@@ -39,14 +40,18 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
     getCommentList();
   }, [id]);
 
-  // 计算评论数
-  const getCommentCount = useMemo(() => {
+  const getCount = (comments: CommentParams[]) => {
     let count = 0;
     comments.forEach((i) => {
       const length: number = i.replyList?.length || 0;
       count += length + 1;
     });
     return count;
+  };
+
+  // 计算评论数
+  const getCommentCount = useMemo(() => {
+    return getCount(comments);
   }, [comments]);
 
   // 获取评论列表
@@ -56,6 +61,8 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
     );
     if (res.success) {
       setComments(res.data);
+      const count = getCount(res.data);
+      EventBus.getCommentNum(count);
       getCommentLength && getCommentLength(res.data);
     } else {
       error(res.message);
@@ -98,14 +105,14 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
     }
     const params = isThreeTier
       ? {
-        commentId: comment.commentId!,
-        fromCommentId: comment.commentId!,
-        userId: getUserInfo?.userId,
-      }
+          commentId: comment.commentId!,
+          fromCommentId: comment.commentId!,
+          userId: getUserInfo?.userId,
+        }
       : {
-        commentId: comment.commentId!,
-        userId: getUserInfo?.userId,
-      };
+          commentId: comment.commentId!,
+          userId: getUserInfo?.userId,
+        };
     setLoading(true);
     const res = normalizeResult<GiveLikeResult>(await Service.giveLike(params));
     setLoading(false);
@@ -124,14 +131,14 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
   const onDeleteComment = (comment: CommentParams, isThreeTier?: boolean) => {
     const params = isThreeTier
       ? {
-        commentId: comment.commentId!,
-        fromCommentId: comment.commentId!,
-        articleId: id,
-      }
+          commentId: comment.commentId!,
+          fromCommentId: comment.commentId!,
+          articleId: id,
+        }
       : {
-        commentId: comment.commentId!,
-        articleId: id,
-      };
+          commentId: comment.commentId!,
+          articleId: id,
+        };
     Modal.confirm(modalConfig(params));
   };
 
@@ -209,8 +216,9 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
                     <div className={styles.actionContent}>
                       <div className={styles.likeAndReplay}>
                         <MIcons
-                          name={`${i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'
-                            }`}
+                          name={`${
+                            i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'
+                          }`}
                           text={i.likeCount! > 0 ? i.likeCount : '点赞'}
                           iconWrapClass={styles.iconWrap}
                           className={i.isLike ? styles.isLike : null}
@@ -302,10 +310,11 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
                               <div className={styles.actionContent}>
                                 <div className={styles.likeAndReplay}>
                                   <MIcons
-                                    name={`${j.isLike
-                                      ? 'icon-24gf-thumbsUp2'
-                                      : 'icon-24gl-thumbsUp2'
-                                      }`}
+                                    name={`${
+                                      j.isLike
+                                        ? 'icon-24gf-thumbsUp2'
+                                        : 'icon-24gl-thumbsUp2'
+                                    }`}
                                     text={j.likeCount! > 0 ? j.likeCount : '点赞'}
                                     iconWrapClass={styles.iconWrap}
                                     className={j.isLike ? styles.isLike : null}
@@ -365,19 +374,19 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
                     })}
                     {checkReplyList(i.replyList, i.commentId!).length !==
                       i.replyList.length && (
-                        <div
-                          className={styles.viewMore}
+                      <div
+                        className={styles.viewMore}
+                        onClick={() => onViewMoreReply(i.commentId!)}
+                      >
+                        <span className={styles.viewText}>
+                          查看更多（{i.replyList && i.replyList.length - 2}条）回复
+                        </span>
+                        <MIcons
+                          name="icon-xiajiantou"
                           onClick={() => onViewMoreReply(i.commentId!)}
-                        >
-                          <span className={styles.viewText}>
-                            查看更多（{i.replyList && i.replyList.length - 2}条）回复
-                          </span>
-                          <MIcons
-                            name="icon-xiajiantou"
-                            onClick={() => onViewMoreReply(i.commentId!)}
-                          />
-                        </div>
-                      )}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

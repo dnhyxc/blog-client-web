@@ -5,27 +5,35 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { shareQQ, shareSinaWeiBo, error } from '@/utils';
+import Qrcode from '@/components/Qrcode';
+import { EventBus } from '@/event';
+import MIcons from '@/components/Icons';
+import CollectionModal from '@/components/CollectionModel';
+import CreateCollectModel from '@/components/CreateCollectModel';
 import { ArticleDetailParams } from '@/typings/common';
-import Qrcode from '../Qrcode';
-import MIcons from '../Icons';
-import CollectionModal from '../CollectionModel';
-import CreateCollectModel from '../CreateCollectModel';
 import styles from './index.less';
 
 interface IProps {
   id: string;
   detail: ArticleDetailParams;
   commentRef: any;
-  commentCount: number;
 }
 
-const Multibar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) => {
+const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
   const [likeCount, setLikeCount] = useState<number | undefined>(0);
   const [isLike, setIsLike] = useState<boolean | undefined>(false);
   const [visible, setVisible] = useState<boolean>(false);
   const [addVisible, setAddVisible] = useState<boolean>(false);
   const [collected, setCollected] = useState<boolean>(false);
   const [createCollectId, setCreateCollectId] = useState<string>('');
+  const [commentCount, setCommentCount] = useState<number>(0);
+
+  useEffect(() => {
+    EventBus.onSetCommentCount.listen(() => {
+      const count = EventBus.commentCount;
+      setCommentCount(count);
+    });
+  }, []);
 
   const {
     userInfoStore: { getUserInfo },

@@ -5,7 +5,7 @@
  * @LastEditors: dnh
  * @FilePath: \src\view\detail\index.tsx
  */
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Affix, BackTop, Spin, Button } from 'antd';
 import classname from 'classname';
@@ -25,12 +25,10 @@ import { useGetArticleDetail, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
 import { formatGapTime } from '@/utils';
 import ActionBar from '@/components/ActionBar';
-import { ArticleDetailParams, CommentParams } from '@/typings/common';
+import { ArticleDetailParams } from '@/typings/common';
 import styles from './index.less';
 
 const ArticleDetail: React.FC = () => {
-  const [commentCount, setCommentCount] = useState<number>(0);
-
   const navigate = useNavigate();
   const { id } = useParams();
   const { detail, loading } = useGetArticleDetail({ id });
@@ -51,16 +49,6 @@ const ArticleDetail: React.FC = () => {
       <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
     </div>
   );
-
-  // 获取评论数
-  const getCommentLength = (comments: CommentParams[]) => {
-    let count = 0;
-    comments.forEach((i) => {
-      const length: number = i.replyList?.length || 0;
-      count += length + 1;
-    });
-    setCommentCount(count);
-  };
 
   // 编辑文章
   const onEditArticle = () => {
@@ -123,7 +111,7 @@ const ArticleDetail: React.FC = () => {
         {detail && (
           <div className={styles.content}>
             <div className={styles.preview}>
-              <Multibar id={id as string} detail={detail} commentRef={commentRef} commentCount={commentCount} />
+              <Multibar id={id as string} detail={detail} commentRef={commentRef} />
               <Preview
                 className={styles.previewContent}
                 mackdown={detail.content}
@@ -148,7 +136,7 @@ const ArticleDetail: React.FC = () => {
                 <AnotherArticle id={id} />
               </div>
               <div ref={commentRef}>
-                <Comments authorId={detail.authorId} getCommentLength={getCommentLength} />
+                <Comments authorId={detail.authorId} />
               </div>
             </div>
             <div className={styles.rightBar}>
@@ -159,7 +147,9 @@ const ArticleDetail: React.FC = () => {
             </div>
           </div>
         )}
-        {htmlWidth <= 960 && detail && <ActionBar id={id as string} detail={detail} commentRef={commentRef} commentCount={commentCount} />}
+        {htmlWidth <= 960 && detail && (
+          <ActionBar id={id as string} detail={detail} commentRef={commentRef} />
+        )}
         {htmlWidth <= 960 && <Footer />}
       </div>
       {htmlWidth > 960 && (

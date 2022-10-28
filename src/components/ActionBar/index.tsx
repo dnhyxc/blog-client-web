@@ -5,6 +5,7 @@ import ActionIcon from '@/components/ActionIcon';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
+import { EventBus } from '@/event';
 import { error } from '@/utils';
 import CreateCollectModel from '@/components/CreateCollectModel';
 import CollectionDrawer from '@/components/CollectionDrawer';
@@ -16,10 +17,9 @@ interface IProps {
   id: string;
   detail: ArticleDetailParams;
   commentRef: any;
-  commentCount: number;
 }
 
-const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) => {
+const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
   const [barVisible, setBarVisible] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number | undefined>(0);
   const [isLike, setIsLike] = useState<boolean | undefined>(false);
@@ -27,10 +27,18 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, commentCount }) =
   const [addVisible, setAddVisible] = useState<boolean>(false);
   const [collected, setCollected] = useState<boolean>(false);
   const [tocVisible, setTocVisible] = useState<boolean>(false);
+  const [commentCount, setCommentCount] = useState<number>(0);
 
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+
+  useEffect(() => {
+    EventBus.onSetCommentCount.listen(() => {
+      const count = EventBus.commentCount;
+      setCommentCount(count);
+    });
+  }, []);
 
   useEffect(() => {
     setLikeCount(detail?.likeCount);
