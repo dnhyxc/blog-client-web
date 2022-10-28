@@ -38,7 +38,6 @@ const TagList: React.FC<IProps> = () => {
     data: articleList,
     loading,
     pageSize: PAGESIZE,
-    scrollStyle: styles.scrollStyle,
   });
 
   useEffect(() => {

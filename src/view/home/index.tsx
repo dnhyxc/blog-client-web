@@ -8,6 +8,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
+import classname from 'classname';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import RightBar from '@/components/RightBar';
@@ -22,6 +23,7 @@ import {
   useScrollLoad,
   useDeleteArticle,
   useHtmlWidth,
+  useGetSiderVisible,
 } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -52,13 +54,13 @@ const Home: React.FC<IProps> = () => {
     userInfoStore: { getUserInfo },
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
+  const { siderVisible } = useGetSiderVisible();
   // scrollRef：用户设置rightbar的吸顶效果，scrollbarRef：scrollbar 滚动到顶部，scrollTop：回到顶部
   const { pageNo, setPageNo, onScroll, scrollRef, scrollbarRef, scrollTop } = useScrollLoad(
     {
       data: articleList,
       loading,
       pageSize: PAGESIZE,
-      scrollStyle: styles.scrollStyle,
     }
   );
 
@@ -226,7 +228,7 @@ const Home: React.FC<IProps> = () => {
       <Header right={rightNode()}>文章列表</Header>
       {articleList && (
         <Content
-          className={styles.contentWrap}
+          className={classname(styles.contentWrap, siderVisible && styles.changePaddingTop)}
           onScroll={onScroll}
           scrollbarRef={scrollbarRef}
         >

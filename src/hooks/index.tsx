@@ -328,13 +328,14 @@ export const useScrollLoad = ({
   const scrollbarRef = useRef<any>(null);
 
   const addClassName = (scrollTop: number, scrollRef: any) => {
-    if (!scrollStyle) return;
     if (scrollTop >= scrollRef?.current?.offsetTop) {
       setSuckTop(true);
-      scrollRef?.current?.classList?.add(scrollStyle);
+      scrollStyle && scrollRef?.current?.classList?.add(scrollStyle);
+      scrollRef?.current?.setAttribute('id', '__SCROLL_TOP__');
     } else {
       setSuckTop(false);
-      scrollRef?.current?.classList?.remove(scrollStyle);
+      scrollStyle && scrollRef?.current?.classList?.remove(scrollStyle);
+      scrollRef?.current?.removeAttribute('id');
     }
   };
 

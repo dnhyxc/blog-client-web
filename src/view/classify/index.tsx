@@ -44,7 +44,7 @@ const Classify: React.FC = () => {
       data: classifyList,
       loading,
       pageSize: PAGESIZE,
-      scrollStyle: styles.scrollStyle,
+      scrollStyle: siderVisible && styles.scrollTopStyle,
     }
   );
   const {
@@ -183,7 +183,7 @@ const Classify: React.FC = () => {
               deleteArticle={deleteArticle}
               onEditArticle={onEditArticle}
               loading={loading}
-              style={{ paddingTop: `${height + 10}px` }}
+              style={{ paddingTop: `${!siderVisible ? height + 10 : height}px` }}
             />
           </div>
           <RightBar

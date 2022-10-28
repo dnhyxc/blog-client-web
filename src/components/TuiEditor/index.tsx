@@ -12,6 +12,7 @@ import colorSyntax from '@toast-ui/editor-plugin-color-syntax';
 import chart from '@toast-ui/editor-plugin-chart';
 // import "@toast-ui/editor/dist/theme/toastui-editor-dark.css";
 import React, { useEffect } from 'react';
+import classname from 'classname';
 import Editor from '@toast-ui/editor';
 import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight';
 import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
@@ -26,9 +27,10 @@ import styles from './index.less';
 interface IProps {
   initialValue?: string;
   onGetMackdown: Function;
+  siderVisible?: boolean;
 }
 
-const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown }) => {
+const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown, siderVisible }) => {
   const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
@@ -101,7 +103,12 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown }) => {
     }
   };
 
-  return <div className={styles.editContainer} id="editor" />;
+  return (
+    <div
+      className={classname(styles.editContainer, siderVisible && styles.hidePadding)}
+      id="editor"
+    />
+  );
 };
 
 export default TuiEditor;

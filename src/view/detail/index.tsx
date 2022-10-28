@@ -24,7 +24,7 @@ import AnotherArticle from '@/components/AnotherArticle';
 import { useGetArticleDetail, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
 import { formatGapTime } from '@/utils';
-import ActionBar from './ActionBar';
+import ActionBar from '@/components/ActionBar';
 import { ArticleDetailParams, CommentParams } from '@/typings/common';
 import styles from './index.less';
 

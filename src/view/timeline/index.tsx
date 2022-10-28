@@ -18,6 +18,7 @@ import {
   useDeleteTimelineArticle,
   useVerifyToken,
   useGetSiderVisible,
+  useHtmlWidth,
 } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -32,14 +33,13 @@ const TimeLine: React.FC = () => {
   useVerifyToken();
   const navigate = useNavigate();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
-  const { onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad({
-    scrollStyle: styles.scrollStyle,
-  });
+  const { onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad({});
 
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
   const { siderVisible } = useGetSiderVisible();
+  const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
     getTimelineList();
@@ -145,7 +145,10 @@ const TimeLine: React.FC = () => {
             </Timeline>
           ) : (
             <div className={classname(styles.emptyWrap)}>
-              <MSkeleton rows={3} terminal="h5" />
+              <MSkeleton
+                rows={htmlWidth > 960 ? 2 : 3}
+                terminal={htmlWidth > 960 ? 'web' : 'h5'}
+              />
             </div>
           )}
           {timelineList.length > 0 && (

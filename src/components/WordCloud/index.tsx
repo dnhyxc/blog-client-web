@@ -117,7 +117,7 @@ const WordCloud: React.FC<IProps> = ({ data, callback }) => {
   };
 
   return (
-    <div className={styles.WordCloud}>
+    <div className={styles.WordCloud} key={Math.random()}>
       <div id="main" style={{ width: '100%', height: '100%' }} />
     </div>
   );

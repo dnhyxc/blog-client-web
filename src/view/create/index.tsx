@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { Button } from 'antd';
+import classname from 'classname';
 import { observer } from 'mobx-react';
 import useStore from '@/store';
 import Header from '@/components/Header';
 import TuiEditor from '@/components/TuiEditor';
-import { useGetArticleDetail, useDebounce, useVerifyToken } from '@/hooks';
+import {
+  useGetArticleDetail,
+  useDebounce,
+  useVerifyToken,
+  useGetSiderVisible,
+} from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, info, success, error } from '@/utils';
 import { ARTICLE_DRAFT } from '@/constant';
@@ -36,6 +42,7 @@ const CreateArticle: React.FC<IProps> = () => {
   const id = search.get('id');
   const draftId = search.get('draftId');
   const { detail } = useGetArticleDetail({ id, draftId, visible, draftArticleId });
+  const { siderVisible } = useGetSiderVisible();
 
   const onGetMackdown = (mackdown: any) => {
     setContent(mackdown.trim());
@@ -132,8 +139,12 @@ const CreateArticle: React.FC<IProps> = () => {
   return (
     <div className={styles.container}>
       <Header right={renderRight()}>发布文章</Header>
-      <div className={styles.tuiEditorWrap}>
-        <TuiEditor onGetMackdown={onGetMackdown} initialValue={detail?.content} />
+      <div className={classname(styles.tuiEditorWrap, siderVisible && styles.changeHeight)}>
+        <TuiEditor
+          onGetMackdown={onGetMackdown}
+          initialValue={detail?.content}
+          siderVisible={siderVisible}
+        />
       </div>
       {visible && (
         <ReleaseModel

@@ -9,7 +9,7 @@
     justify-content: space-between;
     align-items: flex-start;
     height: 100%;
-    padding: 9px 0 9px 9px;
+    padding: 0 0 9px 9px;
 
     .wrap {
       display: flex;
@@ -85,7 +85,6 @@
 
       .emptyWrap {
         flex: 1;
-        padding: 0 0 20px 0;
         margin-top: 38px;
 
         .skeletonWrap {
@@ -123,13 +122,6 @@
     margin-top: 38px;
   }
 
-  // 吸顶效果样式
-  .scrollStyle {
-    position: fixed;
-    top: 65px;
-    width: 260px;
-  }
-
   :global {
     .ant-timeline-item-tail {
       border-left: 2px solid @menu-hover;
@@ -154,7 +146,7 @@
 @media screen and (max-width: 960px) {
   .TimeLine {
     .contentWrap {
-      padding: 5px 0 0 2px;
+      padding-left: 2px;
 
       .wrap {
         padding-right: 0;
@@ -173,6 +165,10 @@
         .descClass {
           .ellipsisMore(3);
           white-space: initial;
+        }
+
+        .emptyWrap {
+          margin-top: -5px;
         }
       }
     }

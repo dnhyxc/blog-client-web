@@ -51,7 +51,7 @@ const Tag: React.FC = () => {
       <Content>
         <div className={styles.wrap}>
           {tagList.length > 0 && bodyWidth > 960 ? (
-            <WordCloud data={tagList} callback={toTagList} />
+            <WordCloud data={tagList} callback={toTagList} key={Math.random()} />
           ) : (
             <WordList data={tagList} callback={toTagList} />
           )}

@@ -20,10 +20,10 @@ const MSkeleton: React.FC<IProps> = ({
 }) => {
   return (
     <div className={classname(className, styles.MSkeleton)}>
-      {!terminal ? (
+      {terminal === 'web' ? (
         <div className={classname(skeletonWrapStyle, styles.skeletonWrap)}>
           <Skeleton.Image className={classname(styles.skeletonAvatar)} />
-          <Skeleton active title paragraph={{ rows }} />
+          <Skeleton active paragraph={{ rows }} />
         </div>
       ) : (
         <div className={classname(skeletonWrapStyle, styles.skeletonWrap)}>
