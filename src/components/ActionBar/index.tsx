@@ -127,14 +127,16 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
         icon={!barVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'}
       />
       <div className={classname(styles.container, barVisible && styles.showBar)}>
-        <div className={styles.actionBtn}>
-          <MIcons
-            name="icon-mulu"
-            className={styles.tocIcon}
-            onClick={onShowToc}
-            customStyle
-          />
-        </div>
+        {detail?.content.includes('#') && (
+          <div className={styles.actionBtn}>
+            <MIcons
+              name="icon-mulu"
+              className={styles.tocIcon}
+              onClick={onShowToc}
+              customStyle
+            />
+          </div>
+        )}
         <div className={styles.actionBtn}>
           <MIcons
             name="icon-pinglun1"
