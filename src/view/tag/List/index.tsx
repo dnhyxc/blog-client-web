@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
+import classname from 'classname';
 import Header from '@/components/Header';
 import Content from '@/components/Content';
 import Card from '@/components/Card';
@@ -9,7 +10,14 @@ import MIcons from '@/components/Icons';
 import useStore from '@/store';
 import { PAGESIZE } from '@/constant';
 import BackTop from '@/components/BackTop';
-import { useLoginStatus, useLikeArticle, useScrollLoad, useDeleteArticle } from '@/hooks';
+import {
+  useLoginStatus,
+  useLikeArticle,
+  useScrollLoad,
+  useDeleteArticle,
+  useGetSiderVisible,
+  useHtmlWidth,
+} from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
@@ -34,6 +42,8 @@ const TagList: React.FC<IProps> = () => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const { siderVisible } = useGetSiderVisible();
+  const { htmlWidth } = useHtmlWidth();
   const { pageNo, onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad({
     data: articleList,
     loading,
@@ -121,7 +131,10 @@ const TagList: React.FC<IProps> = () => {
         &nbsp; 标签
       </Header>
       <Content
-        className={styles.contentWrap}
+        className={classname(
+          siderVisible && htmlWidth > 960 && styles.changePadding,
+          styles.contentWrap
+        )}
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
       >
