@@ -36,6 +36,7 @@ interface IProps {
   style?: CSSProperties;
   fromPage?: boolean;
   customRender?: boolean;
+  noMoreStyle?: string;
 }
 
 const Card: React.FC<IProps> = ({
@@ -61,6 +62,7 @@ const Card: React.FC<IProps> = ({
   customRender,
   moveTo,
   removeArticle,
+  noMoreStyle,
 }) => {
   const {
     userInfoStore: { getUserInfo },
@@ -284,7 +286,7 @@ const Card: React.FC<IProps> = ({
         </div>
       )}
       {!loading && list.length === total ? (
-        <div className={styles.noMore}>
+        <div className={classname(styles.noMore, noMoreStyle)}>
           {list.length > 0
             ? `共(${list.length})
           篇，${loadText || '已是全部家当'}～～～`
@@ -292,7 +294,7 @@ const Card: React.FC<IProps> = ({
             篇，空空如也～～～`}
         </div>
       ) : (
-        <div className={styles.noMore}>loading...</div>
+        <div className={classname(styles.noMore, noMoreStyle)}>loading...</div>
       )}
     </div>
   );

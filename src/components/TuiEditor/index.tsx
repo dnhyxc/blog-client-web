@@ -105,7 +105,10 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown, siderVisible
 
   return (
     <div
-      className={classname(styles.editContainer, siderVisible && styles.hidePadding)}
+      className={classname(
+        styles.editContainer,
+        siderVisible && htmlWidth > 960 && styles.hidePadding
+      )}
       id="editor"
     />
   );

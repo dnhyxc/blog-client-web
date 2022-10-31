@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
 import useStore from '@/store';
-import { useGetSiderVisible } from '@/hooks';
+import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
 import { formatGapTime, error } from '@/utils';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
@@ -21,6 +21,7 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const { htmlWidth } = useHtmlWidth();
   const { siderVisible } = useGetSiderVisible();
 
   useEffect(() => {
@@ -47,7 +48,10 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
 
   return (
     <div
-      className={classname(styles.NewArticles, siderVisible && styles.changeTop)}
+      className={classname(
+        styles.NewArticles,
+        siderVisible && htmlWidth > 960 && styles.changeTop
+      )}
       ref={scrollRef}
     >
       <div className={styles.contant}>

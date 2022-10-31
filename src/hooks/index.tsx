@@ -622,3 +622,46 @@ export const useGetTocScrollHeight = ({ tocVisible }: { tocVisible: boolean }) =
 
   return { tocScrollRef };
 };
+
+// 获取sider的显隐状态
+export const useGetSiderStatus = () => {
+  const { siderStore } = useStore();
+
+  const [htmlWidth, setHtmlWidth] = useState<number>(window.innerWidth);
+  const [siderStatus, setSiderStatus] = useState<boolean>(false);
+  const [siderVisible, setSiderVisible] = useState<boolean>(
+    siderStore.toggleSider || false
+  );
+
+  useEffect(() => {
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
+
+  const onResize = useDebounce(
+    () => {
+      const width = window.innerWidth;
+      setHtmlWidth(width);
+    },
+    100,
+    []
+  );
+
+  useEffect(() => {
+    EventBus.onToggleSider.listen(() => {
+      setSiderVisible(EventBus.visible);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (siderVisible && htmlWidth > 960) {
+      setSiderStatus(true);
+    } else {
+      setSiderStatus(false);
+    }
+  }, [siderVisible, htmlWidth]);
+
+  return { siderStatus };
+};

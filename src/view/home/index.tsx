@@ -228,7 +228,10 @@ const Home: React.FC<IProps> = () => {
       <Header right={rightNode()}>文章列表</Header>
       {articleList && (
         <Content
-          className={classname(styles.contentWrap, siderVisible && styles.changePaddingTop)}
+          className={classname(
+            styles.contentWrap,
+            siderVisible && htmlWidth > 960 && styles.changePaddingTop
+          )}
           onScroll={onScroll}
           scrollbarRef={scrollbarRef}
         >

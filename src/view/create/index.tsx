@@ -11,6 +11,7 @@ import {
   useDebounce,
   useVerifyToken,
   useGetSiderVisible,
+  useHtmlWidth,
 } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, info, success, error } from '@/utils';
@@ -42,6 +43,7 @@ const CreateArticle: React.FC<IProps> = () => {
   const id = search.get('id');
   const draftId = search.get('draftId');
   const { detail } = useGetArticleDetail({ id, draftId, visible, draftArticleId });
+  const { htmlWidth } = useHtmlWidth();
   const { siderVisible } = useGetSiderVisible();
 
   const onGetMackdown = (mackdown: any) => {
@@ -139,7 +141,12 @@ const CreateArticle: React.FC<IProps> = () => {
   return (
     <div className={styles.container}>
       <Header right={renderRight()}>发布文章</Header>
-      <div className={classname(styles.tuiEditorWrap, siderVisible && styles.changeHeight)}>
+      <div
+        className={classname(
+          styles.tuiEditorWrap,
+          siderVisible && htmlWidth > 960 && styles.changeHeight
+        )}
+      >
         <TuiEditor
           onGetMackdown={onGetMackdown}
           initialValue={detail?.content}

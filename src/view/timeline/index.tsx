@@ -107,7 +107,12 @@ const TimeLine: React.FC = () => {
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
       >
-        <div className={classname(styles.wrap, siderVisible && styles.changeWidth)}>
+        <div
+          className={classname(
+            styles.wrap,
+            siderVisible && htmlWidth > 960 && styles.changeWidth
+          )}
+        >
           {timelineList.length > 0 && timelineList[0].articles.length > 0 ? (
             <Timeline className={styles.timelineContent}>
               {timelineList.map((i) => {

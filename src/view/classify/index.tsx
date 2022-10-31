@@ -15,6 +15,7 @@ import {
   useScrollLoad,
   useDeleteArticle,
   useGetSiderVisible,
+  useHtmlWidth,
 } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -38,13 +39,14 @@ const Classify: React.FC = () => {
   });
 
   const listRef = useRef<ArticleItem[]>([]);
+  const { htmlWidth } = useHtmlWidth();
   const { siderVisible } = useGetSiderVisible();
   const { pageNo, setPageNo, onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad(
     {
       data: classifyList,
       loading,
       pageSize: PAGESIZE,
-      scrollStyle: siderVisible && styles.scrollTopStyle,
+      scrollStyle: siderVisible && htmlWidth > 960 && styles.scrollTopStyle,
     }
   );
   const {

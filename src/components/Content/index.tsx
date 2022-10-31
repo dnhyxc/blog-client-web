@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import classname from 'classname';
-import { useGetSiderVisible } from '@/hooks';
+import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 import styles from './index.less';
@@ -27,27 +27,28 @@ const Content: React.FC<IProps> = ({
   autoHeightMax,
 }) => {
   const { siderVisible } = useGetSiderVisible();
+  const { htmlWidth } = useHtmlWidth();
 
   return (
     <div
       className={classname(
         styles.container,
         containerClassName,
-        siderVisible && styles.showContainer
+        siderVisible && htmlWidth > 960 && styles.showContainer
       )}
     >
       <div
         className={classname(
           styles.wrap,
           wrapClassName,
-          siderVisible && styles.hideWrapPadding
+          siderVisible && htmlWidth > 960 && styles.hideWrapPadding
         )}
       >
         <div
           className={classname(
             styles.scrollWrap,
             className,
-            siderVisible && styles.contentWidth
+            siderVisible && htmlWidth > 960 && styles.contentWidth
           )}
         >
           <Scrollbars

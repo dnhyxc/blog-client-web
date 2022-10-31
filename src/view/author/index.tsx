@@ -46,13 +46,12 @@ const Author: React.FC = () => {
     total: 0,
     count: 0,
   });
-
   const listRef = useRef<ArticleItem[]>([]);
   const navigate = useNavigate();
   const { htmlWidth } = useHtmlWidth();
   const {
     userInfoStore: { getUserInfo },
-    siderStore
+    siderStore,
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const { pageNo, setPageNo, onScroll, scrollbarRef, scrollTop } = useScrollLoad({
@@ -227,7 +226,9 @@ const Author: React.FC = () => {
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
       >
-        <div className={classname(styles.wrap, siderStore.toggleSider && styles.changeWidth)}>
+        <div
+          className={classname(styles.wrap, siderStore.toggleSider && styles.changeWidth)}
+        >
           <div className={styles.infoWrap}>
             <div className={styles.mainCover}>
               <Image
@@ -307,18 +308,18 @@ const Author: React.FC = () => {
                         {(i.value !== '3' ||
                           !timelineList.length ||
                           (timelineList.length && !timelineList[0].articles.length)) && (
-                            <Card
-                              list={articleList.list}
-                              total={articleList.total}
-                              wrapClass={styles.wrapClass}
-                              toDetail={toDetail}
-                              likeArticle={likeArticle}
-                              deleteArticle={deleteArticle}
-                              onEditArticle={onEditArticle}
-                              loadText="地主家也没余粮了"
-                              loading={loading}
-                            />
-                          )}
+                          <Card
+                            list={articleList.list}
+                            total={articleList.total}
+                            wrapClass={styles.wrapClass}
+                            toDetail={toDetail}
+                            likeArticle={likeArticle}
+                            deleteArticle={deleteArticle}
+                            onEditArticle={onEditArticle}
+                            loadText="地主家也没余粮了"
+                            loading={loading}
+                          />
+                        )}
                         {i.value === '3' &&
                           timelineList.length > 0 &&
                           timelineList[0].articles.length > 0 && (
@@ -341,10 +342,10 @@ const Author: React.FC = () => {
                                           total={i.articles.length}
                                           wrapClass={styles.wrapClass}
                                           itemClass={styles.itemClass}
-                                          descClass={styles.descClass}
                                           toDetail={toDetail}
                                           likeArticle={likeArticle}
                                           deleteArticle={deleteTimeline}
+                                          noMoreStyle={styles.noMoreStyle}
                                         />
                                       )}
                                     </div>
