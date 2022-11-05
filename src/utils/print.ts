@@ -80,7 +80,7 @@ export const onPrintElement = ({
 };
 
 // 下载指定的元素
-export const onDowmloadElement = (element: HTMLDivElement | null) => {
+export const onDowmloadElement = (element: HTMLDivElement | null, filename: string) => {
   if (element) {
     html2canvas(element, {
       allowTaint: true,
@@ -90,7 +90,7 @@ export const onDowmloadElement = (element: HTMLDivElement | null) => {
       const link = document.createElement('a');
       link.style.display = 'none';
       link.href = obj;
-      link.setAttribute('download', '文章内容.png');
+      link.setAttribute('download', filename || '文章内容.png');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
