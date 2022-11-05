@@ -6,6 +6,7 @@ import { normalizeResult } from './tools';
 import { storage } from './storage';
 import { success, error, info } from './message';
 import { shareQQ, shareQZon, shareSinaWeiBo } from './share';
+import { onDowmloadElement, onPrintElement } from './print';
 
 // 格式化时间
 export const formatDate = (date: number, format = 'YYYY/MM/DD HH:mm:ss') => {
@@ -118,4 +119,6 @@ export {
   shareQQ,
   shareQZon,
   shareSinaWeiBo,
+  onDowmloadElement,
+  onPrintElement,
 };

@@ -7,7 +7,6 @@ import 'katex/dist/katex.min.css';
 import React, { ReactNode, useRef } from 'react';
 import classname from 'classname';
 import ReactMarkdown from 'react-markdown';
-// import html2canvas from 'html2canvas';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import remarkGfm from 'remark-gfm';
@@ -84,28 +83,6 @@ const Preview: React.FC<IProps> = ({
         );
     }
   };
-
-  // const dowmload = () => {
-  //   if (downloadRef?.current) {
-  //     html2canvas(downloadRef?.current, {
-  //       allowTaint: true,
-  //       width: downloadRef.current.clientWidth + 200,
-  //       height: downloadRef.current.clientHeight + 110,
-  //     }).then((cancas) => {
-  //       const obj = cancas
-  //         .toDataURL('image/png')
-  //         .replace('image/png', 'image/octet-stream');
-  //       const link = document.createElement('a');
-  //       link.style.display = 'none';
-  //       link.href = obj;
-  //       link.setAttribute('download', '文章内容.png');
-  //       document.body.appendChild(link);
-  //       link.click();
-  //       document.body.removeChild(link);
-  //     });
-  //   }
-  // };
-
   return (
     <div className={classname(styles.container, classProps)} ref={downloadRef}>
       <div className={styles.coverImg}>{coverImg}</div>
