@@ -14,13 +14,7 @@ yum -y install lrzsz
 
 在 node 官网下载 linux 版本的 node 压缩包。：
 
-在 xshell 中输入命令`rz`将下载的 node 包放入服务器中。
-
-输入命令`cd /usr/local`进入到 local 文件夹中。
-
-进入到 local 文件夹中后，输入命令`mkdir node`创建一个 node 文件夹。
-
-`cd node`进入到 node 文件夹，输入命令`mv /root/node-vxxx.tar.xz ./`将 root 下的 node 拷贝到 local 下的 node 目录下。
+输入命令`cd /usr/local`进入到 local 文件夹中。进入到 local 文件夹中后，输入命令`mkdir node`创建一个 node 文件夹。在node目录下输入命令`rz`将下载的 node 包放入`/usr/local/node`文件夹中。
 
 输入`tar -vxf node-vxxx.tar.xz`将 node 进行解压。
 
@@ -29,6 +23,8 @@ yum -y install lrzsz
 `cd node-vxxx.tar.xz cd bin`到 node-vxxx.tar.xz 下的 bin 目录中，接着输入命令`ln -s /usr/local/node/node-vxxx.tar.xz/bin/npm /usr/local/bin/npm`设置 node 环境变量。
 
 `cd node-vxxx.tar.xz cd bin`到 node-vxxx.tar.xz 下的 bin 目录中，接着输入命令`ln -s /usr/local/node/node-vxxx.tar.xz/bin/yarn /usr/local/bin/yarn`设置 node 环境变量。
+
+`cd node-vxxx.tar.xz cd bin`到 node-vxxx.tar.xz 下的 bin 目录中，接着输入命令`ln -s /usr/local/node/node-vxxx.tar.xz/bin/pm2 /usr/local/bin/pm2`设置 node 环境变量。
 
 ### node 项目部署
 
@@ -184,7 +180,7 @@ http {
 
 ### 部署前端项目
 
-进入 `/usr/local/nginx/html`，之后将打包好的前端资源包 dist.zip 使用 `rz` 命令上传到 html 文件夹中，接着使用 `unzip dist.zip` 将 dist.zip 解压即可。
+进入 `/usr/local/nginx/html/dist`，之后将打包好的前端资源包 dist.zip 使用 `rz` 命令上传到 html下的dist 文件夹中，接着使用 `unzip dist.zip` 将 dist.zip 解压即可。
 
 ### 部署后端项目
 
@@ -232,7 +228,7 @@ http {
       proxy_set_header  X-Real-IP $remote_addr;
       proxy_set_header  REMOTE-HOST $remote_addr;
       proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_pass  http://43.143.120.87:9112;  #或者也可以设置为: http://localhost:9112;
+      proxy_pass  http://localhost:9112;
     }
 
     #设置服务器图片资源的代理
@@ -259,16 +255,26 @@ http {
       try_files   $uri  $uri/ /index.html;  #解决 browserRouter 页面刷新后出现404
     }
 
-    #为前台项目代理服务接口
+    #为后台项目代理服务接口
     location /admin/ {
       proxy_set_header  Host  $http_host;
       proxy_set_header  X-Real-IP $remote_addr;
       proxy_set_header  REMOTE-HOST $remote_addr;
       proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_pass  http://43.143.120.87:9112;  #或者也可以设置为: http://localhost:9112;
+      proxy_pass  http://localhost:9112;
     }
   }
 }
+```
+
+### nginx 报错处理
+
+解决nginx: [error] open() ＂/usr/local/nginx/logs/nginx.pid＂ failed错误，具体操作如下：
+
+```js
+cd /usr/local/nginx
+
+/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
 ```
 
 ### 复制 upload 资源
