@@ -30,6 +30,7 @@ import * as Service from '@/service';
 import { PAGESIZE } from '@/constant';
 import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
+import Cover from './cover';
 import styles from './index.less';
 
 interface IProps {}
@@ -56,13 +57,20 @@ const Home: React.FC<IProps> = () => {
   const { htmlWidth } = useHtmlWidth();
   const { siderVisible } = useGetSiderVisible();
   // scrollRef：用户设置rightbar的吸顶效果，scrollbarRef：scrollbar 滚动到顶部，scrollTop：回到顶部
-  const { pageNo, setPageNo, onScroll, scrollRef, scrollbarRef, scrollTop } = useScrollLoad(
-    {
-      data: articleList,
-      loading,
-      pageSize: PAGESIZE,
-    }
-  );
+  const {
+    pageNo,
+    setPageNo,
+    onScroll,
+    scrollRef,
+    scrollbarRef,
+    scrollTop,
+    contentWrapRef,
+  } = useScrollLoad({
+    data: articleList,
+    loading,
+    pageSize: PAGESIZE,
+    paddingTopStyle: siderVisible && htmlWidth > 960 && styles.paddingTopStyle,
+  });
 
   useEffect(() => {
     storage.locRemoveItem('params');
@@ -232,9 +240,12 @@ const Home: React.FC<IProps> = () => {
             styles.contentWrap,
             siderVisible && htmlWidth > 960 && styles.changePaddingTop
           )}
+          wrapClassName={siderVisible && htmlWidth > 960 ? styles.wrapClassName : ''}
           onScroll={onScroll}
           scrollbarRef={scrollbarRef}
+          contentWrapRef={contentWrapRef}
         >
+          {siderVisible && htmlWidth > 960 && <Cover />}
           <div className={styles.content} id="CONTENT">
             <Card
               list={articleList.list}
@@ -244,6 +255,7 @@ const Home: React.FC<IProps> = () => {
               likeArticle={likeArticle}
               onEditArticle={onEditArticle}
               loading={loading}
+              noMoreStyle={siderVisible && htmlWidth > 960 ? styles.noMoreStyle : ''}
             />
             <RightBar
               className={styles.rightbar}

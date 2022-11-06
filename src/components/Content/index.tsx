@@ -12,6 +12,7 @@ interface IProps {
   wrapClassName?: string;
   onScroll?: Function;
   scrollbarRef?: any;
+  contentWrapRef?: any; // 用于滚动时动态给该元素添加paddingTop
   autoHeight?: boolean;
   autoHeightMax?: number | string;
 }
@@ -23,6 +24,7 @@ const Content: React.FC<IProps> = ({
   wrapClassName,
   onScroll,
   scrollbarRef,
+  contentWrapRef,
   autoHeight,
   autoHeightMax,
 }) => {
@@ -43,6 +45,7 @@ const Content: React.FC<IProps> = ({
           wrapClassName,
           siderVisible && htmlWidth > 960 && styles.hideWrapPadding
         )}
+        ref={contentWrapRef}
       >
         <div
           className={classname(

@@ -319,6 +319,7 @@ export const useScrollLoad = ({
   loading,
   pageSize,
   scrollStyle, // 如果需要吸顶，组件必须设置ref=scrollRef，且必须传入scrollStyle参数
+  paddingTopStyle,
 }: useScrollLoadParams<any>) => {
   const [pageNo, setPageNo] = useState<number>(1);
   const [suckTop, setSuckTop] = useState<boolean>(false);
@@ -326,9 +327,14 @@ export const useScrollLoad = ({
 
   const scrollRef = useRef<any>(null);
   const scrollbarRef = useRef<any>(null);
+  const contentWrapRef = useRef<any>(null);
 
-  const addClassName = (scrollTop: number, scrollRef: any) => {
-    if (scrollTop >= scrollRef?.current?.offsetTop) {
+  const addClassName = (scrollTop: number) => {
+    const currentTop = paddingTopStyle
+      ? document.body.clientHeight + 360
+      : scrollRef?.current?.offsetTop;
+    // 有首页有coverImage 时 document.body.clientHeight + 350 否则 scrollRef?.current?.offsetTop
+    if (scrollTop >= currentTop) {
       setSuckTop(true);
       scrollStyle && scrollRef?.current?.classList?.add(scrollStyle);
       scrollRef?.current?.setAttribute('id', '__SCROLL_TOP__');
@@ -337,13 +343,20 @@ export const useScrollLoad = ({
       scrollStyle && scrollRef?.current?.classList?.remove(scrollStyle);
       scrollRef?.current?.removeAttribute('id');
     }
+
+    // 动态计算首页Content组件中contentWrap元素的paddingTop
+    if (scrollTop >= document.body.clientHeight - 43) {
+      paddingTopStyle && contentWrapRef?.current?.classList?.add(paddingTopStyle);
+    } else {
+      paddingTopStyle && contentWrapRef?.current?.classList?.remove(paddingTopStyle);
+    }
   };
 
   // 滚动加载
   const onScroll = (event: ScrollEvent) => {
     const { scrollTop, scrollHeight, clientHeight } = event;
     // 元素吸顶控制器
-    addClassName(scrollTop, scrollRef);
+    addClassName(scrollTop);
     setScrollTop(scrollTop);
     if (
       !loading &&
@@ -355,7 +368,16 @@ export const useScrollLoad = ({
     }
   };
 
-  return { pageNo, setPageNo, onScroll, scrollRef, suckTop, scrollbarRef, scrollTop };
+  return {
+    pageNo,
+    setPageNo,
+    onScroll,
+    scrollRef,
+    suckTop,
+    scrollbarRef,
+    scrollTop,
+    contentWrapRef,
+  };
 };
 
 // 删除文章hooks
