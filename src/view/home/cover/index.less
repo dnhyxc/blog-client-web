@@ -1,5 +1,8 @@
 .Cover {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   height: calc(100vh - 50px);
   margin-bottom: 10px;
@@ -12,17 +15,79 @@
     height: 100%;
     top: 0;
     left: 0;
-    background-image: url('@/assets/images/about_me.jpg');
+    background-image: url('@/assets/images/sea.jpg');
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-size: cover;
-    filter: blur(2px);
+    z-index: -1;
+    // filter: blur(2px);
   }
 
   .content {
-    position: relative;
-    text-align: center;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: calc(100% - 10px);
+    background-color: rgba(0, 0, 0, 0.2);
+
+    .desc {
+      padding: 10px 10px 0;
+      text-align: center;
+      color: #fff;
+
+      .line {
+        font-size: 22px;
+        width: 15em;
+        white-space: nowrap;
+        overflow: hidden;
+        animation: typing 5s steps(15), caret 0.5s steps(1) 9;
+        border-right: 2px solid transparent;
+      }
+    }
+  }
+
+  .downWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.2);
+
+    .shaking {
+      animation: shaking 1s infinite;
+      cursor: pointer;
+      padding: 0 50px;
+
+      .downIcon {
+        font-size: 25px;
+        color: #fff;
+      }
+    }
+  }
+}
+
+@keyframes shaking {
+  0% {
+    transform: translateY(-5px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+  100% {
+    transform: translateY(-5px);
+  }
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes caret {
+  50% {
+    border-right-color: #000;
   }
 }

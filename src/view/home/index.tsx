@@ -245,7 +245,7 @@ const Home: React.FC<IProps> = () => {
           scrollbarRef={scrollbarRef}
           contentWrapRef={contentWrapRef}
         >
-          {siderVisible && htmlWidth > 960 && <Cover />}
+          {siderVisible && htmlWidth > 960 && <Cover scrollbarRef={scrollbarRef} />}
           <div className={styles.content} id="CONTENT">
             <Card
               list={articleList.list}
