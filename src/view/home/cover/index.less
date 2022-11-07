@@ -44,7 +44,20 @@
 
       .authorName {
         margin-bottom: 50px;
-        font-size: 4rem;
+        font-size: 5rem;
+        font-family: '黑体';
+        font-weight: 600;
+        background: -webkit-linear-gradient(
+          45deg,
+          #3da8fa,
+          #ffffff,
+          #19acfb,
+          #ffffff,
+          #40b3ff
+        );
+        color: transparent;
+        background-clip: text;
+        animation: ran 20s linear infinite;
       }
 
       .line {
@@ -123,5 +136,15 @@
     letter-spacing: 0.5rem;
     filter: blur(0rem);
     color: #fff;
+  }
+}
+
+@keyframes ran {
+  from {
+    backgroud-position: 0 0;
+  }
+
+  to {
+    background-position: 2109px 0;
   }
 }
