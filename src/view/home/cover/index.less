@@ -33,17 +33,34 @@
     background-color: rgba(0, 0, 0, 0.2);
 
     .desc {
-      padding: 10px 10px 0;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       color: #fff;
+      width: 100%;
+      height: 200px;
+
+      .authorName {
+        margin-bottom: 50px;
+        font-size: 4rem;
+      }
 
       .line {
-        font-size: 22px;
-        width: 15em;
-        white-space: nowrap;
-        overflow: hidden;
-        animation: typing 5s steps(15), caret 0.5s steps(1) 9;
-        border-right: 2px solid transparent;
+        width: 100%;
+        font-family: Righteous;
+        color: white;
+        font-size: 2.5rem;
+        text-transform: uppercase;
+        line-height: 1;
+        animation: letterspacing 3s infinite alternate ease-in-out;
+        display: block;
+        position: absolute;
+        left: 50%;
+        top: 52%;
+        transform: translate3d(-50%, 0, 0);
+        letter-spacing: -0.7rem;
       }
     }
   }
@@ -88,6 +105,23 @@
 
 @keyframes caret {
   50% {
-    border-right-color: #000;
+    border-right-color: #fff;
+  }
+}
+
+@keyframes letterspacing {
+  0% {
+    letter-spacing: -1.5rem;
+    filter: blur(0.3rem);
+  }
+
+  50% {
+    filter: blur(0.5rem);
+  }
+
+  100% {
+    letter-spacing: 0.5rem;
+    filter: blur(0rem);
+    color: #fff;
   }
 }

@@ -182,6 +182,8 @@ const Home: React.FC<IProps> = () => {
 
   // 搜索
   const onSearch = (value: string) => {
+    // 搜索时跳至文章列表
+    scrollbarRef?.current.scrollTop(document.body.clientHeight - 49);
     setKeyword(value);
     if (keyword !== value) {
       setPageNo(1);

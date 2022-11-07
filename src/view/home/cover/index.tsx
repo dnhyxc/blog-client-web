@@ -15,8 +15,8 @@ const Cover: React.FC<IProps> = ({ scrollbarRef }) => {
     <div className={styles.Cover}>
       <div className={styles.content}>
         <div className={styles.desc}>
-          <p>DNHYXC</p>
-          <p className={styles.line}>行到水穷处，坐看云起时！</p>
+          <div className={styles.authorName}>dnhyxc</div>
+          <div className={styles.line}>行到水穷处，坐看云起时！</div>
         </div>
       </div>
       <div className={styles.downWrap}>
