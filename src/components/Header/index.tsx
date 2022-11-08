@@ -7,6 +7,7 @@
  */
 import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import classname from 'classname';
 import { LeftOutlined } from '@ant-design/icons';
 import { useHtmlWidth, useGetSiderVisible } from '@/hooks';
 import MIcons from '../Icons';
@@ -20,6 +21,7 @@ interface IProps {
   right?: ReactNode;
   needLeft?: boolean;
   excludesWidth?: boolean;
+  className?: string
 }
 
 const Header: React.FC<IProps> = ({
@@ -28,6 +30,7 @@ const Header: React.FC<IProps> = ({
   right,
   needLeft = true,
   excludesWidth = false,
+  className,
 }) => {
   const { siderVisible } = useGetSiderVisible();
 
@@ -43,7 +46,7 @@ const Header: React.FC<IProps> = ({
   };
 
   return (
-    <div className={styles.herderWrap}>
+    <div className={classname(className, styles.herderWrap)}>
       <div className={styles.left}>
         {needLeft &&
           (left || (

@@ -33,7 +33,7 @@ import { ArticleListResult, ArticleItem } from '@/typings/common';
 import Cover from './cover';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -235,7 +235,7 @@ const Home: React.FC<IProps> = () => {
   return (
     <div className={styles.container}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header right={rightNode()}>文章列表</Header>
+      <Header right={rightNode()} className={styles.header}>文章列表</Header>
       {articleList && (
         <Content
           className={classname(
