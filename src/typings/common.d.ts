@@ -248,6 +248,7 @@ export interface useScrollLoadParams<T> {
   pageSize?: number;
   scrollStyle?: string;
   paddingTopStyle?: string;
+  headerStyle?: string;
 }
 
 export interface useDeleteArticleParams {

@@ -33,7 +33,7 @@ import { ArticleListResult, ArticleItem } from '@/typings/common';
 import Cover from './cover';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -65,11 +65,13 @@ const Home: React.FC<IProps> = () => {
     scrollbarRef,
     scrollTop,
     contentWrapRef,
+    headerRef,
   } = useScrollLoad({
     data: articleList,
     loading,
     pageSize: PAGESIZE,
     paddingTopStyle: siderVisible && htmlWidth > 960 && styles.paddingTopStyle,
+    headerStyle: siderVisible && htmlWidth > 960 && styles.headerStyle,
   });
 
   useEffect(() => {
@@ -235,7 +237,9 @@ const Home: React.FC<IProps> = () => {
   return (
     <div className={styles.container}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header right={rightNode()} className={styles.header}>文章列表</Header>
+      <Header right={rightNode()} className={styles.header} headerRef={headerRef}>
+        文章列表
+      </Header>
       {articleList && (
         <Content
           className={classname(

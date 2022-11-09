@@ -4,6 +4,7 @@
   position: relative;
   .header {
     background-image: linear-gradient(45deg, #2c628b, #7aa0a2, #2c628b, #7aa0a2);
+    box-shadow: 0 0 3px #73a3c2 inset; // #c9c9c9
   }
 
   .contentWrap {
@@ -64,6 +65,11 @@
     padding-top: 9px;
     transition: all 0.2s ease-in-out;
   }
+
+  .headerStyle {
+    background-image: linear-gradient(45deg, #fff, #fff, #fff, #fff);
+    box-shadow: 0 5px 5px -5px #ddd;
+  }
 }
 
 @media screen and (max-width: 960px) {
@@ -82,6 +88,10 @@
   .toSearch {
     padding: 0;
     margin-left: 15px;
+
+    &:hover {
+      color: @head-menu-active;
+    }
   }
 }
 

@@ -320,6 +320,7 @@ export const useScrollLoad = ({
   pageSize,
   scrollStyle, // 如果需要吸顶，组件必须设置ref=scrollRef，且必须传入scrollStyle参数
   paddingTopStyle,
+  headerStyle, // header 特定样式
 }: useScrollLoadParams<any>) => {
   const [pageNo, setPageNo] = useState<number>(1);
   const [suckTop, setSuckTop] = useState<boolean>(false);
@@ -328,6 +329,7 @@ export const useScrollLoad = ({
   const scrollRef = useRef<any>(null);
   const scrollbarRef = useRef<any>(null);
   const contentWrapRef = useRef<any>(null);
+  const headerRef = useRef<any>(null);
 
   const addClassName = (scrollTop: number) => {
     const currentTop = paddingTopStyle
@@ -347,8 +349,10 @@ export const useScrollLoad = ({
     // 动态计算首页Content组件中contentWrap元素的paddingTop
     if (scrollTop >= document.body.clientHeight - 43) {
       paddingTopStyle && contentWrapRef?.current?.classList?.add(paddingTopStyle);
+      headerStyle && headerRef?.current?.classList?.add(headerStyle);
     } else {
       paddingTopStyle && contentWrapRef?.current?.classList?.remove(paddingTopStyle);
+      headerStyle && headerRef?.current?.classList?.remove(headerStyle);
     }
   };
 
@@ -377,6 +381,7 @@ export const useScrollLoad = ({
     scrollbarRef,
     scrollTop,
     contentWrapRef,
+    headerRef,
   };
 };
 

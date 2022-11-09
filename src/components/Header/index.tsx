@@ -21,7 +21,8 @@ interface IProps {
   right?: ReactNode;
   needLeft?: boolean;
   excludesWidth?: boolean;
-  className?: string
+  className?: string;
+  headerRef?: any;
 }
 
 const Header: React.FC<IProps> = ({
@@ -31,6 +32,7 @@ const Header: React.FC<IProps> = ({
   needLeft = true,
   excludesWidth = false,
   className,
+  headerRef,
 }) => {
   const { siderVisible } = useGetSiderVisible();
 
@@ -46,7 +48,7 @@ const Header: React.FC<IProps> = ({
   };
 
   return (
-    <div className={classname(className, styles.herderWrap)}>
+    <div className={classname(className, styles.herderWrap)} ref={headerRef}>
       <div className={styles.left}>
         {needLeft &&
           (left || (
