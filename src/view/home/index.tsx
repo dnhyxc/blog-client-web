@@ -237,7 +237,7 @@ const Home: React.FC<IProps> = () => {
   return (
     <div className={styles.container}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header right={rightNode()} className={htmlWidth > 960 && styles.header} headerRef={headerRef}>
+      <Header right={rightNode()} className={htmlWidth > 960 && siderVisible && styles.header} headerRef={headerRef}>
         文章列表
       </Header>
       {articleList && (
