@@ -48,7 +48,7 @@ const Tag: React.FC = () => {
   return (
     <div className={styles.Tag}>
       <Header right={rightNode()}>文章标签</Header>
-      <Content>
+      <Content className={styles.tagContentWrap}>
         <div className={styles.wrap}>
           {tagList.length > 0 && bodyWidth > 960 ? (
             <WordCloud data={tagList} callback={toTagList} key={Math.random()} />

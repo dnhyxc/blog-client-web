@@ -8,7 +8,7 @@ interface IProps {
 
 const Cover: React.FC<IProps> = ({ scrollbarRef }) => {
   const toArticleList = () => {
-    scrollbarRef?.current.scrollTop(document.body.clientHeight - 49);
+    scrollbarRef?.current.scrollTop(document.body.clientHeight - 40);
   };
 
   return (
