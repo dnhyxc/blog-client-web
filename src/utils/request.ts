@@ -1,7 +1,7 @@
 import commonStore, { Auth } from '@/store/common';
 import fetch from 'isomorphic-fetch';
 import { stringify } from 'query-string';
-import { show } from '@/components/Render';
+import { show, close } from '@/components/Render';
 import { addGatewayPattern } from './urlTool';
 import { error } from './message';
 
@@ -70,9 +70,17 @@ function parseJSON(response: Response) {
 }
 
 function onRedirect() {
+  let timer = null;
   const { pathname } = window.location;
   if (pathname !== '/login') {
     show();
+    if (timer) {
+      clearInterval();
+    } else {
+      timer = setTimeout(() => {
+        close();
+      }, 5000);
+    }
   }
 }
 

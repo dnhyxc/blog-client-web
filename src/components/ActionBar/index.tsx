@@ -6,7 +6,7 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { EventBus } from '@/event';
-import { error } from '@/utils';
+import { error, info } from '@/utils';
 import CreateCollectModel from '@/components/CreateCollectModel';
 import CollectionDrawer from '@/components/CollectionDrawer';
 import TocDrawer from '@/components/TocDrawer';
@@ -101,6 +101,10 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
 
   // 收藏
   const onCollection = () => {
+    if (!getUserInfo?.userId) {
+      info('请先登录后再收藏！');
+      return;
+    }
     setVisible(true);
   };
 
