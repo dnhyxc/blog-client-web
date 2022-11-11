@@ -4,7 +4,7 @@ import classname from 'classname';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
-import { shareQQ, shareSinaWeiBo, error } from '@/utils';
+import { shareQQ, shareSinaWeiBo, error, info } from '@/utils';
 import Qrcode from '@/components/Qrcode';
 import { EventBus } from '@/event';
 import MIcons from '@/components/Icons';
@@ -57,7 +57,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
       await Service.likeArticle({ id, userId: getUserInfo?.userId })
     );
     if (!res.success) {
-      error(res.message);
+      res.code !== 401 && error(res.message);
       return;
     }
     setIsLike(res.data.isLike);
@@ -70,6 +70,10 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
 
   // 收藏
   const onCollection = () => {
+    if (!getUserInfo?.userId) {
+      info('请登录后再试');
+      return;
+    }
     setVisible(true);
   };
 
@@ -104,6 +108,10 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
 
   // 取消收藏
   const cancelCollected = async () => {
+    if (!getUserInfo?.userId) {
+      info('请登录后再试');
+      return;
+    }
     const res = normalizeResult<number>(
       await Service.cancelCollected({
         articleId: id,
