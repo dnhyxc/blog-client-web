@@ -539,7 +539,14 @@ export const useDeleteTimelineArticle = ({
 };
 
 // 校验token是否过期的hook
-export const useVerifyToken = () => {
+export const useVerifyToken = (needRes: boolean) => {
+  const [loginStatus, setLoginStatus] = useState<{
+    success?: boolean;
+    message?: string;
+    code?: number | string;
+    data?: any;
+  }>({});
+
   const { commonStore } = useStore();
 
   const navigate = useNavigate();
@@ -559,11 +566,20 @@ export const useVerifyToken = () => {
 
   const verifyToken = async () => {
     const res = normalizeResult<number>(await Service.verify());
-    if (!res.success) {
+    if (!res.success && !needRes) {
       commonStore.setAuth({ redirectUrl: `${pathname}${search}` });
       navigate(`/login?verify=${pathname.slice(1)}`);
     }
+
+    setLoginStatus({
+      success: res.success,
+      message: res.message,
+      code: res.code,
+      data: res.data,
+    });
   };
+
+  return { loginStatus };
 };
 
 // 获取用户信息hook

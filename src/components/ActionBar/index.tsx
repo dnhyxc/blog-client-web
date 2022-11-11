@@ -6,6 +6,7 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { EventBus } from '@/event';
+import { useVerifyToken } from '@/hooks';
 import { error, info } from '@/utils';
 import CreateCollectModel from '@/components/CreateCollectModel';
 import CollectionDrawer from '@/components/CollectionDrawer';
@@ -33,6 +34,8 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
     userInfoStore: { getUserInfo },
   } = useStore();
 
+  const { loginStatus } = useVerifyToken(true);
+
   useEffect(() => {
     EventBus.onSetCommentCount.listen(() => {
       const count = EventBus.commentCount;
@@ -49,7 +52,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
     if (!visible) {
       getCollectionStatus();
     }
-  }, [visible, id]);
+  }, [visible, id, loginStatus]);
 
   // 切换menu
   const onToggleActionBar = () => {
@@ -71,6 +74,10 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
   // 文章点赞
   const onLikeArticle = async () => {
     if (!id) return;
+    if (!getUserInfo?.userId || !loginStatus.success) {
+      info('请登录后再试');
+      return;
+    }
     const res = normalizeResult<{ id: string; isLike: boolean }>(
       await Service.likeArticle({ id, userId: getUserInfo?.userId })
     );
@@ -88,6 +95,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
 
   // 获取收藏状态
   const getCollectionStatus = async () => {
+    if (!getUserInfo?.userId || !loginStatus.success) return;
     const res = normalizeResult<{ collected: boolean }>(
       await Service.checkCollectionStatus({
         articleId: id,
@@ -101,8 +109,8 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
 
   // 收藏
   const onCollection = () => {
-    if (!getUserInfo?.userId) {
-      info('请先登录后再收藏！');
+    if (!getUserInfo?.userId || !loginStatus.success) {
+      info('请登录后再试');
       return;
     }
     setVisible(true);

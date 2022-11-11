@@ -6,6 +6,7 @@ import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { shareQQ, shareSinaWeiBo, error, info } from '@/utils';
 import Qrcode from '@/components/Qrcode';
+import { useVerifyToken } from '@/hooks';
 import { EventBus } from '@/event';
 import MIcons from '@/components/Icons';
 import CollectionModal from '@/components/CollectionModel';
@@ -28,6 +29,8 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
   const [createCollectId, setCreateCollectId] = useState<string>('');
   const [commentCount, setCommentCount] = useState<number>(0);
 
+  const { loginStatus } = useVerifyToken(true);
+
   useEffect(() => {
     EventBus.onSetCommentCount.listen(() => {
       const count = EventBus.commentCount;
@@ -48,11 +51,15 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
     if (!visible) {
       getCollectionStatus();
     }
-  }, [visible, id]);
+  }, [visible, id, loginStatus]);
 
   // 文章点赞
   const onLikeArticle = async () => {
     if (!id) return;
+    if (!getUserInfo?.userId || !loginStatus.success) {
+      info('请登录后再试');
+      return;
+    }
     const res = normalizeResult<{ id: string; isLike: boolean }>(
       await Service.likeArticle({ id, userId: getUserInfo?.userId })
     );
@@ -70,7 +77,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
 
   // 收藏
   const onCollection = () => {
-    if (!getUserInfo?.userId) {
+    if (!getUserInfo?.userId || !loginStatus.success) {
       info('请登录后再试');
       return;
     }
@@ -95,6 +102,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
 
   // 获取收藏状态
   const getCollectionStatus = async () => {
+    if (!getUserInfo?.userId || !loginStatus.success) return;
     const res = normalizeResult<{ collected: boolean }>(
       await Service.checkCollectionStatus({
         articleId: id,
@@ -108,7 +116,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
 
   // 取消收藏
   const cancelCollected = async () => {
-    if (!getUserInfo?.userId) {
+    if (!getUserInfo?.userId || !loginStatus.success) {
       info('请登录后再试');
       return;
     }
