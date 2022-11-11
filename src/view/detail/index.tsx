@@ -111,7 +111,9 @@ const ArticleDetail: React.FC = () => {
         {detail && (
           <div className={styles.content}>
             <div className={styles.preview}>
-              <Multibar id={id as string} detail={detail} commentRef={commentRef} />
+              {htmlWidth > 960 && (
+                <Multibar id={id as string} detail={detail} commentRef={commentRef} />
+              )}
               <Preview
                 className={styles.previewContent}
                 mackdown={detail.content}
@@ -139,12 +141,14 @@ const ArticleDetail: React.FC = () => {
                 <Comments authorId={detail.authorId} />
               </div>
             </div>
-            <div className={styles.rightBar}>
-              <RightBar />
-              <Affix offsetTop={50}>
-                <Toc mackdown={detail.content} />
-              </Affix>
-            </div>
+            {htmlWidth > 960 && (
+              <div className={styles.rightBar}>
+                <RightBar />
+                <Affix offsetTop={50}>
+                  <Toc mackdown={detail.content} />
+                </Affix>
+              </div>
+            )}
           </div>
         )}
         {htmlWidth <= 960 && detail && (
