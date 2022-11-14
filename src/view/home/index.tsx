@@ -237,7 +237,7 @@ const Home: React.FC<IProps> = () => {
   return (
     <div className={styles.container}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      {htmlWidth <= 960 && (
+      {(htmlWidth <= 960 || !siderVisible) && (
         <Header
           right={rightNode()}
           className={htmlWidth > 960 && siderVisible && styles.header}
