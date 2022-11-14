@@ -33,7 +33,7 @@ import { ArticleListResult, ArticleItem } from '@/typings/common';
 import Cover from './cover';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -185,7 +185,7 @@ const Home: React.FC<IProps> = () => {
   // 搜索
   const onSearch = (value: string) => {
     // 搜索时跳至文章列表
-    scrollbarRef?.current.scrollTop(document.body.clientHeight - 40);
+    scrollbarRef?.current.scrollTop(document.body.clientHeight - 49);
     setKeyword(value);
     if (keyword !== value) {
       setPageNo(1);
@@ -237,9 +237,15 @@ const Home: React.FC<IProps> = () => {
   return (
     <div className={styles.container}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header right={rightNode()} className={htmlWidth > 960 && siderVisible && styles.header} headerRef={headerRef}>
-        文章列表
-      </Header>
+      {htmlWidth <= 960 && (
+        <Header
+          right={rightNode()}
+          className={htmlWidth > 960 && siderVisible && styles.header}
+          headerRef={headerRef}
+        >
+          文章列表
+        </Header>
+      )}
       {articleList && (
         <Content
           className={classname(
@@ -247,11 +253,26 @@ const Home: React.FC<IProps> = () => {
             siderVisible && htmlWidth > 960 && styles.changePaddingTop
           )}
           wrapClassName={siderVisible && htmlWidth > 960 ? styles.wrapClassName : ''}
+          containerClassName={
+            siderVisible && htmlWidth > 960 ? styles.containerClassName : ''
+          }
           onScroll={onScroll}
           scrollbarRef={scrollbarRef}
           contentWrapRef={contentWrapRef}
         >
-          {siderVisible && htmlWidth > 960 && <Cover scrollbarRef={scrollbarRef} />}
+          {siderVisible && htmlWidth > 960 && (
+            <Cover scrollbarRef={scrollbarRef}>
+              {htmlWidth > 960 && (
+                <Header
+                  right={rightNode()}
+                  className={htmlWidth > 960 && siderVisible && styles.header}
+                  headerRef={headerRef}
+                >
+                  文章列表
+                </Header>
+              )}
+            </Cover>
+          )}
           <div className={styles.content} id="CONTENT">
             <Card
               list={articleList.list}

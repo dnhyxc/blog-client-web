@@ -333,7 +333,7 @@ export const useScrollLoad = ({
 
   const addClassName = (scrollTop: number) => {
     const currentTop = paddingTopStyle
-      ? document.body.clientHeight + 360
+      ? document.body.clientHeight + 350
       : scrollRef?.current?.offsetTop;
     // 有首页有coverImage 时 document.body.clientHeight + 350 否则 scrollRef?.current?.offsetTop
     if (scrollTop >= currentTop) {
@@ -347,11 +347,11 @@ export const useScrollLoad = ({
     }
 
     // 动态计算首页Content组件中contentWrap元素的paddingTop
-    if (scrollTop >= document.body.clientHeight - 43) {
-      paddingTopStyle && contentWrapRef?.current?.classList?.add(paddingTopStyle);
+    if (scrollTop >= document.body.clientHeight - 50) {
+      // paddingTopStyle && contentWrapRef?.current?.classList?.add(paddingTopStyle);
       headerStyle && headerRef?.current?.classList?.add(headerStyle);
     } else {
-      paddingTopStyle && contentWrapRef?.current?.classList?.remove(paddingTopStyle);
+      // paddingTopStyle && contentWrapRef?.current?.classList?.remove(paddingTopStyle);
       headerStyle && headerRef?.current?.classList?.remove(headerStyle);
     }
   };

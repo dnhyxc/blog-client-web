@@ -1,18 +1,20 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import MIcons from '@/components/Icons';
 import styles from './index.less';
 
 interface IProps {
   scrollbarRef: any;
+  children?: ReactNode;
 }
 
-const Cover: React.FC<IProps> = ({ scrollbarRef }) => {
+const Cover: React.FC<IProps> = ({ scrollbarRef, children }) => {
   const toArticleList = () => {
-    scrollbarRef?.current.scrollTop(document.body.clientHeight - 40);
+    scrollbarRef?.current.scrollTop(document.body.clientHeight - 49);
   };
 
   return (
     <div className={styles.Cover}>
+      {children}
       <div className={styles.content}>
         <div className={styles.desc}>
           <div className={styles.authorName}>dnhyxc</div>
