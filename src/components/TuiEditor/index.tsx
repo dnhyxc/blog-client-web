@@ -80,7 +80,7 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown, siderVisible
       button.className = 'toastui-editor-toolbar-icons last';
       button.style.backgroundImage = 'none';
       button.style.margin = '0';
-      button.innerHTML = '<i>BB</i>';
+      button.innerHTML = '<b style="font-size: 18px; color: #868686;">JS</b>';
       button.addEventListener('click', () => {
         // console.log(editor, '========');
         // const wwSelection = editor.getSelection();

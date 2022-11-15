@@ -539,7 +539,7 @@ export const useDeleteTimelineArticle = ({
 };
 
 // 校验token是否过期的hook
-export const useVerifyToken = (needRes: boolean) => {
+export const useVerifyToken = (needRes?: boolean) => {
   const [loginStatus, setLoginStatus] = useState<{
     success?: boolean;
     message?: string;
