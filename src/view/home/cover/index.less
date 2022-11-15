@@ -1,13 +1,15 @@
+@import '~@styles/common.less';
+
 .Cover {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
-  // height: calc(100vh - 50px);
   height: 100vh;
   margin-bottom: 10px;
   z-index: 99;
+  .clickNoSelectText();
 
   &::before {
     content: '';
@@ -59,6 +61,7 @@
         color: transparent;
         background-clip: text;
         animation: ran 20s linear infinite;
+        cursor: pointer;
       }
 
       .line {
