@@ -2,11 +2,13 @@
 
 .container {
   position: relative;
+
   .header {
-    // background-image: linear-gradient(45deg, #2c628b, #7aa0a2, #2c628b, #7aa0a2);
-    // box-shadow: 0 0 3px #73a3c2 inset; // #c9c9c9
+    position: fixed;
+    top: 0;
+    left: 0;
     box-shadow: none;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: transparent;
   }
 
   .contentWrap {
@@ -73,9 +75,6 @@
   }
 
   .headerStyle {
-    position: fixed;
-    top: 0;
-    left: 0;
     background-image: linear-gradient(45deg, #fff, #fff, #fff, #fff);
     box-shadow: 0 5px 5px -5px #ddd;
     z-index: 99;
