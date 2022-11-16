@@ -11,10 +11,11 @@ import styles from './index.less';
 
 interface IProps {
   className?: string;
+  itemStyles?: string; // header item 的样式
   children?: ReactNode;
 }
 
-const HeadMenu: React.FC<IProps> = ({ className, children }) => {
+const HeadMenu: React.FC<IProps> = ({ className, itemStyles, children }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { htmlWidth } = useHtmlWidth();
@@ -82,7 +83,11 @@ const HeadMenu: React.FC<IProps> = ({ className, children }) => {
           return (
             <Fragment key={i.name}>
               <span
-                className={classname(styles.item, i.path === pathname && styles.active)}
+                className={classname(
+                  itemStyles,
+                  styles.item,
+                  i.path === pathname && styles.active
+                )}
                 onClick={(e) => toOtherPage(e, i.path)}
               >
                 {i.name}

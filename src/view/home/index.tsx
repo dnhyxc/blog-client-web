@@ -220,7 +220,10 @@ const Home: React.FC<IProps> = () => {
         {!showSearch && (
           <MIcons
             name="icon-sousuo2"
-            className={styles.iconWrap}
+            className={classname(
+              htmlWidth > 960 && siderVisible && styles.searchIcon,
+              styles.iconWrap
+            )}
             onClick={htmlWidth > 960 ? onShowSearch : toSearch}
           />
         )}
@@ -267,8 +270,10 @@ const Home: React.FC<IProps> = () => {
                   right={rightNode()}
                   className={htmlWidth > 960 && siderVisible && styles.header}
                   headerRef={headerRef}
+                  itemStyles={htmlWidth > 960 && siderVisible && styles.itemStyles} // header item 的样式
+                  iconStyles={htmlWidth > 960 && siderVisible && styles.iconStyles} // header item 的样式
                 >
-                  文章列表
+                  <div className={styles.headTitle}>文章列表</div>
                 </Header>
               )}
             </Cover>

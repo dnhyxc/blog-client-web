@@ -1,5 +1,12 @@
 @import '~@styles/common.less';
 
+.textRun {
+  background: -webkit-linear-gradient(60deg, #3da8fa, #ffffff, #19acfb, #ffffff, #40b3ff);
+  color: transparent !important;
+  background-clip: text;
+  animation: run 68s linear infinite;
+}
+
 .container {
   position: relative;
 
@@ -9,6 +16,32 @@
     left: 0;
     box-shadow: none;
     background-color: transparent;
+    z-index: 99;
+    color: #f1f1f1;
+
+    .headTitle {
+      .textRun;
+    }
+
+    .itemStyles {
+      color: #f1f1f1;
+
+      &:hover {
+        border-bottom: 3px solid @head-menu-active;
+        color: @head-menu-active;
+      }
+    }
+
+    .iconStyles {
+      .textRun;
+    }
+
+    .searchWrap {
+      .toSearch {
+        color: #fff;
+        transition: none;
+      }
+    }
   }
 
   .contentWrap {
@@ -74,10 +107,76 @@
     transition: all 0.2s ease-in-out;
   }
 
+  .searchWrap {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .toSearch {
+      padding: 0;
+      margin-left: 15px;
+
+      &:hover {
+        color: @head-menu-active;
+      }
+    }
+  }
+
+  .iconWrap {
+    cursor: pointer;
+  }
+
+  .searchIcon {
+    color: #f1f1f1;
+
+    &:hover {
+      color: @head-menu-active;
+    }
+  }
+
   .headerStyle {
     background-image: linear-gradient(45deg, #fff, #fff, #fff, #fff);
     box-shadow: 0 5px 5px -5px #ddd;
     z-index: 99;
+    color: initial;
+
+    .headTitle {
+      background: none;
+      color: initial !important;
+    }
+
+    .itemStyles {
+      color: initial;
+
+      &:hover {
+        border-bottom: 3px solid @menu-active;
+        color: @menu-active;
+      }
+    }
+
+    .iconStyles {
+      background: none;
+      color: @menu-active !important;
+    }
+
+    .searchIcon {
+      color: initial;
+
+      &:hover {
+        color: @menu-active;
+      }
+    }
+
+    .searchWrap {
+      .toSearch {
+        color: initial;
+        transition: none;
+
+        &:hover {
+          color: @menu-active;
+        }
+      }
+    }
   }
 }
 
@@ -89,21 +188,12 @@
   }
 }
 
-.searchWrap {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-
-  .toSearch {
-    padding: 0;
-    margin-left: 15px;
-
-    &:hover {
-      color: @head-menu-active;
-    }
+@keyframes run {
+  from {
+    backgroud-position: 0 0;
   }
-}
 
-.iconWrap {
-  cursor: pointer;
+  to {
+    background-position: 2109px 0;
+  }
 }

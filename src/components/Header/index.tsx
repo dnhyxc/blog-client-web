@@ -22,6 +22,8 @@ interface IProps {
   needLeft?: boolean;
   excludesWidth?: boolean;
   className?: string;
+  itemStyles?: string; // header item 的样式
+  iconStyles?: string; // 左侧 icon 的样式
   headerRef?: any;
 }
 
@@ -33,6 +35,8 @@ const Header: React.FC<IProps> = ({
   excludesWidth = false,
   className,
   headerRef,
+  itemStyles,
+  iconStyles,
 }) => {
   const { siderVisible } = useGetSiderVisible();
 
@@ -54,11 +58,17 @@ const Header: React.FC<IProps> = ({
           (left || (
             <div className={styles.back} onClick={goBack}>
               <LeftOutlined />
-              <MIcons name="icon-haidao_" className={styles.iconWrap} onClick={goHome} />
+              <MIcons
+                name="icon-haidao_"
+                className={classname(styles.iconWrap, iconStyles)}
+                onClick={goHome}
+              />
             </div>
           ))}
         <div className={styles.child}>{children}</div>
-        {(excludesWidth || siderVisible) && htmlWidth > 960 && <HeadMenu />}
+        {(excludesWidth || siderVisible) && htmlWidth > 960 && (
+          <HeadMenu itemStyles={itemStyles} />
+        )}
       </div>
       <div className={styles.right}>
         {right && <span>{right}</span>}
