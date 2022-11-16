@@ -123,13 +123,13 @@ module.exports = {
   // 缓存配置
   optimization: {
     splitChunks: {
-      cacheGroups: {
-        vendor: {
-          test: /node_modules/,
-          name: 'vendor',
-          chunks: 'all',
-        },
-      },
+      // cacheGroups: {
+      //   vendor: {
+      //     test: /node_modules/,
+      //     name: 'vendor',
+      //     chunks: 'all',
+      //   },
+      // },
     },
   },
   // 解决警告：You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
