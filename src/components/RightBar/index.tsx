@@ -11,17 +11,19 @@ interface IProps {
   scrollRef?: any;
 }
 
-const RightBar: React.FC<IProps> = ({ className, showRecommendArticle, scrollRef }) => {
+const RightBar: React.FC<IProps> = ({
+  className,
+  showRecommendArticle,
+  scrollRef,
+}) => {
   const { htmlWidth } = useHtmlWidth();
 
-  return (
-    htmlWidth > 960 ? (
-      <div className={classname(styles.container, className)}>
-        <Introduction showRecommendArticle={showRecommendArticle} />
-        {showRecommendArticle && <RecommendArticle scrollRef={scrollRef} />}
-      </div>
-    ) : null
-  );
+  return htmlWidth > 960 ? (
+    <div className={classname(styles.container, className)}>
+      <Introduction showRecommendArticle={showRecommendArticle} />
+      {showRecommendArticle && <RecommendArticle scrollRef={scrollRef} />}
+    </div>
+  ) : null;
 };
 
 export default RightBar;

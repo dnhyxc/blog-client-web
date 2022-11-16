@@ -100,6 +100,10 @@ const Login = () => {
     }
   };
 
+  const onBackHome = () => {
+    navigate('/home');
+  };
+
   const onForget = () => {
     setVisible(true);
   };
@@ -212,6 +216,9 @@ const Login = () => {
               </Form.Item>
             </Form>
             <div className={styles.forget}>
+              <Button type="link" className={styles.backBtn} onClick={onBackHome}>
+                返回首页
+              </Button>
               <Button type="link" className={styles.forgetBtn} onClick={onForget}>
                 忘记密码
               </Button>
