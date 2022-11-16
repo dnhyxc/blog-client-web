@@ -303,26 +303,24 @@ const Collection: React.FC<IProps> = () => {
                   <MIcons name="icon-lock-full" className={styles.lockIcon} />
                 )}
               </span>
-              {userInfo?.userId === getUserInfo?.userId && (
-                <div className={styles.actions}>
-                  <span className={styles.edit}>
-                    <MIcons
-                      name="icon-icon_bianji"
-                      // text="编辑"
-                      className={styles.icon}
-                      onClick={onHeadEditCollection}
-                    />
-                  </span>
-                  <span className={styles.delete}>
-                    <MIcons
-                      name="icon-shanchu"
-                      className={styles.icon}
-                      // text="删除"
-                      onClick={onDeleteCollect}
-                    />
-                  </span>
-                </div>
-              )}
+              <div className={styles.actions}>
+                <span className={styles.edit}>
+                  <MIcons
+                    name="icon-icon_bianji"
+                    text={htmlWidth > 960 ? '编辑' : ''}
+                    className={styles.icon}
+                    onClick={onHeadEditCollection}
+                  />
+                </span>
+                <span className={styles.delete}>
+                  <MIcons
+                    name="icon-shanchu"
+                    className={styles.icon}
+                    text={htmlWidth > 960 ? '删除' : ''}
+                    onClick={onDeleteCollect}
+                  />
+                </span>
+              </div>
             </div>
             <div className={styles.desc}>
               {updateCollectInfo?.desc || collectInfo?.desc}
