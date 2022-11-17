@@ -18,13 +18,15 @@
     height: 100%;
     top: 0;
     left: 0;
-    background-image: url('@/assets/images/sea.jpg');
+    // background-image: url('@/assets/images/sea.jpg');
     background-position: center;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-size: cover;
+    animation-name: imageAnimation;
+    animation-duration: 20s;
+    animation-iteration-count: infinite;
     z-index: -1;
-    // filter: blur(2px);
   }
 
   .content {
@@ -223,5 +225,19 @@
 
   to {
     background-position: 2109px 0;
+  }
+}
+
+@keyframes imageAnimation {
+  0% {
+    background-image: url('@/assets/images/sea.jpg');
+  }
+
+  50% {
+    background-image: url('@/assets/images/ssm.jpg');
+  }
+
+  100% {
+    background-image: url('@/assets/images/sea.jpg');
   }
 }
