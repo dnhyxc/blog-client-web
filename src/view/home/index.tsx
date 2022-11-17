@@ -263,19 +263,21 @@ const Home: React.FC<IProps> = () => {
           scrollbarRef={scrollbarRef}
           contentWrapRef={contentWrapRef}
         >
-          <Cover scrollbarRef={scrollbarRef}>
-            {htmlWidth > 960 && (
-              <Header
-                right={rightNode()}
-                className={htmlWidth > 960 && siderVisible && styles.header}
-                headerRef={headerRef}
-                itemStyles={htmlWidth > 960 && siderVisible && styles.itemStyles} // header item 的样式
-                iconStyles={htmlWidth > 960 && siderVisible && styles.iconStyles} // header item 的样式
-              >
-                <div className={styles.headTitle}>文章列表</div>
-              </Header>
-            )}
-          </Cover>
+          {(siderVisible || htmlWidth <= 960) && (
+            <Cover scrollbarRef={scrollbarRef}>
+              {htmlWidth > 960 && (
+                <Header
+                  right={rightNode()}
+                  className={htmlWidth > 960 && siderVisible && styles.header}
+                  headerRef={headerRef}
+                  itemStyles={htmlWidth > 960 && siderVisible && styles.itemStyles} // header item 的样式
+                  iconStyles={htmlWidth > 960 && siderVisible && styles.iconStyles} // header item 的样式
+                >
+                  <div className={styles.headTitle}>文章列表</div>
+                </Header>
+              )}
+            </Cover>
+          )}
           <div className={styles.content} id="CONTENT">
             <Card
               list={articleList.list}
