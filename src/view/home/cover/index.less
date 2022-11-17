@@ -126,12 +126,51 @@
       width: 100%;
     }
 
-    .carouselItem {
-      height: 200px;
-      color: #fff;
-      line-height: 200px;
-      text-align: center;
-      font-size: 18px;
+    .carouselWrap {
+      position: relative;
+
+      .carouselItem {
+        height: 200px;
+        color: #fff;
+        font-size: 18px;
+        padding-top: 15px;
+        padding-left: 20px;
+      }
+
+      .authorName {
+        display: flex;
+        align-items: center;
+        padding-right: 20px;
+        font-size: 14px;
+        margin-top: 5px;
+        .ellipsis();
+
+        .tag,
+        .classify {
+          .ellipsis();
+        }
+
+        .classify {
+          margin-left: 15px;
+        }
+      }
+
+      .abstract {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        color: #fff;
+        font-size: 14px;
+        padding-left: 20px;
+
+        .ellipsisMore(1);
+      }
+    }
+
+    :global {
+      .ant-carousel .slick-dots-bottom {
+        bottom: -3px;
+      }
     }
   }
 }

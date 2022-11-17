@@ -49,8 +49,9 @@ const Cover: React.FC<IProps> = ({ scrollbarRef, children }) => {
     scrollbarRef?.current.scrollTop(document.body.clientHeight - 49);
   };
 
-  const toPersonal = () => {
-    navigate('/personal');
+  const toPersonal = (e: MouseEvent, id: string) => {
+    e.stopPropagation();
+    navigate(`/personal?id=${id}`);
   };
 
   // 点击进入详情
@@ -60,6 +61,12 @@ const Cover: React.FC<IProps> = ({ scrollbarRef, children }) => {
     } else {
       navigate(`/detail/${id}`);
     }
+  };
+
+  // 去分类页
+  const toClassify = (e: Event, classify: string) => {
+    e.stopPropagation();
+    navigate(`/classify?classify=${classify}`);
   };
 
   const itemStyles = (url: string) => {
@@ -76,8 +83,13 @@ const Cover: React.FC<IProps> = ({ scrollbarRef, children }) => {
       {children}
       <div className={styles.content}>
         <div className={styles.desc}>
-          <div className={styles.authorName} onClick={toPersonal}>
-            {getUserInfo?.username}
+          <div
+            className={styles.authorName}
+            onClick={(e) =>
+              toPersonal(e as unknown as MouseEvent, getUserInfo?.userId || '')
+            }
+          >
+            {getUserInfo?.username || ''}
           </div>
           <div className={styles.line}>
             {getUserInfo?.motto || '行到水穷处，坐看云起时！'}
@@ -102,13 +114,34 @@ const Cover: React.FC<IProps> = ({ scrollbarRef, children }) => {
           <Carousel autoplay>
             {recommendList.map((i) => {
               return (
-                <div key={i.id}>
+                <div key={i.id} className={styles.carouselWrap}>
                   <div
                     className={styles.carouselItem}
                     style={itemStyles(i.coverImage)}
                     onClick={() => toDetail(i.id)}
                   >
-                    {i.title}
+                    <div className={styles.desc}>
+                      <div className={styles.title}>{i.title}</div>
+                      <div className={styles.authorName}>
+                        <span
+                          className={styles.tag}
+                          onClick={(e) =>
+                            toPersonal(e as unknown as MouseEvent, i.authorId)
+                          }
+                        >
+                          {i.authorName}
+                        </span>
+                        <span
+                          className={styles.classify}
+                          onClick={(e) =>
+                            toClassify(e as unknown as MouseEvent, i.classify)
+                          }
+                        >
+                          {i.classify}
+                        </span>
+                      </div>
+                      <div className={styles.abstract}>{i.abstract}</div>
+                    </div>
                   </div>
                 </div>
               );
