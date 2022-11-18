@@ -156,13 +156,11 @@ const ArticleDetail: React.FC = () => {
         )}
         {htmlWidth <= 960 && <Footer />}
       </div>
-      {htmlWidth > 960 && (
-        <BackTop className={styles.backTopWrap}>
-          <div className={styles.backTop}>
-            <ArrowUpOutlined className={styles.topIcon} />
-          </div>
-        </BackTop>
-      )}
+      <BackTop className={htmlWidth > 960 ? styles.backTopWrap : styles.mobileBackTopWrap}>
+        <div className={styles.backTop}>
+          <ArrowUpOutlined className={styles.topIcon} />
+        </div>
+      </BackTop>
     </Spin>
   );
 };

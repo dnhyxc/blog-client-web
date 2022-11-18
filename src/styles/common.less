@@ -1,3 +1,44 @@
+// antd conform 样式
+.antdConform() {
+  :global {
+    .ant-modal-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 20px;
+    }
+
+    .ant-modal-confirm-body-wrapper {
+      width: 100%;
+    }
+
+    .ant-modal-confirm-body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+
+      .anticon {
+        display: none;
+      }
+    }
+    .ant-modal-confirm-btns {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      .ant-btn {
+        width: 35%;
+        height: 35px;
+      }
+    }
+    .ant-modal-confirm-content {
+      text-align: center;
+      margin-left: 0 !important;
+    }
+  }
+}
+
 // 是网页整体变成灰色
 .htmlToGray() {
   filter: grayscale(100%);

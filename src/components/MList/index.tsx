@@ -108,7 +108,7 @@ const MList: React.FC<IProps> = ({
                     篇文章
                   </span>
                   {(!authorId || authorId === getUserInfo?.userId) && (
-                    <div className={styles.acrions}>
+                    <div className={styles.actions}>
                       <span className={styles.edit}>
                         <MIcons
                           name="icon-icon_bianji"

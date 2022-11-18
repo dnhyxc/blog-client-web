@@ -9,7 +9,7 @@ import { formatGapTime, error } from '@/utils';
 import { HEAD_UEL } from '@/constant';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/MAlert';
-import { useLoginStatus, useScroll } from '@/hooks';
+import { useHtmlWidth, useLoginStatus, useScroll } from '@/hooks';
 import { EventBus } from '@/event';
 import { CommentParams, GiveLikeResult, DeleteCommentResult } from '@/typings/common';
 import DraftInput from '../DraftInput';
@@ -35,6 +35,7 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
     userInfoStore: { getUserInfo },
   } = useStore();
   const navigate = useNavigate();
+  const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
     getCommentList();
@@ -149,6 +150,9 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
   }) => {
     return {
       title: '确定删除该评论吗？',
+      className: htmlWidth < 960 ? styles.removeCommentConfirm : '',
+      centered: htmlWidth < 960,
+      width: htmlWidth < 960 ? '80%' : '',
       async onOk() {
         deleteComment(params);
       },

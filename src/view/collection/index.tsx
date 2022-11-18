@@ -250,7 +250,7 @@ const Collection: React.FC<IProps> = () => {
       className: htmlWidth < 960 ? styles.modalConfirm : '',
       width: htmlWidth < 960 ? '80%' : '',
       title: '确定删除该收藏集吗？',
-      content: '删除收藏集同时也会移除收藏集中的文章',
+      content: '删除收藏集同时会移除收藏集中的文章',
       centered: htmlWidth < 960,
       async onOk() {
         const res = normalizeResult<ArticleListResult>(
