@@ -330,7 +330,7 @@ const Personal = () => {
                       )
                   )}
                 </div>
-                {(authorId === getUserInfo.userId || !authorId) && (
+                {(authorId === getUserInfo?.userId || !authorId) && (
                   <Button type="primary" ghost onClick={toSetting}>
                     修改个人资料
                   </Button>

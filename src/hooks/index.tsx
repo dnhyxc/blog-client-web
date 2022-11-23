@@ -567,6 +567,7 @@ export const useVerifyToken = (needRes?: boolean) => {
   const verifyToken = async () => {
     const res = normalizeResult<number>(await Service.verify());
     if (!res.success && !needRes) {
+      error(res.message);
       commonStore.setAuth({ redirectUrl: `${pathname}${search}` });
       navigate(`/login?verify=${pathname.slice(1)}`);
     }
