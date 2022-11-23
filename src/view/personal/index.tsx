@@ -62,7 +62,7 @@ const Personal = () => {
   });
 
   // 校验token是否过期
-  useVerifyToken();
+  useVerifyToken(undefined, true);
   const navigate = useNavigate();
 
   const listRef = useRef<ArticleItem[]>([]);
