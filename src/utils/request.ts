@@ -75,7 +75,7 @@ function onRedirect() {
   if (pathname !== '/login') {
     show();
     if (timer) {
-      clearInterval();
+      clearInterval(timer);
     } else {
       timer = setTimeout(() => {
         close();
