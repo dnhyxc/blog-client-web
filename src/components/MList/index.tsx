@@ -104,7 +104,7 @@ const MList: React.FC<IProps> = ({
                 <div className={styles.collectDesc}>{i.desc}</div>
                 <div className={styles.collectionCount}>
                   <span>
-                    {formatDate(i.createTime, 'YYYY-DD-MM')}更新 · {i.articleIds?.length}
+                    {formatDate(i.createTime, 'YYYY-MM-DD')}更新 · {i.articleIds?.length}
                     篇文章
                   </span>
                   {(!authorId || authorId === getUserInfo?.userId) && (
