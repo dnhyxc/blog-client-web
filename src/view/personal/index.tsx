@@ -8,6 +8,7 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Tabs } from 'antd';
+import classname from 'classname';
 import Content from '@/components/Content';
 import Image from '@/components/Image';
 import Card from '@/components/Card';
@@ -34,6 +35,8 @@ import {
   useScrollLoad,
   useVerifyToken,
   useGetUserInfo,
+  useHtmlWidth,
+  useGetSiderVisible,
 } from '@/hooks';
 import {
   ArticleListResult,
@@ -64,6 +67,8 @@ const Personal = () => {
   // 校验token是否过期
   useVerifyToken(undefined, true);
   const navigate = useNavigate();
+  const { htmlWidth } = useHtmlWidth();
+  const { siderVisible } = useGetSiderVisible();
 
   const listRef = useRef<ArticleItem[]>([]);
   const {
@@ -284,7 +289,10 @@ const Personal = () => {
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()}>我的主页</Header>
       <Content
-        className={styles.contentWrap}
+        className={classname(
+          styles.contentWrap,
+          htmlWidth > 960 && siderVisible && styles.contentPadding
+        )}
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
       >
