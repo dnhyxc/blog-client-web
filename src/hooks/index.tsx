@@ -335,7 +335,7 @@ export const useScrollLoad = ({
     const currentTop = paddingTopStyle
       ? document.body.clientHeight + 350
       : scrollRef?.current?.offsetTop;
-    // 有首页有coverImage 时 document.body.clientHeight + 350 否则 scrollRef?.current?.offsetTop
+    // 有首页有coverImage 时 document.body.clientHeight + 310 否则 scrollRef?.current?.offsetTop
     if (scrollTop >= currentTop) {
       setSuckTop(true);
       scrollStyle && scrollRef?.current?.classList?.add(scrollStyle);
@@ -348,10 +348,8 @@ export const useScrollLoad = ({
 
     // 动态计算首页Content组件中contentWrap元素的paddingTop
     if (scrollTop >= document.body.clientHeight - 50) {
-      // paddingTopStyle && contentWrapRef?.current?.classList?.add(paddingTopStyle);
       headerStyle && headerRef?.current?.classList?.add(headerStyle);
     } else {
-      // paddingTopStyle && contentWrapRef?.current?.classList?.remove(paddingTopStyle);
       headerStyle && headerRef?.current?.classList?.remove(headerStyle);
     }
   };
