@@ -88,14 +88,14 @@ const CreateArticle: React.FC<IProps> = () => {
   // 保存草稿
   const onSaveDraft = useDebounce(
     async (values: CreateArticleParams) => {
-      if (!content) {
+      if (!content && !detail?.content) {
         info('嘿，醒醒！文章还一个字没写呢...');
         return;
       }
 
       const params: CreateDraftParams = {
         ...values,
-        content,
+        content: content || (detail?.content as string),
         createTime: values?.createTime?.valueOf() || new Date().valueOf(),
         authorId: getUserInfo?.userId,
         articleId: draftId || draftArticleId,
@@ -106,7 +106,7 @@ const CreateArticle: React.FC<IProps> = () => {
       articleDraft(params, ARTICLE_DRAFT[draftArticleId || draftId ? 2 : 1]);
     },
     500,
-    [visible, content],
+    [visible, content, detail],
     true
   );
 
