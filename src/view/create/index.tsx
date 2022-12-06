@@ -26,7 +26,7 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -51,12 +51,12 @@ const CreateArticle: React.FC<IProps> = () => {
   };
 
   useEffect(() => {
-    if (visible || id) return;
+    if (visible) return;
     window.addEventListener('keydown', onKeyDown);
     return () => {
       window.removeEventListener('keydown', onKeyDown);
     };
-  }, [content, visible, id]);
+  }, [content, visible]);
 
   useEffect(() => {
     if (deleteId === draftId) {
@@ -88,17 +88,21 @@ const CreateArticle: React.FC<IProps> = () => {
   // 保存草稿
   const onSaveDraft = useDebounce(
     async (values: CreateArticleParams) => {
-      if (!content) {
+      console.log(values, 'values', detail);
+
+      if (!content && !detail?.content) {
         info('嘿，醒醒！文章还一个字没写呢...');
         return;
       }
 
       const params: CreateDraftParams = {
+        ...detail,
         ...values,
-        content,
+        content: content || detail?.content!,
         createTime: values?.createTime?.valueOf() || new Date().valueOf(),
         authorId: getUserInfo?.userId,
         articleId: draftId || draftArticleId,
+        originalArticleId: id,
       };
 
       if (!draftArticleId && !draftId) delete params.articleId;
@@ -106,9 +110,11 @@ const CreateArticle: React.FC<IProps> = () => {
       articleDraft(params, ARTICLE_DRAFT[draftArticleId || draftId ? 2 : 1]);
     },
     500,
-    [visible, content],
+    [visible, content, id],
     true
   );
+
+  console.log(detail, 'detail');
 
   // 删除草稿
   const deleteDraft = async (id?: string, needMessage?: boolean) => {

@@ -71,6 +71,8 @@ const ReleaseModel: React.FC<IProps> = ({
     form.setFieldsValue({ abstract: initialValue?.abstract });
   }, [initialValue]);
 
+  console.log(initialValue, 'initialValue');
+
   const onClose = () => {
     onCancel && onCancel();
   };
@@ -92,6 +94,7 @@ const ReleaseModel: React.FC<IProps> = ({
 
   const getResult = (res: any) => {
     if (res.success) {
+      initialValue?.originalArticleId && deleteDraft && deleteDraft();
       success(res.message);
       navigate('/home');
     }
@@ -117,9 +120,9 @@ const ReleaseModel: React.FC<IProps> = ({
       content,
       createTime: values?.createTime?.valueOf() || new Date().valueOf(),
       authorId: getUserInfo?.userId,
-      articleId,
+      articleId: articleId || initialValue?.originalArticleId,
     };
-    if (articleId) {
+    if (articleId || initialValue?.originalArticleId) {
       updateArticle(params);
     } else {
       delete params.articleId;

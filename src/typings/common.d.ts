@@ -122,6 +122,7 @@ export interface ArticleDetailParams {
   replyCount?: number;
   likeCount: number;
   isLike: boolean;
+  originalArticleId?: string | number;
 }
 
 export interface UseGetArticleDetailParams {
@@ -309,6 +310,7 @@ export interface CreateDraftParams {
   createTime: number;
   authorId: string;
   articleId?: string | null;
+  originalArticleId?: string | null;
 }
 
 export interface CreateDraftParamsResult {
