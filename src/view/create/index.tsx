@@ -88,8 +88,6 @@ const CreateArticle: React.FC<IProps> = () => {
   // 保存草稿
   const onSaveDraft = useDebounce(
     async (values: CreateArticleParams) => {
-      console.log(values, 'values', detail);
-
       if (!content && !detail?.content) {
         info('嘿，醒醒！文章还一个字没写呢...');
         return;
@@ -113,8 +111,6 @@ const CreateArticle: React.FC<IProps> = () => {
     [visible, content, id],
     true
   );
-
-  console.log(detail, 'detail');
 
   // 删除草稿
   const deleteDraft = async (id?: string, needMessage?: boolean) => {

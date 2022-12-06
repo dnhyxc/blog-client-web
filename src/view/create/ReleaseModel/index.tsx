@@ -71,8 +71,6 @@ const ReleaseModel: React.FC<IProps> = ({
     form.setFieldsValue({ abstract: initialValue?.abstract });
   }, [initialValue]);
 
-  console.log(initialValue, 'initialValue');
-
   const onClose = () => {
     onCancel && onCancel();
   };
