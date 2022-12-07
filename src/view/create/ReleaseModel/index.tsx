@@ -87,12 +87,14 @@ const ReleaseModel: React.FC<IProps> = ({
   // 调用创建文章的接口
   const updateArticle = async (params: CreateArticleParams) => {
     const res = normalizeResult<CreateResult>(await Server.updateArticle(params));
+    if (res.success && initialValue?.originalArticleId && initialValue?.id) {
+      deleteDraft && deleteDraft(initialValue?.id);
+    }
     getResult(res);
   };
 
   const getResult = (res: any) => {
     if (res.success) {
-      initialValue?.originalArticleId && deleteDraft && deleteDraft();
       success(res.message);
       navigate('/home');
     }
@@ -180,7 +182,7 @@ const ReleaseModel: React.FC<IProps> = ({
               保存草稿
             </Button>
             <Button type="primary" onClick={onFinish}>
-              发布
+              {initialValue?.originalArticleId || articleId ? '更新' : '发布'}
             </Button>
           </div>
         }

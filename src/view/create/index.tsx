@@ -26,7 +26,7 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -77,8 +77,7 @@ const CreateArticle: React.FC<IProps> = () => {
       await Server.articleDraft(params, path)
     );
     if (res.message) {
-      const { id } = res.data;
-      setDraftArticleId(id);
+      setDraftArticleId(res.data?.id);
       success(res.message);
     } else {
       error(res.message);

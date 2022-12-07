@@ -69,11 +69,10 @@ function parseJSON(response: Response) {
   return response.json();
 }
 
-function onRedirect() {
+function onRedirect(pathname: string, search: string) {
   let timer = null;
-  const { pathname } = window.location;
   if (pathname !== '/login') {
-    show();
+    show({ pathname, search });
     if (timer) {
       clearInterval(timer);
     } else {
@@ -143,9 +142,10 @@ export default function request(_url: string, options?: any): FetchResult {
       if (err && err.response) {
         return err.response.json().then((data: any) => {
           if (err.response.status === 401 || err.response.status === 403) {
+            const { pathname, search } = window.location;
             // 重定向跳转
-            setAuth({ hasAuth: false, noLogin: true, redirectUrl: '/login' });
-            onRedirect();
+            setAuth({ hasAuth: false, noLogin: true, redirectUrl: `${pathname}${search}` });
+            onRedirect(pathname, search);
             return {
               err: new Error(data.message || '系统异常'),
               code: err.response.status,
@@ -171,11 +171,6 @@ export default function request(_url: string, options?: any): FetchResult {
             err: new Error(data.message || '系统异常'),
           };
         });
-        // .catch(() => {
-        //   return {
-        //     err: new Error('系统异常'),
-        //   };
-        // });
       }
       return {
         err: new Error('系统异常'),

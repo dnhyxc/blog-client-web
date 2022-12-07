@@ -3,6 +3,7 @@ import classname from 'classname';
 import MarkNav from 'markdown-navbar'; // markdown 目录
 import { Scrollbars } from 'react-custom-scrollbars';
 import { useGetTocScrollHeight } from '@/hooks';
+import { isInsideElement } from '@/utils';
 import { ArticleDetailParams } from '@/typings/common';
 import 'markdown-navbar/dist/navbar.css';
 import styles from './index.less';
@@ -20,6 +21,16 @@ const TocDrawer: React.FC<IProps> = ({ visible, onCancel, detail }) => {
     onCancel && onCancel();
   };
 
+  const onTouchStart = (e: TouchEvent) => {
+    // 判断鼠标是否进入蒙层
+    const res = isInsideElement(e, e.target as HTMLDivElement);
+    if (res) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  };
+
   const renderThumb = () => {
     // renderThumb 改变样式时被调用的函数，必须是函数
     const thumbStyle = {
@@ -31,7 +42,11 @@ const TocDrawer: React.FC<IProps> = ({ visible, onCancel, detail }) => {
 
   return (
     <div className={classname(styles.TocDrawer, visible && styles.showTocDrawer)}>
-      <div className={styles.mack} onClick={onHideTocDrawer} />
+      <div
+        className={styles.mack}
+        onClick={onHideTocDrawer}
+        onTouchStart={(e) => onTouchStart(e as unknown as TouchEvent)}
+      />
       {detail?.content?.includes('#') ? (
         <div className={styles.mackNav}>
           <div className={styles.tocTitle}>文章目录</div>

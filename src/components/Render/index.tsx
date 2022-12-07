@@ -27,9 +27,9 @@ class MRender {
   };
 
   // 将Alert渲染到confirm元素中
-  show = () => {
+  show = (props?: any) => {
     this.createRoot();
-    this.root.render(<MAlert close={this.close} type="render" />);
+    this.root.render(<MAlert close={this.close} type="render" {...props} />);
   };
 
   // 调用unmount防止出现重复createRoot的报错

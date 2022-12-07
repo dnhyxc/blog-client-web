@@ -29,6 +29,8 @@ const Login = () => {
   const [form] = Form.useForm();
   const [search] = useSearchParams();
   const verifyPath = search.get('verify');
+  const query = search.get('search');
+  const pathname = search.get('pathname');
 
   useEffect(() => {
     let timer: any = null;
@@ -57,7 +59,9 @@ const Login = () => {
   const verifyToken = async () => {
     const res = normalizeResult<number>(await verify());
     if (res.success) {
-      navigate(`${commonStore.auth.redirectUrl}` || '/home', { replace: true });
+      navigate(`${commonStore.auth.redirectUrl}` || `${pathname}${query}` || '/home', {
+        replace: true,
+      });
     }
   };
 
@@ -94,7 +98,9 @@ const Login = () => {
       values?.remember
         ? username && setCookie('uname', username, 1)
         : removeCoolie('uname');
-      navigate(`${commonStore.auth.redirectUrl}` || '/home', { replace: true });
+      navigate(`${commonStore.auth.redirectUrl}` || `${pathname}${query}` || '/home', {
+        replace: true,
+      });
     } else {
       res.message && error(res.message);
     }

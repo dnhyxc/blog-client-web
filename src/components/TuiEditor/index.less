@@ -9,6 +9,7 @@
       height: 100%;
       font-size: 14px;
     }
+
     .toastui-editor-dropdown-toolbar {
       flex-wrap: wrap;
       height: auto;
@@ -81,6 +82,21 @@
   }
 
   :global {
+    .toastui-editor-toolbar {
+      .toastui-editor-md-tab-container {
+        .tab-item {
+          height: 40px;
+          line-height: 40px;
+          margin-top: 6px;
+          font-size: 14px;
+        }
+      }
+    }
+
+    .toastui-editor-defaultUI-toolbar {
+      padding: 0 0 0 10px;
+    }
+
     .toastui-editor-popup {
       max-width: 300px;
       margin-left: 0;

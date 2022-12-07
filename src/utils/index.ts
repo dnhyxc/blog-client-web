@@ -105,6 +105,20 @@ export const getSelectedText = () => window.getSelection()?.toString();
 // 文字复制到剪贴板
 export const copyText = async (text: string) => await navigator.clipboard.writeText(text);
 
+// 判断鼠标是否在指定元素内部
+export const isInsideElement = (e: TouchEvent, dom: HTMLDivElement) => {
+  const x = e.changedTouches[0].clientX; // 鼠标相对屏幕横坐标
+  const y = e.changedTouches[0].clientY; // 鼠标相对屏幕纵坐标
+  const left = Number(dom.getBoundingClientRect().left); // obj相对屏幕的横坐标
+  const clientWidth = Number(dom.getBoundingClientRect().left + dom.clientWidth); // obj相对屏幕的横坐标+width
+  const top = Number(dom.getBoundingClientRect().top); // obj相对屏幕的纵坐标
+  const clientHeight = Number(dom.getBoundingClientRect().top + dom.clientHeight); // obj相对屏幕的纵坐标+height
+  if (x > left && x < clientWidth && y > top && y < clientHeight) {
+    return true;
+  }
+  return false;
+};
+
 export {
   normalizeResult,
   useCookies,

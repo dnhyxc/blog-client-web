@@ -8,14 +8,25 @@ interface IProps {
   onClose?: Function;
   type?: string;
   msgNode?: ReactNode;
+  pathname?: string;
+  search?: string;
 }
 
-const MAlert: React.FC<IProps> = ({ close, onClick, onClose, type = 'login', msgNode }) => {
+const MAlert: React.FC<IProps> = ({
+  close,
+  onClick,
+  onClose,
+  type = 'login',
+  msgNode,
+  pathname,
+  search,
+}) => {
   const onClickHandler = () => {
     if (onClick) {
       onClick();
     } else {
-      window.location.href = '/login';
+      // request 中唤起 MAlert 组件将原来的pathname及search带过来
+      window.location.href = `/login?pathname=${pathname}&search=${search}`;
     }
   };
 
