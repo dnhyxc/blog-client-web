@@ -310,7 +310,7 @@ export interface CreateDraftParams {
   createTime: number;
   authorId: string;
   articleId?: string | null;
-  originalArticleId?: string | null;
+  originalArticleId?: string | number | null;
 }
 
 export interface CreateDraftParamsResult {

@@ -87,8 +87,8 @@ const ReleaseModel: React.FC<IProps> = ({
   // 调用创建文章的接口
   const updateArticle = async (params: CreateArticleParams) => {
     const res = normalizeResult<CreateResult>(await Server.updateArticle(params));
-    if (res.success && initialValue?.originalArticleId && initialValue?.id) {
-      deleteDraft && deleteDraft(initialValue?.id);
+    if (res.success && initialValue?.originalArticleId) {
+      deleteDraft && deleteDraft();
     }
     getResult(res);
   };

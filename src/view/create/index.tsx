@@ -26,7 +26,7 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -76,10 +76,12 @@ const CreateArticle: React.FC<IProps> = () => {
     const res = normalizeResult<CreateDraftParamsResult>(
       await Server.articleDraft(params, path)
     );
-    if (res.message) {
+    if (res.success) {
       setDraftArticleId(res.data?.id);
       success(res.message);
-    } else {
+    }
+
+    if (!res.success && res.code !== 401 && res.code !== 409) {
       error(res.message);
     }
   };
@@ -99,7 +101,7 @@ const CreateArticle: React.FC<IProps> = () => {
         createTime: values?.createTime?.valueOf() || new Date().valueOf(),
         authorId: getUserInfo?.userId,
         articleId: draftId || draftArticleId,
-        originalArticleId: id,
+        originalArticleId: id || detail?.originalArticleId,
       };
 
       if (!draftArticleId && !draftId) delete params.articleId;
@@ -113,8 +115,8 @@ const CreateArticle: React.FC<IProps> = () => {
 
   // 删除草稿
   const deleteDraft = async (id?: string, needMessage?: boolean) => {
-    if (!draftId && !id) return;
-    const res = normalizeResult<string>(await Server.deleteDraft({ id: id || draftId }));
+    if (!draftId && !id && !draftArticleId) return;
+    const res = normalizeResult<string>(await Server.deleteDraft({ id: draftArticleId || id || draftId }));
     if (!needMessage) return;
     setDeleteId(res.data);
   };
