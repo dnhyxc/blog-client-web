@@ -222,7 +222,7 @@ export const useGetArticleDetail = ({
     }
   };
 
-  return { detail, loading };
+  return { detail, loading, setDetail };
 };
 
 // 点赞hooks

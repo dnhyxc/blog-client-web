@@ -133,8 +133,7 @@ const DraftPopover: React.FC<IProps> = ({
               <div key={i.id} className={styles.draftItem}>
                 <span className={styles.title}>
                   {i.title ||
-                    `${i.content?.slice(0, 26).replace(/#/g, '')}${
-                      i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
+                    `${i.content?.slice(0, 26).replace(/#/g, '')}${i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
                     }`}
                 </span>
                 <span className={styles.actions}>
@@ -157,6 +156,13 @@ const DraftPopover: React.FC<IProps> = ({
               </div>
             );
           })}
+          {!loading && draftList?.list?.length === draftList?.total ? (
+            <div className={styles.noMore}>
+              {`共(${draftList?.list?.length})条，没有更多了～～～`}
+            </div>
+          ) : (
+            <div className={styles.noMore}>loading...</div>
+          )}
         </Content>
       ) : (
         <div className={styles.draftEmpty}>

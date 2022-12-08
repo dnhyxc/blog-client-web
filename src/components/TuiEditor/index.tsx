@@ -25,12 +25,13 @@ import { toolbars } from './toobars';
 import styles from './index.less';
 
 interface IProps {
-  initialValue?: string;
   onGetMackdown: Function;
+  initialValue?: string;
+  onSaveDraft?: Function;
   siderVisible?: boolean;
 }
 
-const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown, siderVisible }) => {
+const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown, siderVisible, onSaveDraft }) => {
   const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
@@ -67,7 +68,7 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown, siderVisible
     });
 
     editor.insertToolbarItem(
-      { groupIndex: 1, itemIndex: 6 },
+      { groupIndex: htmlWidth > 960 ? 1 : 0, itemIndex: htmlWidth > 960 ? 6 : 1 },
       {
         name: 'myItem',
         // command: "code",
@@ -80,16 +81,19 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown, siderVisible
       button.className = 'toastui-editor-toolbar-icons last';
       button.style.backgroundImage = 'none';
       button.style.margin = '0';
-      button.innerHTML = '<b style="font-size: 18px; color: #868686;">JS</b>';
+      button.innerHTML = `<b style="font-size: 14px; color: #868686;">${htmlWidth > 960 ? 'JS' : '保存'}</b>`;
       button.addEventListener('click', () => {
-        // console.log(editor, '========');
-        // const wwSelection = editor.getSelection();
-        // console.log(wwSelection, 'wwSelection');
-        editor.insertText('```js\n\n```');
-        editor.moveCursorToStart(0);
-        // editor.exec("code");
+        if (htmlWidth > 960) {
+          // console.log(editor, '========');
+          // const wwSelection = editor.getSelection();
+          // console.log(wwSelection, 'wwSelection');
+          editor.insertText('```js\n\n```');
+          editor.moveCursorToStart(0);
+          // editor.exec("code");
+        } else {
+          onSaveDraft && onSaveDraft();
+        }
       });
-
       return button;
     }
   }, [initialValue, htmlWidth]);

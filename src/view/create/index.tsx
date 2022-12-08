@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Button } from 'antd';
 import classname from 'classname';
 import { observer } from 'mobx-react';
@@ -20,13 +20,14 @@ import {
   CreateArticleParams,
   CreateDraftParams,
   CreateDraftParamsResult,
+  ArticleDetailParams,
 } from '@/typings/common';
 import ReleaseModel from './ReleaseModel';
 import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -41,9 +42,10 @@ const CreateArticle: React.FC<IProps> = () => {
     userInfoStore: { getUserInfo },
   } = useStore();
   const [search] = useSearchParams();
+  const navigate = useNavigate();
   const id = search.get('id');
   const draftId = search.get('draftId');
-  const { detail } = useGetArticleDetail({ id, draftId, visible, draftArticleId });
+  const { detail, setDetail } = useGetArticleDetail({ id, draftId, visible, draftArticleId });
   const { htmlWidth } = useHtmlWidth();
   const { siderVisible } = useGetSiderVisible();
 
@@ -61,7 +63,8 @@ const CreateArticle: React.FC<IProps> = () => {
 
   useEffect(() => {
     if (deleteId === draftId) {
-      window.location.href = '/create';
+      setDetail({ content: '' } as ArticleDetailParams);
+      navigate('/create');
     }
   }, [deleteId, draftId]);
 
@@ -80,6 +83,7 @@ const CreateArticle: React.FC<IProps> = () => {
     if (res.success) {
       setDraftArticleId(res.data?.id);
       success(res.message);
+      setVisible(false);
     }
 
     if (!res.success && res.code !== 401 && res.code !== 409) {
@@ -110,7 +114,7 @@ const CreateArticle: React.FC<IProps> = () => {
       articleDraft(params, ARTICLE_DRAFT[draftArticleId || draftId ? 2 : 1]);
     },
     500,
-    [visible, content, id],
+    [visible, content, id, draftArticleId, draftId],
     true
   );
 
@@ -118,10 +122,14 @@ const CreateArticle: React.FC<IProps> = () => {
   const deleteDraft = async (id?: string, needMessage?: boolean) => {
     if (!draftId && !id && !draftArticleId) return;
     const res = normalizeResult<string>(
-      await Server.deleteDraft({ id: draftArticleId || id || draftId })
+      await Server.deleteDraft({ id: id || draftArticleId || draftId })
     );
     if (!needMessage) return;
     setDeleteId(res.data);
+    // 如果删除的草稿id等于新创建的草稿id，则需要清空草稿id
+    if (res.data === draftArticleId) {
+      setDraftArticleId('');
+    }
   };
 
   // 显示草稿弹窗
@@ -172,9 +180,11 @@ const CreateArticle: React.FC<IProps> = () => {
         )}
       >
         <TuiEditor
+          key={detail?.content}
           onGetMackdown={onGetMackdown}
           initialValue={detail?.content}
           siderVisible={siderVisible}
+          onSaveDraft={onSaveDraft}
         />
       </div>
       {visible && (
