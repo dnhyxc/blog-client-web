@@ -53,7 +53,6 @@ const DraftPopover: React.FC<IProps> = ({
   }, [pageNo, visible, drawerVisible]);
 
   useEffect(() => {
-    setVisible(visible);
     setPageNo(1);
     listRef.current = [];
     setDraftList({
