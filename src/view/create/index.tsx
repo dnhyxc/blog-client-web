@@ -26,13 +26,14 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [content, setContent] = useState<string>('');
   const [draftArticleId, setDraftArticleId] = useState<string>('');
   const [deleteId, setDeleteId] = useState<string>('');
+  const [drawerVisible, setDrawerVisible] = useState(false);
 
   // 校验token是否过期
   useVerifyToken();
@@ -116,9 +117,20 @@ const CreateArticle: React.FC<IProps> = () => {
   // 删除草稿
   const deleteDraft = async (id?: string, needMessage?: boolean) => {
     if (!draftId && !id && !draftArticleId) return;
-    const res = normalizeResult<string>(await Server.deleteDraft({ id: draftArticleId || id || draftId }));
+    const res = normalizeResult<string>(
+      await Server.deleteDraft({ id: draftArticleId || id || draftId })
+    );
     if (!needMessage) return;
     setDeleteId(res.data);
+  };
+
+  // 显示草稿弹窗
+  const showDraftDrawer = () => {
+    setDrawerVisible(true);
+  };
+
+  const hideDraftDrawer = () => {
+    setDrawerVisible(false);
   };
 
   const renderRight = () => {
@@ -132,7 +144,16 @@ const CreateArticle: React.FC<IProps> = () => {
         >
           发布文章
         </Button>
-        <DraftPopover deleteDraft={deleteDraft} />
+        {htmlWidth <= 960 && (
+          <Button type="link" className={styles.draftBtn} onClick={showDraftDrawer}>
+            草稿箱
+          </Button>
+        )}
+        <DraftPopover
+          deleteDraft={deleteDraft}
+          hideDraftDrawer={hideDraftDrawer}
+          drawerVisible={drawerVisible}
+        />
       </span>
     );
   };

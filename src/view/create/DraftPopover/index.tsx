@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Popover, Button } from 'antd';
+import { Popover, Button, Drawer, Empty } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
 import Content from '@/components/Content';
 import { useNavigate } from 'react-router-dom';
-import { useScrollLoad } from '@/hooks';
+import { useHtmlWidth, useScrollLoad } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, error, formatGapTime } from '@/utils';
@@ -13,9 +14,15 @@ import styles from './index.less';
 interface IProps {
   // eslint-disable-next-line no-unused-vars
   deleteDraft?: (id?: string, needMessage?: boolean) => void;
+  drawerVisible?: boolean;
+  hideDraftDrawer?: Function;
 }
 
-const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
+const DraftPopover: React.FC<IProps> = ({
+  deleteDraft,
+  drawerVisible,
+  hideDraftDrawer,
+}) => {
   const [draftList, setDraftList] = useState<ArticleListResult>({
     list: [],
     total: 0,
@@ -37,11 +44,24 @@ const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
     scrollStyle: styles.scrollStyle,
   });
 
+  const { htmlWidth } = useHtmlWidth();
+
   useEffect(() => {
-    if (visible) {
+    if (visible || drawerVisible) {
       getDraftList();
     }
-  }, [pageNo, visible]);
+  }, [pageNo, visible, drawerVisible]);
+
+  useEffect(() => {
+    setVisible(visible);
+    setPageNo(1);
+    listRef.current = [];
+    setDraftList({
+      list: listRef.current,
+      total: 0,
+      count: 0,
+    });
+  }, [drawerVisible]);
 
   // 获取文章列表
   const getDraftList = async () => {
@@ -84,6 +104,7 @@ const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
   const onEditDraft = (item: ArticleItem) => {
     navigate(`/create?draftId=${item.id}`);
     setVisible(false);
+    hideDraftDrawer && hideDraftDrawer();
   };
 
   // 删除
@@ -99,45 +120,56 @@ const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
 
   const content = (
     <div className={styles.draftContent}>
-      <Content
-        containerClassName={styles.containerClassName}
-        wrapClassName={styles.wrapClassName}
-        className={styles.scrollWrap}
-        autoHeight
-        autoHeightMax="300px"
-        onScroll={onScroll}
-      >
-        {draftList?.list?.map((i) => {
-          return (
-            <div key={i.id} className={styles.draftItem}>
-              <span className={styles.title}>
-                {i.title ||
-                  `${i.content?.slice(0, 26).replace(/#/g, '')}${i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
-                  }`}
-              </span>
-              <span className={styles.actions}>
-                <span className={styles.createTime}>{formatGapTime(i.createTime)}</span>
-                <Button
-                  className={styles.editBtn}
-                  type="link"
-                  onClick={() => onEditDraft(i)}
-                >
-                  编辑
-                </Button>
-                <Button className={styles.delBtn} type="link" onClick={() => onDelDraft(i)}>
-                  删除
-                </Button>
-              </span>
-            </div>
-          );
-        })}
-      </Content>
+      {draftList?.list?.length > 0 ? (
+        <Content
+          containerClassName={styles.containerClassName}
+          wrapClassName={styles.wrapClassName}
+          className={styles.scrollWrap}
+          autoHeight
+          autoHeightMax="260px"
+          onScroll={onScroll}
+        >
+          {draftList?.list?.map((i) => {
+            return (
+              <div key={i.id} className={styles.draftItem}>
+                <span className={styles.title}>
+                  {i.title ||
+                    `${i.content?.slice(0, 26).replace(/#/g, '')}${
+                      i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
+                    }`}
+                </span>
+                <span className={styles.actions}>
+                  <span className={styles.createTime}>{formatGapTime(i.createTime)}</span>
+                  <Button
+                    className={styles.editBtn}
+                    type="link"
+                    onClick={() => onEditDraft(i)}
+                  >
+                    编辑
+                  </Button>
+                  <Button
+                    className={styles.delBtn}
+                    type="link"
+                    onClick={() => onDelDraft(i)}
+                  >
+                    删除
+                  </Button>
+                </span>
+              </div>
+            );
+          })}
+        </Content>
+      ) : (
+        <div className={styles.draftEmpty}>
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="空空如也" />
+        </div>
+      )}
     </div>
   );
 
   const title = <div className={styles.modalTitle}>草稿列表</div>;
 
-  return (
+  return htmlWidth > 960 ? (
     <Popover
       className={styles.draftPop}
       placement="bottomRight"
@@ -151,6 +183,30 @@ const DraftPopover: React.FC<IProps> = ({ deleteDraft }) => {
         草稿箱
       </Button>
     </Popover>
+  ) : (
+    <Drawer
+      title="草稿列表"
+      key="top"
+      placement="top"
+      closable={false}
+      visible={drawerVisible}
+      bodyStyle={{ padding: '10px 0 10px 10px' }}
+      height={340}
+      onClose={() => {
+        hideDraftDrawer && hideDraftDrawer();
+      }}
+      extra={
+        <div
+          onClick={() => {
+            hideDraftDrawer && hideDraftDrawer();
+          }}
+        >
+          <CloseOutlined />
+        </div>
+      }
+    >
+      {content}
+    </Drawer>
   );
 };
 

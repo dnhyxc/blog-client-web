@@ -15,7 +15,7 @@
   width: 350px;
 
   .containerClassName {
-    max-height: 300px;
+    max-height: 260px;
 
     .wrapClassName {
       padding: 0;
@@ -61,13 +61,20 @@
 //   }
 // }
 
-@media screen and (max-width: 375px) {
+@media screen and (max-width: 960px) {
   .draftContent {
-    width: auto;
-    min-width: 290px;
+    width: 100%;
 
     .draftItem {
-      max-width: 290px;
+      padding-right: 10px;
     }
+  }
+
+  .draftEmpty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 260px;
+    padding-right: 10px;
   }
 }
