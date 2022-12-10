@@ -176,13 +176,13 @@ const DraftPopover: React.FC<IProps> = ({
 
   return htmlWidth > 960 ? (
     <Popover
-      className={styles.draftPop}
       placement="bottomRight"
       title={title}
       content={content}
       trigger="click"
       visible={visible}
       onVisibleChange={onVisibleChange}
+      overlayClassName={styles.overlayClassName}
     >
       <Button type="link" className={styles.draftBtn}>
         草稿箱
@@ -196,6 +196,7 @@ const DraftPopover: React.FC<IProps> = ({
       closable={false}
       visible={drawerVisible}
       bodyStyle={{ padding: '10px 0 10px 10px' }}
+      headerStyle={{ padding: '16px 10px' }}
       height={340}
       onClose={() => {
         hideDraftDrawer && hideDraftDrawer();
