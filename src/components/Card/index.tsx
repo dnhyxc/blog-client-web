@@ -237,7 +237,7 @@ const Card: React.FC<IProps> = ({
               )}
               <div className={styles.action}>
                 <div className={styles.icons}>
-                  <div>
+                  <div className={styles.iconList}>
                     <MIcons
                       name={`${i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'}`}
                       text={i.likeCount > 0 ? i.likeCount : '点赞'}
@@ -250,6 +250,13 @@ const Card: React.FC<IProps> = ({
                       text={i.replyCount > 0 ? i.replyCount : '评论'}
                       iconWrapClass={styles.iconWrap}
                       onClick={() => toDetail && toDetail(i.id, true)}
+                    />
+                    <MIcons
+                      name="icon-yanjing"
+                      text={i.readCount > 0 ? i.readCount : '阅读'}
+                      iconWrapClass={styles.iconWrap}
+                      className={styles.eyes}
+                      onClick={() => likeArticle && likeArticle(i.id)}
                     />
                   </div>
                   {htmlWidth < 960 && (

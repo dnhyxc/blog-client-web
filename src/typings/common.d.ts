@@ -96,6 +96,7 @@ export interface ArticleItem extends AddCollectionRes {
   isLike: boolean;
   likeCount: number;
   replyCount: number;
+  readCount: number;
   tag: string;
   title: string;
 }
@@ -121,6 +122,7 @@ export interface ArticleDetailParams {
   authorId: string;
   replyCount?: number;
   likeCount: number;
+  readCount: number;
   isLike: boolean;
   originalArticleId?: string | number;
 }

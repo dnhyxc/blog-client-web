@@ -23,7 +23,7 @@ import Comments from '@/components/Comments';
 import AnotherArticle from '@/components/AnotherArticle';
 import { useGetArticleDetail, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
-import { formatGapTime } from '@/utils';
+import { formatDate } from '@/utils';
 import ActionBar from '@/components/ActionBar';
 import { ArticleDetailParams } from '@/typings/common';
 import styles from './index.less';
@@ -74,7 +74,8 @@ const ArticleDetail: React.FC = () => {
           <div className={styles.createInfo}>
             <div className={styles.username}>{detail?.authorName}</div>
             <div>
-              <span>{formatGapTime(detail?.createTime)}</span>
+              <span>{formatDate(detail?.createTime, 'YYYY年MM月DD日 HH:mm')}</span>
+              <span className={styles.readCount}>阅读 {detail?.readCount}</span>
               {getUserInfo?.userId === detail?.authorId && (
                 <Button type="link" onClick={onEditArticle}>
                   编辑
