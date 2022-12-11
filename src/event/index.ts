@@ -1,3 +1,4 @@
+import { storage } from '@/utils';
 import { Dispatcher } from './dispatcher';
 
 class Event {
@@ -5,17 +6,23 @@ class Event {
 
   onToggleSider: Dispatcher;
 
+  onToggleTheme: Dispatcher;
+
   onSetCommentCount: Dispatcher;
 
   siderVisible: boolean;
 
   commentNum: number;
 
+  theme: string;
+
   constructor() {
     this.siderVisible = false;
     this.commentNum = 0;
+    this.theme = (storage.ssnGetItem('theme') as string) || 'light';
     this.onToggleSider = new Dispatcher();
     this.onSetCommentCount = new Dispatcher();
+    this.onToggleTheme = new Dispatcher();
   }
 
   // 单例模式
@@ -45,6 +52,12 @@ class Event {
   getCommentNum(comments: number) {
     this.commentNum = comments;
     this.onSetCommentCount.emit(this);
+  }
+
+  // 切换主题
+  changeTheme(theme: string) {
+    this.theme = theme;
+    this.onToggleTheme.emit(this);
   }
 }
 

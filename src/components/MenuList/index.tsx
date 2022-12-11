@@ -109,7 +109,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
 
   return (
     <div className={styles.siderContainer}>
-      {!type && htmlWidth > 960 && <ActionIcon className={styles.changeIconWrap} onClick={onToggleSider} icon={siderVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'} />}
+      {!type && htmlWidth > 960 && <ActionIcon className={styles.changeIconWrap} siderVisible={siderVisible} onClick={onToggleSider} />}
       <Sider
         theme="light"
         trigger={null}

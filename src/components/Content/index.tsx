@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react';
 import classname from 'classname';
-import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
+import { useGetSiderVisible, useHtmlWidth, useGetTheme } from '@/hooks';
 import { Scrollbars } from 'react-custom-scrollbars';
-
 import styles from './index.less';
 
 interface IProps {
@@ -30,6 +29,7 @@ const Content: React.FC<IProps> = ({
 }) => {
   const { siderVisible } = useGetSiderVisible();
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   return (
     <div
@@ -51,7 +51,8 @@ const Content: React.FC<IProps> = ({
           className={classname(
             styles.scrollWrap,
             className,
-            siderVisible && htmlWidth > 960 && styles.contentWidth
+            siderVisible && htmlWidth > 960 && styles.contentWidth,
+            themeMode === 'dark' && styles.dark
           )}
         >
           <Scrollbars

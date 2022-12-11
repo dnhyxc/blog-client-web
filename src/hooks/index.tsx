@@ -5,7 +5,7 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, Result } from '@/utils/tools';
 import { EventBus } from '@/event';
-import { error } from '@/utils';
+import { error, storage } from '@/utils';
 import { PAGESIZE } from '@/constant';
 import { close } from '@/components/Render';
 import {
@@ -706,4 +706,20 @@ export const useGetSiderStatus = () => {
   }, [siderVisible, htmlWidth]);
 
   return { siderStatus };
+};
+
+// 获取主题模式的hook
+export const useGetTheme = () => {
+  const [themeMode, setThemeMode] = useState<string>(storage.ssnGetItem('theme') as string);
+
+  useEffect(() => {
+    EventBus.onToggleTheme.listen(() => {
+      const { theme } = EventBus;
+      setThemeMode(theme);
+    });
+  }, []);
+
+  console.log(themeMode, 'themeMode>>>>tthemeModeheme');
+
+  return { themeMode };
 };

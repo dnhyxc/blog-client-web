@@ -136,6 +136,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
       <ActionIcon
         className={styles.changeIconWrap}
         onClick={onToggleActionBar}
+        type="actionbar"
         icon={!barVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'}
       />
       <div className={classname(styles.container, barVisible && styles.showBar)}>
