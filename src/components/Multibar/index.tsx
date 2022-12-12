@@ -6,7 +6,7 @@ import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { shareQQ, shareSinaWeiBo, error, info } from '@/utils';
 import Qrcode from '@/components/Qrcode';
-import { useVerifyToken } from '@/hooks';
+import { useGetTheme, useVerifyToken } from '@/hooks';
 import { EventBus } from '@/event';
 import MIcons from '@/components/Icons';
 import CollectionModal from '@/components/CollectionModel';
@@ -30,6 +30,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
   const [commentCount, setCommentCount] = useState<number>(0);
 
   const { loginStatus } = useVerifyToken(true);
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     EventBus.onSetCommentCount.listen(() => {
@@ -176,7 +177,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
   );
 
   return (
-    <div className={styles.Multibar}>
+    <div className={classname(styles.Multibar, themeMode === 'dark' && styles.dark)}>
       <div className={styles.actionBtn}>
         <MIcons
           name="icon-24gf-thumbsUp2"

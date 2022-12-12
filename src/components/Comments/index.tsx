@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'antd';
+import classname from 'classname';
 import Image from '@/components/Image';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -9,7 +10,7 @@ import { formatGapTime, error } from '@/utils';
 import { HEAD_UEL } from '@/constant';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/MAlert';
-import { useHtmlWidth, useLoginStatus, useScroll } from '@/hooks';
+import { useGetTheme, useHtmlWidth, useLoginStatus, useScroll } from '@/hooks';
 import { EventBus } from '@/event';
 import { CommentParams, GiveLikeResult, DeleteCommentResult } from '@/typings/common';
 import DraftInput from '../DraftInput';
@@ -36,6 +37,7 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
   } = useStore();
   const navigate = useNavigate();
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     getCommentList();
@@ -182,7 +184,10 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
   };
 
   return (
-    <div className={styles.Comments} ref={commentRef}>
+    <div
+      className={classname(styles.Comments, themeMode === 'dark' && styles.dark)}
+      ref={commentRef}
+    >
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.draftInputWrap}>
         <DraftInput

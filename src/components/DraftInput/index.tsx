@@ -3,6 +3,7 @@ import { Button, Input } from 'antd';
 import { useParams } from 'react-router-dom';
 import classname from 'classname';
 import useStore from '@/store';
+import { useGetTheme } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error } from '@/utils';
 import Image from '@/components/Image';
@@ -41,6 +42,7 @@ const DraftInput: React.FC<IProps> = ({
   const [keyword, setKeyword] = useState<string>('');
 
   const { id } = useParams();
+  const { themeMode } = useGetTheme();
 
   const inputRef: any = useRef();
 
@@ -201,7 +203,7 @@ const DraftInput: React.FC<IProps> = ({
                   </span>
                 </span>
               </div>
-              <div id="ACTION">
+              <div id="ACTION" className={themeMode === 'dark' && styles.darkBtn}>
                 <span id="ENTER" className={styles.enter}>
                   Ctrl + Enter
                 </span>

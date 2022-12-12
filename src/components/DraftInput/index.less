@@ -77,6 +77,16 @@
         margin-right: 15px;
         color: @font-3;
       }
+
+      .darkBtn {
+        :global {
+          .ant-btn-primary[disabled] {
+            background-color: @dark-gray;
+            color: @dark-fc;
+            border: @dark-gray;
+          }
+        }
+      }
     }
   }
 }

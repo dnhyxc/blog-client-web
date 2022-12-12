@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import classname from 'classname';
 import * as Service from '@/service';
+import { useGetTheme } from '@/hooks';
 import { normalizeResult } from '@/utils/tools';
 import { formatGapTime, storage } from '@/utils';
 import MIcons from '../Icons';
@@ -15,6 +17,7 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
   const [articleList, setArticleList] = useState<ArticleItem[]>([]);
 
   const navigate = useNavigate();
+  const { themeMode } = useGetTheme();
 
   const params: AnotherParams =
     (storage.locGetItem('params') && JSON.parse(storage.locGetItem('params')!)) || {};
@@ -51,7 +54,7 @@ const AnotherArticle: React.FC<IProps> = ({ id }) => {
   };
 
   return articleList[0]?.id || articleList[1]?.id ? (
-    <div className={styles.AnotherArticle}>
+    <div className={classname(styles.AnotherArticle, themeMode === 'dark' && styles.dark)}>
       {articleList.map((i, index) => {
         return (
           <div
