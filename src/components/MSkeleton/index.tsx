@@ -8,6 +8,7 @@ interface IProps {
   skeletonWrapStyle?: string;
   rows?: number;
   text?: string;
+  textStyle?: string;
   terminal?: string;
 }
 
@@ -16,6 +17,7 @@ const MSkeleton: React.FC<IProps> = ({
   skeletonWrapStyle,
   rows,
   text,
+  textStyle,
   terminal,
 }) => {
   return (
@@ -32,7 +34,9 @@ const MSkeleton: React.FC<IProps> = ({
         </div>
       )}
 
-      <div className={styles.emptyText}>{text || '已是全部家当～～～'}</div>
+      <div className={classname(styles.emptyText, textStyle)}>
+        {text || '已是全部家当～～～'}
+      </div>
     </div>
   );
 };

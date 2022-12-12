@@ -250,6 +250,36 @@
   }
 }
 
+.dark {
+  background-color: @dark-bgc;
+
+  &::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: @dark-bgc-deep;
+  }
+
+  .content {
+    background-color: @dark-bgc !important;
+
+    .preview {
+      .previewContent {
+        background-color: @dark-bgc-deep;
+        color: @dark-fc;
+
+        :global(p code) {
+          background: @dark-gray;
+          padding: 2px 5px;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 960px) {
   .hanToc {
     padding: 0;

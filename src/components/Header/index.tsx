@@ -9,7 +9,7 @@ import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
 import { LeftOutlined } from '@ant-design/icons';
-import { useHtmlWidth, useGetSiderVisible } from '@/hooks';
+import { useHtmlWidth, useGetSiderVisible, useGetTheme } from '@/hooks';
 import MIcons from '../Icons';
 import HeadMenu from '../HeadMenu';
 import User from './User';
@@ -39,6 +39,7 @@ const Header: React.FC<IProps> = ({
   iconStyles,
 }) => {
   const { siderVisible } = useGetSiderVisible();
+  const { themeMode } = useGetTheme();
 
   const navigate = useNavigate();
   const { htmlWidth } = useHtmlWidth();
@@ -52,7 +53,14 @@ const Header: React.FC<IProps> = ({
   };
 
   return (
-    <div className={classname(className, styles.herderWrap)} ref={headerRef}>
+    <div
+      className={classname(
+        className,
+        styles.herderWrap,
+        themeMode === 'dark' && styles.dark
+      )}
+      ref={headerRef}
+    >
       <div className={styles.left}>
         {needLeft &&
           (left || (

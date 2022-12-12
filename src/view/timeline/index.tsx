@@ -19,6 +19,7 @@ import {
   useVerifyToken,
   useGetSiderVisible,
   useHtmlWidth,
+  useGetTheme,
 } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -34,6 +35,7 @@ const TimeLine: React.FC = () => {
   const navigate = useNavigate();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const { onScroll, scrollRef, scrollTop, scrollbarRef } = useScrollLoad({});
+  const { themeMode } = useGetTheme();
 
   const {
     userInfoStore: { getUserInfo },
@@ -124,7 +126,14 @@ const TimeLine: React.FC = () => {
                     dot={<ClockCircleOutlined style={{ fontSize: '16px' }} />}
                   >
                     <div className={styles.cardList}>
-                      <div className={styles.date}>{i.date}</div>
+                      <div
+                        className={classname(
+                          styles.date,
+                          themeMode === 'dark' && styles.dark
+                        )}
+                      >
+                        {i.date}
+                      </div>
                       {i.articles && i.articles.length > 0 && (
                         <Card
                           list={i.articles}
@@ -153,6 +162,8 @@ const TimeLine: React.FC = () => {
               <MSkeleton
                 rows={htmlWidth > 960 ? 2 : 3}
                 terminal={htmlWidth > 960 ? 'web' : 'h5'}
+                skeletonWrapStyle={themeMode === 'dark' && styles.darkSkeleton}
+                textStyle={themeMode === 'dark' && styles.darkTextStyle}
               />
             </div>
           )}

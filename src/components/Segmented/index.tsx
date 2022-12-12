@@ -8,6 +8,7 @@ interface IProps {
   onClick: (tagName: string) => void;
   getOffsetHeight?: (height: number) => void;
   className?: string;
+  activeTagStyle?: string;
   classify?: string | null;
 }
 
@@ -16,6 +17,7 @@ const MSegmented: React.FC<IProps> = ({
   className,
   getOffsetHeight,
   classify,
+  activeTagStyle,
 }) => {
   const [tagIndex, setTagIndex] = useState<number>(
     ARTICLE_CLASSIFY.findIndex((i) => i === classify) || 0
@@ -86,7 +88,7 @@ const MSegmented: React.FC<IProps> = ({
         );
       })}
       <span
-        className={styles.activeTag}
+        className={classname(styles.activeTag, activeTagStyle)}
         style={{ top: offsetTop, left: offsetLeft, width: clientWidth }}
       />
     </div>

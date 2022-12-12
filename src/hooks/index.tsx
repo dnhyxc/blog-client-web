@@ -321,6 +321,8 @@ export const useScrollLoad = ({
   scrollStyle, // 如果需要吸顶，组件必须设置ref=scrollRef，且必须传入scrollStyle参数
   paddingTopStyle,
   headerStyle, // header 特定样式
+  headerDarkStyle, // header 暗黑样式
+  themeMode, // 主题模式
 }: useScrollLoadParams<any>) => {
   const [pageNo, setPageNo] = useState<number>(1);
   const [suckTop, setSuckTop] = useState<boolean>(false);
@@ -330,6 +332,19 @@ export const useScrollLoad = ({
   const scrollbarRef = useRef<any>(null);
   const contentWrapRef = useRef<any>(null);
   const headerRef = useRef<any>(null);
+
+  // 点击主题切换时，实时更新样式
+  useEffect(() => {
+    if (themeMode === 'dark' && scrollTop >= document.body.clientHeight - 50) {
+      headerStyle && headerRef?.current?.classList?.remove(headerStyle);
+      headerStyle && headerRef?.current?.classList?.add(headerDarkStyle);
+    }
+
+    if (themeMode === 'light' && scrollTop >= document.body.clientHeight - 50) {
+      headerStyle && headerRef?.current?.classList?.remove(headerDarkStyle);
+      headerStyle && headerRef?.current?.classList?.add(headerStyle);
+    }
+  }, [themeMode, scrollTop]);
 
   const addClassName = (scrollTop: number) => {
     const currentTop = paddingTopStyle
@@ -347,10 +362,19 @@ export const useScrollLoad = ({
     }
 
     // 动态计算首页Content组件中contentWrap元素的paddingTop
-    if (scrollTop >= document.body.clientHeight - 50) {
+    if (scrollTop >= document.body.clientHeight - 50 && themeMode === 'light') {
+      headerStyle && headerRef?.current?.classList?.remove(headerDarkStyle);
       headerStyle && headerRef?.current?.classList?.add(headerStyle);
     } else {
       headerStyle && headerRef?.current?.classList?.remove(headerStyle);
+    }
+
+    // 动态计算首页Content组件中contentWrap元素的paddingTop
+    if (scrollTop >= document.body.clientHeight - 50 && themeMode === 'dark') {
+      headerStyle && headerRef?.current?.classList?.remove(headerStyle);
+      headerStyle && headerRef?.current?.classList?.add(headerDarkStyle);
+    } else {
+      headerStyle && headerRef?.current?.classList?.remove(headerDarkStyle);
     }
   };
 

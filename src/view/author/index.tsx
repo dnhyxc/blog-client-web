@@ -20,6 +20,7 @@ import {
   useDeleteArticle,
   useDeleteTimelineArticle,
   useHtmlWidth,
+  useGetTheme,
 } from '@/hooks';
 import { PAGESIZE, HEAD_UEL, MAIN_COVER, AUTHOR_TABS, AUTHOR_API_PATH } from '@/constant';
 import Footer from '@/components/Footer';
@@ -59,6 +60,7 @@ const Author: React.FC = () => {
     loading,
     pageSize: PAGESIZE,
   });
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     onGetPersonalInfo();
@@ -212,7 +214,7 @@ const Author: React.FC = () => {
   );
 
   return (
-    <div className={styles.AuthorContainer}>
+    <div className={classname(styles.AuthorContainer, themeMode === 'dark' && styles.dark)}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth right={rightNode()}>
@@ -227,9 +229,18 @@ const Author: React.FC = () => {
         scrollbarRef={scrollbarRef}
       >
         <div
-          className={classname(styles.wrap, siderStore.toggleSider && styles.changeWidth)}
+          className={classname(
+            styles.wrap,
+            siderStore.toggleSider && styles.changeWidth,
+            themeMode === 'dark' && styles.dark
+          )}
         >
-          <div className={styles.infoWrap}>
+          <div
+            className={classname(
+              styles.infoWrap,
+              themeMode === 'dark' && styles.darkInfoWrap
+            )}
+          >
             <div className={styles.mainCover}>
               <Image
                 url={authorInfo?.mainCover || MAIN_COVER}
@@ -250,7 +261,12 @@ const Author: React.FC = () => {
               <div className={styles.info}>{authorInfo?.job}</div>
             </div>
           </div>
-          <div className={styles.viewMore}>
+          <div
+            className={classname(
+              styles.viewMore,
+              themeMode === 'dark' && styles.darkViewMore
+            )}
+          >
             {showMoreInfo && (
               <div>
                 <div className={styles.info}>{authorInfo?.introduce}</div>
@@ -301,7 +317,15 @@ const Author: React.FC = () => {
           <div className={styles.content}>
             <div className={styles.tabList}>
               <div className={styles.tab}>
-                <Tabs defaultActiveKey="1" onChange={onChangeTabs}>
+                <Tabs
+                  defaultActiveKey="1"
+                  onChange={onChangeTabs}
+                  tabBarStyle={
+                    themeMode === 'dark'
+                      ? { backgroundColor: '#232323', color: '#f1f1f1' }
+                      : {}
+                  }
+                >
                   {AUTHOR_TABS.map((i) => {
                     return (
                       <TabPane tab={i.name} key={i.value}>

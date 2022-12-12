@@ -21,7 +21,7 @@ import RightBar from '@/components/RightBar';
 import Toc from '@/components/ArticleToc';
 import Comments from '@/components/Comments';
 import AnotherArticle from '@/components/AnotherArticle';
-import { useGetArticleDetail, useHtmlWidth } from '@/hooks';
+import { useGetArticleDetail, useGetTheme, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
 import { formatDate } from '@/utils';
 import ActionBar from '@/components/ActionBar';
@@ -36,6 +36,7 @@ const ArticleDetail: React.FC = () => {
     userInfoStore: { getUserInfo },
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
   const commentRef = useRef<HTMLDivElement | null>(null);
 
   // 高级搜索
@@ -101,7 +102,8 @@ const ArticleDetail: React.FC = () => {
       <div
         className={classname(
           styles.detailContainer,
-          detail?.content.includes('#') && styles.hanToc
+          detail?.content.includes('#') && styles.hanToc,
+          themeMode === 'dark' && styles.dark
         )}
       >
         <div className={styles.headerWrap}>

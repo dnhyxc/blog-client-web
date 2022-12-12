@@ -46,7 +46,32 @@
         }
       }
     }
+
+    .dark {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
+    }
+
+    .itemDark {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
+
+      &:hover {
+        box-shadow: 0 0 3px @dark-bgc;
+        background-color: @dark-bgc;
+        cursor: pointer;
+      }
+    }
   }
+
+  .dark {
+    background-color: @dark-bgc;
+    color: @dark-fc;
+  }
+}
+
+.dark {
+  background-color: @dark-bgc-deep;
 }
 
 :global {

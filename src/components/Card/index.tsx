@@ -6,7 +6,7 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
 import { formatGapTime } from '@/utils';
 import useStore from '@/store';
-import { useHtmlWidth } from '@/hooks';
+import { useHtmlWidth, useGetTheme } from '@/hooks';
 import Image from '@/components/Image';
 import { CARD_URL } from '@/constant';
 import MIcons from '@/components/Icons';
@@ -71,6 +71,7 @@ const Card: React.FC<IProps> = ({
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const authorId = search.get('authorId');
+  const { themeMode } = useGetTheme();
 
   const renderAction = (id: string) => {
     const onRemoveArticle = (id: string) => {
@@ -161,7 +162,11 @@ const Card: React.FC<IProps> = ({
       {list && list.length > 0 ? (
         list.map((i) => (
           <div
-            className={classname(styles.item, itemClass)}
+            className={classname(
+              styles.item,
+              itemClass,
+              themeMode === 'dark' && styles.dark
+            )}
             key={i.id}
             onClick={() => toDetail && toDetail(i.id)}
           >
@@ -242,7 +247,11 @@ const Card: React.FC<IProps> = ({
                       name={`${i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'}`}
                       text={i.likeCount > 0 ? i.likeCount : '点赞'}
                       iconWrapClass={styles.iconWrap}
-                      className={i.isLike ? styles.isLike : null}
+                      className={classname(
+                        i.isLike ? styles.isLike : null,
+                        themeMode === 'dark' && styles.darkText
+                      )}
+                      textStyle={themeMode === 'dark' && styles.darkText}
                       onClick={() => likeArticle && likeArticle(i.id)}
                     />
                     <MIcons
@@ -250,13 +259,16 @@ const Card: React.FC<IProps> = ({
                       text={i.replyCount > 0 ? i.replyCount : '评论'}
                       iconWrapClass={styles.iconWrap}
                       onClick={() => toDetail && toDetail(i.id, true)}
+                      className={classname(themeMode === 'dark' && styles.darkText)}
+                      textStyle={themeMode === 'dark' && styles.darkText}
                     />
                     <MIcons
                       name="icon-yanjing"
                       text={i.readCount > 0 ? i.readCount : '阅读'}
                       iconWrapClass={styles.iconWrap}
-                      className={styles.eyes}
+                      className={(styles.eyes, themeMode === 'dark' && styles.darkText)}
                       onClick={() => likeArticle && likeArticle(i.id)}
+                      textStyle={themeMode === 'dark' && styles.darkText}
                     />
                   </div>
                   {htmlWidth < 960 && (
@@ -282,18 +294,38 @@ const Card: React.FC<IProps> = ({
           </div>
         ))
       ) : htmlWidth > 960 ? (
-        <div className={classname(styles.item, itemClass, styles.skeletonWrap)}>
+        <div
+          className={classname(
+            styles.item,
+            itemClass,
+            styles.skeletonWrap,
+            themeMode === 'dark' && styles.dark
+          )}
+        >
           <Skeleton.Image className={classname(styles.skeletonAvatar, skeletonAvatar)} />
           <Skeleton active title paragraph={{ rows: skeletonRows }} />
         </div>
       ) : (
-        <div className={classname(styles.item, itemClass, styles.skeletonWrap)}>
+        <div
+          className={classname(
+            styles.item,
+            itemClass,
+            styles.skeletonWrap,
+            themeMode === 'dark' && styles.dark
+          )}
+        >
           <Skeleton active title paragraph={{ rows: skeletonRows }} />
           <Skeleton.Image className={classname(styles.skeletonAvatar, skeletonAvatar)} />
         </div>
       )}
       {!loading && list.length === total ? (
-        <div className={classname(styles.noMore, noMoreStyle)}>
+        <div
+          className={classname(
+            styles.noMore,
+            noMoreStyle,
+            themeMode === 'dark' && styles.darkNoMore
+          )}
+        >
           {list.length > 0
             ? `共(${list.length})
           篇，${loadText || '已是全部家当'}～～～`
@@ -301,7 +333,15 @@ const Card: React.FC<IProps> = ({
             篇，空空如也～～～`}
         </div>
       ) : (
-        <div className={classname(styles.noMore, noMoreStyle)}>loading...</div>
+        <div
+          className={classname(
+            styles.noMore,
+            noMoreStyle,
+            themeMode === 'dark' && styles.darkNoMore
+          )}
+        >
+          loading...
+        </div>
       )}
     </div>
   );

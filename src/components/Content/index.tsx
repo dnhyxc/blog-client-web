@@ -36,7 +36,8 @@ const Content: React.FC<IProps> = ({
       className={classname(
         styles.container,
         containerClassName,
-        siderVisible && htmlWidth > 960 && styles.showContainer
+        siderVisible && htmlWidth > 960 && styles.showContainer,
+        themeMode === 'dark' && styles.darkContainer
       )}
     >
       <div

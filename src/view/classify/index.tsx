@@ -16,6 +16,7 @@ import {
   useDeleteArticle,
   useGetSiderVisible,
   useHtmlWidth,
+  useGetTheme,
 } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -53,6 +54,7 @@ const Classify: React.FC = () => {
     userInfoStore: { getUserInfo },
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     getClassifyList();
@@ -167,13 +169,16 @@ const Classify: React.FC = () => {
             <div
               className={classname(
                 styles.segmentedWrap,
-                siderVisible && styles.changeWidth
+                siderVisible && styles.changeWidth,
+                themeMode === 'dark' && styles.dark
               )}
             >
               <MSegmented
                 onClick={onSelectClassify}
                 getOffsetHeight={getOffsetHeight}
                 classify={classify}
+                className={themeMode === 'dark' && styles.darkSegmented}
+                activeTagStyle={themeMode === 'dark' && styles.activeTagStyle}
               />
             </div>
             <Card

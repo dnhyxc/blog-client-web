@@ -1,6 +1,7 @@
 @import '~@styles/common.less';
 
 .herderWrap {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -44,6 +45,11 @@
     justify-content: flex-end;
     align-items: center;
   }
+}
+
+.dark {
+  background-color: @dark-bgc-deep;
+  color: @dark-fc;
 }
 
 @media screen and (max-width: 960px) {

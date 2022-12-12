@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
 import useStore from '@/store';
-import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
+import { useGetSiderVisible, useGetTheme, useHtmlWidth } from '@/hooks';
 import { formatGapTime, error } from '@/utils';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
@@ -23,6 +23,7 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
   const { siderVisible } = useGetSiderVisible();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     getArticleByRandom();
@@ -50,15 +51,22 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
     <div
       className={classname(
         styles.NewArticles,
-        siderVisible && htmlWidth > 960 && styles.changeTop
+        siderVisible && htmlWidth > 960 && styles.changeTop,
+        themeMode === 'dark' && styles.dark
       )}
       ref={scrollRef}
     >
-      <div className={styles.contant}>
-        <div className={styles.header}>文章推荐</div>
+      <div className={classname(styles.contant, themeMode === 'dark' && styles.dark)}>
+        <div className={classname(styles.header, themeMode === 'dark' && styles.dark)}>
+          文章推荐
+        </div>
         {recommendList.length > 0 &&
           recommendList.map((i) => (
-            <div key={i.id} className={styles.item} onClick={() => toDetail(i.id)}>
+            <div
+              key={i.id}
+              className={classname(styles.item, themeMode === 'dark' && styles.itemDark)}
+              onClick={() => toDetail(i.id)}
+            >
               <div className={styles.title}>{i.title}</div>
               <div className={styles.abstract}>
                 <span>{formatGapTime(i.createTime)}</span>

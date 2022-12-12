@@ -31,6 +31,9 @@
             font-weight: 600;
             line-height: 26px;
           }
+          .dark {
+            color: @dark-fc;
+          }
         }
       }
 
@@ -87,28 +90,17 @@
         flex: 1;
         margin-top: 38px;
 
-        .skeletonWrap {
-          display: flex;
-          align-items: center;
-          padding: 10px 10px;
-          height: 130px;
-          padding-bottom: 10px;
-          background-color: #fff;
-          border-radius: 5px;
-
-          .skeletonAvatar {
-            height: 110px;
-            width: 200px;
-            margin-right: 10px;
-            margin-bottom: 0;
-            border-radius: 5px;
-          }
+        .darkSkeleton {
+          background-color: @dark-bgc-deep;
         }
 
-        .emptyText {
-          text-align: center;
-          margin: 12px 0;
+        .darkTextStyle {
+          color: @dark-fc;
         }
+      }
+
+      .dark {
+        background-color: @dark-bgc;
       }
     }
 

@@ -5,6 +5,7 @@ import { HEAD_UEL } from '@/constant';
 import { Button } from 'antd';
 import Image from '@/components/Image';
 import * as Service from '@/service';
+import { useGetTheme } from '@/hooks';
 import { info, normalizeResult } from '@/utils';
 import { UserInfoParams } from '@/typings/common';
 import styles from './index.less';
@@ -20,6 +21,7 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle }) => 
   });
 
   const navigate = useNavigate();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     onGetPersonalInfo();
@@ -79,7 +81,8 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle }) => 
       className={classname(
         styles.introductionWrap,
         className,
-        showRecommendArticle && styles.needMarginBottom
+        showRecommendArticle && styles.needMarginBottom,
+        themeMode === 'dark' && styles.dark
       )}
     >
       <div className={styles.card}>

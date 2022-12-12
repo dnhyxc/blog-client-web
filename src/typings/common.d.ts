@@ -209,6 +209,7 @@ interface TimelineArticles {
   classify: string;
   likeCount: number;
   replyCount: number;
+  readCount: number;
 }
 
 export interface TimelineResult {
@@ -252,6 +253,8 @@ export interface useScrollLoadParams<T> {
   scrollStyle?: string;
   paddingTopStyle?: string;
   headerStyle?: string;
+  headerDarkStyle?: string;
+  themeMode?: string;
 }
 
 export interface useDeleteArticleParams {

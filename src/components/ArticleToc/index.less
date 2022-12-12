@@ -78,6 +78,62 @@
   }
 }
 
+.dark {
+  background-color: @dark-bgc-deep;
+
+  .mackNav {
+    background-color: @dark-bgc-deep;
+  }
+
+  .tocText {
+    border-bottom: 1px solid @dark-gray;
+    color: @dark-fc;
+  }
+
+  .tocList {
+    background-color: @dark-bgc-deep;
+  }
+
+  :global(.markdown-navigation .title-anchor) {
+    &:hover {
+      background-color: @dark-gray;
+      color: @dark-fc;
+    }
+  }
+
+  :global(.markdown-navigation .title-anchor.active) {
+    color: @menu-active;
+
+    &::after {
+      background-color: @menu-active;
+    }
+
+    &:hover {
+      background-color: #fff;
+      color: @menu-active;
+    }
+  }
+
+  :global(.markdown-navigation) {
+    :global(.title-level3) {
+      color: @dark-fc;
+      padding-left: 20px;
+    }
+    :global(.title-level4) {
+      color: @font-3;
+      padding-left: 20px;
+    }
+    :global(.title-level5) {
+      color: @font-2;
+      padding-left: 20px;
+    }
+    :global(.title-level6) {
+      color: @font-2;
+      padding-left: 20px;
+    }
+  }
+}
+
 @media screen and (max-width: 960px) {
   .tocWrap {
     display: none;

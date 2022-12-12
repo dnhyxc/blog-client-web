@@ -123,6 +123,11 @@
       }
     }
 
+    .darkInfoWrap {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
+    }
+
     .viewMore {
       background-color: #fff;
       width: 100%;
@@ -138,6 +143,8 @@
 
       .moreInfo {
         .ellipsis();
+        display: flex;
+        justify-content: flex-start;
         cursor: pointer;
 
         .downIcon {
@@ -149,6 +156,11 @@
         margin-left: 10px;
         color: @font-4;
       }
+    }
+
+    .darkViewMore {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
     }
 
     .content {
@@ -164,6 +176,11 @@
         border-radius: 5px;
 
         .tab {
+          .tabBar {
+            background-color: @dark-bgc-deep;
+            color: @dark-fc;
+          }
+
           .wrapClass {
             width: 100%;
           }
@@ -212,6 +229,10 @@
     padding: 0;
   }
 
+  .dark {
+    background-color: @dark-bgc;
+  }
+
   :global {
     .ant-tabs > .ant-tabs-nav {
       padding: 0 10px;
@@ -219,7 +240,15 @@
       background-color: #fff;
       border-radius: 5px;
     }
+
+    .ant-tabs-top > .ant-tabs-nav::before {
+      border-bottom: none;
+    }
   }
+}
+
+.dark {
+  background-color: @dark-bgc;
 }
 
 .iconWrap {
@@ -253,7 +282,7 @@
       .content {
         width: 100%;
 
-        .noMoreStyle{
+        .noMoreStyle {
           padding: 10px 0 4px 0;
         }
       }

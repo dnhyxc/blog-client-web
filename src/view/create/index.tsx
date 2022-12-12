@@ -12,6 +12,7 @@ import {
   useVerifyToken,
   useGetSiderVisible,
   useHtmlWidth,
+  useGetTheme,
 } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, info, success, error } from '@/utils';
@@ -27,7 +28,7 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -45,9 +46,15 @@ const CreateArticle: React.FC<IProps> = () => {
   const navigate = useNavigate();
   const id = search.get('id');
   const draftId = search.get('draftId');
-  const { detail, setDetail } = useGetArticleDetail({ id, draftId, visible, draftArticleId });
+  const { detail, setDetail } = useGetArticleDetail({
+    id,
+    draftId,
+    visible,
+    draftArticleId,
+  });
   const { htmlWidth } = useHtmlWidth();
   const { siderVisible } = useGetSiderVisible();
+  const { themeMode } = useGetTheme();
 
   const onGetMackdown = (mackdown: any) => {
     setContent(mackdown.trim());
@@ -176,7 +183,8 @@ const CreateArticle: React.FC<IProps> = () => {
       <div
         className={classname(
           styles.tuiEditorWrap,
-          siderVisible && htmlWidth > 960 && styles.changeHeight
+          siderVisible && htmlWidth > 960 && styles.changeHeight,
+          themeMode === 'dark' && styles.dark
         )}
       >
         <TuiEditor

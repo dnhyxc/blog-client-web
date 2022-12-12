@@ -24,6 +24,7 @@ import {
   useDeleteArticle,
   useHtmlWidth,
   useGetSiderVisible,
+  useGetTheme,
 } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -50,6 +51,7 @@ const Home: React.FC<IProps> = () => {
   const listRef = useRef<ArticleItem[]>([]);
 
   const navigate = useNavigate();
+  const { themeMode } = useGetTheme();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const {
     userInfoStore: { getUserInfo },
@@ -72,6 +74,8 @@ const Home: React.FC<IProps> = () => {
     pageSize: PAGESIZE,
     paddingTopStyle: siderVisible && htmlWidth > 960 && styles.paddingTopStyle,
     headerStyle: siderVisible && htmlWidth > 960 && styles.headerStyle,
+    headerDarkStyle: siderVisible && htmlWidth > 960 && styles.headerDarkStyle,
+    themeMode,
   });
 
   useEffect(() => {
