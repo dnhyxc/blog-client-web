@@ -743,7 +743,5 @@ export const useGetTheme = () => {
     });
   }, []);
 
-  console.log(themeMode, 'themeMode>>>>tthemeModeheme');
-
   return { themeMode };
 };
