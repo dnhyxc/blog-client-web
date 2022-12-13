@@ -123,10 +123,10 @@
       }
     }
 
-    .darkInfoWrap {
-      background-color: @dark-bgc-deep;
-      color: @dark-fc;
-    }
+    // .darkInfoWrap {
+    //   background-color: @dark-bgc-deep;
+    //   color: @dark-fc;
+    // }
 
     .viewMore {
       background-color: #fff;
@@ -158,10 +158,10 @@
       }
     }
 
-    .darkViewMore {
-      background-color: @dark-bgc-deep;
-      color: @dark-fc;
-    }
+    // .darkViewMore {
+    //   background-color: @dark-bgc-deep;
+    //   color: @dark-fc;
+    // }
 
     .content {
       display: flex;
@@ -229,10 +229,6 @@
     padding: 0;
   }
 
-  .dark {
-    background-color: @dark-bgc;
-  }
-
   :global {
     .ant-tabs > .ant-tabs-nav {
       padding: 0 10px;
@@ -244,11 +240,48 @@
     .ant-tabs-top > .ant-tabs-nav::before {
       border-bottom: none;
     }
+
+    .ant-timeline-item-head {
+      background-color: transparent;
+    }
   }
 }
 
+// 暗黑样式设置
 .dark {
   background-color: @dark-bgc;
+
+  .wrap {
+    background-color: @dark-bgc;
+    .infoWrap {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
+    }
+
+    .viewMore {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
+    }
+
+    .content {
+      .tabList {
+        .tab {
+          .tabBar {
+            background-color: @dark-bgc-deep;
+            color: @dark-fc;
+          }
+
+          .timelineContent {
+            background-color: @dark-bgc-deep;
+
+            .date {
+              color: @dark-fc;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .iconWrap {

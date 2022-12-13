@@ -231,16 +231,10 @@ const Author: React.FC = () => {
         <div
           className={classname(
             styles.wrap,
-            siderStore.toggleSider && styles.changeWidth,
-            themeMode === 'dark' && styles.dark
+            siderStore.toggleSider && styles.changeWidth
           )}
         >
-          <div
-            className={classname(
-              styles.infoWrap,
-              themeMode === 'dark' && styles.darkInfoWrap
-            )}
-          >
+          <div className={styles.infoWrap}>
             <div className={styles.mainCover}>
               <Image
                 url={authorInfo?.mainCover || MAIN_COVER}
@@ -261,12 +255,7 @@ const Author: React.FC = () => {
               <div className={styles.info}>{authorInfo?.job}</div>
             </div>
           </div>
-          <div
-            className={classname(
-              styles.viewMore,
-              themeMode === 'dark' && styles.darkViewMore
-            )}
-          >
+          <div className={styles.viewMore}>
             {showMoreInfo && (
               <div>
                 <div className={styles.info}>{authorInfo?.introduce}</div>
@@ -332,18 +321,18 @@ const Author: React.FC = () => {
                         {(i.value !== '3' ||
                           !timelineList.length ||
                           (timelineList.length && !timelineList[0].articles.length)) && (
-                          <Card
-                            list={articleList.list}
-                            total={articleList.total}
-                            wrapClass={styles.wrapClass}
-                            toDetail={toDetail}
-                            likeArticle={likeArticle}
-                            deleteArticle={deleteArticle}
-                            onEditArticle={onEditArticle}
-                            loadText="地主家也没余粮了"
-                            loading={loading}
-                          />
-                        )}
+                            <Card
+                              list={articleList.list}
+                              total={articleList.total}
+                              wrapClass={styles.wrapClass}
+                              toDetail={toDetail}
+                              likeArticle={likeArticle}
+                              deleteArticle={deleteArticle}
+                              onEditArticle={onEditArticle}
+                              loadText="地主家也没余粮了"
+                              loading={loading}
+                            />
+                          )}
                         {i.value === '3' &&
                           timelineList.length > 0 &&
                           timelineList[0].articles.length > 0 && (

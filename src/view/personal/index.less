@@ -109,6 +109,10 @@
               background-color: #fff;
               border-radius: 5px;
             }
+
+            .ant-tabs-top > .ant-tabs-nav::before {
+              border-bottom: none;
+            }
           }
         }
       }
@@ -121,6 +125,19 @@
 
   .iconWrap {
     cursor: pointer;
+  }
+}
+
+.dark {
+  .contentWrap {
+    .content {
+      .wrap {
+        .userInfo {
+          background-color: @dark-bgc-deep;
+          color: @dark-fc;
+        }
+      }
+    }
   }
 }
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Skeleton } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
-import { useHtmlWidth } from '@/hooks';
+import { useGetTheme, useHtmlWidth } from '@/hooks';
 import { formatDate } from '@/utils';
 import { ArticleItem, AddCollectionRes } from '@/typings/common';
 import MIcons from '../Icons';
@@ -50,6 +50,7 @@ const MList: React.FC<IProps> = ({
     userInfoStore: { getUserInfo },
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   const toClolection = (id: string) => {
     navigate(`/collection/${id}?authorId=${authorId || getUserInfo?.userId}`);
@@ -65,7 +66,7 @@ const MList: React.FC<IProps> = ({
   };
 
   return (
-    <div className={styles.collectionWrap}>
+    <div className={classname(styles.collectionWrap, themeMode === 'dark' && styles.dark)}>
       {list?.length > 0 && (
         <div className={styles.collectionHeader}>
           <div className={styles.collectCount}>

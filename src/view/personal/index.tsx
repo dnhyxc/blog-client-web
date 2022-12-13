@@ -37,6 +37,7 @@ import {
   useGetUserInfo,
   useHtmlWidth,
   useGetSiderVisible,
+  useGetTheme,
 } from '@/hooks';
 import {
   ArticleListResult,
@@ -69,6 +70,7 @@ const Personal = () => {
   const navigate = useNavigate();
   const { htmlWidth } = useHtmlWidth();
   const { siderVisible } = useGetSiderVisible();
+  const { themeMode } = useGetTheme();
 
   const listRef = useRef<ArticleItem[]>([]);
   const {
@@ -211,7 +213,7 @@ const Personal = () => {
     pageNo,
     authorId: authorId as string,
     accessUserId: getUserInfo?.userId,
-    getCollectionTotal: selectKey === '3' ? getCollectionTotal : () => {},
+    getCollectionTotal: selectKey === '3' ? getCollectionTotal : () => { },
   });
 
   // 更新收藏集
@@ -285,7 +287,7 @@ const Personal = () => {
   );
 
   return (
-    <div className={styles.Personal}>
+    <div className={classname(styles.Personal, themeMode === 'dark' && styles.dark)}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()}>我的主页</Header>
       <Content
@@ -346,7 +348,15 @@ const Personal = () => {
               </div>
             </div>
             <div className={styles.tabsWrap}>
-              <Tabs defaultActiveKey={tabKey || '1'} onChange={onChange}>
+              <Tabs
+                defaultActiveKey={tabKey || '1'}
+                onChange={onChange}
+                tabBarStyle={
+                themeMode === 'dark'
+                  ? { backgroundColor: '#232323', color: '#f1f1f1' }
+                  : {}
+              }
+              >
                 {getTabList.map((i) => {
                   return (
                     <TabPane tab={i.name} key={i.value}>

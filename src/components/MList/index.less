@@ -73,6 +73,8 @@
     }
 
     .collectionName {
+      display: flex;
+      justify-content: flex-start;
       font-size: 16px;
       margin-bottom: 8px;
       font-weight: 600;
@@ -115,6 +117,26 @@
     display: flex;
     align-items: center;
     padding: 15px 10px 0 10px;
+  }
+}
+
+.dark {
+  .collectionHeader {
+    background-color: @dark-bgc-deep;
+
+    .collectCount {
+      .listCount,
+      .count {
+        background-color: @dark-gray;
+        color: #1da57a;
+      }
+    }
+  }
+
+  .collectionItem {
+    background-color: @dark-bgc-deep;
+    color: @dark-fc;
+    border-bottom: 1px solid @dark-bgc;
   }
 }
 
