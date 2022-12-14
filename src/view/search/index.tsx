@@ -15,6 +15,7 @@ import {
   useScrollLoad,
   useDeleteArticle,
   useHtmlWidth,
+  useGetTheme,
 } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
@@ -23,7 +24,7 @@ import { info, error, normalizeResult } from '@/utils';
 import { ArticleListResult, SearchTypeParams, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const Search: React.FC<IProps> = () => {
   const [showMore, setShowMore] = useState<boolean>(false);
@@ -49,6 +50,7 @@ const Search: React.FC<IProps> = () => {
     userInfoStore: { getUserInfo },
   } = useStore();
   const navigate = useNavigate();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (showMore) {
@@ -185,7 +187,7 @@ const Search: React.FC<IProps> = () => {
   };
 
   return (
-    <div className={styles.Search}>
+    <div className={classname(styles.Search, themeMode === 'dark' && styles.dark)}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth>

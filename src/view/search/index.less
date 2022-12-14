@@ -107,6 +107,10 @@
               height: 50px;
             }
           }
+
+          .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
+            border-radius: 0 5px 5px 0px;
+          }
         }
       }
 
@@ -215,6 +219,41 @@
       margin-bottom: 10px;
       background-color: #fff;
       border-radius: 5px;
+    }
+  }
+}
+
+.dark {
+  background-color: @dark-bgc;
+
+  .wrap {
+    background-color: @dark-bgc;
+
+    .searchWrap {
+      .searchTagList {
+        .label {
+          background-color: @dark-gray;
+          color: @dark-fc;
+
+          .downIcon{
+            color: @dark-fc;
+          }
+
+          .viewMoreInfo {
+            margin-left: 5px;
+            color: @dark-fc;
+          }
+        }
+
+        .tag {
+          background-color: @dark-gray;
+          color: @dark-fc;
+        }
+        .active {
+          background-color: @menu-active;
+          color: #fff;
+        }
+      }
     }
   }
 }

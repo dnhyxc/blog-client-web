@@ -743,5 +743,13 @@ export const useGetTheme = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (themeMode === 'dark') {
+      document.body.style.backgroundColor = '#333';
+    } else {
+      document.body.style.backgroundColor = '#fff';
+    }
+  }, [themeMode]);
+
   return { themeMode };
 };
