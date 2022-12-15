@@ -118,6 +118,15 @@ export const GLOBAL_STYLES = {
   WHITE: '#fff',
 };
 
+// Drawer 暗黑样式
+export const DRAWER_STYLES = {
+  headerStyle: {
+    backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP,
+    color: GLOBAL_STYLES.DARK_FC,
+  },
+  bodyStyle: { backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP },
+};
+
 // 播放顺序图标
 export const MUSIC_ORDER_ICONS = [
   'icon-24gl-repeat2',

@@ -34,6 +34,21 @@
   }
 }
 
+.overlayClassName {
+  :global {
+    .ant-popover-inner {
+      background-color: @dark-gray;
+      color: @dark-fc;
+    }
+    .ant-popover-inner-content {
+      color: @dark-fc;
+    }
+    .ant-popover-arrow-content {
+      --antd-arrow-background-color: @dark-gray;
+    }
+  }
+}
+
 .wrap {
   width: calc(100% - 260px);
 
@@ -144,6 +159,11 @@
           border-left: 2px solid @layer-3-border;
           border-right: 2px solid @layer-3-border;
         }
+
+        .darkClassify {
+          border-left: 2px solid @dark-gray;
+          border-right: 2px solid @dark-gray;
+        }
       }
 
       .name {
@@ -168,6 +188,10 @@
       .date {
         .ellipsis();
         border-left: 2px solid @layer-3-border;
+      }
+
+      .darkDate {
+        border-left: 2px solid @dark-gray;
       }
 
       .action {

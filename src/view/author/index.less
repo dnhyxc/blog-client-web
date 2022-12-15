@@ -205,7 +205,8 @@
 
               .itemClass {
                 border-bottom: 1px solid @background;
-                padding: 10px 10px 6px 0;
+                padding: 10px 0 6px 0;
+                margin-right: 10px;
 
                 &:nth-last-child(2) {
                   border-bottom-left-radius: 0;
@@ -276,6 +277,12 @@
 
             .date {
               color: @dark-fc;
+            }
+
+            .timelineItem {
+              .itemClass {
+                border-bottom: 1px solid @dark-gray;
+              }
             }
           }
         }

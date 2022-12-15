@@ -8,7 +8,7 @@ import { useGetTheme, useHtmlWidth, useScrollLoad } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, error, formatGapTime } from '@/utils';
-import { PAGESIZE } from '@/constant';
+import { PAGESIZE, DRAWER_STYLES } from '@/constant';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
@@ -135,8 +135,7 @@ const DraftPopover: React.FC<IProps> = ({
               <div key={i.id} className={styles.draftItem}>
                 <span className={styles.title}>
                   {i.title ||
-                    `${i.content?.slice(0, 26).replace(/#/g, '')}${
-                      i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
+                    `${i.content?.slice(0, 26).replace(/#/g, '')}${i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
                     }`}
                 </span>
                 <span className={styles.actions}>
@@ -197,13 +196,15 @@ const DraftPopover: React.FC<IProps> = ({
     </Popover>
   ) : (
     <Drawer
-      title="草稿列表"
+      title={<div className={themeMode === 'dark' && styles.drawerTitle}>草稿列表</div>}
       key="top"
       placement="top"
       closable={false}
       visible={drawerVisible}
-      bodyStyle={{ padding: '10px 0 10px 10px' }}
-      headerStyle={{ padding: '16px 10px' }}
+      headerStyle={
+        themeMode === 'dark' ? { padding: '16px 10px', borderRadius: '0', ...DRAWER_STYLES.headerStyle } : { padding: '16px 10px', borderRadius: '0' }
+      }
+      bodyStyle={themeMode === 'dark' ? { padding: '10px 0 10px 10px', ...DRAWER_STYLES.bodyStyle } : { padding: '10px 0 10px 10px' }}
       height={340}
       onClose={() => {
         hideDraftDrawer && hideDraftDrawer();

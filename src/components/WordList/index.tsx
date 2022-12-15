@@ -1,15 +1,17 @@
 import React from 'react';
+import classname from 'classname';
 import { TAG_STYLES } from '@/constant';
 import styles from './index.less';
 
 interface IProps {
   data: { name: string; value: number }[];
+  className?: string;
   callback?: Function;
 }
 
-const WordList: React.FC<IProps> = ({ data, callback }) => {
+const WordList: React.FC<IProps> = ({ data, className, callback }) => {
   return (
-    <div className={styles.WordList}>
+    <div className={classname(styles.WordList, className)}>
       <div className={styles.tagList}>
         {data.map((i, index) => {
           return (

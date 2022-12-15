@@ -1,12 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button, Drawer, Checkbox } from 'antd';
+import classname from 'classname';
 import MIcons from '@/components/Icons';
 import Content from '@/components/Content';
 import useStore from '@/store';
-import { useScrollLoad } from '@/hooks';
+import { useGetTheme, useScrollLoad } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error, success, info } from '@/utils';
+import { DRAWER_STYLES } from '@/constant';
 import { CollectionListRes, AddCollectionRes } from '@/typings/common';
 import CreateDrawer from '../CreateDrawer';
 import styles from './index.less';
@@ -54,6 +56,7 @@ const CollectionDrawer: React.FC<IProps> = ({
     loading,
     pageSize: 10,
   });
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (visible) {
@@ -155,7 +158,7 @@ const CollectionDrawer: React.FC<IProps> = ({
 
   const renderTitle = (
     <div className={styles.titleWrap}>
-      <div className={styles.title}>选择收藏集</div>
+      <div className={classname(styles.title, themeMode === 'dark' && styles.darkTitle)}>选择收藏集</div>
       <Button type="link" onClick={showCreate} className={styles.submit}>
         <MIcons name="icon-add" className={styles.addIcon} noStopPropagation />
         <span>新建收藏集</span>
@@ -164,7 +167,7 @@ const CollectionDrawer: React.FC<IProps> = ({
   );
 
   return (
-    <div className={styles.CollectionDrawer}>
+    <div className={classname(styles.CollectionDrawer, themeMode === 'dark' && styles.dark)}>
       <Drawer
         title={renderTitle}
         placement="bottom"
@@ -182,8 +185,8 @@ const CollectionDrawer: React.FC<IProps> = ({
             确定
           </Button>,
         ]}
-        headerStyle={{ padding: '10px' }}
-        bodyStyle={{ padding: '0 0 10px 0', overflow: 'hidden' }}
+        headerStyle={themeMode === 'dark' ? { ...DRAWER_STYLES.headerStyle, padding: '10px', borderRadius: '0', } : { padding: '10px', borderRadius: '0', }}
+        bodyStyle={themeMode === 'dark' ? { ...DRAWER_STYLES.bodyStyle, padding: '0 0 10px 0', overflow: 'hidden' } : { padding: '0 0 10px 0', overflow: 'hidden' }}
         footerStyle={{ padding: '10px', height: '60px' }}
       >
         <Content

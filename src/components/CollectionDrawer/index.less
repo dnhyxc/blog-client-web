@@ -5,6 +5,10 @@
   justify-content: space-between;
   align-items: center;
 
+  .darkTitle {
+    color: @dark-fc;
+  }
+
   .submit {
     display: flex;
     align-items: center;
@@ -73,6 +77,14 @@
 .selectSubmit {
   height: 40px;
   width: 100%;
+}
+
+.dark {
+  .containerClassName {
+    .scrollWrapStyle {
+      background-color: @dark-bgc !important;
+    }
+  }
 }
 
 @media screen and (max-width: 960px) {

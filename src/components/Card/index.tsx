@@ -195,7 +195,9 @@ const Card: React.FC<IProps> = ({
                       content={() => content(i)}
                       trigger="hover"
                       className={styles.popover}
+                      overlayClassName={themeMode === 'dark' && styles.dark && styles.overlayClassName}
                       zIndex={12}
+                      getPopupContainer={(node) => node}
                     >
                       <EllipsisOutlined
                         onClick={(e) => {
@@ -227,7 +229,7 @@ const Card: React.FC<IProps> = ({
                     {i?.authorName}
                   </span>
                   <span
-                    className={styles.classify}
+                    className={classname(styles.classify, themeMode === 'dark' && styles.dark && styles.darkClassify)}
                     onClick={(e) => toTagList(e as unknown as MouseEvent, i.tag)}
                   >
                     标签：
@@ -237,7 +239,7 @@ const Card: React.FC<IProps> = ({
                     分类：
                     {i.classify}
                   </span>
-                  <span className={styles.date}>{formatGapTime(i.createTime)}</span>
+                  <span className={classname(styles.date, themeMode === 'dark' && styles.dark && styles.darkDate)}>{formatGapTime(i.createTime)}</span>
                 </div>
               )}
               <div className={styles.action}>
@@ -267,7 +269,6 @@ const Card: React.FC<IProps> = ({
                       text={i.readCount > 0 ? i.readCount : '阅读'}
                       iconWrapClass={styles.iconWrap}
                       className={(styles.eyes, themeMode === 'dark' && styles.darkText)}
-                      onClick={() => likeArticle && likeArticle(i.id)}
                       textStyle={themeMode === 'dark' && styles.darkText}
                     />
                   </div>
