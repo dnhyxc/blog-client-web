@@ -359,6 +359,7 @@ const Author: React.FC = () => {
                                           toDetail={toDetail}
                                           likeArticle={likeArticle}
                                           deleteArticle={deleteTimeline}
+                                          onEditArticle={onEditArticle}
                                           noMoreStyle={styles.noMoreStyle}
                                         />
                                       )}

@@ -226,7 +226,8 @@ const Home: React.FC<IProps> = () => {
             name="icon-sousuo2"
             className={classname(
               htmlWidth > 960 && siderVisible && styles.searchIcon,
-              styles.iconWrap
+              styles.iconWrap,
+              themeMode === 'dark' && styles.darkIconWrap
             )}
             onClick={htmlWidth > 960 ? onShowSearch : toSearch}
           />

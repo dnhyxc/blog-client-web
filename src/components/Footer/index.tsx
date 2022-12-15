@@ -7,7 +7,7 @@
  */
 import React, { ReactNode } from 'react';
 import classname from 'classname';
-import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
+import { useGetSiderVisible, useGetTheme, useHtmlWidth } from '@/hooks';
 import MenuList from './Menu';
 import styles from './index.less';
 
@@ -18,9 +18,16 @@ interface IProps {
 const Footer: React.FC<IProps> = ({ children }) => {
   const { siderVisible } = useGetSiderVisible();
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   return (
-    <div className={classname(styles.footerWrap, siderVisible && htmlWidth > 960 && styles.showFooter)}>
+    <div
+      className={classname(
+        styles.footerWrap,
+        siderVisible && htmlWidth > 960 && styles.showFooter,
+        themeMode === 'dark' && styles.dark
+      )}
+    >
       <MenuList />
       {children}
     </div>

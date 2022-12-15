@@ -34,10 +34,21 @@
       .textArea {
         border: none;
         border-radius: 5px;
+        background-color: #555;
         background-color: @background;
 
         &:focus {
           background-color: #fff;
+        }
+      }
+
+      .darkTextArea {
+        background-color: @dark-bgc;
+        color: @dark-fc;
+
+        &:focus {
+          background-color: @dark-gray;
+          color: @dark-fc;
         }
       }
     }

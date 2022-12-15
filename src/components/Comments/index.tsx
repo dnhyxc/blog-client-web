@@ -392,6 +392,7 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
                         </span>
                         <MIcons
                           name="icon-xiajiantou"
+                          iconWrapClass={styles.iconWrap}
                           onClick={() => onViewMoreReply(i.commentId!)}
                         />
                       </div>

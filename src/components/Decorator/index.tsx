@@ -7,9 +7,10 @@
  */
 import React, { ReactNode, useState, useEffect } from 'react';
 import classname from 'classname';
+import { useGetTheme } from '@/hooks';
 import { EventBus } from '@/event';
 import useStore from '@/store';
-import styles from './index.scss';
+import styles from './index.less';
 
 interface IProps {
   children?: ReactNode;
@@ -18,6 +19,7 @@ interface IProps {
 
 const Decorator: React.FC<IProps> = ({ children, className }) => {
   const { siderStore } = useStore();
+  const { themeMode } = useGetTheme();
 
   const [headMenuVisible, setHeadMenuVisible] = useState<boolean>(
     siderStore.toggleSider || false
@@ -31,7 +33,11 @@ const Decorator: React.FC<IProps> = ({ children, className }) => {
 
   return (
     <div
-      className={classname(className || styles.container, headMenuVisible && styles.hide)}
+      className={classname(
+        className || styles.container,
+        headMenuVisible && styles.hide,
+        themeMode === 'dark' && styles.dark
+      )}
     >
       {children}
     </div>

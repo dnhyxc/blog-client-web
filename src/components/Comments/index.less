@@ -173,6 +173,9 @@
         }
 
         .viewMore {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
           cursor: pointer;
           .clickNoSelectText();
 
@@ -194,6 +197,25 @@
   .title {
     background-color: @dark-bgc-deep;
     color: @dark-fc;
+  }
+
+  .commentWrap {
+    .commentContent {
+      .commentChild {
+        background-color: @dark-bgc-deep;
+        color: @dark-fc;
+      }
+
+      .formContent {
+        background-color: @dark-bgc;
+        color: @dark-fc;
+        border: @dark-gray;
+      }
+    }
+
+    .iconWrap {
+      color: @dark-fc-gray;
+    }
   }
 }
 

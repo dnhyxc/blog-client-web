@@ -19,7 +19,7 @@ import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
 import uml from '@toast-ui/editor-plugin-uml';
 import Prism from 'prismjs';
 import * as Service from '@/service';
-import { useHtmlWidth } from '@/hooks';
+import { useGetTheme, useHtmlWidth } from '@/hooks';
 import { normalizeResult } from '@/utils';
 import { toolbars } from './toobars';
 import styles from './index.less';
@@ -31,8 +31,14 @@ interface IProps {
   siderVisible?: boolean;
 }
 
-const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown, siderVisible, onSaveDraft }) => {
+const TuiEditor: React.FC<IProps> = ({
+  initialValue,
+  onGetMackdown,
+  siderVisible,
+  onSaveDraft,
+}) => {
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     const editor: any = new Editor({
@@ -81,7 +87,9 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown, siderVisible
       button.className = 'toastui-editor-toolbar-icons last';
       button.style.backgroundImage = 'none';
       button.style.margin = '0';
-      button.innerHTML = `<b style="font-size: 14px; color: #868686;">${htmlWidth > 960 ? 'JS' : '保存'}</b>`;
+      button.innerHTML = `<b style="font-size: 14px; color: #868686;">${
+        htmlWidth > 960 ? 'JS' : '保存'
+      }</b>`;
       button.addEventListener('click', () => {
         if (htmlWidth > 960) {
           // console.log(editor, '========');
@@ -111,7 +119,8 @@ const TuiEditor: React.FC<IProps> = ({ initialValue, onGetMackdown, siderVisible
     <div
       className={classname(
         styles.editContainer,
-        siderVisible && htmlWidth > 960 && styles.hidePadding
+        siderVisible && htmlWidth > 960 && styles.hidePadding,
+        themeMode === 'dark' && styles.dark
       )}
       id="editor"
     />

@@ -281,7 +281,10 @@ const Card: React.FC<IProps> = ({
                           : i?.authorName}
                       </span>
                       <span
-                        className={styles.classifyTag}
+                        className={classname(
+                          styles.classifyTag,
+                          themeMode === 'dark' && styles.darkClassifyTag
+                        )}
                         onClick={(e) => toClassify(e as unknown as MouseEvent, i.classify)}
                       >
                         {i.classify}

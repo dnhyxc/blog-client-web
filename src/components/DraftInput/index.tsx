@@ -175,7 +175,10 @@ const DraftInput: React.FC<IProps> = ({
                   : '请输入评论（Enter换行，Ctrl + Enter 发送）'
               }
               autoSize={{ minRows: 3 }}
-              className={styles.textArea}
+              className={classname(
+                styles.textArea,
+                themeMode === 'dark' && styles.darkTextArea
+              )}
               value={keyword}
               onFocus={onFocus}
               id="TEXTAREA_WRAP"
