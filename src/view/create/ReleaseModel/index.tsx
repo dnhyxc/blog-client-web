@@ -12,15 +12,16 @@ import {
   DatePicker,
 } from 'antd';
 import type { MenuProps } from 'antd';
+import classname from 'classname';
 import { DownOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import UploadFile from '@/components/Upload';
 import MAlert from '@/components/MAlert';
 import useStore from '@/store';
-import { useLoginStatus, useHtmlWidth } from '@/hooks';
+import { useLoginStatus, useHtmlWidth, useGetTheme } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, success, error, info } from '@/utils';
-import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL } from '@/constant';
+import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL, GLOBAL_STYLES } from '@/constant';
 import { CreateArticleParams, ArticleDetailParams, CreateResult } from '@/typings/common';
 
 import styles from './index.less';
@@ -57,6 +58,7 @@ const ReleaseModel: React.FC<IProps> = ({
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (initialValue?.coverImage) {
@@ -162,15 +164,19 @@ const ReleaseModel: React.FC<IProps> = ({
   );
 
   return (
-    <div className={styles.ReleaseModel}>
+    <div>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Drawer
-        title="发布文章"
+        title={<div className={themeMode === 'dark' && styles.drawerTitle}>发布文章</div>}
         placement="right"
         width={htmlWidth > 500 ? 500 : 'calc(100vw - 50px)'}
         closable={false}
         onClose={onClose}
         visible={visible}
+        headerStyle={
+          themeMode === 'dark' ? { backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP } : {}
+        }
+        bodyStyle={themeMode === 'dark' ? { backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP } : {}}
         extra={
           <div>
             <Button
@@ -187,7 +193,9 @@ const ReleaseModel: React.FC<IProps> = ({
           </div>
         }
       >
-        <div className={styles.ReleaseModel}>
+        <div
+          className={classname(styles.ReleaseModel, themeMode === 'dark' && styles.dark)}
+        >
           <Form
             labelCol={{ span: 3 }}
             wrapperCol={{ span: 22 }}
@@ -217,7 +225,14 @@ const ReleaseModel: React.FC<IProps> = ({
               <Radio.Group buttonStyle="solid">
                 {ARTICLE_CLASSIFY.map((i) => {
                   return (
-                    <Radio.Button className={styles.tag} key={i} value={i}>
+                    <Radio.Button
+                      className={classname(
+                        styles.tag,
+                        themeMode === 'dark' && styles.darkTag
+                      )}
+                      key={i}
+                      value={i}
+                    >
                       {i}
                     </Radio.Button>
                   );

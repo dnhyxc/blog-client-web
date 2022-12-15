@@ -27,6 +27,7 @@ import {
   ICONLINKS,
   ABOUT_ME_API_PATH,
   HEAD_UEL,
+  GLOBAL_STYLES,
 } from '@/constant';
 import {
   useLoginStatus,
@@ -352,7 +353,10 @@ const Personal = () => {
                 onChange={onChange}
                 tabBarStyle={
                   themeMode === 'dark'
-                    ? { backgroundColor: '#232323', color: '#f1f1f1' }
+                    ? {
+                        backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP,
+                        color: GLOBAL_STYLES.DARK_FC,
+                      }
                     : {}
                 }
               >

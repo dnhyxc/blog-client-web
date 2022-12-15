@@ -108,6 +108,16 @@ export const MUSIC_LIST_INFO = [
   // },
 ];
 
+// 全局样式
+export const GLOBAL_STYLES = {
+  DARK_BGC: '#333',
+  DARK_BGC_DEEP: '#262626',
+  DARK_GRAY: '#565656',
+  DARK_FC_GRAY: '#a5a5a5',
+  DARK_FC: '#f1f1f1',
+  WHITE: '#fff',
+};
+
 // 播放顺序图标
 export const MUSIC_ORDER_ICONS = [
   'icon-24gl-repeat2',

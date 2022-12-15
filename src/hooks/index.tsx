@@ -6,7 +6,7 @@ import * as Service from '@/service';
 import { normalizeResult, Result } from '@/utils/tools';
 import { EventBus } from '@/event';
 import { error, storage } from '@/utils';
-import { PAGESIZE } from '@/constant';
+import { PAGESIZE, GLOBAL_STYLES } from '@/constant';
 import { close } from '@/components/Render';
 import {
   ArticleDetailParams,
@@ -745,9 +745,9 @@ export const useGetTheme = () => {
 
   useEffect(() => {
     if (themeMode === 'dark') {
-      document.body.style.backgroundColor = '#333';
+      document.body.style.backgroundColor = GLOBAL_STYLES.DARK_BGC;
     } else {
-      document.body.style.backgroundColor = '#fff';
+      document.body.style.backgroundColor = GLOBAL_STYLES.WHITE;
     }
   }, [themeMode]);
 

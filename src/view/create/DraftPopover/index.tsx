@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Popover, Button, Drawer, Empty } from 'antd';
+import classname from 'classname';
 import { CloseOutlined } from '@ant-design/icons';
 import Content from '@/components/Content';
 import { useNavigate } from 'react-router-dom';
-import { useHtmlWidth, useScrollLoad } from '@/hooks';
+import { useGetTheme, useHtmlWidth, useScrollLoad } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, error, formatGapTime } from '@/utils';
@@ -45,6 +46,7 @@ const DraftPopover: React.FC<IProps> = ({
   });
 
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (visible || drawerVisible) {
@@ -118,7 +120,7 @@ const DraftPopover: React.FC<IProps> = ({
   };
 
   const content = (
-    <div className={styles.draftContent}>
+    <div className={classname(styles.draftContent, themeMode === 'dark' && styles.dark)}>
       {draftList?.list?.length > 0 ? (
         <Content
           containerClassName={styles.containerClassName}
@@ -133,7 +135,8 @@ const DraftPopover: React.FC<IProps> = ({
               <div key={i.id} className={styles.draftItem}>
                 <span className={styles.title}>
                   {i.title ||
-                    `${i.content?.slice(0, 26).replace(/#/g, '')}${i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
+                    `${i.content?.slice(0, 26).replace(/#/g, '')}${
+                      i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
                     }`}
                 </span>
                 <span className={styles.actions}>
@@ -172,7 +175,11 @@ const DraftPopover: React.FC<IProps> = ({
     </div>
   );
 
-  const title = <div className={styles.modalTitle}>草稿列表</div>;
+  const title = (
+    <div className={classname(styles.modalTitle, themeMode === 'dark' && styles.darkModalTitle)}>
+      草稿列表
+    </div>
+  );
 
   return htmlWidth > 960 ? (
     <Popover

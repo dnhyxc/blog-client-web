@@ -27,12 +27,20 @@
   }
 }
 
+.darkTag {
+  background-color: @dark-gray;
+}
+
 .datePicker {
   width: 100%;
 }
 
 .saveDraft {
   margin-right: 10px;
+}
+
+.drawerTitle {
+  color: @dark-fc;
 }
 
 .ReleaseModel {
@@ -64,10 +72,33 @@
     }
   }
 
-  :global(.ant-upload.ant-upload-select-picture-card) {
-    width: 200px;
-    height: 112px;
-    margin-bottom: 0;
+  :global {
+    .ant-upload.ant-upload-select-picture-card {
+      width: 200px;
+      height: 112px;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.dark {
+  :global {
+    .ant-form-item {
+      label {
+        color: @dark-fc;
+      }
+
+      .ant-input,
+      .ant-picker,
+      .ant-upload {
+        background-color: @dark-gray;
+        color: @dark-fc;
+      }
+
+      .ant-picker-input > input {
+        color: @dark-fc;
+      }
+    }
   }
 }
 

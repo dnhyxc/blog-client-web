@@ -22,7 +22,14 @@ import {
   useHtmlWidth,
   useGetTheme,
 } from '@/hooks';
-import { PAGESIZE, HEAD_UEL, MAIN_COVER, AUTHOR_TABS, AUTHOR_API_PATH } from '@/constant';
+import {
+  PAGESIZE,
+  HEAD_UEL,
+  MAIN_COVER,
+  AUTHOR_TABS,
+  AUTHOR_API_PATH,
+  GLOBAL_STYLES,
+} from '@/constant';
 import Footer from '@/components/Footer';
 import {
   ArticleListResult,
@@ -312,7 +319,10 @@ const Author: React.FC = () => {
                   onChange={onChangeTabs}
                   tabBarStyle={
                     themeMode === 'dark'
-                      ? { backgroundColor: '#232323', color: '#f1f1f1' }
+                      ? {
+                          backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP,
+                          color: GLOBAL_STYLES.DARK_FC,
+                        }
                       : {}
                   }
                 >
