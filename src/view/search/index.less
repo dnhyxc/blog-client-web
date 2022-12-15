@@ -230,12 +230,26 @@
     background-color: @dark-bgc;
 
     .searchWrap {
+      .search {
+        .searchInp {
+          :global {
+            .ant-input {
+              background-color: @dark-gray;
+              color: @dark-fc;
+              border: 1px solid @dark-fc;
+            }
+            .ant-input-search-button {
+              border: 1px solid @dark-fc;
+            }
+          }
+        }
+      }
       .searchTagList {
         .label {
           background-color: @dark-gray;
           color: @dark-fc;
 
-          .downIcon{
+          .downIcon {
             color: @dark-fc;
           }
 

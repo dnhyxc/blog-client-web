@@ -213,7 +213,7 @@ const Personal = () => {
     pageNo,
     authorId: authorId as string,
     accessUserId: getUserInfo?.userId,
-    getCollectionTotal: selectKey === '3' ? getCollectionTotal : () => { },
+    getCollectionTotal: selectKey === '3' ? getCollectionTotal : () => {},
   });
 
   // 更新收藏集
@@ -282,7 +282,11 @@ const Personal = () => {
   // 渲染右侧搜索
   const rightNode = () => (
     <div className={styles.searchWrap}>
-      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
+      <MIcons
+        name="icon-sousuo2"
+        className={classname(styles.iconWrap, themeMode === 'dark' && styles.darkIcon)}
+        onClick={toSearch}
+      />
     </div>
   );
 
@@ -324,11 +328,6 @@ const Personal = () => {
                           rel="noreferrer"
                           key={i.name}
                           className={styles.link}
-                          style={
-                            getUserInfo?.[i.label]
-                              ? { display: 'inline-block' }
-                              : { display: 'none' }
-                          }
                         >
                           <MIcons
                             name={i.name}
@@ -352,10 +351,10 @@ const Personal = () => {
                 defaultActiveKey={tabKey || '1'}
                 onChange={onChange}
                 tabBarStyle={
-                themeMode === 'dark'
-                  ? { backgroundColor: '#232323', color: '#f1f1f1' }
-                  : {}
-              }
+                  themeMode === 'dark'
+                    ? { backgroundColor: '#232323', color: '#f1f1f1' }
+                    : {}
+                }
               >
                 {getTabList.map((i) => {
                   return (

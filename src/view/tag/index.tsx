@@ -43,7 +43,11 @@ const Tag: React.FC = () => {
   // 渲染右侧搜索
   const rightNode = () => (
     <div className={styles.searchWrap}>
-      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
+      <MIcons
+        name="icon-sousuo2"
+        className={classname(styles.iconWrap, themeMode === 'dark' && styles.darkIcon)}
+        onClick={toSearch}
+      />
     </div>
   );
 

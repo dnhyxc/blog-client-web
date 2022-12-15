@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Input, Modal } from 'antd';
+import classname from 'classname';
 import Content from '@/components/Content';
 import MDropdown from '@/components/MDropdown';
 import useStore from '@/store';
-import { useHtmlWidth, useVerifyToken } from '@/hooks';
+import { useGetTheme, useHtmlWidth, useVerifyToken } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, encrypt, getSetItemConfig, error, success } from '@/utils';
 import { UPDATE_INFO_API_PATH } from '@/constant';
@@ -23,6 +24,7 @@ const Account: React.FC<IProps> = () => {
   const cleararticledebugger = search.get('cleararticledebugger');
   const inputRef = useRef<any>(null);
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
   const { userInfoStore } = useStore();
   const { userId, zhihu, juejin, github, blog, auth } = userInfoStore.getUserInfo;
 
@@ -98,7 +100,7 @@ const Account: React.FC<IProps> = () => {
   };
 
   return (
-    <div className={styles.Account}>
+    <div className={classname(styles.Account, themeMode === 'dark' && styles.dark)}>
       <Content
         containerClassName={styles.containerClassName}
         wrapClassName={styles.wrapClassName}

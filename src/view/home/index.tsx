@@ -231,7 +231,14 @@ const Home: React.FC<IProps> = () => {
             onClick={htmlWidth > 960 ? onShowSearch : toSearch}
           />
         )}
-        {showSearch && <MSearch inputRef={inputRef} onSearch={onSearch} onBlur={onBlur} />}
+        {showSearch && (
+          <MSearch
+            className={scrollTop >= document.body.clientHeight - 50 && styles.inputSearch}
+            inputRef={inputRef}
+            onSearch={onSearch}
+            onBlur={onBlur}
+          />
+        )}
       </div>
       {htmlWidth > 960 && (
         <Button type="link" className={styles.toSearch} onClick={toSearch}>
@@ -242,7 +249,7 @@ const Home: React.FC<IProps> = () => {
   );
 
   return (
-    <div className={styles.container}>
+    <div className={classname(styles.container, themeMode === 'dark' && styles.dark)}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       {(htmlWidth <= 960 || !siderVisible) && (
         <Header

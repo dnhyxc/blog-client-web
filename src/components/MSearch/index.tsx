@@ -1,5 +1,6 @@
 import React from 'react';
 import { Input } from 'antd';
+import classname from 'classname';
 import styles from './index.less';
 
 interface IProps {
@@ -7,11 +8,18 @@ interface IProps {
   placeholder?: string;
   onSearch: Function;
   onBlur?: Function;
+  className?: string;
 }
 
-const MSearch: React.FC<IProps> = ({ inputRef, placeholder, onSearch, onBlur }) => {
+const MSearch: React.FC<IProps> = ({
+  inputRef,
+  placeholder,
+  onSearch,
+  onBlur,
+  className,
+}) => {
   return (
-    <div className={styles.MSearch}>
+    <div className={classname(styles.MSearch, className)}>
       <Input.Search
         ref={inputRef}
         enterButton

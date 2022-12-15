@@ -209,7 +209,11 @@ const Author: React.FC = () => {
   // 渲染右侧搜索
   const rightNode = () => (
     <div className={styles.searchWrap}>
-      <MIcons name="icon-sousuo2" className={styles.iconWrap} onClick={toSearch} />
+      <MIcons
+        name="icon-sousuo2"
+        className={classname(styles.iconWrap, themeMode === 'dark' && styles.darkIcon)}
+        onClick={toSearch}
+      />
     </div>
   );
 
@@ -229,10 +233,7 @@ const Author: React.FC = () => {
         scrollbarRef={scrollbarRef}
       >
         <div
-          className={classname(
-            styles.wrap,
-            siderStore.toggleSider && styles.changeWidth
-          )}
+          className={classname(styles.wrap, siderStore.toggleSider && styles.changeWidth)}
         >
           <div className={styles.infoWrap}>
             <div className={styles.mainCover}>
@@ -321,18 +322,18 @@ const Author: React.FC = () => {
                         {(i.value !== '3' ||
                           !timelineList.length ||
                           (timelineList.length && !timelineList[0].articles.length)) && (
-                            <Card
-                              list={articleList.list}
-                              total={articleList.total}
-                              wrapClass={styles.wrapClass}
-                              toDetail={toDetail}
-                              likeArticle={likeArticle}
-                              deleteArticle={deleteArticle}
-                              onEditArticle={onEditArticle}
-                              loadText="地主家也没余粮了"
-                              loading={loading}
-                            />
-                          )}
+                          <Card
+                            list={articleList.list}
+                            total={articleList.total}
+                            wrapClass={styles.wrapClass}
+                            toDetail={toDetail}
+                            likeArticle={likeArticle}
+                            deleteArticle={deleteArticle}
+                            onEditArticle={onEditArticle}
+                            loadText="地主家也没余粮了"
+                            loading={loading}
+                          />
+                        )}
                         {i.value === '3' &&
                           timelineList.length > 0 &&
                           timelineList[0].articles.length > 0 && (

@@ -57,6 +57,9 @@
             padding-bottom: 3px;
 
             .icons {
+              display: flex;
+              align-items: center;
+
               .link {
                 margin-right: 10px;
 
@@ -66,7 +69,15 @@
               }
 
               .iconWrap {
+                display: flex;
+                justify-content: center;
+                align-items: center;
                 margin-right: 15px;
+                height: 30px;
+                width: 30px;
+                line-height: 30px;
+                border-radius: 30px;
+                text-align: center;
                 cursor: pointer;
 
                 &:last-child {
@@ -74,18 +85,19 @@
                 }
 
                 .adsIcon {
-                  font-size: 25px;
+                  font-size: 34px;
                 }
 
                 .juejin {
-                  font-size: 22px;
                   background-color: #4e5969;
-                  border-radius: 22px;
                   color: #fff;
+                  width: 100%;
+                  font-size: 22px;
+                  border-radius: 30px;
                 }
 
                 .wangzhiIcon {
-                  font-size: 22px;
+                  font-size: 30px;
                 }
               }
             }
@@ -135,10 +147,35 @@
         .userInfo {
           background-color: @dark-bgc-deep;
           color: @dark-fc;
+
+          .actions {
+            .icons {
+              .iconWrap {
+                .adsIcon {
+                  font-size: 34px;
+                  color: @dark-fc;
+                }
+
+                .juejin {
+                  color: @dark-bgc;
+                  background-color: @dark-fc;
+                }
+
+                .wangzhiIcon {
+                  font-size: 30px;
+                  color: @dark-fc;
+                }
+              }
+            }
+          }
         }
       }
     }
   }
+}
+
+.darkIcon {
+  color: @dark-fc;
 }
 
 @media screen and (max-width: 960px) {

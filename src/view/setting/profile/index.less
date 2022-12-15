@@ -147,6 +147,33 @@
   }
 }
 
+.dark {
+  background-color: @dark-bgc;
+
+  .scrollWrap {
+    background-color: @dark-bgc-deep !important;
+  }
+
+  .content {
+    background-color: @dark-bgc-deep;
+
+    .formWrap {
+      :global {
+        .ant-form-item {
+          label {
+            color: @dark-fc;
+          }
+
+          .ant-input {
+            background-color: @dark-gray;
+            color: @dark-fc;
+          }
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 960px) {
   .Profile {
     margin-left: 0;

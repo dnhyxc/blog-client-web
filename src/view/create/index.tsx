@@ -153,7 +153,7 @@ const CreateArticle: React.FC<IProps> = () => {
       <span>
         <Button
           type="link"
-          className={styles.release}
+          className={classname(styles.release, themeMode === 'dark' && styles.darkRelease)}
           disabled={!content && !detail?.content}
           onClick={() => setVisible(true)}
         >

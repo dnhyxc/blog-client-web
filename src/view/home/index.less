@@ -185,6 +185,26 @@
   }
 }
 
+.dark {
+  .header {
+    .searchWrap {
+      .inputSearch {
+        :global {
+          .ant-input {
+            background-color: @dark-gray;
+            color: @dark-fc;
+          }
+        }
+      }
+
+      .toSearch {
+        color: #f1f1f1;
+        transition: none;
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 960px) {
   .container {
     .contentWrap {

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input } from 'antd';
+import classname from 'classname';
 import useStore from '@/store';
-import { useLoginStatus, useHtmlWidth, useVerifyToken } from '@/hooks';
+import { useLoginStatus, useHtmlWidth, useVerifyToken, useGetTheme } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, storage, success, error, info } from '@/utils';
 import MAlert from '@/components/MAlert';
@@ -30,6 +31,7 @@ const Profile: React.FC = () => {
     getUserInfo: { headUrl, mainCover, username, userId, job, motto, introduce },
   } = userInfoStore;
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (mainCover) {
@@ -84,7 +86,7 @@ const Profile: React.FC = () => {
   };
 
   return (
-    <div className={styles.Profile}>
+    <div className={classname(styles.Profile, themeMode === 'dark' && styles.dark)}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Content
         containerClassName={styles.containerClassName}

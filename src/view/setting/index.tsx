@@ -1,10 +1,11 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
+import classname from 'classname';
 import Header from '@/components/Header';
 import MenuList from '@/components/MenuList';
 import Footer from '@/components/Footer';
-import { useHtmlWidth } from '@/hooks';
+import { useGetTheme, useHtmlWidth } from '@/hooks';
 import styles from './index.less';
 
 const { Content } = Layout;
@@ -13,9 +14,10 @@ interface IProps {}
 
 const Setting: React.FC<IProps> = () => {
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   return (
-    <div className={styles.Setting}>
+    <div className={classname(styles.Setting, themeMode === 'dark' && styles.dark)}>
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth>
           <div className={styles.headerContent}>我的主页</div>

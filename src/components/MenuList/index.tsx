@@ -13,7 +13,7 @@ import useStore from '@/store';
 import Image from '@/components/Image';
 import ActionIcon from '@/components/ActionIcon';
 import { menuList, settingList } from '@/router/menu';
-import { useHtmlWidth } from '@/hooks';
+import { useGetTheme, useHtmlWidth } from '@/hooks';
 import { CARD_URL } from '@/constant';
 import { EventBus } from '@/event';
 import styles from './index.less';
@@ -32,15 +32,14 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
     siderStore,
   } = useStore();
 
-  const [siderVisible, setSiderVisible] = useState<boolean>(
-    siderStore?.toggleSider
-  );
+  const [siderVisible, setSiderVisible] = useState<boolean>(siderStore?.toggleSider);
   const [selectMenu, setSelectMenu] = useState<string>('');
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [search] = useSearchParams();
   const id = search.get('id');
   const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     const sliceName = pathname !== '/' ? pathname.slice(1) : pathname;
@@ -108,8 +107,14 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
   };
 
   return (
-    <div className={styles.siderContainer}>
-      {!type && htmlWidth > 960 && <ActionIcon className={styles.changeIconWrap} siderVisible={siderVisible} onClick={onToggleSider} />}
+    <div className={classname(styles.siderContainer, themeMode === 'dark' && styles.dark)}>
+      {!type && htmlWidth > 960 && (
+        <ActionIcon
+          className={styles.changeIconWrap}
+          siderVisible={siderVisible}
+          onClick={onToggleSider}
+        />
+      )}
       <Sider
         theme="light"
         trigger={null}

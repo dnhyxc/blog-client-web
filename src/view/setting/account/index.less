@@ -20,7 +20,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    // height: 100%;
     background-color: #fff;
     padding: 10px 20px;
 
@@ -71,6 +70,39 @@
     position: absolute;
     right: 20px;
     bottom: 10px;
+  }
+}
+
+.dark {
+  .scrollWrap {
+    background-color: @dark-bgc-deep !important;
+  }
+
+  .content {
+    background-color: @dark-bgc-deep;
+    color: @dark-fc;
+
+    .setList {
+      .setItem {
+        border-bottom: 1px solid @dark-gray;
+
+        &:first-child {
+          border-top: 1px solid @dark-gray;
+          border-bottom: none;
+        }
+
+        .input {
+          background-color: @dark-gray;
+        }
+
+        :global {
+          .ant-input {
+            background-color: @dark-gray;
+            color: @dark-fc;
+          }
+        }
+      }
+    }
   }
 }
 

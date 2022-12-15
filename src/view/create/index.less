@@ -21,6 +21,9 @@
     font-size: 15px;
   }
 
+  .darkRelease {
+  }
+
   .draftBtn {
     padding: 4px 0 4px 5px;
   }
@@ -39,6 +42,12 @@
   .changeHeight {
     height: calc(100vh - 50px);
     transition: all 0.3s ease-in-out;
+  }
+
+  :global {
+    .ant-btn-link[disabled] {
+      color: @dark-fc-gray;
+    }
   }
 }
 

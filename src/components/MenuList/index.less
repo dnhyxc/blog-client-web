@@ -26,13 +26,16 @@
       }
     }
 
-    :global(.ant-menu-inline) {
-      border-right: none;
-    }
-    :global(.ant-menu-inline .ant-menu-item::after) {
-      border-left: 3px solid @menu-active;
-      border-right: none;
-      left: 0;
+    :global {
+      .ant-menu-inline {
+        border-right: none;
+      }
+
+      .ant-menu-inline .ant-menu-item::after {
+        border-left: 3px solid @menu-active;
+        border-right: none;
+        left: 0;
+      }
     }
 
     .menu_icon {
@@ -83,6 +86,17 @@
 
   .settingSiderWrap {
     padding: 5px 0;
+  }
+}
+
+.dark {
+  .siderWrap {
+    :global {
+      .ant-menu-inline {
+        background-color: @dark-bgc-deep;
+        color: @dark-fc;
+      }
+    }
   }
 }
 
