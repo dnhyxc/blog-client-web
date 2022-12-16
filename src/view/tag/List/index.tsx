@@ -89,6 +89,10 @@ const TagList: React.FC<IProps> = () => {
     listRef,
     pageNo,
     tagName: tagName! || '',
+    removeConfirmStyle: classname(
+      styles.removeConfirmStyle,
+      themeMode === 'dark' && styles.darkRemoveConfirmStyle
+    ),
   });
 
   // 文章点赞

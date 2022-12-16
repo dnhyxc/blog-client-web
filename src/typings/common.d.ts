@@ -274,6 +274,7 @@ export interface useDeleteArticleParams {
   authorLike?: boolean;
   filterList?: string[];
   getCollectionTotal?: Function;
+  removeConfirmStyle?: string;
 }
 
 export interface useUpdateCollectedParams {
@@ -288,6 +289,7 @@ export interface useDeleteTimelineParams {
   timelineList: TimelineResult[];
   setTimelineList: Function;
   setAlertStatus: Function;
+  removeConfirmStyle?: string;
 }
 
 // 上下页参数定义

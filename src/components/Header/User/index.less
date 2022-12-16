@@ -1,3 +1,5 @@
+@import '~@styles/common.less';
+
 .User {
   margin-left: 15px;
 
@@ -12,6 +14,35 @@
   }
 }
 
+.darkUserMenuItem {
+  .iconWrap {
+    padding: 5px 12px;
+    color: @dark-fc;
+  }
+
+  &:hover {
+    .iconWrap {
+      color: @dark-bgc;
+    }
+  }
+}
+
 .userMenuItem {
   padding: 3px 10px;
+}
+
+.overlayClassName {
+  :global {
+    .ant-dropdown-menu {
+      background-color: @dark-gray;
+    }
+
+    .ant-dropdown-menu-item {
+      padding: 0;
+    }
+    
+    .ant-dropdown-arrow::before {
+      background-color: @dark-gray;
+    }
+  }
 }

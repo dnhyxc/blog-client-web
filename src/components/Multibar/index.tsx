@@ -146,7 +146,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
         trigger="hover"
         getPopupContainer={(triggerNode) => triggerNode as HTMLElement}
         content={<Qrcode />}
-        overlayClassName={styles.overlayClassName}
+        overlayClassName={themeMode === 'dark' ? styles.overlayClassName : ''}
       >
         <div className={styles.wechart}>
           <div>
@@ -217,7 +217,10 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
         trigger="hover"
         getPopupContainer={(triggerNode) => triggerNode.parentNode as HTMLElement}
         content={shareContent}
-        overlayClassName={styles.shareOverlayClassName}
+        overlayClassName={classname(
+          styles.shareOverlayClassName,
+          themeMode === 'dark' && styles.darkShareOverlayClassName
+        )}
       >
         <div className={styles.actionBtn}>
           <MIcons name="icon-tiaoguofenxiang" className={styles.shareIcon} customStyle />

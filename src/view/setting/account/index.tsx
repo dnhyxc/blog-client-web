@@ -110,7 +110,11 @@ const Account: React.FC<IProps> = () => {
           <div className={styles.header}>
             <div className={styles.infoText}>
               <span>账号设置</span>
-              {htmlWidth < 960 && <MDropdown />}
+              {htmlWidth < 960 && (
+                <MDropdown
+                  overlayClassName={themeMode === 'dark' ? styles.overlayClassName : ''}
+                />
+              )}
             </div>
           </div>
           <div className={styles.setList}>

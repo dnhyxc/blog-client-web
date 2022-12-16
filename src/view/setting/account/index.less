@@ -1,5 +1,16 @@
 @import '~@styles/common.less';
 
+.overlayClassName {
+  :global {
+    .ant-dropdown-menu {
+      background-color: @dark-bgc;
+    }
+    .ant-dropdown-menu-title-content {
+      color: @dark-fc;
+    }
+  }
+}
+
 .Account {
   position: relative;
   height: 100%;
@@ -125,5 +136,9 @@
         padding-top: 10px;
       }
     }
+  }
+
+  .dark {
+    background-color: @dark-gray;
   }
 }

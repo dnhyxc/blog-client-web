@@ -10,6 +10,13 @@
   }
 }
 
+.darkTitleWrap {
+  .addIcon,
+  .title {
+    color: @dark-fc;
+  }
+}
+
 .createContent {
   .name {
     height: 52px;
@@ -23,5 +30,40 @@
 
   .radio {
     margin-bottom: 10px;
+  }
+
+  .infoText {
+    margin-right: 10px;
+  }
+
+  .info {
+    color: @font-5;
+    font-size: 12px;
+  }
+}
+
+.dark {
+  .name {
+    color: @dark-fc;
+  }
+
+  .desc {
+    .radio {
+      color: @dark-fc;
+    }
+
+    :global {
+      textarea.ant-input {
+        color: @dark-fc;
+      }
+    }
+  }
+
+  .infoText {
+    color: @dark-fc;
+  }
+
+  .info {
+    color: @dark-fc-gray;
   }
 }

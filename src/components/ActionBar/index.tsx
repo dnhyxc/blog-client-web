@@ -18,9 +18,10 @@ interface IProps {
   id: string;
   detail: ArticleDetailParams;
   commentRef: any;
+  className?: string;
 }
 
-const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
+const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
   const [barVisible, setBarVisible] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number | undefined>(0);
   const [isLike, setIsLike] = useState<boolean | undefined>(false);
@@ -132,14 +133,14 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef }) => {
   };
 
   return (
-    <div className={styles.ActionBar}>
+    <div className={classname(styles.ActionBar, className)}>
       <ActionIcon
         className={styles.changeIconWrap}
         onClick={onToggleActionBar}
         type="actionbar"
         icon={!barVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'}
       />
-      <div className={classname(styles.container, barVisible && styles.showBar)}>
+      <div className={classname(styles.container, barVisible && styles.showBar, className)}>
         {detail?.content.includes('#') && (
           <div className={styles.actionBtn}>
             <MIcons

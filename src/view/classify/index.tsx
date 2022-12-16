@@ -115,6 +115,10 @@ const Classify: React.FC = () => {
     listRef,
     pageNo,
     classify: selectClassify,
+    removeConfirmStyle: classname(
+      styles.removeConfirmStyle,
+      themeMode === 'dark' && styles.darkRemoveConfirmStyle
+    ),
   });
 
   // 文章点赞

@@ -24,7 +24,7 @@ import { info, error, normalizeResult } from '@/utils';
 import { ArticleListResult, SearchTypeParams, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Search: React.FC<IProps> = () => {
   const [showMore, setShowMore] = useState<boolean>(false);
@@ -171,6 +171,10 @@ const Search: React.FC<IProps> = () => {
     pageNo,
     keyword,
     filterList: filterValues,
+    removeConfirmStyle: classname(
+      styles.removeConfirmStyle,
+      themeMode === 'dark' && styles.darkRemoveConfirmStyle
+    ),
   });
 
   const toDetail = (id: string, needScroll: boolean): void => {

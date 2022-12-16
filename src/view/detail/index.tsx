@@ -159,7 +159,12 @@ const ArticleDetail: React.FC = () => {
           </div>
         )}
         {htmlWidth <= 960 && detail && (
-          <ActionBar id={id as string} detail={detail} commentRef={commentRef} />
+          <ActionBar
+            id={id as string}
+            detail={detail}
+            commentRef={commentRef}
+            className={themeMode === 'dark' && styles.darkActionBar}
+          />
         )}
         {htmlWidth <= 960 && <Footer />}
       </div>

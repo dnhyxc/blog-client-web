@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import type { RadioChangeEvent } from 'antd';
 import { Button, Drawer, Input, Radio } from 'antd';
+import classname from 'classname';
 import MIcons from '@/components/Icons';
 import useStore from '@/store';
+import { useGetTheme } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error, success } from '@/utils';
+import { DRAWER_STYLES } from '@/constant';
 import { AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
 
@@ -36,6 +39,8 @@ const CreateDrawer: React.FC<IProps> = ({
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (collectInfo?.name && visible) {
@@ -140,7 +145,9 @@ const CreateDrawer: React.FC<IProps> = ({
   };
 
   const renderTitle = (
-    <div className={styles.titleWrap}>
+    <div
+      className={classname(styles.titleWrap, themeMode === 'dark' && styles.darkTitleWrap)}
+    >
       <div onClick={() => onCancel()}>
         <MIcons name="icon-arrow-left-bold" className={styles.addIcon} noStopPropagation />
       </div>
@@ -165,10 +172,21 @@ const CreateDrawer: React.FC<IProps> = ({
         onClose={onClose}
         visible={visible}
         height={427}
-        headerStyle={{ padding: '10px' }}
-        bodyStyle={{ padding: '0 10px' }}
+        headerStyle={
+          themeMode === 'dark'
+            ? { ...DRAWER_STYLES.headerStyle, padding: '10px' }
+            : { padding: '10px' }
+        }
+        bodyStyle={
+          themeMode === 'dark'
+            ? { ...DRAWER_STYLES.bodyStyle, padding: '0 10px' }
+            : { padding: '0 10px' }
+        }
+        maskStyle={themeMode === 'dark' ? { ...DRAWER_STYLES.maskStyle } : {}}
       >
-        <div className={styles.createContent}>
+        <div
+          className={classname(styles.createContent, themeMode === 'dark' && styles.dark)}
+        >
           <Input
             className={styles.name}
             placeholder="请输入收藏集名称"
@@ -193,11 +211,11 @@ const CreateDrawer: React.FC<IProps> = ({
             value={status}
           >
             <Radio value={1} className={styles.radio}>
-              <span>公开</span>
+              <span className={styles.infoText}>公开</span>
               <span className={styles.info}>当其他人关注此收藏集后不可再更改为隐私</span>
             </Radio>
             <Radio value={2}>
-              <span>隐私</span>
+              <span className={styles.infoText}>隐私</span>
               <span className={styles.info}>仅自己可见此收藏集</span>
             </Radio>
           </Radio.Group>

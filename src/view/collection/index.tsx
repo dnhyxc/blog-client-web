@@ -25,6 +25,7 @@ import {
   useScrollLoad,
   useGetUserInfo,
   useGetSiderVisible,
+  useGetTheme,
 } from '@/hooks';
 import { PAGESIZE, HEAD_UEL } from '@/constant';
 import {
@@ -75,6 +76,7 @@ const Collection: React.FC<IProps> = () => {
     authorId: getUserInfo?.userId,
   });
   const { siderVisible } = useGetSiderVisible();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     getCollectInfo();
@@ -247,7 +249,10 @@ const Collection: React.FC<IProps> = () => {
   // 删除收藏集
   const onDeleteCollect = async () => {
     Modal.confirm({
-      className: htmlWidth < 960 ? styles.modalConfirm : '',
+      className:
+        htmlWidth < 960
+          ? classname(styles.modalConfirm, themeMode === 'dark' && styles.darkModalConfirm)
+          : '',
       width: htmlWidth < 960 ? '80%' : '',
       title: '确定删除该收藏集吗？',
       content: '删除收藏集同时会移除收藏集中的文章',
@@ -280,7 +285,7 @@ const Collection: React.FC<IProps> = () => {
   );
 
   return (
-    <div className={styles.Collection}>
+    <div className={classname(styles.Collection, themeMode === 'dark' && styles.dark)}>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth right={rightNode()}>

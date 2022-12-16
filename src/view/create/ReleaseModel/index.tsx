@@ -21,7 +21,7 @@ import useStore from '@/store';
 import { useLoginStatus, useHtmlWidth, useGetTheme } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, success, error, info } from '@/utils';
-import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL, GLOBAL_STYLES } from '@/constant';
+import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL, DRAWER_STYLES } from '@/constant';
 import { CreateArticleParams, ArticleDetailParams, CreateResult } from '@/typings/common';
 
 import styles from './index.less';
@@ -173,10 +173,8 @@ const ReleaseModel: React.FC<IProps> = ({
         closable={false}
         onClose={onClose}
         visible={visible}
-        headerStyle={
-          themeMode === 'dark' ? { backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP } : {}
-        }
-        bodyStyle={themeMode === 'dark' ? { backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP } : {}}
+        headerStyle={themeMode === 'dark' ? { ...DRAWER_STYLES.headerStyle } : {}}
+        bodyStyle={themeMode === 'dark' ? { ...DRAWER_STYLES.bodyStyle } : {}}
         extra={
           <div>
             <Button

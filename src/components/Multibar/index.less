@@ -65,6 +65,21 @@
     }
   }
 
+  .darkShareOverlayClassName {
+    :global {
+      .ant-popover-inner {
+        background-color: @dark-gray;
+        color: @dark-fc;
+      }
+      .ant-popover-inner-content {
+        color: @dark-fc;
+      }
+      .ant-popover-arrow-content {
+        --antd-arrow-background-color: @dark-gray;
+      }
+    }
+  }
+
   .shareContent {
     min-width: 125px;
 
@@ -115,5 +130,42 @@
 .dark {
   .actionBtn {
     background-color: @dark-bgc-deep;
+  }
+
+  .shareContent {
+    .wechart,
+    .weibo,
+    .shareQZon {
+      &:hover {
+        color: @dark-bgc;
+
+        .weiboIcon,
+        .wechartIcon,
+        .qqIcon {
+          color: @dark-bgc;
+        }
+      }
+
+      .weiboIcon,
+      .wechartIcon,
+      .qqIcon {
+        color: @dark-fc;
+      }
+    }
+  }
+}
+
+.overlayClassName {
+  :global {
+    .ant-popover-inner {
+      background-color: @dark-gray;
+      color: @dark-fc;
+    }
+    .ant-popover-inner-content {
+      color: @dark-fc;
+    }
+    .ant-popover-arrow-content {
+      --antd-arrow-background-color: @dark-gray;
+    }
   }
 }

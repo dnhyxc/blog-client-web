@@ -424,10 +424,12 @@ export const useDeleteArticle = ({
   authorPage, // 代表博主页面
   authorLike, // 代表博主页面博主点赞列表
   getCollectionTotal, // 获取收藏集总数的方法
+  removeConfirmStyle, // confirm 样式
 }: useDeleteArticleParams) => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const { htmlWidth } = useHtmlWidth();
 
   const deleteArticle = (id: string) => {
     Modal.confirm(modalConfig(id));
@@ -493,8 +495,10 @@ export const useDeleteArticle = ({
   const modalConfig = (articleId: string) => {
     return {
       title: delType !== '3' ? '确定删除该文章吗？' : '确定删除该收藏集吗？',
+      className: removeConfirmStyle,
+      width: htmlWidth < 960 ? '80%' : '',
       content: delType === '3' ? '删除收藏集同时会移除收藏集中的文章' : null,
-      centered: true,
+      centered: htmlWidth < 960,
       async onOk() {
         let res = {} as Result<{ id: string } | ArticleListResult>;
         if (delType !== '3') {
@@ -521,7 +525,10 @@ export const useDeleteTimelineArticle = ({
   timelineList,
   setTimelineList,
   setAlertStatus,
+  removeConfirmStyle,
 }: useDeleteTimelineParams) => {
+  const { htmlWidth } = useHtmlWidth();
+
   const deleteTimeline = (articleId: string) => {
     Modal.confirm(modalConfig(articleId));
   };
@@ -529,6 +536,9 @@ export const useDeleteTimelineArticle = ({
   const modalConfig = (articleId: string) => {
     return {
       title: '确定删除该文章吗？',
+      className: removeConfirmStyle,
+      centered: htmlWidth < 960,
+      width: htmlWidth < 960 ? '80%' : '',
       async onOk() {
         const res = normalizeResult<{ id: string }>(
           await Service.deleteArticle({ articleId, type: 'timeline' })

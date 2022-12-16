@@ -40,17 +40,38 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
   };
 
   return (
-    <div className={styles.actionList}>
+    <div className={classname(styles.actionList, theme && styles.dark)}>
       <div className={classname(className, styles.MusicIcon, show && styles.show)}>
-        <MIcons name={type ? icon as string : !show ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'} className={styles.icon} onClick={onToggle} customStyle />
+        <MIcons
+          name={
+            type
+              ? (icon as string)
+              : !show
+              ? 'icon-arrow-right-bold'
+              : 'icon-arrow-left-bold'
+          }
+          className={styles.icon}
+          onClick={onToggle}
+          customStyle
+        />
       </div>
       <div className={classname(styles.actionContent, show && styles.showContent)}>
         <div className={styles.iconList} onClick={() => onClick()}>
-          <MIcons name={siderVisible ? 'icon-shuangjiantouyou' : 'icon-shuangjiantouzuo'} className={styles.actionIcon} noStopPropagation customStyle />
+          <MIcons
+            name={siderVisible ? 'icon-shuangjiantouyou' : 'icon-shuangjiantouzuo'}
+            className={styles.actionIcon}
+            noStopPropagation
+            customStyle
+          />
           <span className={styles.text}>隐藏菜单</span>
         </div>
         <div className={styles.iconList} onClick={changeTheme}>
-          <MIcons name={theme ? 'icon-moon_fill' : 'icon-lieri'} className={classname(styles.actionIcon, !theme && styles.theme)} noStopPropagation customStyle />
+          <MIcons
+            name={theme ? 'icon-moon_fill' : 'icon-lieri'}
+            className={classname(styles.actionIcon, !theme && styles.theme)}
+            noStopPropagation
+            customStyle
+          />
           <span className={styles.text}>切换主题</span>
         </div>
       </div>

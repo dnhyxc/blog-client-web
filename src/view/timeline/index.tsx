@@ -73,6 +73,10 @@ const TimeLine: React.FC = () => {
     timelineList,
     setTimelineList,
     setAlertStatus,
+    removeConfirmStyle: classname(
+      styles.removeConfirmStyle,
+      themeMode === 'dark' && styles.darkRemoveConfirmStyle
+    ),
   });
 
   // 编辑文章

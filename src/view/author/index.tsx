@@ -195,12 +195,20 @@ const Author: React.FC = () => {
     pageNo,
     authorPage: selectKey === '1',
     authorLike: selectKey === '2',
+    removeConfirmStyle: classname(
+      styles.removeConfirmStyle,
+      themeMode === 'dark' && styles.darkRemoveConfirmStyle
+    ),
   });
 
   const { deleteTimeline } = useDeleteTimelineArticle({
     timelineList,
     setTimelineList,
     setAlertStatus,
+    removeConfirmStyle: classname(
+      styles.removeConfirmStyle,
+      themeMode === 'dark' && styles.darkRemoveConfirmStyle
+    ),
   });
 
   // 查看更多信息

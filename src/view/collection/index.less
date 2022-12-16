@@ -34,6 +34,21 @@
   }
 }
 
+.darkModalConfirm {
+  :global {
+    .ant-modal-body {
+      background-color: @dark-bgc;
+      color: @dark-fc;
+    }
+    .ant-modal-confirm-body {
+      .ant-modal-confirm-title,
+      .ant-modal-confirm-content {
+        color: @dark-fc;
+      }
+    }
+  }
+}
+
 .Collection {
   position: relative;
   display: flex;
@@ -120,6 +135,8 @@
         cursor: pointer;
 
         .collectionName {
+          display: flex;
+          align-items: center;
           .ellipsis();
         }
 
@@ -176,6 +193,8 @@
           }
 
           .moreCollection {
+            display: flex;
+            align-items: center;
             margin-top: 6px;
             font-size: 13px;
             cursor: pointer;
@@ -209,6 +228,12 @@
 
   .iconWrap {
     cursor: pointer;
+  }
+}
+
+.dark {
+  .wrap {
+    background-color: @dark-bgc;
   }
 }
 

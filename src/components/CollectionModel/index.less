@@ -7,6 +7,15 @@
   }
 }
 
+.darkTitle {
+  color: @dark-fc;
+
+  .info {
+    font-size: 12px;
+    color: @dark-fc-gray;
+  }
+}
+
 .containerClassName {
   height: 320px;
 
@@ -36,6 +45,8 @@
       }
 
       .collectionName {
+        display: flex;
+        align-items: center;
         font-size: 16px;
         margin-bottom: 8px;
         font-weight: 600;
@@ -54,6 +65,35 @@
       &:last-child {
         border-bottom: none;
       }
+    }
+
+    .noMore {
+      background-color: #fff;
+      border-bottom: 1px solid @background;
+      margin-top: 8px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+    }
+  }
+}
+
+.darkContainerClassName {
+  .scrollWrapStyle {
+    background-color: @dark-bgc-deep !important;
+  }
+
+  .collectionList {
+    .collectionItem {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
+      border-bottom: 1px solid @dark-gray;
+    }
+
+    .noMore {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
+      border-bottom: none;
     }
   }
 }
@@ -77,6 +117,24 @@
   :global {
     .ant-modal-body {
       padding: 10px 10px;
+    }
+  }
+}
+
+.darkWrapClassName {
+  :global {
+    .ant-modal-header {
+      background-color: @dark-bgc-deep;
+      border-radius: 0;
+    }
+
+    .ant-modal-close-x {
+      color: @dark-fc;
+    }
+
+    .ant-modal-footer {
+      background-color: @dark-bgc-deep;
+      border-radius: 0;
     }
   }
 }

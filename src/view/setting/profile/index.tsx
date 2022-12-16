@@ -97,7 +97,11 @@ const Profile: React.FC = () => {
           <div className={styles.title}>
             <div className={styles.infoText}>
               <span>个人设置</span>
-              {htmlWidth < 960 && <MDropdown />}
+              {htmlWidth < 960 && (
+                <MDropdown
+                  overlayClassName={themeMode === 'dark' ? styles.overlayClassName : ''}
+                />
+              )}
             </div>
             <div className={styles.mainCover}>
               <Image

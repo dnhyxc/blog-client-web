@@ -132,6 +132,10 @@ const Home: React.FC<IProps> = () => {
     listRef,
     pageNo,
     keyword,
+    removeConfirmStyle: classname(
+      styles.removeConfirmStyle,
+      themeMode === 'dark' && styles.darkRemoveConfirmStyle
+    ),
   });
 
   // 文章点赞

@@ -39,6 +39,19 @@
   }
 }
 
+.darkAntdConform() {
+  :global {
+    .ant-modal-content {
+      background-color: @dark-bgc;
+    }
+
+    .ant-modal-confirm-title,
+    .ant-modal-confirm-content {
+      color: @dark-fc;
+    }
+  }
+}
+
 // 是网页整体变成灰色
 .htmlToGray() {
   filter: grayscale(100%);
@@ -204,6 +217,7 @@
 @dark-gray: #565656;
 @dark-fc-gray: #a5a5a5;
 @dark-fc: #f1f1f1;
+@dark-mask: rgba(225, 225, 225, 0.2);
 
 // 媒体查询配置
 @max-width: 960px;

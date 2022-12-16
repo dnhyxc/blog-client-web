@@ -76,7 +76,13 @@ const Card: React.FC<IProps> = ({
   const renderAction = (id: string) => {
     const onRemoveArticle = (id: string) => {
       Modal.confirm({
-        className: htmlWidth < 960 ? styles.removeArticleConfirm : '',
+        className:
+          htmlWidth < 960
+            ? classname(
+                styles.removeArticleConfirm,
+                themeMode === 'dark' && styles.darkRemoveArticleConfirm
+              )
+            : '',
         title: '确定移除该文章吗？',
         content: '移除后，该文章将从当前收藏集中删除',
         centered: htmlWidth < 960,
@@ -195,7 +201,7 @@ const Card: React.FC<IProps> = ({
                       content={() => content(i)}
                       trigger="hover"
                       className={styles.popover}
-                      overlayClassName={themeMode === 'dark' && styles.dark && styles.overlayClassName}
+                      overlayClassName={themeMode === 'dark' && styles.overlayClassName}
                       zIndex={12}
                       getPopupContainer={(node) => node}
                     >
@@ -229,7 +235,10 @@ const Card: React.FC<IProps> = ({
                     {i?.authorName}
                   </span>
                   <span
-                    className={classname(styles.classify, themeMode === 'dark' && styles.dark && styles.darkClassify)}
+                    className={classname(
+                      styles.classify,
+                      themeMode === 'dark' && styles.dark && styles.darkClassify
+                    )}
                     onClick={(e) => toTagList(e as unknown as MouseEvent, i.tag)}
                   >
                     标签：
@@ -239,7 +248,14 @@ const Card: React.FC<IProps> = ({
                     分类：
                     {i.classify}
                   </span>
-                  <span className={classname(styles.date, themeMode === 'dark' && styles.dark && styles.darkDate)}>{formatGapTime(i.createTime)}</span>
+                  <span
+                    className={classname(
+                      styles.date,
+                      themeMode === 'dark' && styles.dark && styles.darkDate
+                    )}
+                  >
+                    {formatGapTime(i.createTime)}
+                  </span>
                 </div>
               )}
               <div className={styles.action}>

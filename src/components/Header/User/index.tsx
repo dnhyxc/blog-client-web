@@ -1,14 +1,16 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Dropdown, Menu } from 'antd';
+import classname from 'classname';
 import useStore from '@/store';
+import { useGetTheme } from '@/hooks';
 import Image from '@/components/Image';
 import MIcons from '@/components/Icons';
 import { HEAD_UEL, USER_MENU } from '@/constant';
 import { storage } from '@/utils';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const User: React.FC<IProps> = () => {
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const User: React.FC<IProps> = () => {
     userInfoStore: { getUserInfo },
     commonStore,
   } = useStore();
+  const { themeMode } = useGetTheme();
 
   const onJump = (path: string) => {
     if (path === '/login') {
@@ -34,7 +37,12 @@ const User: React.FC<IProps> = () => {
       items={USER_MENU.map((i) => ({
         key: i.key,
         label: (
-          <div className={styles.userMenuItem}>
+          <div
+            className={classname(
+              styles.userMenuItem,
+              themeMode === 'dark' && styles.darkUserMenuItem
+            )}
+          >
             <MIcons
               name={i.icon}
               text={i.text}
@@ -50,7 +58,13 @@ const User: React.FC<IProps> = () => {
   return (
     <div className={styles.User}>
       {getUserInfo?.userId ? (
-        <Dropdown overlay={menu} placement="bottomRight" arrow trigger={['click']}>
+        <Dropdown
+          overlay={menu}
+          placement="bottomRight"
+          arrow
+          trigger={['click']}
+          overlayClassName={themeMode === 'dark' ? styles.overlayClassName : ''}
+        >
           <div className={styles.headImg}>
             <Image
               url={getUserInfo?.headUrl || HEAD_UEL}

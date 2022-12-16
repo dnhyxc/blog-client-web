@@ -111,3 +111,50 @@
     transition: all 0.6s;
   }
 }
+
+.dark {
+  .mack {
+    background-color: @dark-mask;
+  }
+
+  .mackNav {
+    background-color: @dark-bgc-deep;
+
+    .tocTitle {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
+    }
+  }
+
+  .tocList {
+    background-color: @dark-bgc-deep;
+    color: @dark-fc;
+  }
+
+  :global {
+    .markdown-navigation .title-anchor.active {
+      position: relative;
+      color: @dark-fc;
+      background-color: @dark-gray;
+
+      &::after {
+        background-color: @menu-active;
+      }
+    }
+
+    .markdown-navigation {
+      :global(.title-level3) {
+        color: @dark-fc;
+      }
+      :global(.title-level4) {
+        color: @dark-fc;
+      }
+      :global(.title-level5) {
+        color: @dark-fc;
+      }
+      :global(.title-level6) {
+        color: @dark-fc;
+      }
+    }
+  }
+}

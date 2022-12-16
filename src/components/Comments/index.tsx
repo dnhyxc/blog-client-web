@@ -152,7 +152,13 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
   }) => {
     return {
       title: '确定删除该评论吗？',
-      className: htmlWidth < 960 ? styles.removeCommentConfirm : '',
+      className:
+        htmlWidth < 960
+          ? classname(
+              styles.removeCommentConfirm,
+              themeMode === 'dark' && styles.darkRemoveCommentConfirm
+            )
+          : '',
       centered: htmlWidth < 960,
       width: htmlWidth < 960 ? '80%' : '',
       async onOk() {

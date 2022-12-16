@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Form, Input, Radio, Button } from 'antd';
+import classname from 'classname';
 import useStore from '@/store';
 import * as Service from '@/service';
+import { DRAWER_STYLES } from '@/constant';
+import { useGetTheme } from '@/hooks';
 import { normalizeResult, error, success } from '@/utils';
 import { AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
@@ -34,6 +37,7 @@ const AddCollection: React.FC<IProps> = ({
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (collectInfo?.name && visible) {
@@ -126,7 +130,10 @@ const AddCollection: React.FC<IProps> = ({
       width={520}
       centered
       visible={visible}
-      wrapClassName={styles.wrapClassName}
+      wrapClassName={classname(
+        styles.wrapClassName,
+        themeMode === 'dark' && styles.darkWrapClassName
+      )}
       onCancel={onClose}
       keyboard
       maskClosable={false}
@@ -145,8 +152,14 @@ const AddCollection: React.FC<IProps> = ({
           确定
         </Button>,
       ]}
+      bodyStyle={themeMode === 'dark' ? { ...DRAWER_STYLES.bodyStyle } : {}}
     >
-      <div className={styles.AddCollection}>
+      <div
+        className={classname(
+          styles.AddCollection,
+          themeMode === 'dark' && styles.darkAddCollection
+        )}
+      >
         <Form
           labelCol={{ span: 3 }}
           wrapperCol={{ span: 20 }}

@@ -9,9 +9,10 @@ import styles from './index.less';
 
 interface IProps {
   className?: string;
+  overlayClassName?: string;
 }
 
-const MDropdown: React.FC<IProps> = ({ className }) => {
+const MDropdown: React.FC<IProps> = ({ className, overlayClassName }) => {
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
 
   const { pathname } = useLocation();
@@ -40,10 +41,10 @@ const MDropdown: React.FC<IProps> = ({ className }) => {
   };
 
   return (
-    <div className={classname(styles.MenuList, className)}>
+    <div className={classname(styles.MenuList, className, overlayClassName)}>
       <span className={styles.itemIcon}>
         <Dropdown
-          overlayClassName={styles.dropdown}
+          overlayClassName={classname(styles.dropdown, overlayClassName)}
           placement="bottom"
           overlay={menu}
           onVisibleChange={onVisibleChange}

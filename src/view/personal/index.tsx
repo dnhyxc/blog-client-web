@@ -215,6 +215,10 @@ const Personal = () => {
     authorId: authorId as string,
     accessUserId: getUserInfo?.userId,
     getCollectionTotal: selectKey === '3' ? getCollectionTotal : () => {},
+    removeConfirmStyle: classname(
+      styles.removeConfirmStyle,
+      themeMode === 'dark' && styles.darkRemoveConfirmStyle
+    ),
   });
 
   // 更新收藏集

@@ -116,6 +116,7 @@ export const GLOBAL_STYLES = {
   DARK_FC_GRAY: '#a5a5a5',
   DARK_FC: '#f1f1f1',
   WHITE: '#fff',
+  MASK_BGC: 'rgba(225, 225, 225, 0.2)',
 };
 
 // Drawer 暗黑样式
@@ -125,6 +126,7 @@ export const DRAWER_STYLES = {
     color: GLOBAL_STYLES.DARK_FC,
   },
   bodyStyle: { backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP },
+  maskStyle: { backgroundColor: GLOBAL_STYLES.MASK_BGC },
 };
 
 // 播放顺序图标

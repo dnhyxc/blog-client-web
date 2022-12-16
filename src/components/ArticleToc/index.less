@@ -103,13 +103,14 @@
 
   :global(.markdown-navigation .title-anchor.active) {
     color: @menu-active;
+    background-color: @dark-gray;
 
     &::after {
       background-color: @menu-active;
     }
 
     &:hover {
-      background-color: #fff;
+      background-color: @dark-gray;
       color: @menu-active;
     }
   }

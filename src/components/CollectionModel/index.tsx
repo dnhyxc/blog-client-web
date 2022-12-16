@@ -1,12 +1,14 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Checkbox, Modal, Button } from 'antd';
+import classname from 'classname';
 import Content from '@/components/Content';
 import MIcons from '@/components/Icons';
 import useStore from '@/store';
-import { useScrollLoad } from '@/hooks';
+import { useGetTheme, useScrollLoad } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error, success, info } from '@/utils';
+import { DRAWER_STYLES } from '@/constant';
 import { CollectionListRes, AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
 
@@ -50,6 +52,7 @@ const CollectionModal: React.FC<IProps> = ({
     loading,
     pageSize: 10,
   });
+  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (visible) {
@@ -143,7 +146,7 @@ const CollectionModal: React.FC<IProps> = ({
   };
 
   const renderTitle = (
-    <div className={styles.title}>
+    <div className={classname(styles.title, themeMode === 'dark' && styles.darkTitle)}>
       <span>选择收藏集</span>
       <span className={styles.info}>（创建或选择你想添加的收藏集）</span>
     </div>
@@ -155,7 +158,10 @@ const CollectionModal: React.FC<IProps> = ({
       width={520}
       visible={visible}
       centered
-      wrapClassName={styles.wrapClassName}
+      wrapClassName={classname(
+        styles.wrapClassName,
+        themeMode === 'dark' && styles.darkWrapClassName
+      )}
       onCancel={() => onCancel()}
       footer={[
         <div key="1" className={styles.actions}>
@@ -184,11 +190,15 @@ const CollectionModal: React.FC<IProps> = ({
           </div>
         </div>,
       ]}
+      bodyStyle={themeMode === 'dark' ? { ...DRAWER_STYLES.bodyStyle } : {}}
     >
       <Content
         className={styles.scrollWrapStyle}
         wrapClassName={styles.contentStyle}
-        containerClassName={styles.containerClassName}
+        containerClassName={classname(
+          styles.containerClassName,
+          themeMode === 'dark' && styles.darkContainerClassName
+        )}
         onScroll={onScroll}
       >
         <div className={styles.collectionList}>
@@ -211,6 +221,13 @@ const CollectionModal: React.FC<IProps> = ({
               </div>
             );
           })}
+          {collectionList?.list.length === collectionList?.total && !loading ? (
+            <div className={styles.noMore}>
+              {`共(${collectionList?.total})条，没有更多了～～～`}
+            </div>
+          ) : (
+            <div className={styles.noMore}>loading...</div>
+          )}
         </div>
       </Content>
     </Modal>

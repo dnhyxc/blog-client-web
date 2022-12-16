@@ -34,6 +34,22 @@
   }
 }
 
+.darkRemoveArticleConfirm {
+  :global {
+    .ant-modal-body {
+      background-color: @dark-bgc;
+    }
+
+    .ant-modal-confirm-body {
+      .ant-modal-confirm-title,
+      .ant-modal-confirm-content {
+        color: @dark-fc;
+      }
+    }
+    
+  }
+}
+
 .overlayClassName {
   :global {
     .ant-popover-inner {

@@ -52,6 +52,8 @@
       }
 
       .collectionName {
+        display: flex;
+        align-items: center;
         font-size: 16px;
         margin-bottom: 8px;
         font-weight: 600;
@@ -71,6 +73,14 @@
         border-bottom: none;
       }
     }
+
+    .noMore {
+      background-color: #fff;
+      border-bottom: 1px solid @background;
+      height: 45px;
+      line-height: 41px;
+      text-align: center;
+    }
   }
 }
 
@@ -79,10 +89,21 @@
   width: 100%;
 }
 
-.dark {
-  .containerClassName {
-    .scrollWrapStyle {
-      background-color: @dark-bgc !important;
+.darkContainerClassName {
+  .scrollWrapStyle {
+    background-color: @dark-bgc !important;
+  }
+
+  .collectionList {
+    .collectionItem {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
+      border-bottom: 1px solid @dark-gray;
+    }
+
+    .noMore {
+      background-color: @dark-bgc-deep;
+      color: @dark-fc;
     }
   }
 }
