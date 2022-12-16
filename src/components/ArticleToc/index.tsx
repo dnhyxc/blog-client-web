@@ -42,7 +42,7 @@ const Toc: React.FC<IProps> = ({ mackdown, className }) => {
   };
 
   return mackdown.includes('#') ? (
-    <div className={classname(styles.tocWrap, className, themeMode && styles.dark)}>
+    <div className={classname(styles.tocWrap, className, themeMode === 'dark' && styles.dark)}>
       <div className={styles.tocText}>文章目录</div>
       <div className={styles.mackNav}>
         {/* renderThumbVertical 用于更改滚动条样式 */}

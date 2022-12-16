@@ -174,7 +174,7 @@ const CreateDrawer: React.FC<IProps> = ({
         height={427}
         headerStyle={
           themeMode === 'dark'
-            ? { ...DRAWER_STYLES.headerStyle, padding: '10px' }
+            ? { ...DRAWER_STYLES.headerStyle, padding: '10px', borderRadius: '0' }
             : { padding: '10px' }
         }
         bodyStyle={

@@ -116,7 +116,7 @@ export const GLOBAL_STYLES = {
   DARK_FC_GRAY: '#a5a5a5',
   DARK_FC: '#f1f1f1',
   WHITE: '#fff',
-  MASK_BGC: 'rgba(225, 225, 225, 0.2)',
+  MASK_BGC: 'rgba(0, 0, 0, 0.35)',
 };
 
 // Drawer 暗黑样式

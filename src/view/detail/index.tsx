@@ -25,6 +25,7 @@ import { useGetArticleDetail, useGetTheme, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
 import { formatDate } from '@/utils';
 import ActionBar from '@/components/ActionBar';
+import ActionIcon from '@/components/ActionIcon';
 import { ArticleDetailParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -167,6 +168,10 @@ const ArticleDetail: React.FC = () => {
           />
         )}
         {htmlWidth <= 960 && <Footer />}
+        <ActionIcon
+          className={styles.changeIconWrap}
+          noHideMenuIcon
+        />
       </div>
       <BackTop className={htmlWidth > 960 ? styles.backTopWrap : styles.mobileBackTopWrap}>
         <div className={styles.backTop}>

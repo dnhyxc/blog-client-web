@@ -52,6 +52,43 @@
   }
 }
 
+// ActionIcon样式
+.changeIconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  bottom: 64px;
+  width: 12px;
+  height: 70px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  background-color: @sky-blue;
+  box-shadow: 0 0 5px #fff;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  z-index: 10;
+
+  .icon {
+    color: @menu-active;
+    font-size: 12px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &:hover {
+    width: 20px;
+    transition: all 0.3s ease-in-out;
+
+    .icon {
+      font-size: 16px;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+
 // 是网页整体变成灰色
 .htmlToGray() {
   filter: grayscale(100%);

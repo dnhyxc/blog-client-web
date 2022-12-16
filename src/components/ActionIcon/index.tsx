@@ -7,13 +7,14 @@ import styles from './index.less';
 
 interface IProps {
   siderVisible?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   className?: string;
   type?: string;
   icon?: string;
+  noHideMenuIcon?: boolean;
 }
 
-const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, icon }) => {
+const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, icon, noHideMenuIcon }) => {
   const [show, setShow] = useState<boolean>(false);
   const [theme, setTheme] = useState<boolean>(storage.ssnGetItem('theme') === 'dark');
 
@@ -23,7 +24,7 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
   }, [theme]);
 
   const onToggle = () => {
-    type === 'actionBar' ? () => onClick() : showActions;
+    type === 'actionBar' ? () => onClick && onClick() : showActions;
     if (type) {
       onClick && onClick();
     } else {
@@ -40,15 +41,15 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
   };
 
   return (
-    <div className={classname(styles.actionList, theme && styles.dark)}>
+    <div className={classname(styles.actionList, noHideMenuIcon && styles.noHideMenuActionList, theme && styles.dark)}>
       <div className={classname(className, styles.MusicIcon, show && styles.show)}>
         <MIcons
           name={
             type
               ? (icon as string)
               : !show
-              ? 'icon-arrow-right-bold'
-              : 'icon-arrow-left-bold'
+                ? 'icon-arrow-right-bold'
+                : 'icon-arrow-left-bold'
           }
           className={styles.icon}
           onClick={onToggle}
@@ -56,15 +57,17 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
         />
       </div>
       <div className={classname(styles.actionContent, show && styles.showContent)}>
-        <div className={styles.iconList} onClick={() => onClick()}>
-          <MIcons
-            name={siderVisible ? 'icon-shuangjiantouyou' : 'icon-shuangjiantouzuo'}
-            className={styles.actionIcon}
-            noStopPropagation
-            customStyle
-          />
-          <span className={styles.text}>隐藏菜单</span>
-        </div>
+        {!noHideMenuIcon && (
+          <div className={styles.iconList} onClick={() => onClick && onClick()}>
+            <MIcons
+              name={siderVisible ? 'icon-shuangjiantouyou' : 'icon-shuangjiantouzuo'}
+              className={styles.actionIcon}
+              noStopPropagation
+              customStyle
+            />
+            <span className={styles.text}>隐藏菜单</span>
+          </div>
+        )}
         <div className={styles.iconList} onClick={changeTheme}>
           <MIcons
             name={theme ? 'icon-moon_fill' : 'icon-lieri'}
