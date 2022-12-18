@@ -8,6 +8,7 @@ import Card from '@/components/Card';
 import MAlert from '@/components/MAlert';
 import BackTop from '@/components/BackTop';
 import MSegmented from '@/components/Segmented';
+import ActionIcon from '@/components/ActionIcon';
 import MIcons from '@/components/Icons';
 import {
   useLoginStatus,
@@ -165,6 +166,7 @@ const Classify: React.FC = () => {
 
   return (
     <div className={styles.Classify}>
+      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()}>文章分类</Header>
       <Content

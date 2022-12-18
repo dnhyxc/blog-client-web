@@ -6,6 +6,7 @@ import Content from '@/components/Content';
 import Card from '@/components/Card';
 import RightBar from '@/components/RightBar';
 import MAlert from '@/components/MAlert';
+import ActionIcon from '@/components/ActionIcon';
 import MIcons from '@/components/Icons';
 import useStore from '@/store';
 import { PAGESIZE } from '@/constant';
@@ -24,7 +25,7 @@ import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const TagList: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -135,6 +136,7 @@ const TagList: React.FC<IProps> = () => {
 
   return (
     <div className={styles.TagList}>
+      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()}>
         {tagName}

@@ -8,6 +8,7 @@ import Card from '@/components/Card';
 import MAlert from '@/components/MAlert';
 import MIcons from '@/components/Icons';
 import BackTop from '@/components/BackTop';
+import ActionIcon from '@/components/ActionIcon';
 import Footer from '@/components/Footer';
 import {
   useLoginStatus,
@@ -192,6 +193,7 @@ const Search: React.FC<IProps> = () => {
 
   return (
     <div className={classname(styles.Search, themeMode === 'dark' && styles.dark)}>
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth>

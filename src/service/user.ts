@@ -37,7 +37,7 @@ export async function getUserInfo(params: GetUserInfoParams) {
   return res;
 }
 
-export async function verify() {
-  const res = await post(API.VERIFY);
+export async function verify(params?: { fromDetail?: boolean }) {
+  const res = await post(API.VERIFY, params);
   return res;
 }

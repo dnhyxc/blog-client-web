@@ -167,7 +167,7 @@ const ReleaseModel: React.FC<IProps> = ({
     <div>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Drawer
-        title={<div className={themeMode === 'dark' && styles.drawerTitle}>发布文章</div>}
+        title={<div className={themeMode === 'dark' ? styles.drawerTitle : ''}>发布文章</div>}
         placement="right"
         width={htmlWidth > 500 ? 500 : 'calc(100vw - 50px)'}
         closable={false}

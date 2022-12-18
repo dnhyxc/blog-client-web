@@ -1,5 +1,70 @@
 @import '~@styles/common.less';
 
+.actionContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 70px;
+  transition: all 0.3s ease-in-out;
+  background-color: #fff;
+  box-shadow: 0 0 5px @background;
+
+  .iconList {
+    margin-right: 20px;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .actionIcon {
+      font-size: 24px;
+    }
+
+    .theme {
+      color: @sunlight;
+    }
+
+    .text {
+      font-size: 12px;
+      color: @font-4;
+    }
+  }
+}
+
+.commentStyle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 12px;
+  height: 70px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  background-color: @sky-blue;
+  box-shadow: 0 0 5px #fff;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  z-index: 10;
+
+  .icon {
+    color: @menu-active;
+    font-size: 12px;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &:hover {
+    width: 20px;
+    transition: all 0.3s ease-in-out;
+
+    .icon {
+      font-size: 16px;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+
 .actionList {
   position: fixed;
   left: 0;
@@ -8,37 +73,9 @@
   z-index: 10;
 
   .MusicIcon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
+    .commentStyle;
     left: 0;
     bottom: 64px;
-    width: 12px;
-    height: 70px;
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    background-color: @sky-blue;
-    box-shadow: 0 0 5px #fff;
-    transition: all 0.3s ease-in-out;
-    cursor: pointer;
-    z-index: 10;
-
-    .icon {
-      color: @menu-active;
-      font-size: 12px;
-      transition: all 0.3s ease-in-out;
-    }
-
-    &:hover {
-      width: 20px;
-      transition: all 0.3s ease-in-out;
-
-      .icon {
-        font-size: 16px;
-        transition: all 0.3s ease-in-out;
-      }
-    }
   }
 
   .show {
@@ -47,42 +84,45 @@
   }
 
   .actionContent {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
+    .actionContent;
+
     left: -150px;
     width: 150px;
-    height: 70px;
-    transition: all 0.3s ease-in-out;
-    background-color: #fff;
-    box-shadow: 0 0 5px @background;
-
-    .iconList {
-      margin-right: 20px;
-      cursor: pointer;
-
-      &:last-child {
-        margin-right: 0;
-      }
-
-      .actionIcon {
-        font-size: 24px;
-      }
-
-      .theme {
-        color: @sunlight;
-      }
-
-      .text {
-        font-size: 12px;
-        color: @font-4;
-      }
-    }
   }
 
   .showContent {
     left: 0;
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+.detailActionList {
+  position: fixed;
+  right: 0;
+  bottom: 64px;
+  height: 70px;
+  z-index: 10;
+
+  .detailMusicIcon {
+    .commentStyle;
+    right: 0;
+    bottom: 0;
+  }
+
+  .show {
+    right: 80px !important;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .actionContent {
+    .actionContent;
+
+    right: -80px;
+    width: 80px;
+  }
+
+  .showContent {
+    right: 0;
     transition: all 0.3s ease-in-out;
   }
 }

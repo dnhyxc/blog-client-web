@@ -164,13 +164,13 @@ const ArticleDetail: React.FC = () => {
             id={id as string}
             detail={detail}
             commentRef={commentRef}
-            className={themeMode === 'dark' && styles.darkActionBar}
+            className={themeMode === 'dark' ? styles.darkActionBar : ''}
           />
         )}
         {htmlWidth <= 960 && <Footer />}
         <ActionIcon
-          className={styles.changeIconWrap}
           noHideMenuIcon
+          fromDetail
         />
       </div>
       <BackTop className={htmlWidth > 960 ? styles.backTopWrap : styles.mobileBackTopWrap}>

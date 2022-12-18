@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Popover } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
-import { shareQQ, shareSinaWeiBo, error, info } from '@/utils';
+import { shareQQ, shareSinaWeiBo, error } from '@/utils';
 import Qrcode from '@/components/Qrcode';
 import { useGetTheme, useVerifyToken } from '@/hooks';
 import { EventBus } from '@/event';
+import { show, close } from '@/components/Render';
 import MIcons from '@/components/Icons';
 import CollectionModal from '@/components/CollectionModel';
 import CreateCollectModel from '@/components/CreateCollectModel';
@@ -29,8 +31,10 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
   const [createCollectId, setCreateCollectId] = useState<string>('');
   const [commentCount, setCommentCount] = useState<number>(0);
 
-  const { loginStatus } = useVerifyToken(true);
+  const { pathname, search } = useLocation();
+  const { loginStatus } = useVerifyToken(true, false, true);
   const { themeMode } = useGetTheme();
+  const timerRef = useRef<any>(null);
 
   useEffect(() => {
     EventBus.onSetCommentCount.listen(() => {
@@ -54,18 +58,33 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
     }
   }, [visible, id, loginStatus]);
 
+  // 关闭alert弹窗
+  const closeAlert = () => {
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    timerRef.current = setTimeout(() => {
+      close();
+    }, 5000);
+  };
+
   // 文章点赞
   const onLikeArticle = async () => {
     if (!id) return;
     if (!getUserInfo?.userId || !loginStatus.success) {
-      info('请登录后再试');
+      show({ pathname, search });
+      closeAlert();
       return;
     }
     const res = normalizeResult<{ id: string; isLike: boolean }>(
       await Service.likeArticle({ id, userId: getUserInfo?.userId })
     );
     if (!res.success) {
-      res.code !== 401 && error(res.message);
+      if (res.code !== 401) {
+        show({ pathname, search });
+        closeAlert();
+      }
       return;
     }
     setIsLike(res.data.isLike);
@@ -79,7 +98,8 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
   // 收藏
   const onCollection = () => {
     if (!getUserInfo?.userId || !loginStatus.success) {
-      info('请登录后再试');
+      show({ pathname, search });
+      closeAlert();
       return;
     }
     setVisible(true);
@@ -118,7 +138,8 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
   // 取消收藏
   const cancelCollected = async () => {
     if (!getUserInfo?.userId || !loginStatus.success) {
-      info('请登录后再试');
+      show({ pathname, search });
+      closeAlert();
       return;
     }
     const res = normalizeResult<number>(
@@ -129,6 +150,9 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
     );
     if (res.success) {
       getCollectionStatus();
+    } else if (res.code === 409) {
+      show({ pathname, search });
+      closeAlert();
     } else {
       error(res.message);
     }

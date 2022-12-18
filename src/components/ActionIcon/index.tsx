@@ -12,9 +12,10 @@ interface IProps {
   type?: string;
   icon?: string;
   noHideMenuIcon?: boolean;
+  fromDetail?: boolean;
 }
 
-const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, icon, noHideMenuIcon }) => {
+const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, icon, noHideMenuIcon, fromDetail }) => {
   const [show, setShow] = useState<boolean>(false);
   const [theme, setTheme] = useState<boolean>(storage.ssnGetItem('theme') === 'dark');
 
@@ -41,44 +42,74 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
   };
 
   return (
-    <div className={classname(styles.actionList, noHideMenuIcon && styles.noHideMenuActionList, theme && styles.dark)}>
-      <div className={classname(className, styles.MusicIcon, show && styles.show)}>
-        <MIcons
-          name={
-            type
-              ? (icon as string)
-              : !show
-                ? 'icon-arrow-right-bold'
-                : 'icon-arrow-left-bold'
-          }
-          className={styles.icon}
-          onClick={onToggle}
-          customStyle
-        />
-      </div>
-      <div className={classname(styles.actionContent, show && styles.showContent)}>
-        {!noHideMenuIcon && (
-          <div className={styles.iconList} onClick={() => onClick && onClick()}>
+    !fromDetail ? (
+      <div className={classname(styles.actionList, noHideMenuIcon && styles.noHideMenuActionList, theme && styles.dark)}>
+        <div className={classname(className, styles.MusicIcon, show && styles.show)}>
+          <MIcons
+            name={
+              type
+                ? (icon as string)
+                : !show
+                  ? 'icon-arrow-right-bold'
+                  : 'icon-arrow-left-bold'
+            }
+            className={styles.icon}
+            onClick={onToggle}
+            customStyle
+          />
+        </div>
+        <div className={classname(styles.actionContent, show && styles.showContent)}>
+          {!noHideMenuIcon && (
+            <div className={styles.iconList} onClick={() => onClick && onClick()}>
+              <MIcons
+                name={siderVisible ? 'icon-shuangjiantouyou' : 'icon-shuangjiantouzuo'}
+                className={styles.actionIcon}
+                noStopPropagation
+                customStyle
+              />
+              <span className={styles.text}>隐藏菜单</span>
+            </div>
+          )}
+          <div className={styles.iconList} onClick={changeTheme}>
             <MIcons
-              name={siderVisible ? 'icon-shuangjiantouyou' : 'icon-shuangjiantouzuo'}
-              className={styles.actionIcon}
+              name={theme ? 'icon-moon_fill' : 'icon-lieri'}
+              className={classname(styles.actionIcon, !theme && styles.theme)}
               noStopPropagation
               customStyle
             />
-            <span className={styles.text}>隐藏菜单</span>
+            <span className={styles.text}>切换主题</span>
           </div>
-        )}
-        <div className={styles.iconList} onClick={changeTheme}>
-          <MIcons
-            name={theme ? 'icon-moon_fill' : 'icon-lieri'}
-            className={classname(styles.actionIcon, !theme && styles.theme)}
-            noStopPropagation
-            customStyle
-          />
-          <span className={styles.text}>切换主题</span>
         </div>
       </div>
-    </div>
+    ) : (
+      <div className={classname(styles.detailActionList, theme && styles.dark)}>
+        <div className={classname(className, styles.detailMusicIcon, show && styles.show)}>
+          <MIcons
+            name={
+              type
+                ? (icon as string)
+                : !show
+                  ? 'icon-arrow-left-bold'
+                  : 'icon-arrow-right-bold'
+            }
+            className={styles.icon}
+            onClick={onToggle}
+            customStyle
+          />
+        </div>
+        <div className={classname(styles.actionContent, show && styles.showContent)}>
+          <div className={styles.iconList} onClick={changeTheme}>
+            <MIcons
+              name={theme ? 'icon-moon_fill' : 'icon-lieri'}
+              className={classname(styles.actionIcon, !theme && styles.theme)}
+              noStopPropagation
+              customStyle
+            />
+            <span className={styles.text}>切换主题</span>
+          </div>
+        </div>
+      </div>
+    )
   );
 };
 

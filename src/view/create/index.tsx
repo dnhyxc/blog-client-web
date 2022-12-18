@@ -5,6 +5,7 @@ import classname from 'classname';
 import { observer } from 'mobx-react';
 import useStore from '@/store';
 import Header from '@/components/Header';
+import ActionIcon from '@/components/ActionIcon';
 import TuiEditor from '@/components/TuiEditor';
 import {
   useGetArticleDetail,
@@ -28,7 +29,7 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -179,6 +180,7 @@ const CreateArticle: React.FC<IProps> = () => {
 
   return (
     <div className={styles.container}>
+      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
       <Header right={renderRight()}>发布文章</Header>
       <div
         className={classname(

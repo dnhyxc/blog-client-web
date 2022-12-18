@@ -17,6 +17,7 @@ import MIcons from '@/components/Icons';
 import MAlert from '@/components/MAlert';
 import MSearch from '@/components/MSearch';
 import BackTop from '@/components/BackTop';
+import ActionIcon from '@/components/ActionIcon';
 import {
   useLoginStatus,
   useLikeArticle,
@@ -34,7 +35,7 @@ import { ArticleListResult, ArticleItem } from '@/typings/common';
 import Cover from './cover';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps { }
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -255,6 +256,7 @@ const Home: React.FC<IProps> = () => {
 
   return (
     <div className={classname(styles.container, themeMode === 'dark' && styles.dark)}>
+      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       {(htmlWidth <= 960 || !siderVisible) && (
         <Header

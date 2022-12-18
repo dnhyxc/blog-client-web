@@ -4,6 +4,7 @@ import { Button, Input, Modal } from 'antd';
 import classname from 'classname';
 import Content from '@/components/Content';
 import MDropdown from '@/components/MDropdown';
+import ActionIcon from '@/components/ActionIcon';
 import useStore from '@/store';
 import { useGetTheme, useHtmlWidth, useVerifyToken } from '@/hooks';
 import * as Service from '@/service';
@@ -101,6 +102,7 @@ const Account: React.FC<IProps> = () => {
 
   return (
     <div className={classname(styles.Account, themeMode === 'dark' && styles.dark)}>
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
       <Content
         containerClassName={styles.containerClassName}
         wrapClassName={styles.wrapClassName}

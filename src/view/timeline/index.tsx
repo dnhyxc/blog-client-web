@@ -9,6 +9,7 @@ import Content from '@/components/Content';
 import Header from '@/components/Header';
 import MAlert from '@/components/MAlert';
 import BackTop from '@/components/BackTop';
+import ActionIcon from '@/components/ActionIcon';
 import MIcons from '@/components/Icons';
 import MSkeleton from '@/components/MSkeleton';
 import {
@@ -110,6 +111,7 @@ const TimeLine: React.FC = () => {
 
   return (
     <div className={styles.TimeLine}>
+      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()}>时间轴线</Header>
       <Content
@@ -170,8 +172,8 @@ const TimeLine: React.FC = () => {
               <MSkeleton
                 rows={htmlWidth > 960 ? 2 : 3}
                 terminal={htmlWidth > 960 ? 'web' : 'h5'}
-                skeletonWrapStyle={themeMode === 'dark' && styles.darkSkeleton}
-                textStyle={themeMode === 'dark' && styles.darkTextStyle}
+                skeletonWrapStyle={themeMode === 'dark' ? styles.darkSkeleton : ''}
+                textStyle={themeMode === 'dark' ? styles.darkTextStyle : ''}
               />
             </div>
           )}

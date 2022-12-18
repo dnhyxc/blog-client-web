@@ -69,8 +69,9 @@ function parseJSON(response: Response) {
   return response.json();
 }
 
+let timer: any = null;
+
 function onRedirect(pathname: string, search: string) {
-  let timer = null;
   if (pathname !== '/login') {
     show({ pathname, search });
     if (timer) {

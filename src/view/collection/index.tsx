@@ -10,6 +10,7 @@ import Image from '@/components/Image';
 import Card from '@/components/Card';
 import BackTop from '@/components/BackTop';
 import Footer from '@/components/Footer';
+import ActionIcon from '@/components/ActionIcon';
 import CollectionModal from '@/components/CollectionModel';
 import CollectionDrawer from '@/components/CollectionDrawer';
 import CreateCollectModel from '@/components/CreateCollectModel';
@@ -286,6 +287,7 @@ const Collection: React.FC<IProps> = () => {
 
   return (
     <div className={classname(styles.Collection, themeMode === 'dark' && styles.dark)}>
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth right={rightNode()}>

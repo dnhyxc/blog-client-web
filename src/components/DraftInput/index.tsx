@@ -206,7 +206,7 @@ const DraftInput: React.FC<IProps> = ({
                   </span>
                 </span>
               </div>
-              <div id="ACTION" className={themeMode === 'dark' && styles.darkBtn}>
+              <div id="ACTION" className={themeMode === 'dark' ? styles.darkBtn : ''}>
                 <span id="ENTER" className={styles.enter}>
                   Ctrl + Enter
                 </span>

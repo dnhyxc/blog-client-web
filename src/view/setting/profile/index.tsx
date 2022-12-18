@@ -10,6 +10,7 @@ import MAlert from '@/components/MAlert';
 import Content from '@/components/Content';
 import UploadFile from '@/components/Upload';
 import Image from '@/components/Image';
+import ActionIcon from '@/components/ActionIcon';
 import MDropdown from '@/components/MDropdown';
 import { HEAD_UEL, UPDATE_INFO_API_PATH, MAIN_COVER } from '@/constant';
 import { LoginData } from '@/typings/common';
@@ -87,6 +88,7 @@ const Profile: React.FC = () => {
 
   return (
     <div className={classname(styles.Profile, themeMode === 'dark' && styles.dark)}>
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Content
         containerClassName={styles.containerClassName}

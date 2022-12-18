@@ -10,6 +10,7 @@ import Content from '@/components/Content';
 import Card from '@/components/Card';
 import Image from '@/components/Image';
 import BackTop from '@/components/BackTop';
+import ActionIcon from '@/components/ActionIcon';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, storage, error } from '@/utils';
@@ -234,6 +235,7 @@ const Author: React.FC = () => {
 
   return (
     <div className={classname(styles.AuthorContainer, themeMode === 'dark' && styles.dark)}>
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth right={rightNode()}>

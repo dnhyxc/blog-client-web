@@ -110,6 +110,23 @@ export const useLoginStatus = () => {
   const { commonStore } = useStore();
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
+  const timerRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (showAlert) {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      timerRef.current = setTimeout(() => {
+        onCloseAlert();
+      }, 5000);
+    }
+    return () => {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    };
+  }, [showAlert]);
 
   const onCloseAlert = () => {
     setShowAlert(false);
@@ -571,13 +588,14 @@ export const useDeleteTimelineArticle = ({
 };
 
 // 校验token是否过期的hook
-export const useVerifyToken = (needRes?: boolean, needMsg?: boolean) => {
+export const useVerifyToken = (needRes?: boolean, needMsg?: boolean, fromDetail?: boolean) => {
   const [loginStatus, setLoginStatus] = useState<{
     success?: boolean;
     message?: string;
     code?: number | string;
     data?: any;
   }>({});
+  const timerRef = useRef<any>(null);
 
   const { commonStore } = useStore();
 
@@ -586,18 +604,20 @@ export const useVerifyToken = (needRes?: boolean, needMsg?: boolean) => {
   const { pathname, search } = useLocation();
 
   useEffect(() => {
-    verifyToken();
-
-    let timer: any = null;
-    timer = setTimeout(() => close(), 5000);
-
+    verifyToken(fromDetail);
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    timerRef.current = setTimeout(() => close(), 5000);
     return () => {
-      clearInterval(timer);
+      clearInterval(timerRef.current);
+      timerRef.current = null;
     };
-  }, []);
+  }, [fromDetail]);
 
-  const verifyToken = async () => {
-    const res = normalizeResult<number>(await Service.verify());
+  const verifyToken = async (fromDetail?: boolean) => {
+    const res = normalizeResult<number>(await Service.verify({ fromDetail }));
     if (!res.success && !needRes) {
       needMsg && res.code === 409 && error(res.message);
       commonStore.setAuth({ redirectUrl: `${pathname}${search}` });

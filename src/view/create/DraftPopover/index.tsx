@@ -196,7 +196,7 @@ const DraftPopover: React.FC<IProps> = ({
     </Popover>
   ) : (
     <Drawer
-      title={<div className={themeMode === 'dark' && styles.drawerTitle}>草稿列表</div>}
+      title={<div className={themeMode === 'dark' ? styles.drawerTitle : ''}>草稿列表</div>}
       key="top"
       placement="top"
       closable={false}

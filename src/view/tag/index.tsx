@@ -4,10 +4,11 @@ import classname from 'classname';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import WordCloud from '@/components/WordCloud';
-import { useGetBodyWidth, useGetTheme } from '@/hooks';
+import { useGetBodyWidth, useGetTheme, useHtmlWidth } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error } from '@/utils';
 import WordList from '@/components/WordList';
+import ActionIcon from '@/components/ActionIcon';
 import MIcons from '@/components/Icons';
 import { TagResult } from '@/typings/common';
 import styles from './index.less';
@@ -17,6 +18,7 @@ const Tag: React.FC = () => {
   const navigate = useNavigate();
   const { bodyWidth } = useGetBodyWidth();
   const { themeMode } = useGetTheme();
+  const { htmlWidth } = useHtmlWidth();
 
   useEffect(() => {
     getTagList();
@@ -53,6 +55,7 @@ const Tag: React.FC = () => {
 
   return (
     <div className={styles.Tag}>
+      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
       <Header right={rightNode()}>文章标签</Header>
       <Content className={styles.tagContentWrap}>
         <div className={classname(styles.wrap, themeMode === 'dark' && styles.dark)}>

@@ -17,6 +17,7 @@ import MIcons from '@/components/Icons';
 import MAlert from '@/components/MAlert';
 import Header from '@/components/Header';
 import BackTop from '@/components/BackTop';
+import ActionIcon from '@/components/ActionIcon';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, storage, uniqueFunc } from '@/utils';
@@ -297,6 +298,7 @@ const Personal = () => {
 
   return (
     <div className={classname(styles.Personal, themeMode === 'dark' && styles.dark)}>
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()}>我的主页</Header>
       <Content
