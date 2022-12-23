@@ -77,6 +77,7 @@ const Home: React.FC<IProps> = () => {
     headerStyle: siderVisible && htmlWidth > 960 && styles.headerStyle,
     headerDarkStyle: siderVisible && htmlWidth > 960 && styles.headerDarkStyle,
     themeMode,
+    siderVisible,
   });
 
   useEffect(() => {

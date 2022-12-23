@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classname from 'classname';
 import MIcons from '@/components/Icons';
 import { storage } from '@/utils';
@@ -18,14 +18,32 @@ interface IProps {
 const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, icon, noHideMenuIcon, fromDetail }) => {
   const [show, setShow] = useState<boolean>(false);
   const [theme, setTheme] = useState<boolean>(storage.ssnGetItem('theme') === 'dark');
+  const [onNode, setOnNode] = useState<boolean>(false);
+
+  const timer = useRef<any>(null);
 
   useEffect(() => {
     storage.ssnSetItem('theme', theme ? 'dark' : 'light');
     EventBus.changeTheme(theme ? 'dark' : 'light');
   }, [theme]);
 
+  useEffect(() => {
+    // actionBar 没有展开或者鼠标放在actionBar中时，不关闭
+    if (!show || onNode) return;
+    if (timer.current) {
+      clearTimeout(timer.current);
+      timer.current = null;
+    }
+    timer.current = setTimeout(() => {
+      setShow(false);
+    }, 5000);
+    return () => {
+      clearTimeout(timer.current);
+      timer.current = null;
+    };
+  }, [show, onNode]);
+
   const onToggle = () => {
-    type === 'actionBar' ? () => onClick && onClick() : showActions;
     if (type) {
       onClick && onClick();
     } else {
@@ -41,9 +59,17 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
     setTheme(!theme);
   };
 
+  const onMouseEnter = () => {
+    setOnNode(true);
+  };
+
+  const onMouseLeave = () => {
+    setOnNode(false);
+  };
+
   return (
     !fromDetail ? (
-      <div className={classname(styles.actionList, noHideMenuIcon && styles.noHideMenuActionList, theme && styles.dark)}>
+      <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classname(styles.actionList, noHideMenuIcon && styles.noHideMenuActionList, theme && styles.dark)}>
         <div className={classname(className, styles.MusicIcon, show && styles.show)}>
           <MIcons
             name={
@@ -82,7 +108,7 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
         </div>
       </div>
     ) : (
-      <div className={classname(styles.detailActionList, theme && styles.dark)}>
+      <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classname(styles.detailActionList, theme && styles.dark)}>
         <div className={classname(className, styles.detailMusicIcon, show && styles.show)}>
           <MIcons
             name={

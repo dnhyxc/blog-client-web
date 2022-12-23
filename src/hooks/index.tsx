@@ -340,6 +340,7 @@ export const useScrollLoad = ({
   headerStyle, // header 特定样式
   headerDarkStyle, // header 暗黑样式
   themeMode, // 主题模式
+  siderVisible, // 左侧菜单显示控制
 }: useScrollLoadParams<any>) => {
   const [pageNo, setPageNo] = useState<number>(1);
   const [suckTop, setSuckTop] = useState<boolean>(false);
@@ -361,7 +362,7 @@ export const useScrollLoad = ({
       headerStyle && headerRef?.current?.classList?.remove(headerDarkStyle);
       headerStyle && headerRef?.current?.classList?.add(headerStyle);
     }
-  }, [themeMode, scrollTop]);
+  }, [themeMode, scrollTop, siderVisible]);
 
   const addClassName = (scrollTop: number) => {
     const currentTop = paddingTopStyle

@@ -255,6 +255,7 @@ export interface useScrollLoadParams<T> {
   headerStyle?: string;
   headerDarkStyle?: string;
   themeMode?: string;
+  siderVisible?: boolean;
 }
 
 export interface useDeleteArticleParams {

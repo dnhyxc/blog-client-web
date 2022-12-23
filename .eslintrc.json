@@ -74,7 +74,8 @@
     "no-restricted-syntax": 0,
     "no-constructor-return": 0,
     "no-nested-ternary": 0,
-    "no-return-await": 0
+    "no-return-await": 0,
+    "jsx-a11y/mouse-events-have-key-events": 0
   },
   "settings": {
     "import/parsers": {
