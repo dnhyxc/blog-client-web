@@ -181,8 +181,6 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
     }
   };
 
-  console.log(themeMode, 'themeMode');
-
   return (
     <div className={classname(styles.ActionBar, className)} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <ActionIcon
