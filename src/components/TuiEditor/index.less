@@ -42,11 +42,16 @@
     .toastui-editor-defaultUI {
       border: none;
 
+      .toastui-editor-md-tab-container {
+        height: 46px;
+      }
+
       .ProseMirror {
         padding: 10px 1px 10px 10px;
         background: @fff;
       }
     }
+
     .toastui-editor-md-container .toastui-editor-md-preview {
       padding: 0 1px 0 10px;
       background: @fff;
@@ -88,6 +93,21 @@
     }
 
     .toastui-editor-defaultUI {
+      .toastui-editor-md-tab-container {
+        background: @dark-bgc;
+        border-bottom: 1px solid @dark-gray;
+
+        .tab-item {
+          background: @dark-bgc;
+          color: @dark-fc;
+          border: 1px solid @dark-gray;
+        }
+
+        .tab-item.active {
+          background: @dark-bgc-deep;
+        }
+      }
+
       .ProseMirror {
         background-color: @dark-bgc;
         color: @dark-fc;
