@@ -7,7 +7,7 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { EventBus } from '@/event';
-import { useVerifyToken } from '@/hooks';
+import { useGetTheme, useVerifyToken } from '@/hooks';
 import { error } from '@/utils';
 import { show, close } from '@/components/Render';
 import CreateCollectModel from '@/components/CreateCollectModel';
@@ -37,6 +37,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
+  const { themeMode } = useGetTheme();
   const { pathname, search } = useLocation();
   const { loginStatus } = useVerifyToken(true, false, true);
   const timerRef = useRef<any>(null);
@@ -183,7 +184,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
   return (
     <div className={classname(styles.ActionBar, className)} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <ActionIcon
-        className={styles.changeIconWrap}
+        className={classname(styles.changeIconWrap, themeMode === 'dark' && styles.darkIconWrap)}
         onClick={onToggleActionBar}
         type="actionbar"
         icon={!barVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'}

@@ -32,12 +32,13 @@
   .tuiEditorWrap {
     height: calc(100vh - 100px);
     padding-top: 9px;
-    .webkitScrollbarStyle();
+    .webkitScrollbarStyle(@fff, @font-5);
     transition: all 0.3s ease-in-out;
   }
 
   .dark {
     background-color: @dark-bgc;
+    .webkitScrollbarStyle(@dark-bgc-deep, @dark-gray);
   }
 
   .changeHeight {

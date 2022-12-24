@@ -776,7 +776,7 @@ export const useGetTheme = () => {
 
   useEffect(() => {
     if (themeMode === 'dark') {
-      document.body.style.backgroundColor = GLOBAL_STYLES.DARK_BGC;
+      document.body.style.backgroundColor = GLOBAL_STYLES.DARK_BGC_DEEP;
     } else {
       document.body.style.backgroundColor = GLOBAL_STYLES.WHITE;
     }

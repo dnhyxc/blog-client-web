@@ -70,7 +70,7 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
   return (
     !fromDetail ? (
       <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classname(styles.actionList, noHideMenuIcon && styles.noHideMenuActionList, theme && styles.dark)}>
-        <div className={classname(className, styles.MusicIcon, show && styles.show)}>
+        <div className={classname(theme && styles.darkIcon, className, styles.MusicIcon, show && styles.show)}>
           <MIcons
             name={
               type
@@ -109,7 +109,7 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
       </div>
     ) : (
       <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classname(styles.detailActionList, theme && styles.dark)}>
-        <div className={classname(className, styles.detailMusicIcon, show && styles.show)}>
+        <div className={classname(className, styles.detailMusicIcon, show && styles.show, theme && styles.darkIcon)}>
           <MIcons
             name={
               type
