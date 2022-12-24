@@ -3,6 +3,7 @@ import classname from 'classname';
 import MIcons from '@/components/Icons';
 import { storage } from '@/utils';
 import { EventBus } from '@/event';
+import { useGetTheme, useHtmlWidth } from '@/hooks';
 import styles from './index.less';
 
 interface IProps {
@@ -19,6 +20,9 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
   const [show, setShow] = useState<boolean>(false);
   const [theme, setTheme] = useState<boolean>(storage.ssnGetItem('theme') === 'dark');
   const [onNode, setOnNode] = useState<boolean>(false);
+
+  const { htmlWidth } = useHtmlWidth();
+  const { themeMode } = useGetTheme();
 
   const timer = useRef<any>(null);
 
@@ -70,7 +74,7 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
   return (
     !fromDetail ? (
       <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classname(styles.actionList, noHideMenuIcon && styles.noHideMenuActionList, theme && styles.dark)}>
-        <div className={classname(theme && styles.darkIcon, className, styles.MusicIcon, show && styles.show)}>
+        <div className={classname(themeMode === 'dark' && styles.darkIcon, className, styles.MusicIcon, show && styles.show)}>
           <MIcons
             name={
               type
@@ -114,7 +118,9 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
             name={
               type
                 ? (icon as string)
-                : !show
+                : htmlWidth > 960 ? !show
+                  ? 'icon-arrow-right-bold'
+                  : 'icon-arrow-left-bold' : !show
                   ? 'icon-arrow-left-bold'
                   : 'icon-arrow-right-bold'
             }

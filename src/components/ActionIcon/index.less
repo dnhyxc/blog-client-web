@@ -98,33 +98,41 @@
 
 .detailActionList {
   position: fixed;
-  right: 0;
+  left: 0;
   bottom: 64px;
   height: 70px;
   z-index: 10;
 
   .detailMusicIcon {
     .commentStyle;
-    right: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    left: 0;
     bottom: 0;
   }
 
   .show {
-    right: 80px !important;
+    left: 80px !important;
     transition: all 0.3s ease-in-out;
   }
 
   .actionContent {
     .actionContent;
 
-    right: -80px;
+    left: -80px;
     width: 80px;
   }
 
   .showContent {
-    right: 0;
+    left: 0;
     transition: all 0.3s ease-in-out;
   }
+}
+
+.darkIcon {
+  background-color: @dark-bgc-deep !important;
 }
 
 .noHideMenuActionList {
@@ -153,6 +161,33 @@
   }
 }
 
-.darkIcon {
-  background-color: @dark-bgc-deep !important;
+@media screen and (max-width: 960px) {
+  .detailActionList {
+    right: 0;
+    left: auto;
+
+    .detailMusicIcon {
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      right: 0;
+      left: auto;
+    }
+
+    .show {
+      right: 80px !important;
+      left: auto !important;
+    }
+
+    .actionContent {
+      right: -80px;
+      left: auto;
+    }
+
+    .showContent {
+      right: 0;
+      left: auto;
+    }
+  }
 }
