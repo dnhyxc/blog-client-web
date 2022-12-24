@@ -32,6 +32,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
   const [collected, setCollected] = useState<boolean>(false);
   const [tocVisible, setTocVisible] = useState<boolean>(false);
   const [commentCount, setCommentCount] = useState<number>(0);
+  const [onNode, setOnNode] = useState<boolean>(false);
 
   const {
     userInfoStore: { getUserInfo },
@@ -39,6 +40,23 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
   const { pathname, search } = useLocation();
   const { loginStatus } = useVerifyToken(true, false, true);
   const timerRef = useRef<any>(null);
+  const timer = useRef<any>(null);
+
+  useEffect(() => {
+    // actionBar 没有展开或者鼠标放在actionBar中时，不关闭
+    if (!show || onNode) return;
+    if (timer.current) {
+      clearTimeout(timer.current);
+      timer.current = null;
+    }
+    timer.current = setTimeout(() => {
+      setBarVisible(false);
+    }, 5000);
+    return () => {
+      clearTimeout(timer.current);
+      timer.current = null;
+    };
+  }, [barVisible, onNode]);
 
   useEffect(() => {
     EventBus.onSetCommentCount.listen(() => {
@@ -57,6 +75,14 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
       getCollectionStatus();
     }
   }, [visible, id, loginStatus]);
+
+  const onMouseEnter = () => {
+    setOnNode(true);
+  };
+
+  const onMouseLeave = () => {
+    setOnNode(false);
+  };
 
   // 切换menu
   const onToggleActionBar = () => {
@@ -155,7 +181,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
   };
 
   return (
-    <div className={classname(styles.ActionBar, className)}>
+    <div className={classname(styles.ActionBar, className)} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
       <ActionIcon
         className={styles.changeIconWrap}
         onClick={onToggleActionBar}

@@ -7,7 +7,7 @@
     justify-content: center;
     position: fixed;
     left: 0;
-    bottom: 64px;
+    bottom: 65px;
     width: 12px;
     height: 70px;
     border-top-left-radius: 0px;
@@ -15,7 +15,7 @@
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     background-color: @sky-blue;
-    box-shadow: 0 0 5px #fff;
+    box-shadow: 0 0 5px @fff;
     transition: all 0.3s ease-in-out;
     cursor: pointer;
     z-index: 10;
@@ -43,13 +43,13 @@
     align-items: center;
     position: fixed;
     bottom: 64px;
-    right: -305px;
+    left: -305px;
     width: 278px;
     height: 70px;
     border-radius: 10px;
-    background-color: #fff;
-    box-shadow: 0 10px 60px #c9c9c9;
-    z-index: 100;
+    background-color: @fff;
+    box-shadow: 0 0 5px @background;
+    z-index: 50;
     transition: all 0.3s ease-in-out;
 
     .actionBtn {
@@ -99,7 +99,7 @@
   }
 
   .showBar {
-    right: 20px;
+    left: 20px;
     transition: all 0.3s ease-in-out;
   }
 }

@@ -9,10 +9,10 @@ import React, { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
 import { LeftOutlined } from '@ant-design/icons';
+import User from '@/components/User';
 import { useHtmlWidth, useGetSiderVisible, useGetTheme } from '@/hooks';
 import MIcons from '../Icons';
 import HeadMenu from '../HeadMenu';
-import User from './User';
 import styles from './index.less';
 
 interface IProps {
@@ -25,6 +25,7 @@ interface IProps {
   itemStyles?: string; // header item 的样式
   iconStyles?: string; // 左侧 icon 的样式
   headerRef?: any;
+  needUser?: boolean
 }
 
 const Header: React.FC<IProps> = ({
@@ -37,6 +38,7 @@ const Header: React.FC<IProps> = ({
   headerRef,
   itemStyles,
   iconStyles,
+  needUser
 }) => {
   const { siderVisible } = useGetSiderVisible();
   const { themeMode } = useGetTheme();
@@ -78,9 +80,9 @@ const Header: React.FC<IProps> = ({
           <HeadMenu itemStyles={itemStyles} />
         )}
       </div>
-      <div className={styles.right}>
+      <div className={classname(styles.right, needUser && styles.clearPadding)}>
         {right && <span>{right}</span>}
-        <User />
+        {needUser && <User />}
       </div>
     </div>
   );

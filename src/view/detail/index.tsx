@@ -112,7 +112,7 @@ const ArticleDetail: React.FC = () => {
         )}
       >
         <div className={styles.headerWrap}>
-          <Header needLeft excludesWidth right={rightNode()}>
+          <Header needLeft excludesWidth right={rightNode()} needUser>
             <div className={styles.headerContent}>文章详情</div>
           </Header>
         </div>

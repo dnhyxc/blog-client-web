@@ -19,7 +19,7 @@ const Setting: React.FC<IProps> = () => {
   return (
     <div className={classname(styles.Setting, themeMode === 'dark' && styles.dark)}>
       <div className={styles.headerWrap}>
-        <Header needLeft excludesWidth>
+        <Header needLeft excludesWidth needUser>
           <div className={styles.headerContent}>我的主页</div>
         </Header>
       </div>

@@ -238,7 +238,7 @@ const Author: React.FC = () => {
       <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
-        <Header needLeft excludesWidth right={rightNode()}>
+        <Header needLeft excludesWidth right={rightNode()} needUser>
           <div className={styles.headerContent}>关于博主</div>
         </Header>
       </div>

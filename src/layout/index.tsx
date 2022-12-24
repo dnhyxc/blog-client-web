@@ -9,6 +9,7 @@ import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 import MenuList from '@/components/MenuList';
 import Footer from '@/components/Footer';
+import User from '@/components/User';
 import Decorator from '@/components/Decorator';
 import styles from './index.less';
 
@@ -18,6 +19,9 @@ const AppLayout = () => {
   return (
     <div className={styles.container}>
       <MenuList />
+      <div className={styles.user}>
+        <User />
+      </div>
       <Layout className={styles.layout}>
         <Content>
           <Outlet />
