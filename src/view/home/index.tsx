@@ -291,6 +291,7 @@ const Home: React.FC<IProps> = () => {
                   headerRef={headerRef}
                   itemStyles={htmlWidth > 960 && siderVisible && styles.itemStyles} // header item 的样式
                   iconStyles={htmlWidth > 960 && siderVisible && styles.iconStyles} // header item 的样式
+                  activeMenuStyle={scrollTop < document.body.clientHeight - 50 && styles.activeMenuStyle}
                 >
                   <div className={styles.headTitle}>文章列表</div>
                 </Header>

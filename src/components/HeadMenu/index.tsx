@@ -13,9 +13,10 @@ interface IProps {
   className?: string;
   itemStyles?: string; // header item 的样式
   children?: ReactNode;
+  activeMenuStyle?: string;
 }
 
-const HeadMenu: React.FC<IProps> = ({ className, itemStyles, children }) => {
+const HeadMenu: React.FC<IProps> = ({ className, itemStyles, children, activeMenuStyle }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { htmlWidth } = useHtmlWidth();
@@ -86,7 +87,7 @@ const HeadMenu: React.FC<IProps> = ({ className, itemStyles, children }) => {
                 className={classname(
                   itemStyles,
                   styles.item,
-                  i.path === pathname && styles.active
+                  i.path === pathname && (activeMenuStyle || styles.active)
                 )}
                 onClick={(e) => toOtherPage(e, i.path)}
               >

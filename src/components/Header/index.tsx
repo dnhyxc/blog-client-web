@@ -25,7 +25,8 @@ interface IProps {
   itemStyles?: string; // header item 的样式
   iconStyles?: string; // 左侧 icon 的样式
   headerRef?: any;
-  needUser?: boolean
+  needUser?: boolean;
+  activeMenuStyle?: string;
 }
 
 const Header: React.FC<IProps> = ({
@@ -38,7 +39,8 @@ const Header: React.FC<IProps> = ({
   headerRef,
   itemStyles,
   iconStyles,
-  needUser
+  needUser,
+  activeMenuStyle,
 }) => {
   const { siderVisible } = useGetSiderVisible();
   const { themeMode } = useGetTheme();
@@ -77,7 +79,7 @@ const Header: React.FC<IProps> = ({
           ))}
         <div className={styles.child}>{children}</div>
         {(excludesWidth || siderVisible) && htmlWidth > 960 && (
-          <HeadMenu itemStyles={itemStyles} />
+          <HeadMenu itemStyles={itemStyles} activeMenuStyle={activeMenuStyle} />
         )}
       </div>
       <div className={classname(styles.right, needUser && styles.clearPadding)}>
