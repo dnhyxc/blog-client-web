@@ -97,7 +97,7 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
                 noStopPropagation
                 customStyle
               />
-              <span className={styles.text}>隐藏菜单</span>
+              <span className={styles.text}>切换布局</span>
             </div>
           )}
           <div className={styles.iconList} onClick={changeTheme}>
