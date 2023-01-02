@@ -32,7 +32,7 @@ import * as Service from '@/service';
 import { PAGESIZE } from '@/constant';
 import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
-import Cover from './cover';
+import Cover from './Cover';
 import styles from './index.less';
 
 interface IProps { }
