@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
 import { LeftOutlined } from '@ant-design/icons';
 import User from '@/components/User';
+import useStore from '@/store';
 import { useHtmlWidth, useGetSiderVisible, useGetTheme } from '@/hooks';
 import MIcons from '../Icons';
 import HeadMenu from '../HeadMenu';
@@ -42,11 +43,13 @@ const Header: React.FC<IProps> = ({
   needUser,
   activeMenuStyle,
 }) => {
+  const navigate = useNavigate();
   const { siderVisible } = useGetSiderVisible();
   const { themeMode } = useGetTheme();
-
-  const navigate = useNavigate();
   const { htmlWidth } = useHtmlWidth();
+  const {
+    userInfoStore: { getUserInfo },
+  } = useStore();
 
   const goBack = () => {
     navigate(-1);
@@ -82,7 +85,7 @@ const Header: React.FC<IProps> = ({
           <HeadMenu itemStyles={itemStyles} activeMenuStyle={activeMenuStyle} />
         )}
       </div>
-      <div className={classname(styles.right, needUser && styles.clearPadding)}>
+      <div className={classname(styles.right, needUser && styles.clearPadding, !getUserInfo?.userId && styles.noLogin)}>
         {right && <span>{right}</span>}
         {needUser && <User />}
       </div>
