@@ -7,18 +7,18 @@
  */
 import React, { ReactNode } from 'react';
 import classname from 'classname';
-import { useGetSiderVisible, useGetTheme, useHtmlWidth } from '@/hooks';
+import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
 import MenuList from './Menu';
 import styles from './index.less';
 
 interface IProps {
   children?: ReactNode;
+  themeMode?: string;
 }
 
-const Footer: React.FC<IProps> = ({ children }) => {
+const Footer: React.FC<IProps> = ({ children, themeMode }) => {
   const { siderVisible } = useGetSiderVisible();
   const { htmlWidth } = useHtmlWidth();
-  const { themeMode } = useGetTheme();
 
   return (
     <div

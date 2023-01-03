@@ -16,7 +16,15 @@ interface IProps {
   fromDetail?: boolean;
 }
 
-const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, icon, noHideMenuIcon, fromDetail }) => {
+const MusicIcon: React.FC<IProps> = ({
+  siderVisible,
+  className,
+  onClick,
+  type,
+  icon,
+  noHideMenuIcon,
+  fromDetail,
+}) => {
   const [show, setShow] = useState<boolean>(false);
   const [theme, setTheme] = useState<boolean>(storage.ssnGetItem('theme') === 'dark');
   const [onNode, setOnNode] = useState<boolean>(false);
@@ -71,77 +79,103 @@ const MusicIcon: React.FC<IProps> = ({ siderVisible, className, onClick, type, i
     setOnNode(false);
   };
 
-  return (
-    !fromDetail ? (
-      <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classname(styles.actionList, noHideMenuIcon && styles.noHideMenuActionList, theme && styles.dark)}>
-        <div className={classname(themeMode === 'dark' && styles.darkIcon, className, styles.MusicIcon, show && styles.show)}>
-          <MIcons
-            name={
-              type
-                ? (icon as string)
-                : !show
-                  ? 'icon-arrow-right-bold'
-                  : 'icon-arrow-left-bold'
-            }
-            className={styles.icon}
-            onClick={onToggle}
-            customStyle
-          />
-        </div>
-        <div className={classname(styles.actionContent, show && styles.showContent)}>
-          {!noHideMenuIcon && (
-            <div className={styles.iconList} onClick={() => onClick && onClick()}>
-              <MIcons
-                name={siderVisible ? 'icon-shuangjiantouyou' : 'icon-shuangjiantouzuo'}
-                className={styles.actionIcon}
-                noStopPropagation
-                customStyle
-              />
-              <span className={styles.text}>切换布局</span>
-            </div>
-          )}
-          <div className={styles.iconList} onClick={changeTheme}>
+  return !fromDetail ? (
+    <div
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={classname(
+        styles.actionList,
+        noHideMenuIcon && styles.noHideMenuActionList,
+        theme && styles.dark
+      )}
+    >
+      <div
+        className={classname(
+          themeMode === 'dark' && styles.darkIcon,
+          className,
+          styles.MusicIcon,
+          show && styles.show
+        )}
+      >
+        <MIcons
+          name={
+            type
+              ? (icon as string)
+              : !show
+              ? 'icon-arrow-right-bold'
+              : 'icon-arrow-left-bold'
+          }
+          className={styles.icon}
+          onClick={onToggle}
+          customStyle
+        />
+      </div>
+      <div className={classname(styles.actionContent, show && styles.showContent)}>
+        {!noHideMenuIcon && (
+          <div className={styles.iconList} onClick={() => onClick && onClick()}>
             <MIcons
-              name={theme ? 'icon-moon_fill' : 'icon-lieri'}
-              className={classname(styles.actionIcon, !theme && styles.theme)}
+              name={siderVisible ? 'icon-shuangjiantouyou' : 'icon-shuangjiantouzuo'}
+              className={styles.actionIcon}
               noStopPropagation
               customStyle
             />
-            <span className={styles.text}>切换主题</span>
+            <span className={styles.text}>切换布局</span>
           </div>
-        </div>
-      </div>
-    ) : (
-      <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classname(styles.detailActionList, theme && styles.dark)}>
-        <div className={classname(className, styles.detailMusicIcon, show && styles.show, theme && styles.darkIcon)}>
+        )}
+        <div className={styles.iconList} onClick={changeTheme}>
           <MIcons
-            name={
-              type
-                ? (icon as string)
-                : htmlWidth > 960 ? !show
-                  ? 'icon-arrow-right-bold'
-                  : 'icon-arrow-left-bold' : !show
-                  ? 'icon-arrow-left-bold'
-                  : 'icon-arrow-right-bold'
-            }
-            className={styles.icon}
-            onClick={onToggle}
+            name={theme ? 'icon-moon_fill' : 'icon-lieri'}
+            className={classname(styles.actionIcon, !theme && styles.theme)}
+            noStopPropagation
             customStyle
           />
-        </div>
-        <div className={classname(styles.actionContent, show && styles.showContent)}>
-          <div className={styles.iconList} onClick={changeTheme}>
-            <MIcons
-              name={theme ? 'icon-moon_fill' : 'icon-lieri'}
-              className={classname(styles.actionIcon, !theme && styles.theme)}
-              noStopPropagation
-              customStyle
-            />
-            <span className={styles.text}>切换主题</span>
-          </div>
+          <span className={styles.text}>切换主题</span>
         </div>
       </div>
-    )
+    </div>
+  ) : (
+    <div
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      className={classname(styles.detailActionList, theme && styles.dark)}
+    >
+      <div
+        className={classname(
+          className,
+          styles.detailMusicIcon,
+          show && styles.show,
+          theme && styles.darkIcon
+        )}
+      >
+        <MIcons
+          name={
+            type
+              ? (icon as string)
+              : htmlWidth > 960
+              ? !show
+                ? 'icon-arrow-right-bold'
+                : 'icon-arrow-left-bold'
+              : !show
+              ? 'icon-arrow-left-bold'
+              : 'icon-arrow-right-bold'
+          }
+          className={styles.icon}
+          onClick={onToggle}
+          customStyle
+        />
+      </div>
+      <div className={classname(styles.actionContent, show && styles.showContent)}>
+        <div className={styles.iconList} onClick={changeTheme}>
+          <MIcons
+            name={theme ? 'icon-moon_fill' : 'icon-lieri'}
+            className={classname(styles.actionIcon, !theme && styles.theme)}
+            noStopPropagation
+            customStyle
+          />
+          <span className={styles.text}>切换主题</span>
+        </div>
+      </div>
+    </div>
   );
 };
 

@@ -33,7 +33,7 @@ const Setting: React.FC<IProps> = () => {
         <Content>
           <Outlet />
         </Content>
-        {htmlWidth <= 960 && <Footer />}
+        {htmlWidth <= 960 && <Footer themeMode={themeMode} />}
       </Layout>
     </div>
   );

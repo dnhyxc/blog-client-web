@@ -10,7 +10,7 @@ import { formatGapTime, error } from '@/utils';
 import { HEAD_UEL } from '@/constant';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/MAlert';
-import { useGetTheme, useHtmlWidth, useLoginStatus, useScroll } from '@/hooks';
+import { useHtmlWidth, useLoginStatus, useScroll } from '@/hooks';
 import { EventBus } from '@/event';
 import { CommentParams, GiveLikeResult, DeleteCommentResult } from '@/typings/common';
 import DraftInput from '../DraftInput';
@@ -19,9 +19,10 @@ import styles from './index.less';
 interface IProps {
   authorId: string;
   getCommentLength?: Function;
+  themeMode?: string;
 }
 
-const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
+const Comments: React.FC<IProps> = ({ authorId, getCommentLength, themeMode }) => {
   const [viewMoreComments, setViewMoreComments] = useState<string[]>([]);
   const [selectComment, setSelectComment] = useState<CommentParams>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,7 +38,6 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
   } = useStore();
   const navigate = useNavigate();
   const { htmlWidth } = useHtmlWidth();
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     getCommentList();
@@ -201,6 +201,7 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
           focus={false}
           getAlertStatus={setAlertStatus}
           onJump={() => toPersonal(authorId)}
+          themeMode={themeMode}
         />
       </div>
       {comments?.length > 0 && (
@@ -280,6 +281,7 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
                         getCommentList={getCommentList}
                         onHideInput={onHideInput}
                         getAlertStatus={setAlertStatus}
+                        themeMode={themeMode}
                       />
                     )}
                   </div>
@@ -380,6 +382,7 @@ const Comments: React.FC<IProps> = ({ authorId, getCommentLength }) => {
                                   getCommentList={getCommentList}
                                   onHideInput={onHideInput}
                                   getAlertStatus={setAlertStatus}
+                                  themeMode={themeMode}
                                 />
                               )}
                             </div>

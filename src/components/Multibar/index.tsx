@@ -7,7 +7,7 @@ import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { shareQQ, shareSinaWeiBo, error } from '@/utils';
 import Qrcode from '@/components/Qrcode';
-import { useGetTheme, useVerifyToken } from '@/hooks';
+import { useVerifyToken } from '@/hooks';
 import { EventBus } from '@/event';
 import { show, close } from '@/components/Render';
 import MIcons from '@/components/Icons';
@@ -20,9 +20,10 @@ interface IProps {
   id: string;
   detail: ArticleDetailParams;
   commentRef: any;
+  themeMode?: string;
 }
 
-const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
+const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
   const [likeCount, setLikeCount] = useState<number | undefined>(0);
   const [isLike, setIsLike] = useState<boolean | undefined>(false);
   const [visible, setVisible] = useState<boolean>(false);
@@ -33,7 +34,6 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef }) => {
 
   const { pathname, search } = useLocation();
   const { loginStatus } = useVerifyToken(true, false, true);
-  const { themeMode } = useGetTheme();
   const timerRef = useRef<any>(null);
 
   useEffect(() => {

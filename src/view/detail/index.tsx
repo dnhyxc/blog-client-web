@@ -120,7 +120,12 @@ const ArticleDetail: React.FC = () => {
           <div className={styles.content}>
             <div className={styles.preview}>
               {htmlWidth > 960 && (
-                <Multibar id={id as string} detail={detail} commentRef={commentRef} />
+                <Multibar
+                  id={id as string}
+                  detail={detail}
+                  commentRef={commentRef}
+                  themeMode={themeMode}
+                />
               )}
               <Preview
                 className={styles.previewContent}
@@ -143,17 +148,17 @@ const ArticleDetail: React.FC = () => {
                 </div>
               </Preview>
               <div className={styles.anotherArticle}>
-                <AnotherArticle id={id} />
+                <AnotherArticle id={id} themeMode={themeMode} />
               </div>
               <div ref={commentRef}>
-                <Comments authorId={detail.authorId} />
+                <Comments authorId={detail.authorId} themeMode={themeMode} />
               </div>
             </div>
             {htmlWidth > 960 && (
               <div className={styles.rightBar}>
                 <RightBar />
                 <Affix offsetTop={50}>
-                  <Toc mackdown={detail.content} />
+                  <Toc mackdown={detail.content} themeMode={themeMode} />
                 </Affix>
               </div>
             )}
@@ -165,9 +170,10 @@ const ArticleDetail: React.FC = () => {
             detail={detail}
             commentRef={commentRef}
             className={themeMode === 'dark' ? styles.darkActionBar : ''}
+            themeMode={themeMode}
           />
         )}
-        {htmlWidth <= 960 && <Footer />}
+        {htmlWidth <= 960 && <Footer themeMode={themeMode} />}
         <ActionIcon noHideMenuIcon fromDetail />
       </div>
       <BackTop className={htmlWidth > 960 ? styles.backTopWrap : styles.mobileBackTopWrap}>

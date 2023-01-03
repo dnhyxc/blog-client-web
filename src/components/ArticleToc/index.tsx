@@ -2,18 +2,17 @@ import React, { useEffect, useRef } from 'react';
 import MarkNav from 'markdown-navbar'; // markdown 目录
 import { Scrollbars } from 'react-custom-scrollbars';
 import classname from 'classname';
-import { useGetTheme } from '@/hooks';
 import 'markdown-navbar/dist/navbar.css';
 import styles from './index.less';
 
 interface IProps {
   mackdown: string;
   className?: string;
+  themeMode?: string;
 }
 
-const Toc: React.FC<IProps> = ({ mackdown, className }) => {
+const Toc: React.FC<IProps> = ({ mackdown, className, themeMode }) => {
   const scrollRef: any = useRef();
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (scrollRef && !scrollRef.current) return;
@@ -42,7 +41,9 @@ const Toc: React.FC<IProps> = ({ mackdown, className }) => {
   };
 
   return mackdown.includes('#') ? (
-    <div className={classname(styles.tocWrap, className, themeMode === 'dark' && styles.dark)}>
+    <div
+      className={classname(styles.tocWrap, className, themeMode === 'dark' && styles.dark)}
+    >
       <div className={styles.tocText}>文章目录</div>
       <div className={styles.mackNav}>
         {/* renderThumbVertical 用于更改滚动条样式 */}

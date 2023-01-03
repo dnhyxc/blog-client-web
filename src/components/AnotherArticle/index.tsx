@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
 import * as Service from '@/service';
-import { useGetTheme } from '@/hooks';
 import { normalizeResult } from '@/utils/tools';
 import { formatGapTime, storage } from '@/utils';
 import MIcons from '../Icons';
@@ -11,13 +10,13 @@ import styles from './index.less';
 
 interface IProps {
   id: string | undefined;
+  themeMode?: string;
 }
 
-const AnotherArticle: React.FC<IProps> = ({ id }) => {
+const AnotherArticle: React.FC<IProps> = ({ id, themeMode }) => {
   const [articleList, setArticleList] = useState<ArticleItem[]>([]);
 
   const navigate = useNavigate();
-  const { themeMode } = useGetTheme();
 
   const params: AnotherParams =
     (storage.locGetItem('params') && JSON.parse(storage.locGetItem('params')!)) || {};

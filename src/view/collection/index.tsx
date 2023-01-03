@@ -369,7 +369,7 @@ const Collection: React.FC<IProps> = () => {
           </div>
         </div>
       </Content>
-      {htmlWidth <= 960 && <Footer />}
+      {htmlWidth <= 960 && <Footer themeMode={themeMode} />}
       <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
       {htmlWidth > 960 ? (
         <CollectionModal

@@ -7,7 +7,7 @@ import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
 import { EventBus } from '@/event';
-import { useGetTheme, useVerifyToken } from '@/hooks';
+import { useVerifyToken } from '@/hooks';
 import { error } from '@/utils';
 import { show, close } from '@/components/Render';
 import CreateCollectModel from '@/components/CreateCollectModel';
@@ -21,9 +21,10 @@ interface IProps {
   detail: ArticleDetailParams;
   commentRef: any;
   className?: string;
+  themeMode?: string;
 }
 
-const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
+const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className, themeMode }) => {
   const [barVisible, setBarVisible] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number | undefined>(0);
   const [isLike, setIsLike] = useState<boolean | undefined>(false);
@@ -37,7 +38,6 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  const { themeMode } = useGetTheme();
   const { pathname, search } = useLocation();
   const { loginStatus } = useVerifyToken(true, false, true);
   const timerRef = useRef<any>(null);
@@ -182,9 +182,16 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
   };
 
   return (
-    <div className={classname(styles.ActionBar, className)} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <div
+      className={classname(styles.ActionBar, className)}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <ActionIcon
-        className={classname(styles.changeIconWrap, themeMode === 'dark' && styles.darkIconWrap)}
+        className={classname(
+          styles.changeIconWrap,
+          themeMode === 'dark' && styles.darkIconWrap
+        )}
         onClick={onToggleActionBar}
         type="actionbar"
         icon={!barVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'}
@@ -253,6 +260,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className }) => {
         detail={detail}
         visible={tocVisible}
         onCancel={() => setTocVisible(false)}
+        themeMode={themeMode}
       />
     </div>
   );

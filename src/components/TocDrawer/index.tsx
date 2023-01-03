@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import classname from 'classname';
 import MarkNav from 'markdown-navbar'; // markdown 目录
 import { Scrollbars } from 'react-custom-scrollbars';
-import { useGetTheme, useGetTocScrollHeight } from '@/hooks';
+import { useGetTocScrollHeight } from '@/hooks';
 import { ArticleDetailParams } from '@/typings/common';
 import 'markdown-navbar/dist/navbar.css';
 import styles from './index.less';
@@ -11,11 +11,11 @@ interface IProps {
   visible: boolean;
   onCancel: Function;
   detail: ArticleDetailParams;
+  themeMode?: string;
 }
 
-const TocDrawer: React.FC<IProps> = ({ visible, onCancel, detail }) => {
+const TocDrawer: React.FC<IProps> = ({ visible, onCancel, detail, themeMode }) => {
   const { tocScrollRef } = useGetTocScrollHeight({ tocVisible: visible });
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (!visible) {
@@ -46,10 +46,7 @@ const TocDrawer: React.FC<IProps> = ({ visible, onCancel, detail }) => {
         themeMode === 'dark' && styles.dark
       )}
     >
-      <div
-        className={styles.mack}
-        onClick={onHideTocDrawer}
-      />
+      <div className={styles.mack} onClick={onHideTocDrawer} />
       {detail?.content?.includes('#') ? (
         <div className={styles.mackNav}>
           <div className={styles.tocTitle}>文章目录</div>

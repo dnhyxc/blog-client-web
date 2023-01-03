@@ -30,9 +30,9 @@ const AppLayout = () => {
         <Content>
           <Outlet />
         </Content>
-        <Footer />
+        <Footer themeMode={themeMode} />
       </Layout>
-      <Decorator />
+      <Decorator themeMode={themeMode} />
     </div>
   );
 };

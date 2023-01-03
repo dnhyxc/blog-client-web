@@ -3,7 +3,6 @@ import { Button, Input } from 'antd';
 import { useParams } from 'react-router-dom';
 import classname from 'classname';
 import useStore from '@/store';
-import { useGetTheme } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error } from '@/utils';
 import Image from '@/components/Image';
@@ -24,6 +23,7 @@ interface IProps {
   getAlertStatus?: Function;
   focus?: boolean;
   onJump?: Function;
+  themeMode?: string;
 }
 
 const DraftInput: React.FC<IProps> = ({
@@ -37,12 +37,12 @@ const DraftInput: React.FC<IProps> = ({
   onHideInput,
   focus = true,
   getAlertStatus,
+  themeMode,
 }) => {
   const [showIcon, setShowIcon] = useState<boolean>(false);
   const [keyword, setKeyword] = useState<string>('');
 
   const { id } = useParams();
-  const { themeMode } = useGetTheme();
 
   const inputRef: any = useRef();
 

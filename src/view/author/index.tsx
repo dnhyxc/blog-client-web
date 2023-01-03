@@ -398,7 +398,7 @@ const Author: React.FC = () => {
           </div>
         </div>
       </Content>
-      {htmlWidth <= 960 && <Footer />}
+      {htmlWidth <= 960 && <Footer themeMode={themeMode} />}
       <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
     </div>
   );
