@@ -4,7 +4,7 @@
 
 ### 安装 lrzsz
 
-lrzsz 安装之后，就能使用`rz`命令上传本地文件到服务器上了。
+lrzsz 安装之后，就能使用 `rz` 命令上传本地文件到服务器上了。
 
 ```
 yum -y install lrzsz
@@ -12,33 +12,85 @@ yum -y install lrzsz
 
 ### 安装 node
 
-在 node 官网下载 linux 版本的 node 压缩包。：
+在 node 官网下载 linux 版本的 node 压缩包：
 
-输入命令`cd /usr/local`进入到 local 文件夹中。进入到 local 文件夹中后，输入命令`mkdir node`创建一个 node 文件夹。在node目录下输入命令`rz`将下载的 node 包放入`/usr/local/node`文件夹中。
+输入命令 `cd /usr/local` 进入到 local 文件夹中。进入到 local 文件夹中后，输入命令 `mkdir node` 创建一个 node 文件夹。在 node 目录下输入命令`rz`将下载的 node 包放入 `/usr/local/node` 文件夹中。
 
-输入`tar -vxf node-vxxx.tar.xz`将 node 进行解压。
+输入`tar -vxf node-v14.9.0-linux-x64.tar.xz` 将 node 进行解压。
 
-`cd node-vxxx.tar.xz cd bin`到 node-vxxx.tar.xz 下的 bin 目录中，接着输入命令`ln -s /usr/local/node/node-vxxx.tar.xz/bin/node /usr/local/bin/node`设置 node 环境变量。
+`cd node-v14.9.0-linux-x64 cd bin` 到 node-v14.9.0-linux-x64 下的 bin 目录中，接着输入命令 `ln -s /usr/local/node/node-v14.9.0-linux-x64/bin/node /usr/local/bin/node` 设置 node 环境变量。
 
-`cd node-vxxx.tar.xz cd bin`到 node-vxxx.tar.xz 下的 bin 目录中，接着输入命令`ln -s /usr/local/node/node-vxxx.tar.xz/bin/npm /usr/local/bin/npm`设置 node 环境变量。
+`cd node-v14.9.0-linux-x64 cd bin` 到 node-v14.9.0-linux-x64 下的 bin 目录中，接着输入命令 `ln -s /usr/local/node/node-v14.9.0-linux-x64/bin/npm /usr/local/bin/npm`设置 node 环境变量。
 
-`cd node-vxxx.tar.xz cd bin`到 node-vxxx.tar.xz 下的 bin 目录中，接着输入命令`ln -s /usr/local/node/node-vxxx.tar.xz/bin/yarn /usr/local/bin/yarn`设置 node 环境变量。
+`cd node-v14.9.0-linux-x64 cd bin` 到 node-v14.9.0-linux-x64 下的 bin 目录中，接着输入命令 `ln -s /usr/local/node/node-v14.9.0-linux-x64/bin/yarn /usr/local/bin/yarn`设置 node 环境变量。
 
-`cd node-vxxx.tar.xz cd bin`到 node-vxxx.tar.xz 下的 bin 目录中，接着输入命令`ln -s /usr/local/node/node-vxxx.tar.xz/bin/pm2 /usr/local/bin/pm2`设置 node 环境变量。
+`cd node-v14.9.0-linux-x64 cd bin` 到 node-v14.9.0-linux-x64 下的 bin 目录中，接着输入命令 `ln -s /usr/local/node/node-v14.9.0-linux-x64/bin/pm2 /usr/local/bin/pm2` 设置 node 环境变量。
+
+具体命令总结如下，一次执行即可：
+
+```js
+cd /usr/local
+
+mkdir node
+
+cd node
+
+rz // 选择node-v14.9.0-linux-x64.tar.xz
+
+tar -vxf node-v14.9.0-linux-x64.tar.xz
+
+cd node-v14.9.0-linux-x64/bin
+
+ln -s /usr/local/node/node-v14.9.0-linux-x64/bin/node /usr/local/bin/node
+
+ln -s /usr/local/node/node-v14.9.0-linux-x64/bin/npm /usr/local/bin/npm
+
+npm i yarn -g
+
+ln -s /usr/local/node/node-v14.9.0-linux-x64/bin/yarn /usr/local/bin/yarn
+
+npm i pm2 -g
+
+ln -s /usr/local/node/node-v14.9.0-linux-x64/bin/pm2 /usr/local/bin/pm2
+```
 
 ### node 项目部署
 
-`cd /usr/local`到 local 文件夹中，接着输入`mkdir server`创建一个 server 文件夹。
+`cd /usr/local` 到 local 文件夹中，接着输入 `mkdir server` 创建一个 server 文件夹。
 
-`cd server`进入到 server 目录下，接着输入命令`rz`回车后，选择压缩好的服务包。
+`cd server` 进入到 server 目录下，接着输入命令 `rz` 回车后，选择压缩好的服务包。
 
-输入`unzip xxx.zip`将项目解压。
+输入 `unzip xxx.zip` 将项目解压。
 
-在 server 目录下执行`npm install`安装项目所需依赖。依赖安装完毕之后，执行`npm start`启动项目。
+在 server 目录下执行 `yarn install` 安装项目所需依赖。依赖安装完毕之后，可执行 `npm start` 启动项目。当然，也可以选择不现在马上启动，等装完 `pm2` 之后再启动。
+
+具体命令依次如下：
+
+```js
+cd /usr/local
+
+mkdir server
+
+cd server
+
+rz // 选择压缩好的后台服务项目
+
+unzip xxx.zip
+
+yarn install
+
+cd src
+
+mkdir upload
+
+cd upload
+
+mkdir image
+```
 
 ### 安装 pm2
 
-全局安装 pm2：
+全局安装 pm2，如果在前面安装过，可忽略这一步：
 
 ```js
 npm install -g pm2
@@ -88,44 +140,39 @@ kill -9  pm2项目对应的进程
 pm2 update
 ```
 
-### 安装 Mongodb
+### 安装及启动 mongodb
 
 首先到官网根据自己的服务器下载对应的 Mongodb 压缩包。
 
-`cd /usr/local`目录下，使用`mkdir mongodb`创建 mongodb 文件夹。
+`cd /usr/local` 目录下，使用 `mkdir mongodb` 创建 mongodb 文件夹。
 
-`cd /`到根目录，使用命令`mkdir -p /data/db`创建 db 文件夹。再使用`mkdir -p /data/log`创建 log 文件夹。
+`cd /` 到根目录，使用命令 `mkdir -p /data/db` 创建 db 文件夹。再使用 `mkdir -p /data/log` 创建 log 文件夹。
 
-`cd mongodb`文件夹下，使用`rz`命令将我下载好的压缩包通过了`tar -vxf mongodb-xxx.tgz`进行解压。
+`cd /usr/local/mongodb` 文件夹下，使用 `rz` 命令将我下载好的压缩包通过了 `tar -vxf mongodb-linux-x86_64-rhel70-5.0.14.tgz` 进行解压。
 
-`cd mongodb-linux-xxx/bin`目录，在使用`./mongod`启动 mongodb。
+`cd mongodb-linux-x86_64-rhel70-5.0.14/bin` 目录，再使用 `./mongod --dbpath=/data  --logpath=/data/log/mongod.log --fork` 在后台启动 mongodb。
 
-### 配置 mongodb 环境变量
-
-首先在 mongodb/mongodb-xxx/bin 目录执行`pwd`获取 mongodb 的所在路径。
-
-`cs etc`到 etc 目录下。执行`vi profile`命令。接着输入`export PATH=/usr/local/mongodb/mongodb-linux-x86_64-rhel80-5.0.10/bin:$PATH`，设置完毕后保存。之后输入`source profile`让配置生效。
-
-### 创建 data 及 log 文件
+具体命令依次如下：
 
 ```js
-cd mongdb/mongodb-linux-x86_64-rhel70-5.0.12
+cd /usr/local
 
-mkdir data
+mkdir mongodb
 
-cd data
+cd /
 
-mkdir log
+mkdir -p /data/db
 
-cd log
+mkdir -p /data/log
 
-touch mongod.log
-```
+cd /usr/local/mongodb
 
-### 启动 mongodb
+rz // 选择下载好的 mongodb-linux-x86_64-rhel70-5.0.14.tgz 压缩包
 
-```js
-cd mongodb/bin
+tar -vxf mongodb-linux-x86_64-rhel70-5.0.14.tgz
+
+cd mongodb-linux-x86_64-rhel70-5.0.14/bin
+
 ./mongod --dbpath=/data  --logpath=/data/log/mongod.log --fork
 ```
 
@@ -136,13 +183,21 @@ cd mongodb/bin
 ./mongo
 ```
 
+### 配置 mongodb 环境变量
+
+首先在 mongodb/mongodb-linux-x86_64-rhel70-5.0.14/bin 目录执行 `pwd` 获取 mongodb 的所在路径。
+
+`cs etc` 到 etc 目录下。执行 `vi profile` 命令。接着输入 `export PATH=/usr/local/mongodb/mongodb-linux-x86_64-rhel80-5.0.10/bin:$PATH`，设置完毕后保存。之后输入 `source profile` 让配置生效。
+
 ### 安装 nginx
 
 [去官网下载 nginx：](https://nginx.org/en/download.html)
 
-选择下载 Stable version 下的第二个版本：nginx-1.22.0 pgp
+选择下载 Stable version 下的第二个版本：如 nginx-1.22.0 pgp。
 
-### 创建 nginx 并将 nginx tar 包放到 nginx 文件夹中
+### 解压 nginx
+
+首先在 `/usr/local` 文件目录中创建一个 `nginx` 文件夹，接着进入 `nginx` 文件夹，将 `nginx-1.22.1.tar.gz` tar 包放入 nginx 文件夹中。接着在 nginx 文件夹中解压该 tar 包。具体命令依次如下：
 
 ```js
 cd /usr/local
@@ -156,7 +211,9 @@ rz
 tar -vxf nginx-1.22.0
 ```
 
-### 执行如下命令
+### 执行 configure 等命令
+
+进入 `/usr/local/nginx/nginx-1.22.1` 文件目录中，依次按如下命令执行：
 
 ```js
 ./configure
@@ -180,7 +237,7 @@ http {
 
 ### 部署前端项目
 
-进入 `/usr/local/nginx/html/dist`，之后将打包好的前端资源包 dist.zip 使用 `rz` 命令上传到 html下的dist 文件夹中，接着使用 `unzip dist.zip` 将 dist.zip 解压即可。
+进入 `/usr/local/nginx/html/dist`，之后将打包好的前端资源包 dist.zip 使用 `rz` 命令上传到 html 下的 dist 文件夹中，接着使用 `unzip dist.zip` 将 dist.zip 解压即可。
 
 ### 部署后端项目
 
@@ -269,12 +326,11 @@ http {
 
 ### nginx 报错处理
 
-解决nginx: [error] open() ＂/usr/local/nginx/logs/nginx.pid＂ failed错误，具体操作如下：
+解决 nginx: [error] open() ＂/usr/local/nginx/logs/nginx.pid＂ failed 错误，具体操作如下：
 
 ```js
-cd /usr/local/nginx
-
-/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+cd / usr / local / nginx / usr / local / nginx / sbin / nginx -
+  c / usr / local / nginx / conf / nginx.conf;
 ```
 
 ### 复制 upload 资源
