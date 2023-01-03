@@ -5,7 +5,7 @@ import classname from 'classname';
 import Content from '@/components/Content';
 import MIcons from '@/components/Icons';
 import useStore from '@/store';
-import { useGetTheme, useScrollLoad } from '@/hooks';
+import { useScrollLoad } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error, success, info } from '@/utils';
 import { DRAWER_STYLES } from '@/constant';
@@ -21,6 +21,7 @@ interface IProps {
   moveArticleId?: string;
   selectCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时设置选中当前收藏集
   createCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时设置选中当前收藏集
+  themeMode?: string;
 }
 
 const CollectionModal: React.FC<IProps> = ({
@@ -32,6 +33,7 @@ const CollectionModal: React.FC<IProps> = ({
   getSelectCollectIds,
   selectCollectId,
   createCollectId,
+  themeMode,
 }) => {
   const [checkedItem, setCheckedItem] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -52,7 +54,6 @@ const CollectionModal: React.FC<IProps> = ({
     loading,
     pageSize: 10,
   });
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (visible) {
@@ -200,6 +201,7 @@ const CollectionModal: React.FC<IProps> = ({
           themeMode === 'dark' && styles.darkContainerClassName
         )}
         onScroll={onScroll}
+        themeMode={themeMode}
       >
         <div className={styles.collectionList}>
           {collectionList?.list.map((i) => {

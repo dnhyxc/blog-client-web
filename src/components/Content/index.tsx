@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import classname from 'classname';
-import { useGetSiderVisible, useHtmlWidth, useGetTheme } from '@/hooks';
+import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
 import { Scrollbars } from 'react-custom-scrollbars';
 import styles from './index.less';
 
@@ -14,6 +14,7 @@ interface IProps {
   contentWrapRef?: any; // 用于滚动时动态给该元素添加paddingTop
   autoHeight?: boolean;
   autoHeightMax?: number | string;
+  themeMode?: string;
 }
 
 const Content: React.FC<IProps> = ({
@@ -26,10 +27,10 @@ const Content: React.FC<IProps> = ({
   contentWrapRef,
   autoHeight,
   autoHeightMax,
+  themeMode,
 }) => {
   const { siderVisible } = useGetSiderVisible();
   const { htmlWidth } = useHtmlWidth();
-  const { themeMode } = useGetTheme();
 
   return (
     <div

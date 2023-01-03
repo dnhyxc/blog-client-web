@@ -156,7 +156,7 @@ const ArticleDetail: React.FC = () => {
             </div>
             {htmlWidth > 960 && (
               <div className={styles.rightBar}>
-                <RightBar />
+                <RightBar themeMode={themeMode} />
                 <Affix offsetTop={50}>
                   <Toc mackdown={detail.content} themeMode={themeMode} />
                 </Affix>
@@ -174,7 +174,7 @@ const ArticleDetail: React.FC = () => {
           />
         )}
         {htmlWidth <= 960 && <Footer themeMode={themeMode} />}
-        <ActionIcon noHideMenuIcon fromDetail />
+        <ActionIcon noHideMenuIcon fromDetail themeMode={themeMode} />
       </div>
       <BackTop className={htmlWidth > 960 ? styles.backTopWrap : styles.mobileBackTopWrap}>
         <div className={styles.backTop}>

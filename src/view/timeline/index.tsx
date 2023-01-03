@@ -111,7 +111,13 @@ const TimeLine: React.FC = () => {
 
   return (
     <div className={styles.TimeLine}>
-      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
+      {htmlWidth <= 960 && (
+        <ActionIcon
+          noHideMenuIcon
+          className={styles.changeIconWrap}
+          themeMode={themeMode}
+        />
+      )}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()} themeMode={themeMode}>
         时间轴线
@@ -120,6 +126,7 @@ const TimeLine: React.FC = () => {
         className={styles.contentWrap}
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
+        themeMode={themeMode}
       >
         <div
           className={classname(
@@ -162,6 +169,7 @@ const TimeLine: React.FC = () => {
                           skeletonRows={2}
                           skeletonAvatar={styles.skeletonAvatar}
                           likeArticle={likeArticle}
+                          themeMode={themeMode}
                         />
                       )}
                     </div>
@@ -184,6 +192,7 @@ const TimeLine: React.FC = () => {
               className={styles.rightbar}
               showRecommendArticle={!!timelineList.length}
               scrollRef={scrollRef}
+              themeMode={themeMode}
             />
           )}
         </div>

@@ -235,7 +235,7 @@ const Author: React.FC = () => {
 
   return (
     <div className={classname(styles.AuthorContainer, themeMode === 'dark' && styles.dark)}>
-      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} themeMode={themeMode} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth right={rightNode()} needUser themeMode={themeMode}>
@@ -248,6 +248,7 @@ const Author: React.FC = () => {
         className={styles.scrollWrap}
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
+        themeMode={themeMode}
       >
         <div
           className={classname(styles.wrap, siderStore.toggleSider && styles.changeWidth)}
@@ -352,6 +353,7 @@ const Author: React.FC = () => {
                             onEditArticle={onEditArticle}
                             loadText="地主家也没余粮了"
                             loading={loading}
+                            themeMode={themeMode}
                           />
                         )}
                         {i.value === '3' &&

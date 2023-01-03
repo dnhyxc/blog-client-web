@@ -195,6 +195,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className, themeM
         onClick={onToggleActionBar}
         type="actionbar"
         icon={!barVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'}
+        themeMode={themeMode}
       />
       <div className={classname(styles.container, barVisible && styles.showBar, className)}>
         {detail?.content.includes('#') && (
@@ -248,12 +249,14 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className, themeM
         visible={visible}
         onCancel={() => setVisible(false)}
         showCollectionDrawer={onCollection}
+        themeMode={themeMode}
       />
       <CreateCollectModel
         key={Math.random()}
         visible={addVisible}
         onCancel={() => setAddVisible(false)}
         showCollection={onCollection}
+        themeMode={themeMode}
       />
       <TocDrawer
         key={detail?.content}

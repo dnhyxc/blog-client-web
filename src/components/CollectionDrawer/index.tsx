@@ -5,7 +5,7 @@ import classname from 'classname';
 import MIcons from '@/components/Icons';
 import Content from '@/components/Content';
 import useStore from '@/store';
-import { useGetTheme, useScrollLoad } from '@/hooks';
+import { useScrollLoad } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error, success, info } from '@/utils';
 import { DRAWER_STYLES, PAGESIZE } from '@/constant';
@@ -23,6 +23,7 @@ interface IProps {
   selectCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时设置选中当前收藏集
   createCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时打开创建收藏集弹窗新创建的收藏集id
   showCreateDrawer?: Function;
+  themeMode?: string;
 }
 
 const CollectionDrawer: React.FC<IProps> = ({
@@ -35,6 +36,7 @@ const CollectionDrawer: React.FC<IProps> = ({
   selectCollectId,
   createCollectId,
   showCreateDrawer = null,
+  themeMode,
 }) => {
   const [createVisible, setCreateVisible] = useState<boolean>(false);
   const [checkedItem, setCheckedItem] = useState<string[]>([]);
@@ -56,7 +58,6 @@ const CollectionDrawer: React.FC<IProps> = ({
     loading,
     pageSize: PAGESIZE,
   });
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (visible) {
@@ -211,6 +212,7 @@ const CollectionDrawer: React.FC<IProps> = ({
             styles.containerClassName,
             themeMode === 'dark' && styles.darkContainerClassName
           )}
+          themeMode={themeMode}
           onScroll={onScroll}
         >
           <div className={styles.collectionList}>
@@ -251,6 +253,7 @@ const CollectionDrawer: React.FC<IProps> = ({
           visible={createVisible}
           onCancel={onCloseCreate}
           onCheckedItem={onCheckedItem}
+          themeMode={themeMode}
         />
       )}
     </div>

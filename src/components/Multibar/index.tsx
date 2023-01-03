@@ -255,6 +255,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
         onCancel={onHideCollectModel}
         getAddVisible={getAddVisible}
         createCollectId={createCollectId}
+        themeMode={themeMode}
       />
       <CreateCollectModel
         key={Math.random()}
@@ -262,6 +263,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
         onCancel={() => setAddVisible(false)}
         showCollection={onCollection}
         getCreateCollectId={getCreateCollectId}
+        themeMode={themeMode}
       />
     </div>
   );

@@ -130,6 +130,7 @@ const DraftPopover: React.FC<IProps> = ({
           autoHeight
           autoHeightMax="260px"
           onScroll={onScroll}
+          themeMode={themeMode}
         >
           {draftList?.list?.map((i) => {
             return (

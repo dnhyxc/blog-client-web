@@ -4,7 +4,6 @@ import { Button, Drawer, Input, Radio } from 'antd';
 import classname from 'classname';
 import MIcons from '@/components/Icons';
 import useStore from '@/store';
-import { useGetTheme } from '@/hooks';
 import * as Service from '@/service';
 import { normalizeResult, error, success } from '@/utils';
 import { DRAWER_STYLES } from '@/constant';
@@ -20,6 +19,7 @@ interface IProps {
   updateCollection?: Function;
   hideCollectModel?: boolean;
   onCheckedItem?: Function; // 获取新建收藏集的id
+  themeMode?: string;
 }
 
 const CreateDrawer: React.FC<IProps> = ({
@@ -31,6 +31,7 @@ const CreateDrawer: React.FC<IProps> = ({
   updateCollection,
   hideCollectModel,
   onCheckedItem,
+  themeMode,
 }) => {
   const [collectName, setCollectName] = useState<string>('');
   const [collectDesc, setCollectDesc] = useState<string>('');
@@ -39,8 +40,6 @@ const CreateDrawer: React.FC<IProps> = ({
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (collectInfo?.name && visible) {

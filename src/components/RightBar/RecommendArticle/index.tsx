@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
 import useStore from '@/store';
-import { useGetSiderVisible, useGetTheme, useHtmlWidth } from '@/hooks';
+import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
 import { formatGapTime, error } from '@/utils';
 import * as Service from '@/service';
 import { normalizeResult } from '@/utils/tools';
@@ -12,9 +12,10 @@ import styles from './index.less';
 
 interface IProps {
   scrollRef?: any;
+  themeMode?: string;
 }
 
-const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
+const RecommendArticle: React.FC<IProps> = ({ scrollRef, themeMode }) => {
   const [recommendList, setRecommendList] = useState<ArticleItem[]>([]);
 
   const navigate = useNavigate();
@@ -23,7 +24,6 @@ const RecommendArticle: React.FC<IProps> = ({ scrollRef }) => {
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
   const { siderVisible } = useGetSiderVisible();
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     getArticleByRandom();

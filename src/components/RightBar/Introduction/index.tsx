@@ -5,7 +5,6 @@ import { HEAD_UEL } from '@/constant';
 import { Button } from 'antd';
 import Image from '@/components/Image';
 import * as Service from '@/service';
-import { useGetTheme } from '@/hooks';
 import { info, normalizeResult } from '@/utils';
 import { UserInfoParams } from '@/typings/common';
 import styles from './index.less';
@@ -13,15 +12,15 @@ import styles from './index.less';
 interface IProps {
   className?: string;
   showRecommendArticle?: boolean;
+  themeMode?: string;
 }
 
-const Introduction: React.FC<IProps> = ({ className, showRecommendArticle }) => {
+const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, themeMode }) => {
   const [authorInfo, setAuthorInfo] = useState<UserInfoParams>({
     userId: '',
   });
 
   const navigate = useNavigate();
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     onGetPersonalInfo();

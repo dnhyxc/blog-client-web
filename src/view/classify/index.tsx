@@ -166,7 +166,13 @@ const Classify: React.FC = () => {
 
   return (
     <div className={styles.Classify}>
-      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
+      {htmlWidth <= 960 && (
+        <ActionIcon
+          noHideMenuIcon
+          className={styles.changeIconWrap}
+          themeMode={themeMode}
+        />
+      )}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()} themeMode={themeMode}>
         文章分类
@@ -175,6 +181,7 @@ const Classify: React.FC = () => {
         className={styles.contentWrap}
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
+        themeMode={themeMode}
       >
         <div className={classname(styles.content, styles.contentPadding)} id="CONTENT">
           <div className={styles.filterList}>
@@ -203,12 +210,14 @@ const Classify: React.FC = () => {
               onEditArticle={onEditArticle}
               loading={loading}
               style={{ paddingTop: `${!siderVisible ? height + 10 : height}px` }}
+              themeMode={themeMode}
             />
           </div>
           <RightBar
             className={classname(styles.rightbar, siderVisible && styles.changePadding)}
             showRecommendArticle
             scrollRef={scrollRef}
+            themeMode={themeMode}
           />
         </div>
       </Content>

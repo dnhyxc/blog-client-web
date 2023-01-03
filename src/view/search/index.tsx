@@ -193,7 +193,7 @@ const Search: React.FC<IProps> = () => {
 
   return (
     <div className={classname(styles.Search, themeMode === 'dark' && styles.dark)}>
-      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} themeMode={themeMode} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth needUser themeMode={themeMode}>
@@ -206,6 +206,7 @@ const Search: React.FC<IProps> = () => {
         className={styles.scrollWrap}
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
+        themeMode={themeMode}
       >
         <div className={styles.wrap}>
           <div className={styles.searchWrap}>
@@ -268,6 +269,7 @@ const Search: React.FC<IProps> = () => {
               onEditArticle={onEditArticle}
               loadText="地主家也没余粮了"
               loading={loading}
+              themeMode={themeMode}
             />
           </div>
         </div>

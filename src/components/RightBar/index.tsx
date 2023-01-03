@@ -9,19 +9,23 @@ interface IProps {
   showRecommendArticle?: boolean;
   className?: string;
   scrollRef?: any;
+  themeMode?: string;
 }
 
 const RightBar: React.FC<IProps> = ({
   className,
   showRecommendArticle,
   scrollRef,
+  themeMode,
 }) => {
   const { htmlWidth } = useHtmlWidth();
 
   return htmlWidth > 960 ? (
     <div className={classname(styles.container, className)}>
-      <Introduction showRecommendArticle={showRecommendArticle} />
-      {showRecommendArticle && <RecommendArticle scrollRef={scrollRef} />}
+      <Introduction showRecommendArticle={showRecommendArticle} themeMode={themeMode} />
+      {showRecommendArticle && (
+        <RecommendArticle scrollRef={scrollRef} themeMode={themeMode} />
+      )}
     </div>
   ) : null;
 };

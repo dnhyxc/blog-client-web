@@ -287,10 +287,10 @@ const Collection: React.FC<IProps> = () => {
 
   return (
     <div className={classname(styles.Collection, themeMode === 'dark' && styles.dark)}>
-      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} themeMode={themeMode} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
-        <Header needLeft excludesWidth right={rightNode()} themeMode={themeMode}>
+        <Header needLeft excludesWidth right={rightNode()} themeMode={themeMode} needUser>
           <div className={styles.headerContent}>关于博主</div>
         </Header>
       </div>
@@ -300,6 +300,7 @@ const Collection: React.FC<IProps> = () => {
         className={styles.scrollWrap}
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
+        themeMode={themeMode}
       >
         <div className={classname(styles.wrap, siderVisible && styles.changeWidth)}>
           <div className={styles.infoWrap}>
@@ -365,6 +366,7 @@ const Collection: React.FC<IProps> = () => {
               customRender
               moveTo={moveTo}
               removeArticle={removeArticle}
+              themeMode={themeMode}
             />
           </div>
         </div>
@@ -381,6 +383,7 @@ const Collection: React.FC<IProps> = () => {
           getSelectCollectIds={getSelectCollectIds}
           selectCollectId={id}
           createCollectId={createCollectId}
+          themeMode={themeMode}
         />
       ) : (
         <CollectionDrawer
@@ -392,6 +395,7 @@ const Collection: React.FC<IProps> = () => {
           selectCollectId={id}
           createCollectId={createCollectId}
           showCreateDrawer={getAddVisible}
+          themeMode={themeMode}
         />
       )}
       {htmlWidth > 960 ? (
@@ -404,6 +408,7 @@ const Collection: React.FC<IProps> = () => {
             collectInfo={hideCollectModel ? newCollectInfo : null}
             updateCollection={updateCollection}
             getCreateCollectId={getCreateCollectId} // 获取创建时生成的id
+            themeMode={themeMode}
           />
         )
       ) : (
@@ -416,6 +421,7 @@ const Collection: React.FC<IProps> = () => {
           collectInfo={hideCollectModel ? newCollectInfo : null}
           updateCollection={updateCollection}
           onCheckedItem={getCreateCollectId} // 获取新建收藏集的id
+          themeMode={themeMode}
         />
       )}
     </div>

@@ -4,7 +4,6 @@ import classname from 'classname';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { DRAWER_STYLES } from '@/constant';
-import { useGetTheme } from '@/hooks';
 import { normalizeResult, error, success } from '@/utils';
 import { AddCollectionRes } from '@/typings/common';
 import styles from './index.less';
@@ -18,6 +17,7 @@ interface IProps {
   updateCollection?: Function; // 更新收藏集信息
   getCreateCollectId?: Function; // 获取新建的收藏集Id，用于创建完成立即选中
   hideCollectModel?: boolean;
+  themeMode?: string;
 }
 
 const { TextArea } = Input;
@@ -31,13 +31,13 @@ const AddCollection: React.FC<IProps> = ({
   updateCollection,
   hideCollectModel,
   getCreateCollectId,
+  themeMode,
 }) => {
   const [collectionName, setCollectionName] = useState<string>('');
   const [form] = Form.useForm();
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (collectInfo?.name && visible) {

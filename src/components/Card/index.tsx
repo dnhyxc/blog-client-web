@@ -6,7 +6,7 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
 import { formatGapTime } from '@/utils';
 import useStore from '@/store';
-import { useHtmlWidth, useGetTheme } from '@/hooks';
+import { useHtmlWidth } from '@/hooks';
 import Image from '@/components/Image';
 import { CARD_URL } from '@/constant';
 import MIcons from '@/components/Icons';
@@ -37,6 +37,7 @@ interface IProps {
   fromPage?: boolean;
   customRender?: boolean;
   noMoreStyle?: string;
+  themeMode?: string;
 }
 
 const Card: React.FC<IProps> = ({
@@ -63,6 +64,7 @@ const Card: React.FC<IProps> = ({
   moveTo,
   removeArticle,
   noMoreStyle,
+  themeMode,
 }) => {
   const {
     userInfoStore: { getUserInfo },
@@ -71,7 +73,6 @@ const Card: React.FC<IProps> = ({
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const authorId = search.get('authorId');
-  const { themeMode } = useGetTheme();
 
   const renderAction = (id: string) => {
     const onRemoveArticle = (id: string) => {

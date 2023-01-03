@@ -136,7 +136,13 @@ const TagList: React.FC<IProps> = () => {
 
   return (
     <div className={styles.TagList}>
-      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
+      {htmlWidth <= 960 && (
+        <ActionIcon
+          noHideMenuIcon
+          className={styles.changeIconWrap}
+          themeMode={themeMode}
+        />
+      )}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()} themeMode={themeMode}>
         {tagName}
@@ -149,6 +155,7 @@ const TagList: React.FC<IProps> = () => {
         )}
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
+        themeMode={themeMode}
       >
         <div className={styles.content} id="CONTENT">
           <Card
@@ -159,11 +166,13 @@ const TagList: React.FC<IProps> = () => {
             toDetail={toDetail}
             onEditArticle={onEditArticle}
             loading={loading}
+            themeMode={themeMode}
           />
           <RightBar
             className={styles.rightbar}
             showRecommendArticle
             scrollRef={scrollRef}
+            themeMode={themeMode}
           />
         </div>
       </Content>

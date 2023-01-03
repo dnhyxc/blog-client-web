@@ -88,12 +88,13 @@ const Profile: React.FC = () => {
 
   return (
     <div className={classname(styles.Profile, themeMode === 'dark' && styles.dark)}>
-      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} themeMode={themeMode} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Content
         containerClassName={styles.containerClassName}
         wrapClassName={styles.wrapClassName}
         className={styles.scrollWrap}
+        themeMode={themeMode}
       >
         <div className={styles.header}>
           <div className={styles.title}>

@@ -298,7 +298,7 @@ const Personal = () => {
 
   return (
     <div className={classname(styles.Personal, themeMode === 'dark' && styles.dark)}>
-      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
+      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} themeMode={themeMode} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()} themeMode={themeMode}>
         我的主页
@@ -310,6 +310,7 @@ const Personal = () => {
         )}
         onScroll={onScroll}
         scrollbarRef={scrollbarRef}
+        themeMode={themeMode}
       >
         <div className={styles.content} id="CONTENT">
           <div className={styles.wrap}>
@@ -382,6 +383,7 @@ const Personal = () => {
                           onEditArticle={onEditArticle}
                           loading={loading}
                           fromPage={!authorId}
+                          themeMode={themeMode}
                         />
                       ) : (
                         <MList
@@ -397,6 +399,7 @@ const Personal = () => {
                           delCollection={deleteArticle}
                           updateCollection={updateCollection}
                           authorId={authorId || getUserInfo?.userId}
+                          themeMode={themeMode}
                         />
                       )}
                     </TabPane>

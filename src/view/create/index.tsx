@@ -181,7 +181,13 @@ const CreateArticle: React.FC<IProps> = () => {
 
   return (
     <div className={styles.container}>
-      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
+      {htmlWidth <= 960 && (
+        <ActionIcon
+          noHideMenuIcon
+          className={styles.changeIconWrap}
+          themeMode={themeMode}
+        />
+      )}
       <Header right={renderRight()} themeMode={themeMode}>
         发布文章
       </Header>

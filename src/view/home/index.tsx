@@ -257,7 +257,13 @@ const Home: React.FC<IProps> = () => {
 
   return (
     <div className={classname(styles.container, themeMode === 'dark' && styles.dark)}>
-      {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
+      {htmlWidth <= 960 && (
+        <ActionIcon
+          noHideMenuIcon
+          className={styles.changeIconWrap}
+          themeMode={themeMode}
+        />
+      )}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       {(htmlWidth <= 960 || !siderVisible) && (
         <Header
@@ -282,6 +288,7 @@ const Home: React.FC<IProps> = () => {
           onScroll={onScroll}
           scrollbarRef={scrollbarRef}
           contentWrapRef={contentWrapRef}
+          themeMode={themeMode}
         >
           {(siderVisible || htmlWidth <= 960) && (
             <Cover scrollbarRef={scrollbarRef}>
@@ -295,6 +302,7 @@ const Home: React.FC<IProps> = () => {
                   activeMenuStyle={
                     scrollTop < document.body.clientHeight - 50 && styles.activeMenuStyle
                   }
+                  themeMode={themeMode}
                 >
                   <div className={styles.headTitle}>文章列表</div>
                 </Header>
@@ -311,11 +319,13 @@ const Home: React.FC<IProps> = () => {
               onEditArticle={onEditArticle}
               loading={loading}
               noMoreStyle={siderVisible && htmlWidth > 960 ? styles.noMoreStyle : ''}
+              themeMode={themeMode}
             />
             <RightBar
               className={styles.rightbar}
               showRecommendArticle
               scrollRef={scrollRef}
+              themeMode={themeMode}
             />
           </div>
         </Content>

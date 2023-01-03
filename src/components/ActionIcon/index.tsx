@@ -3,7 +3,7 @@ import classname from 'classname';
 import MIcons from '@/components/Icons';
 import { storage } from '@/utils';
 import { EventBus } from '@/event';
-import { useGetTheme, useHtmlWidth } from '@/hooks';
+import { useHtmlWidth } from '@/hooks';
 import styles from './index.less';
 
 interface IProps {
@@ -14,6 +14,7 @@ interface IProps {
   icon?: string;
   noHideMenuIcon?: boolean;
   fromDetail?: boolean;
+  themeMode?: string;
 }
 
 const MusicIcon: React.FC<IProps> = ({
@@ -24,13 +25,13 @@ const MusicIcon: React.FC<IProps> = ({
   icon,
   noHideMenuIcon,
   fromDetail,
+  themeMode,
 }) => {
   const [show, setShow] = useState<boolean>(false);
   const [theme, setTheme] = useState<boolean>(storage.ssnGetItem('theme') === 'dark');
   const [onNode, setOnNode] = useState<boolean>(false);
 
   const { htmlWidth } = useHtmlWidth();
-  const { themeMode } = useGetTheme();
 
   const timer = useRef<any>(null);
 

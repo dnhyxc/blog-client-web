@@ -114,6 +114,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className, themeMode })
           className={styles.changeIconWrap}
           siderVisible={siderVisible}
           onClick={onToggleSider}
+          themeMode={themeMode}
         />
       )}
       <Sider

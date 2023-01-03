@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Skeleton } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
-import { useGetTheme, useHtmlWidth } from '@/hooks';
+import { useHtmlWidth } from '@/hooks';
 import { formatDate } from '@/utils';
 import { ArticleItem, AddCollectionRes } from '@/typings/common';
 import MIcons from '../Icons';
@@ -26,6 +26,7 @@ interface IProps {
   authorId?: string | null;
   itemClass?: string;
   skeletonRows?: number;
+  themeMode?: string;
 }
 
 const MList: React.FC<IProps> = ({
@@ -43,6 +44,7 @@ const MList: React.FC<IProps> = ({
   authorId,
   itemClass, // 骨架样式
   skeletonRows = 2,
+  themeMode,
 }) => {
   const [collectInfo, setCollectInfo] = useState<AddCollectionRes>({ id: '' });
   const navigate = useNavigate();
@@ -50,7 +52,6 @@ const MList: React.FC<IProps> = ({
     userInfoStore: { getUserInfo },
   } = useStore();
   const { htmlWidth } = useHtmlWidth();
-  const { themeMode } = useGetTheme();
 
   const toClolection = (id: string) => {
     navigate(`/collection/${id}?authorId=${authorId || getUserInfo?.userId}`);
@@ -156,6 +157,7 @@ const MList: React.FC<IProps> = ({
           getAddRes={getAddRes}
           updateCollection={updateCollection}
           collectInfo={collectInfo}
+          themeMode={themeMode}
         />
       ) : (
         <CreateDrawer
@@ -165,6 +167,7 @@ const MList: React.FC<IProps> = ({
           getAddRes={getAddRes}
           updateCollection={updateCollection}
           collectInfo={collectInfo}
+          themeMode={themeMode}
         />
       )}
     </div>

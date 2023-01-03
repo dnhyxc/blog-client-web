@@ -784,7 +784,6 @@ export const useGetTheme = () => {
     } else {
       document.body.classList.remove('__DARK_BODY__');
     }
-    console.log(themeMode, 'themeMode');
   }, [themeMode]);
 
   return { themeMode };
