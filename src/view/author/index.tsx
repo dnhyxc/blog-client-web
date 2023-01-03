@@ -238,7 +238,7 @@ const Author: React.FC = () => {
       <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
-        <Header needLeft excludesWidth right={rightNode()} needUser>
+        <Header needLeft excludesWidth right={rightNode()} needUser themeMode={themeMode}>
           <div className={styles.headerContent}>关于博主</div>
         </Header>
       </div>
@@ -330,9 +330,9 @@ const Author: React.FC = () => {
                   tabBarStyle={
                     themeMode === 'dark'
                       ? {
-                        backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP,
-                        color: GLOBAL_STYLES.DARK_FC,
-                      }
+                          backgroundColor: GLOBAL_STYLES.DARK_BGC_DEEP,
+                          color: GLOBAL_STYLES.DARK_FC,
+                        }
                       : {}
                   }
                 >
@@ -342,18 +342,18 @@ const Author: React.FC = () => {
                         {(i.value !== '3' ||
                           !timelineList.length ||
                           (timelineList.length && !timelineList[0].articles.length)) && (
-                            <Card
-                              list={articleList.list}
-                              total={articleList.total}
-                              wrapClass={styles.wrapClass}
-                              toDetail={toDetail}
-                              likeArticle={likeArticle}
-                              deleteArticle={deleteArticle}
-                              onEditArticle={onEditArticle}
-                              loadText="地主家也没余粮了"
-                              loading={loading}
-                            />
-                          )}
+                          <Card
+                            list={articleList.list}
+                            total={articleList.total}
+                            wrapClass={styles.wrapClass}
+                            toDetail={toDetail}
+                            likeArticle={likeArticle}
+                            deleteArticle={deleteArticle}
+                            onEditArticle={onEditArticle}
+                            loadText="地主家也没余粮了"
+                            loading={loading}
+                          />
+                        )}
                         {i.value === '3' &&
                           timelineList.length > 0 &&
                           timelineList[0].articles.length > 0 && (

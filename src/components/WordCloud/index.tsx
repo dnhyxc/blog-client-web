@@ -11,8 +11,6 @@ interface IProps {
 }
 
 const WordCloud: React.FC<IProps> = ({ data, callback }) => {
-  // const { htmlWidth } = useHtmlWidth();
-
   useEffect(() => {
     init();
   }, []);

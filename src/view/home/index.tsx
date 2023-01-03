@@ -35,7 +35,7 @@ import { ArticleListResult, ArticleItem } from '@/typings/common';
 import Cover from './Cover';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const Home: React.FC<IProps> = () => {
   const [articleList, setArticleList] = useState<ArticleListResult>({
@@ -264,6 +264,7 @@ const Home: React.FC<IProps> = () => {
           right={rightNode()}
           className={htmlWidth > 960 && siderVisible && styles.header}
           headerRef={headerRef}
+          themeMode={themeMode}
         >
           文章列表
         </Header>
@@ -291,7 +292,9 @@ const Home: React.FC<IProps> = () => {
                   headerRef={headerRef}
                   itemStyles={htmlWidth > 960 && siderVisible && styles.itemStyles} // header item 的样式
                   iconStyles={htmlWidth > 960 && siderVisible && styles.iconStyles} // header item 的样式
-                  activeMenuStyle={scrollTop < document.body.clientHeight - 50 && styles.activeMenuStyle}
+                  activeMenuStyle={
+                    scrollTop < document.body.clientHeight - 50 && styles.activeMenuStyle
+                  }
                 >
                   <div className={styles.headTitle}>文章列表</div>
                 </Header>

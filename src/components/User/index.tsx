@@ -3,23 +3,23 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Dropdown, Menu } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
-import { useGetTheme } from '@/hooks';
 import Image from '@/components/Image';
 import MIcons from '@/components/Icons';
 import { HEAD_UEL, USER_MENU } from '@/constant';
 import { storage } from '@/utils';
 import styles from './index.less';
 
-interface IProps {}
+interface IProps {
+  themeMode?: string;
+}
 
-const User: React.FC<IProps> = () => {
+const User: React.FC<IProps> = ({ themeMode }) => {
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const {
     userInfoStore: { getUserInfo },
     commonStore,
   } = useStore();
-  const { themeMode } = useGetTheme();
 
   const onJump = (path: string) => {
     if (path === '/login') {

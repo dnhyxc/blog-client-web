@@ -13,7 +13,7 @@ import useStore from '@/store';
 import Image from '@/components/Image';
 import ActionIcon from '@/components/ActionIcon';
 import { menuList, settingList } from '@/router/menu';
-import { useGetTheme, useHtmlWidth } from '@/hooks';
+import { useHtmlWidth } from '@/hooks';
 import { CARD_URL } from '@/constant';
 import { EventBus } from '@/event';
 import styles from './index.less';
@@ -24,9 +24,10 @@ interface IProps {
   type?: string; // type 有值说明是setting
   width?: number;
   className?: string;
+  themeMode?: string;
 }
 
-const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
+const MenuList: React.FC<IProps> = ({ type, width = 180, className, themeMode }) => {
   const {
     userInfoStore: { getUserInfo },
     siderStore,
@@ -39,7 +40,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className }) => {
   const [search] = useSearchParams();
   const id = search.get('id');
   const { htmlWidth } = useHtmlWidth();
-  const { themeMode } = useGetTheme();
+  // const { themeMode } = useGetTheme();
 
   useEffect(() => {
     const sliceName = pathname !== '/' ? pathname.slice(1) : pathname;

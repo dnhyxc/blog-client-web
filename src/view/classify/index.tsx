@@ -168,7 +168,9 @@ const Classify: React.FC = () => {
     <div className={styles.Classify}>
       {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header right={rightNode()}>文章分类</Header>
+      <Header right={rightNode()} themeMode={themeMode}>
+        文章分类
+      </Header>
       <Content
         className={styles.contentWrap}
         onScroll={onScroll}

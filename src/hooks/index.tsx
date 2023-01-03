@@ -6,7 +6,7 @@ import * as Service from '@/service';
 import { normalizeResult, Result } from '@/utils/tools';
 import { EventBus } from '@/event';
 import { error, storage } from '@/utils';
-import { PAGESIZE, GLOBAL_STYLES } from '@/constant';
+import { PAGESIZE } from '@/constant';
 import { close } from '@/components/Render';
 import {
   ArticleDetailParams,
@@ -589,7 +589,11 @@ export const useDeleteTimelineArticle = ({
 };
 
 // 校验token是否过期的hook
-export const useVerifyToken = (needRes?: boolean, needMsg?: boolean, fromDetail?: boolean) => {
+export const useVerifyToken = (
+  needRes?: boolean,
+  needMsg?: boolean,
+  fromDetail?: boolean
+) => {
   const [loginStatus, setLoginStatus] = useState<{
     success?: boolean;
     message?: string;
@@ -776,10 +780,11 @@ export const useGetTheme = () => {
 
   useEffect(() => {
     if (themeMode === 'dark') {
-      document.body.style.backgroundColor = GLOBAL_STYLES.DARK_BGC_DEEP;
+      document.body.classList.add('__DARK_BODY__');
     } else {
-      document.body.style.backgroundColor = GLOBAL_STYLES.WHITE;
+      document.body.classList.remove('__DARK_BODY__');
     }
+    console.log(themeMode, 'themeMode');
   }, [themeMode]);
 
   return { themeMode };

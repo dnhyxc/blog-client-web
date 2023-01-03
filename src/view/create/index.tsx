@@ -29,7 +29,7 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -169,6 +169,7 @@ const CreateArticle: React.FC<IProps> = () => {
           deleteDraft={deleteDraft}
           hideDraftDrawer={hideDraftDrawer}
           drawerVisible={drawerVisible}
+          themeMode={themeMode}
         />
       </span>
     );
@@ -181,7 +182,9 @@ const CreateArticle: React.FC<IProps> = () => {
   return (
     <div className={styles.container}>
       {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
-      <Header right={renderRight()}>发布文章</Header>
+      <Header right={renderRight()} themeMode={themeMode}>
+        发布文章
+      </Header>
       <div
         className={classname(
           styles.tuiEditorWrap,
@@ -195,6 +198,7 @@ const CreateArticle: React.FC<IProps> = () => {
           initialValue={detail?.content}
           siderVisible={siderVisible}
           onSaveDraft={onSaveDraft}
+          themeMode={themeMode}
         />
       </div>
       {visible && (
@@ -206,6 +210,7 @@ const CreateArticle: React.FC<IProps> = () => {
           articleId={id}
           onSaveDraft={onSaveDraft}
           deleteDraft={deleteDraft}
+          themeMode={themeMode}
         />
       )}
     </div>

@@ -56,7 +56,9 @@ const Tag: React.FC = () => {
   return (
     <div className={styles.Tag}>
       {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
-      <Header right={rightNode()}>文章标签</Header>
+      <Header right={rightNode()} themeMode={themeMode}>
+        文章标签
+      </Header>
       <Content className={styles.tagContentWrap}>
         <div className={classname(styles.wrap, themeMode === 'dark' && styles.dark)}>
           {tagList.length > 0 && bodyWidth > 960 ? (

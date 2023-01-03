@@ -18,7 +18,7 @@ import moment from 'moment';
 import UploadFile from '@/components/Upload';
 import MAlert from '@/components/MAlert';
 import useStore from '@/store';
-import { useLoginStatus, useHtmlWidth, useGetTheme } from '@/hooks';
+import { useLoginStatus, useHtmlWidth } from '@/hooks';
 import * as Server from '@/service';
 import { normalizeResult, success, error, info } from '@/utils';
 import { ARTICLE_CLASSIFY, ARTICLE_TAG, CARD_URL, DRAWER_STYLES } from '@/constant';
@@ -35,6 +35,7 @@ interface IProps {
   onSaveDraft?: Function;
   // eslint-disable-next-line no-unused-vars
   deleteDraft?: (id?: string, needMessage?: boolean) => void;
+  themeMode?: string;
 }
 
 const { TextArea } = Input;
@@ -47,6 +48,7 @@ const ReleaseModel: React.FC<IProps> = ({
   onCancel,
   onSaveDraft,
   deleteDraft,
+  themeMode,
 }) => {
   const [filePath, setFilePath] = useState<string>('');
   const [tagValue, setTagValue] = useState<string>();
@@ -58,7 +60,6 @@ const ReleaseModel: React.FC<IProps> = ({
   } = useStore();
   const { showAlert, toLogin, onCloseAlert, setAlertStatus } = useLoginStatus();
   const { htmlWidth } = useHtmlWidth();
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (initialValue?.coverImage) {
@@ -167,7 +168,9 @@ const ReleaseModel: React.FC<IProps> = ({
     <div>
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Drawer
-        title={<div className={themeMode === 'dark' ? styles.drawerTitle : ''}>发布文章</div>}
+        title={
+          <div className={themeMode === 'dark' ? styles.drawerTitle : ''}>发布文章</div>
+        }
         placement="right"
         width={htmlWidth > 500 ? 500 : 'calc(100vw - 50px)'}
         closable={false}

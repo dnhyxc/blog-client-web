@@ -4,7 +4,7 @@ import classname from 'classname';
 import { CloseOutlined } from '@ant-design/icons';
 import Content from '@/components/Content';
 import { useNavigate } from 'react-router-dom';
-import { useGetTheme, useHtmlWidth, useScrollLoad } from '@/hooks';
+import { useHtmlWidth, useScrollLoad } from '@/hooks';
 import useStore from '@/store';
 import * as Service from '@/service';
 import { normalizeResult, error, formatGapTime } from '@/utils';
@@ -17,12 +17,14 @@ interface IProps {
   deleteDraft?: (id?: string, needMessage?: boolean) => void;
   drawerVisible?: boolean;
   hideDraftDrawer?: Function;
+  themeMode?: string;
 }
 
 const DraftPopover: React.FC<IProps> = ({
   deleteDraft,
   drawerVisible,
   hideDraftDrawer,
+  themeMode,
 }) => {
   const [draftList, setDraftList] = useState<ArticleListResult>({
     list: [],
@@ -46,7 +48,6 @@ const DraftPopover: React.FC<IProps> = ({
   });
 
   const { htmlWidth } = useHtmlWidth();
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     if (visible || drawerVisible) {
@@ -135,7 +136,8 @@ const DraftPopover: React.FC<IProps> = ({
               <div key={i.id} className={styles.draftItem}>
                 <span className={styles.title}>
                   {i.title ||
-                    `${i.content?.slice(0, 26).replace(/#/g, '')}${i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
+                    `${i.content?.slice(0, 26).replace(/#/g, '')}${
+                      i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
                     }`}
                 </span>
                 <span className={styles.actions}>
@@ -175,7 +177,12 @@ const DraftPopover: React.FC<IProps> = ({
   );
 
   const title = (
-    <div className={classname(styles.modalTitle, themeMode === 'dark' && styles.darkModalTitle)}>
+    <div
+      className={classname(
+        styles.modalTitle,
+        themeMode === 'dark' && styles.darkModalTitle
+      )}
+    >
       草稿列表
     </div>
   );
@@ -202,9 +209,15 @@ const DraftPopover: React.FC<IProps> = ({
       closable={false}
       visible={drawerVisible}
       headerStyle={
-        themeMode === 'dark' ? { padding: '16px 10px', borderRadius: '0', ...DRAWER_STYLES.headerStyle } : { padding: '16px 10px', borderRadius: '0' }
+        themeMode === 'dark'
+          ? { padding: '16px 10px', borderRadius: '0', ...DRAWER_STYLES.headerStyle }
+          : { padding: '16px 10px', borderRadius: '0' }
       }
-      bodyStyle={themeMode === 'dark' ? { padding: '10px 0 10px 10px', ...DRAWER_STYLES.bodyStyle } : { padding: '10px 0 10px 10px' }}
+      bodyStyle={
+        themeMode === 'dark'
+          ? { padding: '10px 0 10px 10px', ...DRAWER_STYLES.bodyStyle }
+          : { padding: '10px 0 10px 10px' }
+      }
       height={340}
       onClose={() => {
         hideDraftDrawer && hideDraftDrawer();

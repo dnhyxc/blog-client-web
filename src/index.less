@@ -14,6 +14,7 @@ body {
 
   :global(#root) {
     height: 100vh;
+    background-color: transparent;
   }
 
   :global {
@@ -47,5 +48,11 @@ body {
       min-width: 350px;
       height: 100vh;
     }
+  }
+}
+
+:global {
+  .__DARK_BODY__ {
+    background-color: @dark-bgc;
   }
 }

@@ -290,7 +290,7 @@ const Collection: React.FC<IProps> = () => {
       <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
-        <Header needLeft excludesWidth right={rightNode()}>
+        <Header needLeft excludesWidth right={rightNode()} themeMode={themeMode}>
           <div className={styles.headerContent}>关于博主</div>
         </Header>
       </div>

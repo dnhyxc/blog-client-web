@@ -112,7 +112,7 @@ const ArticleDetail: React.FC = () => {
         )}
       >
         <div className={styles.headerWrap}>
-          <Header needLeft excludesWidth right={rightNode()} needUser>
+          <Header needLeft excludesWidth right={rightNode()} needUser themeMode={themeMode}>
             <div className={styles.headerContent}>文章详情</div>
           </Header>
         </div>
@@ -168,10 +168,7 @@ const ArticleDetail: React.FC = () => {
           />
         )}
         {htmlWidth <= 960 && <Footer />}
-        <ActionIcon
-          noHideMenuIcon
-          fromDetail
-        />
+        <ActionIcon noHideMenuIcon fromDetail />
       </div>
       <BackTop className={htmlWidth > 960 ? styles.backTopWrap : styles.mobileBackTopWrap}>
         <div className={styles.backTop}>

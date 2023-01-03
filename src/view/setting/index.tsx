@@ -19,12 +19,17 @@ const Setting: React.FC<IProps> = () => {
   return (
     <div className={classname(styles.Setting, themeMode === 'dark' && styles.dark)}>
       <div className={styles.headerWrap}>
-        <Header needLeft excludesWidth needUser>
+        <Header needLeft excludesWidth needUser themeMode={themeMode}>
           <div className={styles.headerContent}>我的主页</div>
         </Header>
       </div>
       <Layout className={styles.layout}>
-        <MenuList type="setting" width={200} className={styles.menuListWrap} />
+        <MenuList
+          type="setting"
+          width={200}
+          className={styles.menuListWrap}
+          themeMode={themeMode}
+        />
         <Content>
           <Outlet />
         </Content>

@@ -19,7 +19,7 @@ import tableMergedCell from '@toast-ui/editor-plugin-table-merged-cell';
 import uml from '@toast-ui/editor-plugin-uml';
 import Prism from 'prismjs';
 import * as Service from '@/service';
-import { useGetTheme, useHtmlWidth } from '@/hooks';
+import { useHtmlWidth } from '@/hooks';
 import { normalizeResult } from '@/utils';
 import { toolbars } from './toobars';
 import styles from './index.less';
@@ -29,6 +29,7 @@ interface IProps {
   initialValue?: string;
   onSaveDraft?: Function;
   siderVisible?: boolean;
+  themeMode?: string;
 }
 
 const TuiEditor: React.FC<IProps> = ({
@@ -36,9 +37,9 @@ const TuiEditor: React.FC<IProps> = ({
   onGetMackdown,
   siderVisible,
   onSaveDraft,
+  themeMode,
 }) => {
   const { htmlWidth } = useHtmlWidth();
-  const { themeMode } = useGetTheme();
 
   useEffect(() => {
     const editor: any = new Editor({

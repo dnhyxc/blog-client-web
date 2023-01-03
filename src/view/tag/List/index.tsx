@@ -25,7 +25,7 @@ import { normalizeResult, storage, error } from '@/utils';
 import { ArticleListResult, ArticleItem } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps { }
+interface IProps {}
 
 const TagList: React.FC<IProps> = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -138,7 +138,7 @@ const TagList: React.FC<IProps> = () => {
     <div className={styles.TagList}>
       {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header right={rightNode()}>
+      <Header right={rightNode()} themeMode={themeMode}>
         {tagName}
         &nbsp; 标签
       </Header>

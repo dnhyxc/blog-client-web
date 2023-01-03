@@ -11,7 +11,7 @@ import classname from 'classname';
 import { LeftOutlined } from '@ant-design/icons';
 import User from '@/components/User';
 import useStore from '@/store';
-import { useHtmlWidth, useGetSiderVisible, useGetTheme } from '@/hooks';
+import { useHtmlWidth, useGetSiderVisible } from '@/hooks';
 import MIcons from '../Icons';
 import HeadMenu from '../HeadMenu';
 import styles from './index.less';
@@ -28,6 +28,7 @@ interface IProps {
   headerRef?: any;
   needUser?: boolean;
   activeMenuStyle?: string;
+  themeMode?: string;
 }
 
 const Header: React.FC<IProps> = ({
@@ -42,10 +43,10 @@ const Header: React.FC<IProps> = ({
   iconStyles,
   needUser,
   activeMenuStyle,
+  themeMode,
 }) => {
   const navigate = useNavigate();
   const { siderVisible } = useGetSiderVisible();
-  const { themeMode } = useGetTheme();
   const { htmlWidth } = useHtmlWidth();
   const {
     userInfoStore: { getUserInfo },
@@ -85,9 +86,15 @@ const Header: React.FC<IProps> = ({
           <HeadMenu itemStyles={itemStyles} activeMenuStyle={activeMenuStyle} />
         )}
       </div>
-      <div className={classname(styles.right, needUser && styles.clearPadding, !getUserInfo?.userId && styles.noLogin)}>
+      <div
+        className={classname(
+          styles.right,
+          needUser && styles.clearPadding,
+          !getUserInfo?.userId && styles.noLogin
+        )}
+      >
         {right && <span>{right}</span>}
-        {needUser && <User />}
+        {needUser && <User themeMode={themeMode} />}
       </div>
     </div>
   );

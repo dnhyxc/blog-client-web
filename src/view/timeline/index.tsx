@@ -113,7 +113,9 @@ const TimeLine: React.FC = () => {
     <div className={styles.TimeLine}>
       {htmlWidth <= 960 && <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header right={rightNode()}>时间轴线</Header>
+      <Header right={rightNode()} themeMode={themeMode}>
+        时间轴线
+      </Header>
       <Content
         className={styles.contentWrap}
         onScroll={onScroll}

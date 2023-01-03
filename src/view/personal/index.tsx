@@ -300,7 +300,9 @@ const Personal = () => {
     <div className={classname(styles.Personal, themeMode === 'dark' && styles.dark)}>
       <ActionIcon noHideMenuIcon className={styles.changeIconWrap} />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
-      <Header right={rightNode()}>我的主页</Header>
+      <Header right={rightNode()} themeMode={themeMode}>
+        我的主页
+      </Header>
       <Content
         className={classname(
           styles.contentWrap,
