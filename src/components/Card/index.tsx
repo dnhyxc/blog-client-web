@@ -6,7 +6,6 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
 import { formatGapTime } from '@/utils';
 import useStore from '@/store';
-import { useHtmlWidth } from '@/hooks';
 import Image from '@/components/Image';
 import { CARD_URL } from '@/constant';
 import MIcons from '@/components/Icons';
@@ -15,6 +14,7 @@ import styles from './index.less';
 
 interface IProps {
   list: ArticleItem[];
+  htmlWidth?: number;
   total?: number;
   toDetail?: Function;
   wrapClass?: string;
@@ -65,11 +65,11 @@ const Card: React.FC<IProps> = ({
   removeArticle,
   noMoreStyle,
   themeMode,
+  htmlWidth = 0,
 }) => {
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  const { htmlWidth } = useHtmlWidth();
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const authorId = search.get('authorId');

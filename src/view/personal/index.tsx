@@ -298,7 +298,12 @@ const Personal = () => {
 
   return (
     <div className={classname(styles.Personal, themeMode === 'dark' && styles.dark)}>
-      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} themeMode={themeMode} />
+      <ActionIcon
+        noHideMenuIcon
+        className={styles.changeIconWrap}
+        themeMode={themeMode}
+        htmlWidth={htmlWidth}
+      />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Header right={rightNode()} themeMode={themeMode}>
         我的主页
@@ -384,6 +389,7 @@ const Personal = () => {
                           loading={loading}
                           fromPage={!authorId}
                           themeMode={themeMode}
+                          htmlWidth={htmlWidth}
                         />
                       ) : (
                         <MList
@@ -400,6 +406,7 @@ const Personal = () => {
                           updateCollection={updateCollection}
                           authorId={authorId || getUserInfo?.userId}
                           themeMode={themeMode}
+                          htmlWidth={htmlWidth}
                         />
                       )}
                     </TabPane>
@@ -410,7 +417,7 @@ const Personal = () => {
           </div>
         </div>
       </Content>
-      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} htmlWidth={htmlWidth} />
     </div>
   );
 };

@@ -22,9 +22,17 @@ interface IProps {
   commentRef: any;
   className?: string;
   themeMode?: string;
+  htmlWidth?: number;
 }
 
-const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className, themeMode }) => {
+const ActionBar: React.FC<IProps> = ({
+  id,
+  detail,
+  commentRef,
+  className,
+  themeMode,
+  htmlWidth = 0,
+}) => {
   const [barVisible, setBarVisible] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number | undefined>(0);
   const [isLike, setIsLike] = useState<boolean | undefined>(false);
@@ -196,6 +204,7 @@ const ActionBar: React.FC<IProps> = ({ id, detail, commentRef, className, themeM
         type="actionbar"
         icon={!barVisible ? 'icon-arrow-right-bold' : 'icon-arrow-left-bold'}
         themeMode={themeMode}
+        htmlWidth={htmlWidth}
       />
       <div className={classname(styles.container, barVisible && styles.showBar, className)}>
         {detail?.content.includes('#') && (

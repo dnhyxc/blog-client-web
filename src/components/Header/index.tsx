@@ -83,7 +83,11 @@ const Header: React.FC<IProps> = ({
           ))}
         <div className={styles.child}>{children}</div>
         {(excludesWidth || siderVisible) && htmlWidth > 960 && (
-          <HeadMenu itemStyles={itemStyles} activeMenuStyle={activeMenuStyle} />
+          <HeadMenu
+            itemStyles={itemStyles}
+            activeMenuStyle={activeMenuStyle}
+            htmlWidth={htmlWidth}
+          />
         )}
       </div>
       <div

@@ -171,6 +171,7 @@ const Classify: React.FC = () => {
           noHideMenuIcon
           className={styles.changeIconWrap}
           themeMode={themeMode}
+          htmlWidth={htmlWidth}
         />
       )}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
@@ -211,6 +212,7 @@ const Classify: React.FC = () => {
               loading={loading}
               style={{ paddingTop: `${!siderVisible ? height + 10 : height}px` }}
               themeMode={themeMode}
+              htmlWidth={htmlWidth}
             />
           </div>
           <RightBar
@@ -218,10 +220,11 @@ const Classify: React.FC = () => {
             showRecommendArticle
             scrollRef={scrollRef}
             themeMode={themeMode}
+            htmlWidth={htmlWidth}
           />
         </div>
       </Content>
-      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} htmlWidth={htmlWidth} />
     </div>
   );
 };

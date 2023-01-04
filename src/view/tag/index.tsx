@@ -60,6 +60,7 @@ const Tag: React.FC = () => {
           noHideMenuIcon
           className={styles.changeIconWrap}
           themeMode={themeMode}
+          htmlWidth={htmlWidth}
         />
       )}
       <Header right={rightNode()} themeMode={themeMode}>

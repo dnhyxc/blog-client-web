@@ -3,7 +3,6 @@ import classname from 'classname';
 import MIcons from '@/components/Icons';
 import { storage } from '@/utils';
 import { EventBus } from '@/event';
-import { useHtmlWidth } from '@/hooks';
 import styles from './index.less';
 
 interface IProps {
@@ -15,9 +14,10 @@ interface IProps {
   noHideMenuIcon?: boolean;
   fromDetail?: boolean;
   themeMode?: string;
+  htmlWidth?: number;
 }
 
-const MusicIcon: React.FC<IProps> = ({
+const ActionIcon: React.FC<IProps> = ({
   siderVisible,
   className,
   onClick,
@@ -26,12 +26,11 @@ const MusicIcon: React.FC<IProps> = ({
   noHideMenuIcon,
   fromDetail,
   themeMode,
+  htmlWidth = 0,
 }) => {
   const [show, setShow] = useState<boolean>(false);
   const [theme, setTheme] = useState<boolean>(storage.ssnGetItem('theme') === 'dark');
   const [onNode, setOnNode] = useState<boolean>(false);
-
-  const { htmlWidth } = useHtmlWidth();
 
   const timer = useRef<any>(null);
 
@@ -180,4 +179,4 @@ const MusicIcon: React.FC<IProps> = ({
   );
 };
 
-export default MusicIcon;
+export default ActionIcon;

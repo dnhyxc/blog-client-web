@@ -287,7 +287,12 @@ const Collection: React.FC<IProps> = () => {
 
   return (
     <div className={classname(styles.Collection, themeMode === 'dark' && styles.dark)}>
-      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} themeMode={themeMode} />
+      <ActionIcon
+        noHideMenuIcon
+        className={styles.changeIconWrap}
+        themeMode={themeMode}
+        htmlWidth={htmlWidth}
+      />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth right={rightNode()} themeMode={themeMode} needUser>
@@ -367,12 +372,13 @@ const Collection: React.FC<IProps> = () => {
               moveTo={moveTo}
               removeArticle={removeArticle}
               themeMode={themeMode}
+              htmlWidth={htmlWidth}
             />
           </div>
         </div>
       </Content>
       {htmlWidth <= 960 && <Footer themeMode={themeMode} />}
-      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} htmlWidth={htmlWidth} />
       {htmlWidth > 960 ? (
         <CollectionModal
           visible={visible}

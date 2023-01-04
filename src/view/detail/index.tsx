@@ -151,12 +151,16 @@ const ArticleDetail: React.FC = () => {
                 <AnotherArticle id={id} themeMode={themeMode} />
               </div>
               <div ref={commentRef}>
-                <Comments authorId={detail.authorId} themeMode={themeMode} />
+                <Comments
+                  authorId={detail.authorId}
+                  themeMode={themeMode}
+                  htmlWidth={htmlWidth}
+                />
               </div>
             </div>
             {htmlWidth > 960 && (
               <div className={styles.rightBar}>
-                <RightBar themeMode={themeMode} />
+                <RightBar themeMode={themeMode} htmlWidth={htmlWidth} />
                 <Affix offsetTop={50}>
                   <Toc mackdown={detail.content} themeMode={themeMode} />
                 </Affix>
@@ -171,10 +175,11 @@ const ArticleDetail: React.FC = () => {
             commentRef={commentRef}
             className={themeMode === 'dark' ? styles.darkActionBar : ''}
             themeMode={themeMode}
+            htmlWidth={htmlWidth}
           />
         )}
         {htmlWidth <= 960 && <Footer themeMode={themeMode} />}
-        <ActionIcon noHideMenuIcon fromDetail themeMode={themeMode} />
+        <ActionIcon noHideMenuIcon fromDetail themeMode={themeMode} htmlWidth={htmlWidth} />
       </div>
       <BackTop className={htmlWidth > 960 ? styles.backTopWrap : styles.mobileBackTopWrap}>
         <div className={styles.backTop}>

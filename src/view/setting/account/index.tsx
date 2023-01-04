@@ -102,7 +102,12 @@ const Account: React.FC<IProps> = () => {
 
   return (
     <div className={classname(styles.Account, themeMode === 'dark' && styles.dark)}>
-      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} themeMode={themeMode} />
+      <ActionIcon
+        noHideMenuIcon
+        className={styles.changeIconWrap}
+        themeMode={themeMode}
+        htmlWidth={htmlWidth}
+      />
       <Content
         containerClassName={styles.containerClassName}
         wrapClassName={styles.wrapClassName}

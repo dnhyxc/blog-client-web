@@ -5,7 +5,6 @@ import classname from 'classname';
 import { CaretUpOutlined, CaretDownOutlined, AppstoreOutlined } from '@ant-design/icons';
 import { menuList } from '@/router/menu';
 import useStore from '@/store';
-import { useHtmlWidth } from '@/hooks';
 
 import styles from './index.less';
 
@@ -14,12 +13,18 @@ interface IProps {
   itemStyles?: string; // header item 的样式
   children?: ReactNode;
   activeMenuStyle?: string;
+  htmlWidth?: number;
 }
 
-const HeadMenu: React.FC<IProps> = ({ className, itemStyles, children, activeMenuStyle }) => {
+const HeadMenu: React.FC<IProps> = ({
+  className,
+  itemStyles,
+  children,
+  activeMenuStyle,
+  htmlWidth = 0,
+}) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { htmlWidth } = useHtmlWidth();
   const [menuVisible, setMenuVisible] = useState<boolean>(false);
 
   const {

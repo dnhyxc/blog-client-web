@@ -186,6 +186,7 @@ const CreateArticle: React.FC<IProps> = () => {
           noHideMenuIcon
           className={styles.changeIconWrap}
           themeMode={themeMode}
+          htmlWidth={htmlWidth}
         />
       )}
       <Header right={renderRight()} themeMode={themeMode}>
@@ -205,6 +206,7 @@ const CreateArticle: React.FC<IProps> = () => {
           siderVisible={siderVisible}
           onSaveDraft={onSaveDraft}
           themeMode={themeMode}
+          htmlWidth={htmlWidth}
         />
       </div>
       {visible && (

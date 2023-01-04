@@ -40,7 +40,6 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className, themeMode })
   const [search] = useSearchParams();
   const id = search.get('id');
   const { htmlWidth } = useHtmlWidth();
-  // const { themeMode } = useGetTheme();
 
   useEffect(() => {
     const sliceName = pathname !== '/' ? pathname.slice(1) : pathname;
@@ -115,6 +114,7 @@ const MenuList: React.FC<IProps> = ({ type, width = 180, className, themeMode })
           siderVisible={siderVisible}
           onClick={onToggleSider}
           themeMode={themeMode}
+          htmlWidth={htmlWidth}
         />
       )}
       <Sider

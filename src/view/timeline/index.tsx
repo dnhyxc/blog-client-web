@@ -116,6 +116,7 @@ const TimeLine: React.FC = () => {
           noHideMenuIcon
           className={styles.changeIconWrap}
           themeMode={themeMode}
+          htmlWidth={htmlWidth}
         />
       )}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
@@ -170,6 +171,7 @@ const TimeLine: React.FC = () => {
                           skeletonAvatar={styles.skeletonAvatar}
                           likeArticle={likeArticle}
                           themeMode={themeMode}
+                          htmlWidth={htmlWidth}
                         />
                       )}
                     </div>
@@ -193,11 +195,12 @@ const TimeLine: React.FC = () => {
               showRecommendArticle={!!timelineList.length}
               scrollRef={scrollRef}
               themeMode={themeMode}
+              htmlWidth={htmlWidth}
             />
           )}
         </div>
       </Content>
-      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} htmlWidth={htmlWidth} />
     </div>
   );
 };

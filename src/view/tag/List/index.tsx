@@ -141,6 +141,7 @@ const TagList: React.FC<IProps> = () => {
           noHideMenuIcon
           className={styles.changeIconWrap}
           themeMode={themeMode}
+          htmlWidth={htmlWidth}
         />
       )}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
@@ -167,16 +168,18 @@ const TagList: React.FC<IProps> = () => {
             onEditArticle={onEditArticle}
             loading={loading}
             themeMode={themeMode}
+            htmlWidth={htmlWidth}
           />
           <RightBar
             className={styles.rightbar}
             showRecommendArticle
             scrollRef={scrollRef}
             themeMode={themeMode}
+            htmlWidth={htmlWidth}
           />
         </div>
       </Content>
-      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} htmlWidth={htmlWidth} />
     </div>
   );
 };

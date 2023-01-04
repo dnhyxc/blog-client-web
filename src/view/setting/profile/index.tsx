@@ -88,7 +88,12 @@ const Profile: React.FC = () => {
 
   return (
     <div className={classname(styles.Profile, themeMode === 'dark' && styles.dark)}>
-      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} themeMode={themeMode} />
+      <ActionIcon
+        noHideMenuIcon
+        className={styles.changeIconWrap}
+        themeMode={themeMode}
+        htmlWidth={htmlWidth}
+      />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <Content
         containerClassName={styles.containerClassName}

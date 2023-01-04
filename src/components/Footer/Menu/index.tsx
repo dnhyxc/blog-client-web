@@ -3,19 +3,18 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import classname from 'classname';
 import useStore from '@/store';
 import { menuList } from '@/router/menu';
-import { useHtmlWidth } from '@/hooks';
 
 import styles from './index.less';
 
 interface IProps {
   className?: string;
   children?: ReactNode;
+  htmlWidth?: number;
 }
 
-const MenuList: React.FC<IProps> = ({ className, children }) => {
+const MenuList: React.FC<IProps> = ({ className, children, htmlWidth = 0 }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const { htmlWidth } = useHtmlWidth();
 
   const {
     userInfoStore: { getUserInfo },

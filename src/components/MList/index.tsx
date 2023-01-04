@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Skeleton } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
-import { useHtmlWidth } from '@/hooks';
 import { formatDate } from '@/utils';
 import { ArticleItem, AddCollectionRes } from '@/typings/common';
 import MIcons from '../Icons';
@@ -26,6 +25,7 @@ interface IProps {
   authorId?: string | null;
   itemClass?: string;
   skeletonRows?: number;
+  htmlWidth?: number;
   themeMode?: string;
 }
 
@@ -45,13 +45,13 @@ const MList: React.FC<IProps> = ({
   itemClass, // 骨架样式
   skeletonRows = 2,
   themeMode,
+  htmlWidth = 0,
 }) => {
   const [collectInfo, setCollectInfo] = useState<AddCollectionRes>({ id: '' });
   const navigate = useNavigate();
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
-  const { htmlWidth } = useHtmlWidth();
 
   const toClolection = (id: string) => {
     navigate(`/collection/${id}?authorId=${authorId || getUserInfo?.userId}`);

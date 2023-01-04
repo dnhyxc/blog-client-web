@@ -1,16 +1,14 @@
 import React from 'react';
 import { ArrowUpOutlined } from '@ant-design/icons';
-import { useHtmlWidth } from '@/hooks';
 import styles from './index.less';
 
 interface IProps {
   scrollTop: number;
+  htmlWidth?: number;
   scrollbarRef?: any;
 }
 
-const BackTop: React.FC<IProps> = ({ scrollTop, scrollbarRef }) => {
-  const { htmlWidth } = useHtmlWidth();
-
+const BackTop: React.FC<IProps> = ({ scrollTop, scrollbarRef, htmlWidth = 0 }) => {
   const onBackTop = () => {
     scrollbarRef?.current?.scrollTop();
   };

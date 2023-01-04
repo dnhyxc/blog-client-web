@@ -235,7 +235,12 @@ const Author: React.FC = () => {
 
   return (
     <div className={classname(styles.AuthorContainer, themeMode === 'dark' && styles.dark)}>
-      <ActionIcon noHideMenuIcon className={styles.changeIconWrap} themeMode={themeMode} />
+      <ActionIcon
+        noHideMenuIcon
+        className={styles.changeIconWrap}
+        themeMode={themeMode}
+        htmlWidth={htmlWidth}
+      />
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
       <div className={styles.headerWrap}>
         <Header needLeft excludesWidth right={rightNode()} needUser themeMode={themeMode}>
@@ -354,6 +359,7 @@ const Author: React.FC = () => {
                             loadText="地主家也没余粮了"
                             loading={loading}
                             themeMode={themeMode}
+                            htmlWidth={htmlWidth}
                           />
                         )}
                         {i.value === '3' &&
@@ -383,6 +389,7 @@ const Author: React.FC = () => {
                                           deleteArticle={deleteTimeline}
                                           onEditArticle={onEditArticle}
                                           noMoreStyle={styles.noMoreStyle}
+                                          htmlWidth={htmlWidth}
                                         />
                                       )}
                                     </div>
@@ -401,7 +408,7 @@ const Author: React.FC = () => {
         </div>
       </Content>
       {htmlWidth <= 960 && <Footer themeMode={themeMode} />}
-      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} htmlWidth={htmlWidth} />
     </div>
   );
 };

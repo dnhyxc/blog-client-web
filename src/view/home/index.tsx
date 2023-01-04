@@ -262,6 +262,7 @@ const Home: React.FC<IProps> = () => {
           noHideMenuIcon
           className={styles.changeIconWrap}
           themeMode={themeMode}
+          htmlWidth={htmlWidth}
         />
       )}
       {showAlert && <MAlert onClick={toLogin} onClose={onCloseAlert} />}
@@ -320,17 +321,19 @@ const Home: React.FC<IProps> = () => {
               loading={loading}
               noMoreStyle={siderVisible && htmlWidth > 960 ? styles.noMoreStyle : ''}
               themeMode={themeMode}
+              htmlWidth={htmlWidth}
             />
             <RightBar
               className={styles.rightbar}
               showRecommendArticle
               scrollRef={scrollRef}
               themeMode={themeMode}
+              htmlWidth={htmlWidth}
             />
           </div>
         </Content>
       )}
-      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} />
+      <BackTop scrollTop={scrollTop} scrollbarRef={scrollbarRef} htmlWidth={htmlWidth} />
     </div>
   );
 };

@@ -28,7 +28,7 @@ const Footer: React.FC<IProps> = ({ children, themeMode }) => {
         themeMode === 'dark' && styles.dark
       )}
     >
-      <MenuList />
+      <MenuList htmlWidth={htmlWidth} />
       {children}
     </div>
   );
