@@ -33,6 +33,7 @@ const HeadMenu: React.FC<IProps> = ({
 
   const toOtherPage = (e: any, path: string) => {
     e.preventDefault();
+    if (path === pathname) return;
     navigate(path);
   };
 
