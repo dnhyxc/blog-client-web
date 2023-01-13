@@ -24,6 +24,9 @@ interface IProps {
   focus?: boolean;
   onJump?: Function;
   themeMode?: string;
+  htmlWidth?: number;
+  textAreaWrapH5?: string;
+  emojiWrapH5?: string;
 }
 
 const DraftInput: React.FC<IProps> = ({
@@ -38,6 +41,9 @@ const DraftInput: React.FC<IProps> = ({
   focus = true,
   getAlertStatus,
   themeMode,
+  htmlWidth = 0,
+  textAreaWrapH5,
+  emojiWrapH5,
 }) => {
   const [showIcon, setShowIcon] = useState<boolean>(false);
   const [keyword, setKeyword] = useState<string>('');
@@ -167,7 +173,7 @@ const DraftInput: React.FC<IProps> = ({
           </div>
         )}
         <div className={styles.input} id="INPUT">
-          <div className={styles.textAreaWrap} id="TEXTAREA_WRAP">
+          <div className={classname(styles.textAreaWrap, textAreaWrapH5)} id="TEXTAREA_WRAP">
             <TextArea
               placeholder={
                 selectComment?.content
@@ -187,7 +193,7 @@ const DraftInput: React.FC<IProps> = ({
             />
           </div>
           {(showIcon || !showAvatar) && (
-            <div className={styles.emojiWrap} id="EMOJI_WRAP">
+            <div className={classname(styles.emojiWrap, emojiWrapH5)} id="EMOJI_WRAP">
               <div id="ICONFONT" className={styles.iconfontWrap}>
                 <span
                   className={classname(styles.iconfont, 'iconfont icon-biaoqing-xue')}
@@ -207,9 +213,11 @@ const DraftInput: React.FC<IProps> = ({
                 </span>
               </div>
               <div id="ACTION" className={themeMode === 'dark' ? styles.darkBtn : ''}>
-                <span id="ENTER" className={styles.enter}>
-                  Ctrl + Enter
-                </span>
+                {htmlWidth > 960 &&
+                  <span id="ENTER" className={styles.enter}>
+                    Ctrl + Enter
+                  </span>
+                }
                 <Button
                   id="BTN"
                   type="primary"
