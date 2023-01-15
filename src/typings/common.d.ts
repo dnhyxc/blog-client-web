@@ -99,6 +99,7 @@ export interface ArticleItem extends AddCollectionRes {
   readCount: number;
   tag: string;
   title: string;
+  commentCount?: number;
 }
 
 export interface ArticleListResult {

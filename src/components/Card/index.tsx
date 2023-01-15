@@ -80,9 +80,9 @@ const Card: React.FC<IProps> = ({
         className:
           htmlWidth < 960
             ? classname(
-                styles.removeArticleConfirm,
-                themeMode === 'dark' && styles.darkRemoveArticleConfirm
-              )
+              styles.removeArticleConfirm,
+              themeMode === 'dark' && styles.darkRemoveArticleConfirm
+            )
             : '',
         title: '确定移除该文章吗？',
         content: '移除后，该文章将从当前收藏集中删除',
@@ -275,7 +275,7 @@ const Card: React.FC<IProps> = ({
                     />
                     <MIcons
                       name="icon-comment"
-                      text={i.replyCount > 0 ? i.replyCount : '评论'}
+                      text={i.commentCount ? i.commentCount : '评论'}
                       iconWrapClass={styles.iconWrap}
                       onClick={() => toDetail && toDetail(i.id, true)}
                       className={classname(themeMode === 'dark' && styles.darkText)}
