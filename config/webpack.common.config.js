@@ -1,10 +1,17 @@
+const os = require('os');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const HappyPack = require('happypack');
 // const PurgeCSSPlugin = require('purgecss-webpack-plugin'); // css优化去重复无效代码
 // const glob = require('glob');
+
+// 开辟一个线程池，拿到系统CPU的核数，happypack 将编译工作利用所有线程
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
   entry: {
@@ -95,6 +102,18 @@ module.exports = {
       dependencies: true,
       dependenciesCount: 10000,
       percentBy: 'entries',
+    }),
+    // 排除moment无用语言包
+    new MomentLocalesPlugin({ localesToKeep: ['zh-cn'] }),
+    new CompressionPlugin({
+      test: /\.(js|css)(\?.*)?$/i, // 需要压缩的文件正则
+      threshold: 1024, // 文件大小大于这个值时启用压缩
+      deleteOriginalAssets: false, // 压缩后保留原文件
+    }),
+    new HappyPack({
+      id: 'happybabel',
+      loaders: ['babel-loader'],
+      threadPool: happyThreadPool,
     }),
     // 打包时排除没有用到的 css 代码，这个需要谨慎使用，用的不好会导致打包出的css没有内容
     // new PurgeCSSPlugin({
