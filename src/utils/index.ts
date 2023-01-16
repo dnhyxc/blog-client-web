@@ -121,6 +121,37 @@ export const isInsideElement = (e: any, dom: HTMLDivElement) => {
   return false;
 };
 
+// 账号校验
+const verifyUsername = (_: any, value: string) => {
+  const usrRegex =
+    /^((?!\\|\/|\(|\)|\+|-|=|~|～|`|!|！|:|\*|\?|<|>|\||'|%|#|&|\$|\^|&|\*).){1,20}$/;
+  if (usrRegex.test(value)) {
+    return Promise.resolve();
+  }
+  if (value.length < 1) {
+    return Promise.reject('用户名不能少于1位');
+  }
+  if (value.length > 15) {
+    return Promise.reject('用户名不能大于15位');
+  }
+  return Promise.reject('用户名不能包含特殊字符');
+};
+
+// 密码校验
+const verifyPassword = (_: any, value: string) => {
+  const pwdRegex = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,20}/;
+  if (value.length > 20) {
+    return Promise.reject('密码不能不大于20位');
+  }
+  if (value.length < 8) {
+    return Promise.reject('密码不能少于8位');
+  }
+  if (pwdRegex.test(value)) {
+    return Promise.resolve();
+  }
+  return Promise.reject('必须包含字母、数字、特称字符');
+};
+
 export {
   normalizeResult,
   useCookies,
@@ -137,4 +168,6 @@ export {
   shareSinaWeiBo,
   onDowmloadElement,
   onPrintElement,
+  verifyUsername,
+  verifyPassword,
 };

@@ -32,6 +32,7 @@ interface IProps {
   moveTo?(id: string): void;
   showClassify?: boolean;
   loadText?: string;
+  timelineNoMoreText?: string;
   loading?: boolean;
   style?: CSSProperties;
   fromPage?: boolean;
@@ -57,6 +58,7 @@ const Card: React.FC<IProps> = ({
   onEditArticle,
   showClassify = true,
   loadText,
+  timelineNoMoreText,
   loading,
   style,
   fromPage,
@@ -348,7 +350,7 @@ const Card: React.FC<IProps> = ({
           )}
         >
           {list.length > 0
-            ? `共(${list.length})
+            ? `${timelineNoMoreText}共 (${list.length})
           篇，${loadText || '已是全部家当'}～～～`
             : `共(${list.length})
             篇，空空如也～～～`}

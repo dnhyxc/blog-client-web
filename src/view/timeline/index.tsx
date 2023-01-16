@@ -172,6 +172,7 @@ const TimeLine: React.FC = () => {
                           likeArticle={likeArticle}
                           themeMode={themeMode}
                           htmlWidth={htmlWidth}
+                          timelineNoMoreText={`${i.date} 年`}
                         />
                       )}
                     </div>
