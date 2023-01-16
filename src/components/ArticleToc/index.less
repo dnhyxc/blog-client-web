@@ -8,10 +8,16 @@
   border-radius: 5px;
 
   .mackNav {
-    background-color: @background;
+    border-radius: 5px;
 
     .scrollbar {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+
       & > :first-child {
+        &::-webkit-scrollbar {
+          display: none;
+        }
         // 如何禁止子元素滚动触发父元素滚动
         overscroll-behavior: contain;
       }
@@ -29,8 +35,6 @@
   .tocList {
     text-align: left;
     background-color: @fff;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
   }
 
   :global(.markdown-navigation .title-anchor) {
