@@ -350,7 +350,7 @@ const Card: React.FC<IProps> = ({
           )}
         >
           {list.length > 0
-            ? `${timelineNoMoreText}共 (${list.length})
+            ? `${timelineNoMoreText || ''}共 (${list.length})
           篇，${loadText || '已是全部家当'}～～～`
             : `共(${list.length})
             篇，空空如也～～～`}
