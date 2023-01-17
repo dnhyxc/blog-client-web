@@ -1,6 +1,6 @@
-import commonStore, { Auth } from '@/store/common';
 import fetch from 'isomorphic-fetch';
 import { stringify } from 'query-string';
+import commonStore, { Auth } from '@/store/common';
 import { show, close } from '@/components/Render';
 import { addGatewayPattern } from './urlTool';
 import { error } from './message';
