@@ -11,7 +11,7 @@ import { Button, Form, Input, Checkbox } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
 import { register, login, verify, resetPassword } from '@/service';
-import { normalizeResult, useCookies, encrypt, decrypt, success, error } from '@/utils';
+import { normalizeResult, useCookies, encrypt, decrypt, success, error, verifyUsername, verifyPassword } from '@/utils';
 import { close } from '@/components/Render';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
@@ -180,19 +180,23 @@ const Login = () => {
             >
               <Form.Item
                 name="username"
-                rules={[{ required: true, message: '用户名不能为空！' }]}
+                rules={[{ required: true, message: '' }, {
+                  validator: (_, value) => verifyUsername(_, value)
+                }]}
                 initialValue={getCoolie('uname')}
               >
-                <Input placeholder="请输入用户名" size="large" maxLength={20} />
+                <Input placeholder="请输入用户名" size="large" />
               </Form.Item>
               <Form.Item
                 name="password"
-                rules={[{ required: true, message: '密码不能为空!' }]}
+                rules={[{ required: true, message: '' }, {
+                  validator: (_, value) => verifyPassword(_, value)
+                }]}
                 initialValue={
                   getCoolie('100') ? decrypt(getCoolie('100') as string) : undefined
                 }
               >
-                <Input.Password placeholder="请输入密码" size="large" maxLength={20} />
+                <Input.Password placeholder="请输入密码" size="large" />
               </Form.Item>
               <Form.Item
                 name="remember"
