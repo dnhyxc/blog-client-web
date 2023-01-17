@@ -105,11 +105,11 @@ module.exports = {
     }),
     // 排除moment无用语言包
     new MomentLocalesPlugin({ localesToKeep: ['zh-cn'] }),
-    new CompressionPlugin({
-      test: /\.(js|css)(\?.*)?$/i, // 需要压缩的文件正则
-      threshold: 1024, // 文件大小大于这个值时启用压缩
-      deleteOriginalAssets: false, // 压缩后保留原文件
-    }),
+    // new CompressionPlugin({
+    //   test: /\.(js|css)(\?.*)?$/i, // 需要压缩的文件正则
+    //   threshold: 1024, // 文件大小大于这个值时启用压缩
+    //   deleteOriginalAssets: false, // 压缩后保留原文件
+    // }),
     new HappyPack({
       id: 'happybabel',
       loaders: ['babel-loader'],
@@ -140,17 +140,17 @@ module.exports = {
     'react-dom': 'ReactDOM',
   },
   // 缓存配置
-  optimization: {
-    splitChunks: {
-      // cacheGroups: {
-      //   vendor: {
-      //     test: /node_modules/,
-      //     name: 'vendor',
-      //     chunks: 'all',
-      //   },
-      // },
-    },
-  },
+  // optimization: {
+  //   splitChunks: {
+  //     cacheGroups: {
+  //       vendor: {
+  //         test: /node_modules/,
+  //         name: 'vendor',
+  //         chunks: 'all',
+  //       },
+  //     },
+  //   },
+  // },
   // 解决警告：You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
   performance: {
     hints: 'warning',
