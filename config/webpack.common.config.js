@@ -140,17 +140,42 @@ module.exports = {
     'react-dom': 'ReactDOM',
   },
   // 缓存配置
-  // optimization: {
-  //   splitChunks: {
-  //     cacheGroups: {
-  //       vendor: {
-  //         test: /node_modules/,
-  //         name: 'vendor',
-  //         chunks: 'all',
-  //       },
-  //     },
-  //   },
-  // },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        antd: {
+          name: 'chunk-antd', // 分割出的js名
+          priority: 20, // 权重，需要比libs和app的配置大，不然会分到libs或app里面去
+          test: /[\\/]node_modules[\\/]_?antd(.*)/, // 匹配node_modules下的目录
+        },
+        echarts: {
+          name: 'chunk-echarts', // 分割出的js名
+          priority: 20, // 权重，需要比libs和app的配置大，不然会分到libs或app里面去
+          test: /[\\/]node_modules[\\/]_?echarts(.*)/, // 匹配node_modules下的目录
+        },
+        '@toast-ui': {
+          name: 'chunk-toast-ui', // 分割出的js名
+          priority: 20, // 权重，需要比libs和app的配置大，不然会分到libs或app里面去
+          test: /[\\/]node_modules[\\/]_?@toast-ui(.*)/, // 匹配node_modules下的目录
+        },
+        'markdown-navbar': {
+          name: 'chunk-markdown-navbar', // 分割出的js名
+          priority: 20, // 权重，需要比libs和app的配置大，不然会分到libs或app里面去
+          test: /[\\/]node_modules[\\/]_?markdown-navbar(.*)/, // 匹配node_modules下的目录
+        },
+        'react-markdown': {
+          name: 'chunk-react-markdown', // 分割出的js名
+          priority: 20, // 权重，需要比libs和app的配置大，不然会分到libs或app里面去
+          test: /[\\/]node_modules[\\/]_?react-markdown(.*)/, // 匹配node_modules下的目录
+        },
+        'react-router-dom': {
+          name: 'chunk-react-router-dom', // 分割出的js名
+          priority: 20, // 权重，需要比libs和app的配置大，不然会分到libs或app里面去
+          test: /[\\/]node_modules[\\/]_?react-router-dom(.*)/, // 匹配node_modules下的目录
+        },
+      },
+    },
+  },
   // 解决警告：You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
   performance: {
     hints: 'warning',
