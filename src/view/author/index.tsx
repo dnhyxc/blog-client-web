@@ -282,15 +282,22 @@ const Author: React.FC = () => {
           <div className={styles.viewMore}>
             {showMoreInfo && (
               <div>
-                <div className={styles.info}>{authorInfo?.introduce}</div>
-                <div className={styles.info}>{authorInfo?.motto}</div>
+                <div className={styles.info}>
+                  <div className={styles.infoLabel}>座右铭: </div>
+                  <div className={styles.infoDesc}>{authorInfo?.motto}</div>
+                </div>
+                <div className={styles.info}>
+                  <div className={styles.infoLabel}>个人简介: </div>
+                  <div className={styles.infoDesc}>{authorInfo?.introduce}</div>
+                </div>
                 <a
                   href={authorInfo?.github}
                   target="_blank"
                   rel="noreferrer"
                   className={styles.info}
                 >
-                  github: {authorInfo?.github}
+                  <div className={styles.infoLabel}>github: </div>
+                  <div className={styles.infoDesc}>{authorInfo?.github}</div>
                 </a>
                 <a
                   href={authorInfo?.juejin}
@@ -298,7 +305,8 @@ const Author: React.FC = () => {
                   rel="noreferrer"
                   className={styles.info}
                 >
-                  掘金: {authorInfo?.juejin}
+                  <div className={styles.infoLabel}>掘金: </div>
+                  <div className={styles.infoDesc}>{authorInfo?.juejin}</div>
                 </a>
                 <a
                   className={styles.info}
@@ -306,7 +314,8 @@ const Author: React.FC = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  知乎: {authorInfo?.zhihu}
+                  <div className={styles.infoLabel}>知乎: </div>
+                  <div className={styles.infoDesc}>{authorInfo?.zhihu}</div>
                 </a>
                 <a
                   className={styles.info}
@@ -314,7 +323,8 @@ const Author: React.FC = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  博客: {authorInfo?.blog}
+                  <div className={styles.infoLabel}>博客: </div>
+                  <div className={styles.infoDesc}>{authorInfo?.blog}</div>
                 </a>
               </div>
             )}
