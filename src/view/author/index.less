@@ -126,11 +126,14 @@
         .username {
           font-size: 26px;
           font-weight: 600;
+          padding-bottom: 10px;
           .ellipsis();
         }
 
         .info {
           font-weight: 600;
+          padding-bottom: 10px;
+
           .ellipsis();
         }
       }
@@ -145,17 +148,16 @@
 
       .info {
         display: block;
-        font-weight: 600;
         margin-bottom: 5px;
 
         .infoLabel {
-          color: @font-2;
+          color: @font-4;
           font-weight: 100;
         }
 
         .infoDesc {
           text-indent: 2em;
-          .ellipsis();
+          margin-bottom: 10px;
         }
       }
 
@@ -175,11 +177,6 @@
         color: @font-4;
       }
     }
-
-    // .darkViewMore {
-    //   background-color: @dark-bgc-deep;
-    //   color: @dark-fc;
-    // }
 
     .content {
       display: flex;
@@ -368,14 +365,6 @@
 
       .viewMore {
         padding: 12px 10px 10px;
-
-        .info {
-          .infoDesc {
-            overflow: initial;
-            text-overflow: initial;
-            white-space: initial;
-          }
-        }
       }
     }
   }
