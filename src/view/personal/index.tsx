@@ -329,8 +329,15 @@ const Personal = () => {
                 <div className={styles.userName}>
                   {userInfo?.username || getUserInfo?.username}
                 </div>
-                <div>{userInfo ? userInfo?.job || '-' : getUserInfo?.job}</div>
-                <div> {userInfo ? userInfo?.motto || '-' : getUserInfo?.motto}</div>
+                <div className={styles.job}>
+                  {userInfo ? userInfo?.job || '-' : getUserInfo?.job}
+                </div>
+                <div className={styles.motto}>
+                  {userInfo ? userInfo?.motto || '-' : getUserInfo?.motto}
+                </div>
+                <div className={styles.introduce}>
+                  {userInfo ? userInfo?.introduce || '-' : getUserInfo?.introduce}
+                </div>
               </div>
               <div className={styles.actions}>
                 <div className={styles.icons}>

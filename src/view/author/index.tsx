@@ -399,6 +399,7 @@ const Author: React.FC = () => {
                                           deleteArticle={deleteTimeline}
                                           onEditArticle={onEditArticle}
                                           noMoreStyle={styles.noMoreStyle}
+                                          themeMode={themeMode}
                                           htmlWidth={htmlWidth}
                                         />
                                       )}
