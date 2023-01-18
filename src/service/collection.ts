@@ -35,7 +35,7 @@ export async function cancelCollected(params: { articleId: string; userId: strin
   return res;
 }
 
-export async function getCollectedTotal(params: { userId: string }) {
+export async function getCollectedTotal(params: { userId: string; status: number }) {
   const res = await post(API.GET_COLLECTED_TOTAL, params);
   return res;
 }
@@ -74,7 +74,7 @@ export async function removeCollectArticle(params: {
   return res;
 }
 
-export async function getCollectTotal(params: { userId: string }) {
+export async function getCollectTotal(params: { userId: string; status: number }) {
   const res = await post(API.GET_COLLECT_TOTAL, params);
   return res;
 }

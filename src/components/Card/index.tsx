@@ -4,7 +4,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Skeleton, Popover, Modal } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import classname from 'classname';
-import { formatGapTime } from '@/utils';
+import { formatGapTime, warn } from '@/utils';
+import { useDebounce } from '@/hooks';
 import useStore from '@/store';
 import Image from '@/components/Image';
 import { CARD_URL } from '@/constant';
@@ -76,15 +77,15 @@ const Card: React.FC<IProps> = ({
   const [search] = useSearchParams();
   const authorId = search.get('authorId');
 
-  const renderAction = (id: string) => {
+  const renderAction = (id: string, isDelete: boolean | undefined) => {
     const onRemoveArticle = (id: string) => {
       Modal.confirm({
         className:
           htmlWidth < 960
             ? classname(
-              styles.removeArticleConfirm,
-              themeMode === 'dark' && styles.darkRemoveArticleConfirm
-            )
+                styles.removeArticleConfirm,
+                themeMode === 'dark' && styles.darkRemoveArticleConfirm
+              )
             : '',
         title: '确定移除该文章吗？',
         content: '移除后，该文章将从当前收藏集中删除',
@@ -98,14 +99,16 @@ const Card: React.FC<IProps> = ({
 
     return (
       <div className={styles.actions}>
-        <span className={styles.edit}>
-          <MIcons
-            name="icon-table_move-o"
-            iconWrapClass={styles.iconWrapClass}
-            text="转移"
-            onClick={() => moveTo && moveTo(id)}
-          />
-        </span>
+        {!isDelete && (
+          <span className={styles.edit}>
+            <MIcons
+              name="icon-table_move-o"
+              iconWrapClass={styles.iconWrapClass}
+              text="转移"
+              onClick={() => moveTo && moveTo(id)}
+            />
+          </span>
+        )}
         <span className={styles.delete}>
           <MIcons
             name="icon-shanchu"
@@ -166,6 +169,11 @@ const Card: React.FC<IProps> = ({
     }
   };
 
+  // 点击已下架文章
+  const onClickDelete = useDebounce(() => {
+    warn('该文章已下架');
+  }, 200);
+
   return (
     <div className={classname(styles.wrap, wrapClass)} style={style}>
       {list && list.length > 0 ? (
@@ -177,12 +185,13 @@ const Card: React.FC<IProps> = ({
               themeMode === 'dark' && styles.dark
             )}
             key={i.id}
-            onClick={() => toDetail && toDetail(i.id)}
+            onClick={() => (i.isDelete ? onClickDelete() : toDetail && toDetail(i.id))}
           >
             {htmlWidth > 960 && (
               <div className={classname(imgWrapStyle, styles.imgWrap)}>
                 <div className={styles.text}>{i.title}</div>
                 <div className={classname(styles.cardImgWrap, cardImgWrapStyle)}>
+                  {i?.isDelete && <div className={styles.mask}>该文章已被下架</div>}
                   <Image
                     url={i.coverImage || CARD_URL}
                     transitionImg={CARD_URL}
@@ -197,7 +206,7 @@ const Card: React.FC<IProps> = ({
                 <span>{i.title}</span>
                 {(getUserInfo?.userId === i.authorId || getUserInfo?.auth === 1) &&
                   (customRender ? (
-                    authorId === getUserInfo?.userId && renderAction(i.id)
+                    authorId === getUserInfo?.userId && renderAction(i.id, i.isDelete)
                   ) : (
                     <Popover
                       placement="left"
@@ -245,11 +254,11 @@ const Card: React.FC<IProps> = ({
                     onClick={(e) => toTagList(e as unknown as MouseEvent, i.tag)}
                   >
                     标签：
-                    {i.tag}
+                    <span className={styles.tag}>{i.tag}</span>
                   </span>
                   <span onClick={(e) => toClassify(e as unknown as MouseEvent, i.classify)}>
                     分类：
-                    {i.classify}
+                    <span className={styles.tag}>{i.classify}</span>
                   </span>
                   <span
                     className={classname(
@@ -262,6 +271,9 @@ const Card: React.FC<IProps> = ({
                 </div>
               )}
               <div className={styles.action}>
+                {i?.isDelete && htmlWidth <= 960 && (
+                  <div className={styles.mask}>该文章已被下架</div>
+                )}
                 <div className={styles.icons}>
                   <div className={styles.iconList}>
                     <MIcons

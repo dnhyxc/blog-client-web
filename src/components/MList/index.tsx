@@ -57,11 +57,13 @@ const MList: React.FC<IProps> = ({
     navigate(`/collection/${id}?authorId=${authorId || getUserInfo?.userId}`);
   };
 
+  // 编辑收藏集
   const onEdit = (i: AddCollectionRes) => {
     setCollectInfo(i);
     onShow && onShow();
   };
 
+  // 删除收藏集
   const onDelete = (id: string) => {
     delCollection && delCollection(id);
   };
@@ -71,8 +73,14 @@ const MList: React.FC<IProps> = ({
       {list?.length > 0 && (
         <div className={styles.collectionHeader}>
           <div className={styles.collectCount}>
-            <div className={styles.listCount}>{`我创建的 ${collectTotal}`}</div>
-            <div className={styles.count}>{`我收藏的文章 ${collectedCount}`}</div>
+            <div className={styles.listCount}>
+              {`${authorId === getUserInfo?.userId ? '我' : '他'}创建的 ${collectTotal}`}
+            </div>
+            <div className={styles.count}>
+              {`${
+                authorId === getUserInfo?.userId ? '我' : '他'
+              }收藏的文章 ${collectedCount}`}
+            </div>
           </div>
           {(!authorId || authorId === getUserInfo?.userId) && (
             <div>

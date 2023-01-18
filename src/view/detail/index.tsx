@@ -5,7 +5,7 @@
  * @LastEditors: dnh
  * @FilePath: \src\view\detail\index.tsx
  */
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Affix, BackTop, Spin, Button } from 'antd';
 import classname from 'classname';
@@ -23,7 +23,7 @@ import Comments from '@/components/Comments';
 import AnotherArticle from '@/components/AnotherArticle';
 import { useGetArticleDetail, useGetTheme, useHtmlWidth } from '@/hooks';
 import useStore from '@/store';
-import { formatDate } from '@/utils';
+import { formatDate, info } from '@/utils';
 import ActionBar from '@/components/ActionBar';
 import ActionIcon from '@/components/ActionIcon';
 import { ArticleDetailParams } from '@/typings/common';
@@ -39,6 +39,13 @@ const ArticleDetail: React.FC = () => {
   const { htmlWidth } = useHtmlWidth();
   const { themeMode } = useGetTheme();
   const commentRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (detail?.isDelete) {
+      info('该文章已下架');
+      navigate('/home');
+    }
+  }, [detail]);
 
   // 高级搜索
   const toSearch = () => {
@@ -147,13 +154,20 @@ const ArticleDetail: React.FC = () => {
                   <div className={styles.tagList}>
                     <span className={styles.label}>分类：</span>
                     <div className={styles.tagItemWrap}>
-                      <span className={styles.tag} onClick={(e) => toClassify(e, detail.classify)}>{detail.classify}</span>
+                      <span
+                        className={styles.tag}
+                        onClick={(e) => toClassify(e, detail.classify)}
+                      >
+                        {detail.classify}
+                      </span>
                     </div>
                   </div>
                   <div className={styles.tagList}>
                     <span className={styles.label}>标签：</span>
                     <div className={styles.tagItemWrap}>
-                      <span className={styles.tag} onClick={(e) => toTag(e, detail.tag)}>{detail.tag}</span>
+                      <span className={styles.tag} onClick={(e) => toTag(e, detail.tag)}>
+                        {detail.tag}
+                      </span>
                     </div>
                   </div>
                 </div>

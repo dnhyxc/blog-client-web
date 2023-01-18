@@ -4,7 +4,7 @@ import { SET_ITEM_CONFIG } from '@/constant';
 import { encrypt, decrypt } from './crypto';
 import { normalizeResult } from './tools';
 import { storage } from './storage';
-import { success, error, info } from './message';
+import { success, error, info, warn } from './message';
 import { shareQQ, shareQZon, shareSinaWeiBo } from './share';
 import { onDowmloadElement, onPrintElement } from './print';
 
@@ -163,6 +163,7 @@ export {
   success,
   error,
   info,
+  warn,
   shareQQ,
   shareQZon,
   shareSinaWeiBo,

@@ -44,7 +44,7 @@ const MIcons: React.FC<IProps> = ({
       <span className={classname(className, `iconfont ${name}`)} />
       {(text || children) && (
         <span className={classname(styles.child, textStyle)}>
-          {text && <span style={{ fontSize: '13px' }}>{text}</span>}
+          {text}
           {children && <span>{children}</span>}
         </span>
       )}

@@ -28,8 +28,18 @@ class Message {
       },
     });
   };
+
+  warn = (content: string, top?: number) => {
+    message.warn({
+      content,
+      style: {
+        position: 'relative',
+        marginTop: `${top || 42}px`,
+      },
+    });
+  };
 }
 
-const { success, error, info } = new Message();
+const { success, error, info, warn } = new Message();
 
-export { success, error, info };
+export { success, error, info, warn };

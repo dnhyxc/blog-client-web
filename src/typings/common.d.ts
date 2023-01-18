@@ -100,6 +100,7 @@ export interface ArticleItem extends AddCollectionRes {
   tag: string;
   title: string;
   commentCount?: number;
+  isDelete?: boolean;
 }
 
 export interface ArticleListResult {
@@ -126,6 +127,7 @@ export interface ArticleDetailParams {
   readCount: number;
   isLike: boolean;
   originalArticleId?: string | number;
+  isDelete?: boolean;
 }
 
 export interface UseGetArticleDetailParams {
@@ -276,6 +278,7 @@ export interface useDeleteArticleParams {
   authorLike?: boolean;
   filterList?: string[];
   getCollectionTotal?: Function;
+  getCollectedTotal?: Function;
   removeConfirmStyle?: string;
 }
 
