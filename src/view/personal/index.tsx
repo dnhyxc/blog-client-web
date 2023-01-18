@@ -123,7 +123,10 @@ const Personal = () => {
   // 获取收藏集总数
   const getCollectionTotal = async () => {
     const res = normalizeResult<number>(
-      await Service.getCollectTotal({ userId: getUserInfo?.userId })
+      await Service.getCollectTotal({
+        userId: authorId || getUserInfo?.userId,
+        status: authorId && authorId !== getUserInfo?.userId ? 1 : 0, // 1: 公开，2：私有
+      })
     );
     if (res.success) {
       setCollecTotal(res.data);
@@ -133,7 +136,10 @@ const Personal = () => {
   // 获取收藏文章总条数
   const getCollectedTotal = async () => {
     const res = normalizeResult<{ total: number }>(
-      await Service.getCollectedTotal({ userId: authorId || getUserInfo?.userId })
+      await Service.getCollectedTotal({
+        userId: authorId || getUserInfo?.userId,
+        status: authorId && authorId !== getUserInfo?.userId ? 1 : 0, // 1: 公开，2：私有
+      })
     );
     if (res.success) {
       setCollectedCount(res.data.total);
@@ -216,6 +222,7 @@ const Personal = () => {
     authorId: authorId as string,
     accessUserId: getUserInfo?.userId,
     getCollectionTotal: selectKey === '3' ? getCollectionTotal : () => {},
+    getCollectedTotal: selectKey === '3' ? getCollectedTotal : () => {},
     removeConfirmStyle: classname(
       styles.removeConfirmStyle,
       themeMode === 'dark' && styles.darkRemoveConfirmStyle

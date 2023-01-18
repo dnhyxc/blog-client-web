@@ -158,6 +158,7 @@ const Collection: React.FC<IProps> = () => {
     setArticleList({
       ...articleList,
       list: listRef.current,
+      total: articleList.total - 1,
     });
     cancelCollected(id);
   };
@@ -316,24 +317,30 @@ const Collection: React.FC<IProps> = () => {
                   <MIcons name="icon-lock-full" className={styles.lockIcon} />
                 )}
               </span>
-              <div className={styles.actions}>
-                <span className={styles.edit}>
-                  <MIcons
-                    name="icon-icon_bianji"
-                    text={htmlWidth > 960 ? '编辑' : ''}
-                    className={styles.icon}
-                    onClick={onHeadEditCollection}
-                  />
-                </span>
-                <span className={styles.delete}>
-                  <MIcons
-                    name="icon-shanchu"
-                    className={styles.icon}
-                    text={htmlWidth > 960 ? '删除' : ''}
-                    onClick={onDeleteCollect}
-                  />
-                </span>
-              </div>
+              {userInfo?.userId === getUserInfo?.userId && (
+                <div className={styles.actions}>
+                  <span>
+                    <MIcons
+                      name="icon-icon_bianji"
+                      text={
+                        htmlWidth > 960 ? <span className={styles.editIcon}>编辑</span> : ''
+                      }
+                      className={styles.editIcon}
+                      onClick={onHeadEditCollection}
+                    />
+                  </span>
+                  <span>
+                    <MIcons
+                      name="icon-shanchu"
+                      className={styles.delIcon}
+                      text={
+                        htmlWidth > 960 ? <span className={styles.delIcon}>删除</span> : ''
+                      }
+                      onClick={onDeleteCollect}
+                    />
+                  </span>
+                </div>
+              )}
             </div>
             <div className={styles.desc}>
               {updateCollectInfo?.desc || collectInfo?.desc}
@@ -363,7 +370,7 @@ const Collection: React.FC<IProps> = () => {
             <Card
               list={articleList.list}
               total={articleList.total}
-              wrapClass={styles.wrapClass}
+              itemClass={styles.itemClass}
               likeArticle={likeArticle}
               toDetail={toDetail}
               loadText="地主家也没余粮了"

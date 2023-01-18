@@ -54,8 +54,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  padding-top: 60px;
-  padding-bottom: 10px;
+  padding: 60px 10px 10px;
   height: 100%;
   background-color: @background;
   overflow: hidden;
@@ -143,21 +142,19 @@
           .ellipsis();
         }
 
-        &:hover {
-          .actions {
-            display: flex;
-            justify-content: space-between;
-            line-height: 20px;
-            min-width: 105px;
-
-            .edit {
-              margin-right: 10px;
-            }
-          }
-        }
-
         .actions {
-          display: none;
+          display: flex;
+          justify-content: space-between;
+          line-height: 20px;
+          min-width: 105px;
+
+          .editIcon {
+            color: @menu-active;
+          }
+
+          .delIcon {
+            color: @danger-1-normal;
+          }
         }
 
         .lockIcon {
@@ -258,8 +255,7 @@
 @media screen and (max-width: 960px) {
   .Collection {
     max-width: 960px;
-    padding-top: 50px;
-    padding-bottom: 0;
+    padding: 50px 0 0;
 
     .containerClassName {
       height: calc(100vh - 50px);

@@ -65,7 +65,7 @@
 }
 
 .wrap {
-  width: calc(100% - 260px);
+  width: 100%;
 
   .item {
     flex: 1;
@@ -127,6 +127,24 @@
         width: 230px;
         height: 130px;
 
+        .mask {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 16px;
+          padding: 0 10px;
+          width: 100%;
+          height: calc(100% + 1px);
+          z-index: 100;
+          background-color: #fbefda;
+          border: 1px solid #ffcb00;
+          color: @font-danger;
+          border-radius: 5px;
+        }
+
         .image {
           width: 100%;
           min-height: 130px;
@@ -159,7 +177,7 @@
       height: 100%;
 
       .classifyInfo {
-        font-size: 12px;
+        font-size: 13px;
         .ellipsis();
 
         span {
@@ -169,6 +187,10 @@
           &:first-child {
             padding-left: 0;
           }
+        }
+
+        .tag {
+          color: @menu-active;
         }
 
         .classify {
@@ -276,8 +298,13 @@
     color: @font-5;
   }
 
-  .iconWrapClass {
-    color: @font-4;
+  .moveIcon {
+    color: @font-warning;
+    font-weight: normal;
+  }
+
+  .delIcon {
+    color: @danger-1-normal;
     font-weight: normal;
   }
 
@@ -320,6 +347,10 @@
   }
 }
 
+.delBtn {
+  color: @danger-1-normal;
+}
+
 .edit {
   margin-right: 10px;
 }
@@ -337,6 +368,8 @@
     width: 100%;
 
     .item {
+      position: relative;
+
       .info {
         .mobileDesc {
           display: flex;
@@ -355,9 +388,27 @@
           }
 
           .mobileImgWrap {
+            position: relative;
             width: auto;
             height: 66px;
             margin-left: 10px;
+
+            .mask {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              border: 1px solid @sunlight;
+              font-size: 16px;
+              background-color: @del-rgba;
+              color: @font-danger;
+              border-radius: 5px;
+              z-index: 100;
+            }
 
             .image {
               width: auto;
@@ -368,6 +419,7 @@
       }
 
       .actions {
+        position: relative;
         display: flex;
         line-height: 22px;
       }
