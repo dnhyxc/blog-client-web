@@ -129,18 +129,20 @@
 
         .mask {
           position: absolute;
-          right: -100px;
-          bottom: -2px;
-          padding: 0 10px;
-          right: -240px;
-          width: 220px;
-          border: 1px solid @sunlight;
+          top: 0;
+          left: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           font-size: 16px;
-          text-align: center;
-          background-color: @del-rgba;
+          padding: 0 10px;
+          width: 100%;
+          height: calc(100% + 1px);
+          z-index: 100;
+          background-color: #fbefda;
+          border: 1px solid #ffcb00;
           color: @font-danger;
           border-radius: 5px;
-          z-index: 100;
         }
 
         .image {
@@ -296,8 +298,13 @@
     color: @font-5;
   }
 
-  .iconWrapClass {
-    color: @font-4;
+  .moveIcon {
+    color: @font-warning;
+    font-weight: normal;
+  }
+
+  .delIcon {
+    color: @danger-1-normal;
     font-weight: normal;
   }
 
@@ -340,6 +347,10 @@
   }
 }
 
+.delBtn {
+  color: @danger-1-normal;
+}
+
 .edit {
   margin-right: 10px;
 }
@@ -377,33 +388,32 @@
           }
 
           .mobileImgWrap {
+            position: relative;
             width: auto;
             height: 66px;
             margin-left: 10px;
+
+            .mask {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              border: 1px solid @sunlight;
+              font-size: 16px;
+              background-color: @del-rgba;
+              color: @font-danger;
+              border-radius: 5px;
+              z-index: 100;
+            }
 
             .image {
               width: auto;
               height: 66px;
             }
-          }
-        }
-
-        .action {
-          position: relative;
-
-          .mask {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            padding: 0 10px;
-            width: 200px;
-            border: 1px solid @sunlight;
-            font-size: 16px;
-            text-align: center;
-            background-color: @del-rgba;
-            color: @font-danger;
-            border-radius: 5px;
-            z-index: 100;
           }
         }
       }

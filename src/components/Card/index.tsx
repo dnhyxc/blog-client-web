@@ -103,7 +103,7 @@ const Card: React.FC<IProps> = ({
           <span className={styles.edit}>
             <MIcons
               name="icon-table_move-o"
-              iconWrapClass={styles.iconWrapClass}
+              iconWrapClass={styles.moveIcon}
               text="转移"
               onClick={() => moveTo && moveTo(id)}
             />
@@ -112,7 +112,7 @@ const Card: React.FC<IProps> = ({
         <span className={styles.delete}>
           <MIcons
             name="icon-shanchu"
-            iconWrapClass={styles.iconWrapClass}
+            iconWrapClass={styles.delIcon}
             text="移除"
             onClick={() => onRemoveArticle(id)}
           />
@@ -132,7 +132,10 @@ const Card: React.FC<IProps> = ({
             编辑
           </div>
         )}
-        <div onClick={(e) => onDelete(e, item)} className={styles.btn}>
+        <div
+          onClick={(e) => onDelete(e, item)}
+          className={classname(styles.btn, styles.delBtn)}
+        >
           下架
         </div>
       </>
@@ -191,7 +194,7 @@ const Card: React.FC<IProps> = ({
               <div className={classname(imgWrapStyle, styles.imgWrap)}>
                 <div className={styles.text}>{i.title}</div>
                 <div className={classname(styles.cardImgWrap, cardImgWrapStyle)}>
-                  {i?.isDelete && <div className={styles.mask}>该文章已被下架</div>}
+                  {i?.isDelete && <div className={styles.mask}>文章已下架</div>}
                   <Image
                     url={i.coverImage || CARD_URL}
                     transitionImg={CARD_URL}
@@ -232,6 +235,9 @@ const Card: React.FC<IProps> = ({
                 <div className={styles.mobileDesc}>
                   <div className={descClass || styles.desc}>{i.abstract}</div>
                   <div className={styles.mobileImgWrap}>
+                    {i?.isDelete && htmlWidth <= 960 && (
+                      <div className={styles.mask}>文章已下架</div>
+                    )}
                     <Image
                       url={i.coverImage || CARD_URL}
                       transitionImg={CARD_URL}
@@ -271,9 +277,6 @@ const Card: React.FC<IProps> = ({
                 </div>
               )}
               <div className={styles.action}>
-                {i?.isDelete && htmlWidth <= 960 && (
-                  <div className={styles.mask}>该文章已被下架</div>
-                )}
                 <div className={styles.icons}>
                   <div className={styles.iconList}>
                     <MIcons

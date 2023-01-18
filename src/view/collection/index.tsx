@@ -319,19 +319,23 @@ const Collection: React.FC<IProps> = () => {
               </span>
               {userInfo?.userId === getUserInfo?.userId && (
                 <div className={styles.actions}>
-                  <span className={styles.edit}>
+                  <span>
                     <MIcons
                       name="icon-icon_bianji"
-                      text={htmlWidth > 960 ? '编辑' : ''}
-                      className={styles.icon}
+                      text={
+                        htmlWidth > 960 ? <span className={styles.editIcon}>编辑</span> : ''
+                      }
+                      className={styles.editIcon}
                       onClick={onHeadEditCollection}
                     />
                   </span>
-                  <span className={styles.delete}>
+                  <span>
                     <MIcons
                       name="icon-shanchu"
-                      className={styles.icon}
-                      text={htmlWidth > 960 ? '删除' : ''}
+                      className={styles.delIcon}
+                      text={
+                        htmlWidth > 960 ? <span className={styles.delIcon}>删除</span> : ''
+                      }
                       onClick={onDeleteCollect}
                     />
                   </span>
