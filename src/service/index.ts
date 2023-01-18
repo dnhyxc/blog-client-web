@@ -30,9 +30,9 @@ import {
   login,
   updateInfo,
   getUserInfo,
-  updatePassword,
   resetPassword,
   verify,
+  logout,
 } from './user';
 import {
   createCollection,
@@ -75,7 +75,6 @@ export {
   getTimelineList,
   getMyArticleList,
   uploadFile,
-  updatePassword,
   resetPassword,
   getArticleByRandom,
   getAuthorArticleList,
@@ -83,6 +82,7 @@ export {
   getPrevArticle,
   getNextArticle,
   verify,
+  logout,
   advancedSearch,
   createCollection,
   getCollectionList,

@@ -23,7 +23,7 @@ export interface LoginParams {
 }
 
 export interface UserInfoParams {
-  userId: string;
+  userId?: string;
   token?: string;
   username?: string;
   job?: string;

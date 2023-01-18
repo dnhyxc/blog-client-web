@@ -262,7 +262,7 @@ export const AUTHOR_API_PATH = {
 
 export const UPDATE_INFO_API_PATH = {
   1: API.UPDATE_INFO,
-  2: API.UPDATE_PASSWORD,
+  2: API.RESET_PASSWORD,
 };
 
 export const ARTICLE_DRAFT = {

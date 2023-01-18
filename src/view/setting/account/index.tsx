@@ -8,14 +8,12 @@ import ActionIcon from '@/components/ActionIcon';
 import useStore from '@/store';
 import { useGetTheme, useHtmlWidth, useVerifyToken } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult, encrypt, getSetItemConfig, error, success } from '@/utils';
+import { normalizeResult, encrypt, getSetItemConfig, error, success, verifyPassword } from '@/utils';
 import { UPDATE_INFO_API_PATH } from '@/constant';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
 
-interface IProps {}
-
-const Account: React.FC<IProps> = () => {
+const Account: React.FC = () => {
   const [selectItem, setSelectItem] = useState<string>('');
 
   // 校验token是否过期
@@ -27,7 +25,7 @@ const Account: React.FC<IProps> = () => {
   const { htmlWidth } = useHtmlWidth();
   const { themeMode } = useGetTheme();
   const { userInfoStore } = useStore();
-  const { userId, zhihu, juejin, github, blog, auth } = userInfoStore.getUserInfo;
+  const { userId, username, zhihu, juejin, github, blog, auth } = userInfoStore.getUserInfo;
 
   const INPUT_INIT_VALUE = {
     juejin,
@@ -47,12 +45,16 @@ const Account: React.FC<IProps> = () => {
   // 修改用户信息
   const onUpdateUserInfo = async (value: string | number, selectKey?: string) => {
     if (!value) return;
+    const message = await verifyPassword('', value as string);
+
+    console.log(message, 'message');
+
     const res = normalizeResult<LoginData>(
       await Service.updateInfo(
         {
           [selectKey || selectItem]:
             selectItem === 'password' ? encrypt(value as string) : value,
-          userId,
+          username,
         },
         UPDATE_INFO_API_PATH[selectItem === 'password' ? 2 : 1]
       )
@@ -75,19 +77,23 @@ const Account: React.FC<IProps> = () => {
     await Service.delAllArticle();
   };
 
-  const showSetAuthConfirm = (key: string) => {
+  const onLogout = () => {
     Modal.confirm({
-      title: '确定设置为管理员权限吗？',
-      onOk: () => {
-        onUpdateUserInfo(1, key);
+      title: '确定要注销该账号吗？',
+      onOk: async () => {
+        const res = normalizeResult<string>(await Service.logout({ userId }));
+        if (res.success) {
+          success(res.message);
+          navigate('/login');
+        }
       },
     });
   };
 
   const onSetVisible = (name: string) => {
     setSelectItem(name);
-    if (name === 'auth') {
-      showSetAuthConfirm('auth');
+    if (name === 'logout') {
+      onLogout();
     }
   };
 
@@ -131,16 +137,15 @@ const Account: React.FC<IProps> = () => {
                 <div className={styles.setItem} key={i.label}>
                   <span className={styles.name}>{i.name}</span>
                   {(selectItem !== i.label ||
-                    selectItem === 'auth' ||
                     selectItem === 'logout') && (
-                    <Button
-                      type="link"
-                      className={styles.settingBtn}
-                      onClick={() => onSetVisible(i.label)}
-                    >
-                      {i.action}
-                    </Button>
-                  )}
+                      <Button
+                        type="link"
+                        className={styles.settingBtn}
+                        onClick={() => onSetVisible(i.label)}
+                      >
+                        {i.action}
+                      </Button>
+                    )}
                   {selectItem === i.label &&
                     selectItem !== 'auth' &&
                     selectItem !== 'logout' && (

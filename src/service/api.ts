@@ -9,8 +9,6 @@ const LOGIN = '/api/login';
 const UPDATE_INFO = '/api/updateInfo';
 // 获取用户信息
 const GET_USER_INFO = '/api/getUserInfo';
-// 更改密码
-const UPDATE_PASSWORD = '/api/updatePassword';
 // 重置密码
 const RESET_PASSWORD = '/api/resetPassword';
 
@@ -110,6 +108,8 @@ const GET_COLLECT_ARTICLES = '/api/getCollectArticles';
 const REMOVE_COLLECT_ARTICLE = '/api/removeCollectArticle';
 // 获取收藏集总数
 const GET_COLLECT_TOTAL = '/api/getCollectTotal';
+// 注销
+const LOGOUT = '/api/logout';
 
 export {
   REGISTER,
@@ -139,7 +139,6 @@ export {
   GET_MY_ARTICLE_LIST,
   GET_LIKE_ARTICLE_LIST,
   GET_USER_INFO,
-  UPDATE_PASSWORD,
   RESET_PASSWORD,
   GET_ARTICLE_BY_RANDOM,
   GET_AUTHOR_ARTICLE_LIST,
@@ -161,4 +160,5 @@ export {
   GET_COLLECT_ARTICLES,
   REMOVE_COLLECT_ARTICLE,
   GET_COLLECT_TOTAL,
+  LOGOUT,
 };

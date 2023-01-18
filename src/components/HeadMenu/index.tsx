@@ -93,7 +93,7 @@ const HeadMenu: React.FC<IProps> = ({
                 className={classname(
                   itemStyles,
                   styles.item,
-                  i.path === pathname && (activeMenuStyle || styles.active)
+                  pathname.includes(i.path) && (activeMenuStyle || styles.active)
                 )}
                 onClick={(e) => toOtherPage(e, i.path)}
               >

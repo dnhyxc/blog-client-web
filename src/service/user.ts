@@ -22,11 +22,6 @@ export async function updateInfo(params: UserInfoParams, path: string) {
   return res;
 }
 
-export async function updatePassword(params: UserInfoParams) {
-  const res = await put(API.UPDATE_PASSWORD, params);
-  return res;
-}
-
 export async function resetPassword(params: ResetPasswordParams) {
   const res = await put(API.RESET_PASSWORD, params);
   return res;
@@ -39,5 +34,10 @@ export async function getUserInfo(params: GetUserInfoParams) {
 
 export async function verify(params?: { fromDetail?: boolean }) {
   const res = await post(API.VERIFY, params);
+  return res;
+}
+
+export async function logout(params: { userId: string }) {
+  const res = await post(API.LOGOUT, params);
   return res;
 }
