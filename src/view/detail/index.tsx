@@ -66,6 +66,17 @@ const ArticleDetail: React.FC = () => {
     navigate(`/personal?id=${authorId}`);
   };
 
+  // 去标签
+  const toTag = (e: any, tag: string) => {
+    navigate(`/tag/list?tagName=${tag}`);
+  };
+
+  // 去分类
+  const toClassify = (e: any, classify: string) => {
+    e.stopPropagation();
+    navigate(`/classify?classify=${classify}`);
+  };
+
   const renderCoverImg = (detail: ArticleDetailParams) => {
     return (
       <div className={styles.titleWrap}>
@@ -136,13 +147,13 @@ const ArticleDetail: React.FC = () => {
                   <div className={styles.tagList}>
                     <span className={styles.label}>分类：</span>
                     <div className={styles.tagItemWrap}>
-                      <span className={styles.tag}>{detail.classify}</span>
+                      <span className={styles.tag} onClick={(e) => toClassify(e, detail.classify)}>{detail.classify}</span>
                     </div>
                   </div>
                   <div className={styles.tagList}>
                     <span className={styles.label}>标签：</span>
                     <div className={styles.tagItemWrap}>
-                      <span className={styles.tag}>{detail.tag}</span>
+                      <span className={styles.tag} onClick={(e) => toTag(e, detail.tag)}>{detail.tag}</span>
                     </div>
                   </div>
                 </div>

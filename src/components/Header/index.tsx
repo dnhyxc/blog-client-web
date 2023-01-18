@@ -52,7 +52,8 @@ const Header: React.FC<IProps> = ({
     userInfoStore: { getUserInfo },
   } = useStore();
 
-  const goBack = () => {
+  const goBack = (e: Event) => {
+    e.stopPropagation();
     navigate(-1);
   };
 
@@ -72,8 +73,8 @@ const Header: React.FC<IProps> = ({
       <div className={styles.left}>
         {needLeft &&
           (left || (
-            <div className={styles.back} onClick={goBack}>
-              <LeftOutlined />
+            <div className={styles.back} onClick={(e: any) => goBack(e)}>
+              <LeftOutlined className={styles.leftIcon} />
               <MIcons
                 name="icon-haidao_"
                 className={classname(styles.iconWrap, iconStyles)}

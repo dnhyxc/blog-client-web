@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import classname from 'classname';
-import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { useGetSiderVisible, useHtmlWidth } from '@/hooks';
 import styles from './index.less';
 
 interface IProps {

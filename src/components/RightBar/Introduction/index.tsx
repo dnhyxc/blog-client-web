@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
-import { HEAD_UEL } from '@/constant';
 import { Button } from 'antd';
+import { HEAD_UEL } from '@/constant';
 import Image from '@/components/Image';
 import * as Service from '@/service';
 import { info, normalizeResult } from '@/utils';
