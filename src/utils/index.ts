@@ -152,6 +152,24 @@ const verifyPassword = (_: any, value: string) => {
   return Promise.reject('必须包含字母、数字、特称字符');
 };
 
+// 密码校验
+const verifyResetPassword = (value: string) => {
+  const pwdRegex = /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,20}/;
+  if (value.length > 20) {
+    warn('密码不能不大于20位');
+    return false;
+  }
+  if (value.length < 8) {
+    warn('密码不能少于8位');
+    return false;
+  }
+  if (pwdRegex.test(value)) {
+    return true;
+  }
+  warn('必须包含字母、数字、特称字符');
+  return false;
+};
+
 export {
   normalizeResult,
   useCookies,
@@ -171,4 +189,5 @@ export {
   onPrintElement,
   verifyUsername,
   verifyPassword,
+  verifyResetPassword,
 };

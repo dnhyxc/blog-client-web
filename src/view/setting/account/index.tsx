@@ -8,7 +8,7 @@ import ActionIcon from '@/components/ActionIcon';
 import useStore from '@/store';
 import { useGetTheme, useHtmlWidth, useVerifyToken } from '@/hooks';
 import * as Service from '@/service';
-import { normalizeResult, encrypt, getSetItemConfig, error, success, verifyPassword } from '@/utils';
+import { normalizeResult, encrypt, getSetItemConfig, error, success, verifyResetPassword } from '@/utils';
 import { UPDATE_INFO_API_PATH } from '@/constant';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
@@ -45,9 +45,9 @@ const Account: React.FC = () => {
   // 修改用户信息
   const onUpdateUserInfo = async (value: string | number, selectKey?: string) => {
     if (!value) return;
-    const message = await verifyPassword('', value as string);
+    const message = verifyResetPassword(value as string);
 
-    console.log(message, 'message');
+    if (!message) return;
 
     const res = normalizeResult<LoginData>(
       await Service.updateInfo(
