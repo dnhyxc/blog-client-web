@@ -21,9 +21,11 @@ import CYWL_URL from '@/assets/images/cywl.jpg';
 // import MCDGB_COVER from '@/assets/images/mcdgb.jpg';
 // import NEWBOY_COVER from '@/assets/images/newBoy.jpg';
 import SEA from '@/assets/images/sea.jpg';
+import SSM from '@/assets/images/ssm.jpg';
 
 export {
   SEA,
+  SSM,
   ABOUTME,
   HEAD_UEL,
   CARD_URL,
