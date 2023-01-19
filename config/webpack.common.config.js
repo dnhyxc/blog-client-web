@@ -7,8 +7,6 @@ const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 const MomentLocalesPlugin = require('moment-locales-webpack-plugin');
 // const CompressionPlugin = require('compression-webpack-plugin');
 const HappyPack = require('happypack');
-// const PurgeCSSPlugin = require('purgecss-webpack-plugin'); // css优化去重复无效代码
-// const glob = require('glob');
 
 // 开辟一个线程池，拿到系统CPU的核数，happypack 将编译工作利用所有线程
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
@@ -108,7 +106,7 @@ module.exports = {
     // new CompressionPlugin({
     //   test: /\.(js|css)(\?.*)?$/i, // 需要压缩的文件正则
     //   threshold: 1024, // 文件大小大于这个值时启用压缩
-    //   deleteOriginalAssets: false, // 压缩后保留原文件
+    //   deleteOriginalAssets: true, // 压缩后保留原文件
     // }),
     new HappyPack({
       id: 'happybabel',
