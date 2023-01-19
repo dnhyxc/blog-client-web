@@ -137,7 +137,8 @@ const DraftPopover: React.FC<IProps> = ({
               <div key={i.id} className={styles.draftItem}>
                 <span className={styles.title}>
                   {i.title ||
-                    `${i.content?.slice(0, 26).replace(/#/g, '')}${i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
+                    `${i.content?.slice(0, 26).replace(/#/g, '')}${
+                      i.content && i.content.slice(0, 26).length > 20 ? '...' : ''
                     }`}
                 </span>
                 <span className={styles.actions}>
@@ -170,7 +171,10 @@ const DraftPopover: React.FC<IProps> = ({
         </Content>
       ) : (
         <div className={styles.draftEmpty}>
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="空空如也" />
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={<div className={styles.empty}>空空如也</div>}
+          />
         </div>
       )}
     </div>
@@ -195,7 +199,9 @@ const DraftPopover: React.FC<IProps> = ({
       trigger="click"
       visible={visible}
       onVisibleChange={onVisibleChange}
-      overlayClassName={themeMode === 'dark' ? styles.darkOverlayClassName : styles.overlayClassName}
+      overlayClassName={
+        themeMode === 'dark' ? styles.darkOverlayClassName : styles.overlayClassName
+      }
     >
       <Button type="link" className={styles.draftBtn}>
         草稿箱
