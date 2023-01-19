@@ -12,12 +12,13 @@ import classname from 'classname';
 import Content from '@/components/Content';
 import Header from '@/components/Header';
 import RightBar from '@/components/RightBar';
-import Card from '@/components/Card';
 import MIcons from '@/components/Icons';
 import MAlert from '@/components/MAlert';
 import MSearch from '@/components/MSearch';
 import BackTop from '@/components/BackTop';
 import ActionIcon from '@/components/ActionIcon';
+import CardItem from '@/components/CardItem';
+import Card from '@/components/Card';
 import {
   useLoginStatus,
   useLikeArticle,
@@ -311,18 +312,34 @@ const Home: React.FC<IProps> = () => {
             </Cover>
           )}
           <div className={styles.content} id="CONTENT">
-            <Card
-              list={articleList.list}
-              total={articleList.total}
-              toDetail={toDetail}
-              deleteArticle={deleteArticle}
-              likeArticle={likeArticle}
-              onEditArticle={onEditArticle}
-              loading={loading}
-              noMoreStyle={siderVisible && htmlWidth > 960 ? styles.noMoreStyle : ''}
-              themeMode={themeMode}
-              htmlWidth={htmlWidth}
-            />
+            {htmlWidth > 960 && (
+              <CardItem
+                list={articleList.list}
+                total={articleList.total}
+                toDetail={toDetail}
+                deleteArticle={deleteArticle}
+                likeArticle={likeArticle}
+                onEditArticle={onEditArticle}
+                loading={loading}
+                noMoreStyle={siderVisible && htmlWidth > 960 ? styles.noMoreStyle : ''}
+                themeMode={themeMode}
+                htmlWidth={htmlWidth}
+              />
+            )}
+            {htmlWidth <= 960 && (
+              <Card
+                list={articleList.list}
+                total={articleList.total}
+                toDetail={toDetail}
+                deleteArticle={deleteArticle}
+                likeArticle={likeArticle}
+                onEditArticle={onEditArticle}
+                loading={loading}
+                noMoreStyle={siderVisible && htmlWidth > 960 ? styles.noMoreStyle : ''}
+                themeMode={themeMode}
+                htmlWidth={htmlWidth}
+              />
+            )}
             <RightBar
               className={styles.rightbar}
               showRecommendArticle

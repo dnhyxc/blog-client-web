@@ -28,15 +28,97 @@
     }
 
     .articleInfo {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
       height: 38.5%;
+      padding: 10px;
       background-color: @shade-2;
       border-bottom-left-radius: 5px;
       border-bottom-right-radius: 5px;
       color: @fff;
+      cursor: pointer;
+
+      &:hover {
+        .title {
+          .right {
+            display: flex;
+          }
+        }
+      }
+
+      .title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+
+        .left {
+          flex: 0.8;
+          .ellipsis();
+        }
+
+        .right {
+          flex: 0.2;
+          display: flex;
+          justify-content: flex-end;
+          font-size: 14px;
+          height: 100%;
+          display: none;
+
+          .editTextStyle {
+            margin-right: 15px;
+          }
+
+          .editIcon,
+          .editTextStyle {
+            color: @green-light;
+          }
+
+          .delIcon,
+          .delTextStyle {
+            color: @font-warning;
+          }
+        }
+      }
+
+      .abstract {
+        color: @font-6;
+        .ellipsisMore(2);
+      }
+
+      .info {
+        font-size: 13px;
+        .ellipsis();
+
+        span {
+          padding: 0 10px;
+          color: @font-5;
+
+          &:first-child {
+            padding-left: 0;
+          }
+        }
+
+        .tag {
+          color: @green-light;
+          cursor: pointer;
+        }
+
+        .classify {
+          border-left: 2px solid @layer-3-border;
+          border-right: 2px solid @layer-3-border;
+        }
+
+        .darkClassify {
+          border-left: 2px solid @dark-gray;
+          border-right: 2px solid @dark-gray;
+        }
+      }
 
       .action {
         display: flex;
@@ -46,18 +128,30 @@
         .icons {
           height: 28px;
           line-height: 28px;
-
-          .iconList {
-            display: flex;
-            align-items: center;
-          }
-
+          color: @fff;
           display: flex;
           justify-content: space-between;
           flex: 1;
           margin-bottom: 0;
           .clickNoSelectText();
           .ellipsis();
+
+          .iconList {
+            display: flex;
+            align-items: center;
+
+            .iconWrap {
+              margin-right: 20px;
+            }
+
+            .textStyle {
+              color: @fff;
+            }
+
+            .icon {
+              color: @fff;
+            }
+          }
 
           .classifyWrap {
             display: flex;

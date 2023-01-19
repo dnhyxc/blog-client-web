@@ -10,7 +10,7 @@ interface IProps {
   className?: string;
   iconWrapClass?: string;
   textStyle?: string;
-  onClick?: () => void;
+  onClick?: Function;
   customStyle?: boolean;
   noStopPropagation?: boolean;
 }
@@ -45,7 +45,7 @@ const MIcons: React.FC<IProps> = ({
       {(text || children) && (
         <span className={classname(styles.child, textStyle)}>
           {text}
-          {children && <span>{children}</span>}
+          {children && <span className={styles.textStyle}>{children}</span>}
         </span>
       )}
     </span>
