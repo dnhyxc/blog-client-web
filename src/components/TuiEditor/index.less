@@ -83,7 +83,7 @@
 .dark {
   :global {
     .toastui-editor-defaultUI-toolbar {
-      background-color: @dark-bgc;
+      background-color: @dark-bgc-deep;
       border-bottom: 1px solid @dark-gray;
 
       button {
@@ -94,28 +94,32 @@
 
     .toastui-editor-defaultUI {
       .toastui-editor-md-tab-container {
-        background: @dark-bgc;
+        background: @dark-bgc-deep;
         border-bottom: 1px solid @dark-gray;
 
         .tab-item {
-          background: @dark-bgc;
+          background: @dark-bgc-deep;
           color: @dark-fc;
           border: 1px solid @dark-gray;
         }
 
         .tab-item.active {
-          background: @dark-bgc-deep;
+          background: @dark-bgc;
         }
       }
 
       .ProseMirror {
-        background-color: @dark-bgc;
+        background-color: @dark-bgc-deep;
         color: @dark-fc;
       }
 
       .toastui-editor-md-block-quote .toastui-editor-md-marked-text,
       .toastui-editor-md-list-item .toastui-editor-md-meta {
         color: @dark-fc;
+      }
+
+      .toastui-editor-main .toastui-editor-md-splitter {
+        background-color: @dark-gray;
       }
 
       .toastui-editor-md-code-block-line-background {
@@ -128,7 +132,7 @@
 
       // preview
       .toastui-editor-md-container .toastui-editor-md-preview {
-        background-color: @dark-bgc;
+        background-color: @dark-bgc-deep;
       }
 
       .toastui-editor-contents h1,
@@ -141,11 +145,11 @@
       }
 
       .toastui-editor-contents blockquote {
-        background-color: @dark-bgc-deep;
+        background-color: @dark-bgc;
       }
 
       .toastui-editor-contents pre {
-        background-color: @dark-bgc-deep;
+        background-color: @dark-bgc;
       }
 
       .toastui-editor-contents ul,
