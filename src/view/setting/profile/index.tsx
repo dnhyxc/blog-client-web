@@ -104,7 +104,7 @@ const Profile: React.FC = () => {
         <div className={styles.header}>
           <div className={styles.title}>
             <div className={styles.infoText}>
-              <span>个人设置</span>
+              <span>个人资料</span>
               {htmlWidth < 960 && (
                 <MDropdown
                   overlayClassName={themeMode === 'dark' ? styles.overlayClassName : ''}
