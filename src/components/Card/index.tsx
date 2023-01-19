@@ -83,9 +83,9 @@ const Card: React.FC<IProps> = ({
         className:
           htmlWidth < 960
             ? classname(
-                styles.removeArticleConfirm,
-                themeMode === 'dark' && styles.darkRemoveArticleConfirm
-              )
+              styles.removeArticleConfirm,
+              themeMode === 'dark' && styles.darkRemoveArticleConfirm
+            )
             : '',
         title: '确定移除该文章吗？',
         content: '移除后，该文章将从当前收藏集中删除',
@@ -179,7 +179,7 @@ const Card: React.FC<IProps> = ({
 
   return (
     <div className={classname(styles.wrap, wrapClass)} style={style}>
-      {list && list.length > 0 ? (
+      {list?.length > 0 ? (
         list.map((i) => (
           <div
             className={classname(

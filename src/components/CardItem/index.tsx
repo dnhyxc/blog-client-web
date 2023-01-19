@@ -13,8 +13,8 @@ import styles from './index.less';
 
 interface IProps {
   list: ArticleItem[];
-  // total?: number;
-  // loading?: boolean;
+  total?: number;
+  loading?: boolean;
   toDetail?: Function;
   deleteArticle?: Function;
   likeArticle?: Function;
@@ -25,16 +25,18 @@ interface IProps {
   // moveTo?(id: string): void;
   // skeletonRows?: number;
   // skeletonAvatar?: string;
-  // noMoreStyle?: string;
+  noMoreStyle?: string;
   htmlWidth?: number;
   themeMode?: string;
   fromPage?: boolean;
+  timelineNoMoreText?: string;
+  loadText?: string;
 }
 
 const CardItem: React.FC<IProps> = ({
   list,
-  // total,
-  // loading,
+  total,
+  loading,
   toDetail,
   likeArticle,
   deleteArticle,
@@ -43,10 +45,12 @@ const CardItem: React.FC<IProps> = ({
   // moveTo,
   themeMode,
   htmlWidth = 0,
-  // noMoreStyle,
+  noMoreStyle,
   // skeletonRows = 3,
   // skeletonAvatar,
   fromPage,
+  timelineNoMoreText,
+  loadText,
 }) => {
   const {
     userInfoStore: { getUserInfo },
@@ -106,7 +110,7 @@ const CardItem: React.FC<IProps> = ({
               <div className={styles.articleInfo}>
                 <div className={styles.title}>
                   <div className={styles.left}>{i.title}</div>
-                  {getUserInfo?.auth === 1 && (
+                  {(getUserInfo?.auth === 1 || i.authorId === getUserInfo?.userId) && (
                     <div className={styles.right}>
                       {i.authorId === getUserInfo?.userId && (
                         <MIcons
@@ -212,6 +216,31 @@ const CardItem: React.FC<IProps> = ({
             </div>
           </div>
         ))}
+      {!loading && list.length === total ? (
+        <div
+          className={classname(
+            styles.noMore,
+            noMoreStyle,
+            themeMode === 'dark' && styles.darkNoMore
+          )}
+        >
+          {list.length > 0
+            ? `${timelineNoMoreText || ''}共 (${list.length})
+          篇，${loadText || '已是全部家当'}～～～`
+            : `共(${list.length})
+            篇，空空如也～～～`}
+        </div>
+      ) : (
+        <div
+          className={classname(
+            styles.noMore,
+            noMoreStyle,
+            themeMode === 'dark' && styles.darkNoMore
+          )}
+        >
+          loading...
+        </div>
+      )}
     </div>
   );
 };

@@ -302,7 +302,7 @@ const ReleaseModel: React.FC<IProps> = ({
                 placeholder="请输入文章摘要"
                 rows={3}
                 autoSize={{ minRows: 3, maxRows: 10 }}
-                maxLength={100}
+                maxLength={200}
                 showCount
               />
             </Form.Item>
