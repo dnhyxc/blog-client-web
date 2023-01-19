@@ -147,7 +147,6 @@ const Account: React.FC = () => {
                       </Button>
                     )}
                   {selectItem === i.label &&
-                    selectItem !== 'auth' &&
                     selectItem !== 'logout' && (
                       <Input.Search
                         ref={inputRef}

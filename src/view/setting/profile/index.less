@@ -24,10 +24,12 @@
 
   .wrapClassName {
     padding: 0;
+    border-radius: 5px;
   }
 
   .scrollWrap {
     background-color: @fff !important;
+    border-radius: 5px;
   }
 
   .header {
@@ -73,11 +75,14 @@
       }
 
       .changeCover {
-        border: 1px solid rgba(225, 225, 225, 0.4);
-        color: rgba(0, 0, 0, 0.4);
+        padding-top: 0;
+        border: none;
+        color: @fff;
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 5px;
 
         &:hover {
-          background-color: rgba(225, 225, 225, 0.2);
+          background-color: @shade-1;
         }
       }
     }
@@ -167,6 +172,14 @@
 
   .scrollWrap {
     background-color: @dark-bgc-deep !important;
+  }
+
+  .header {
+    .headerWrap {
+      .username {
+        color: @dark-fc;
+      }
+    }
   }
 
   .content {

@@ -5,21 +5,21 @@
     .ant-popover-inner-content {
       padding: 12px 0 12px 16px;
     }
-
-    .ant-popover-arrow-content {
-      background-color: @fff;
-    }
   }
 }
 
 .darkOverlayClassName {
   :global {
+    .ant-popover-inner-content {
+      padding: 12px 0 12px 16px;
+    }
+
     .ant-popover-inner {
-      background-color: @dark-bgc-deep;
+      background-color: @dark-bgc;
     }
 
     .ant-popover-arrow-content {
-      background-color: @dark-bgc-deep;
+      --antd-arrow-background-color: @dark-bgc;
     }
   }
 }
@@ -103,14 +103,14 @@
   .containerClassName {
     .wrapClassName {
       .scrollWrap {
-        background-color: @dark-bgc-deep;
+        background-color: @dark-bgc;
         color: @dark-fc;
       }
     }
   }
 
   .draftItem {
-    background-color: @dark-bgc-deep;
+    background-color: @dark-bgc;
     border-bottom: 1px solid @dark-gray;
     color: @dark-fc;
   }

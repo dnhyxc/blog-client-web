@@ -174,11 +174,6 @@ export const SET_ITEM_CONFIG = [
     label: 'logout',
     action: '注销',
   },
-  {
-    name: '设置管理员权限',
-    label: 'auth',
-    action: '设置',
-  },
 ];
 
 // setting 菜单配置
