@@ -303,21 +303,26 @@ http {
 
   #为后台项目代理服务接口
   server {
-    listen  8090;
+    listen  9020;
     server_name  localhost;
 
     location / {
-      root  /usr/local/nginx/html_admin/dist; #设置前端资源包的路径
-      index   index.html  index.htm;  #设置前端资源入口html文件
-      try_files   $uri  $uri/ /index.html;  #解决 browserRouter 页面刷新后出现404
+      root  /usr/local/nginx/dnhyxc/dist;
+      index   index.html  index.htm;
+      try_files   $uri  $uri/ /index.html;
     }
 
-    #为后台项目代理服务接口
-    location /admin/ {
+    location /api/ {
       proxy_set_header  Host  $http_host;
       proxy_set_header  X-Real-IP $remote_addr;
       proxy_set_header  REMOTE-HOST $remote_addr;
       proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass  http://localhost:9112;
+    }
+
+     location /image/ {
+      root  /usr/local/server/src/upload/image;
+      rewrite  ^/usr/local/server/src/upload/(.*) /$1 break;
       proxy_pass  http://localhost:9112;
     }
   }
@@ -350,6 +355,12 @@ http {
 ```js
 cd / usr / local / nginx / usr / local / nginx / sbin / nginx -
   c / usr / local / nginx / conf / nginx.conf;
+```
+
+解决 nginx: [error] open() ＂/usr/local/nginx/logs/nginx.pid＂ failed 错误，在 nginx 目录下（`[root@localhost nginx]#`）执行如下命令：
+
+```js
+/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
 ```
 
 ### 复制 upload 资源
