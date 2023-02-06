@@ -208,7 +208,7 @@ cd nginx
 
 rz
 
-tar -vxf nginx-1.22.0
+tar -vxf nginx-1.22.1
 ```
 
 ### 执行 configure 等命令
@@ -353,7 +353,9 @@ http {
 解决 nginx: [error] open() ＂/usr/local/nginx/logs/nginx.pid＂ failed 错误，具体操作如下：
 
 ```json
-cd/usr/local/nginx/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf;
+cd/usr/local/nginx
+
+/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
 ```
 
 解决 nginx: [error] open() ＂/usr/local/nginx/logs/nginx.pid＂ failed 错误，在 nginx 目录下（`[root@localhost nginx]#`）执行如下命令：
@@ -395,4 +397,186 @@ lsof -i tcp:port(如：9012)
 
 ```conf
 kill -9 PID #PID，如 56185
+```
+
+### 配置
+
+```conf
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+    client_max_body_size  50m;  #上传size改为20m，防止文件过大无法上传
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        gzip on;
+        gzip_disable "msie6";
+        gzip_vary on;
+        gzip_proxied any;
+        gzip_comp_level 6;
+        gzip_buffers 16 8k;
+        gzip_http_version 1.1;
+        gzip_min_length 256;
+        gzip_types application/atom+xml application/geo+json application/javascript application/x-javascript application/json application/ld+json application/manifest+json application/rdf+xml application/rss+xml application/xhtml+xml application/xml font/eot font/otf font/ttf image/svg+xml text/css text/javascript text/plain text/xml;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+        location / {
+            root  /usr/local/nginx/html/dist;
+            index  index.html index.htm;
+            try_files   $uri  $uri/ /index.html;
+        }
+
+        location /api/ {
+            proxy_set_header  Host  $http_host;
+            proxy_set_header  X-Real-IP $remote_addr;
+            proxy_set_header  REMOTE-HOST $remote_addr;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass  http://localhost:9112;
+        }
+
+        location /image/ {
+            root  /usr/local/server/src/upload/image;
+            rewrite  ^/usr/local/server/src/upload/(.*) /$1 break;
+            proxy_pass  http://localhost:9112;
+        }
+
+        #error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+    }
+
+        # another virtual host using mix of IP-, name-, and port-based configuration
+
+    server {
+        listen       8090;
+        server_name  localhost;
+
+        location / {
+            root  /usr/local/nginx/html_admin/dist;
+            index  index.html index.htm;
+            try_files   $uri  $uri/ /index.html;
+        }
+
+        location /admin/ {
+            proxy_set_header  Host  $http_host;
+            proxy_set_header  X-Real-IP $remote_addr;
+            proxy_set_header  REMOTE-HOST $remote_addr;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass  http://localhost:9112;
+        }
+
+        location /api/ {
+            proxy_set_header  Host  $http_host;
+            proxy_set_header  X-Real-IP $remote_addr;
+            proxy_set_header  REMOTE-HOST $remote_addr;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass  http://localhost:9112;
+        }
+
+        location /image/ {
+            root  /usr/local/server/src/upload/image;
+            rewrite  ^/usr/local/server/src/upload/(.*) /$1 break;
+            proxy_pass  http://localhost:9112;
+        }
+    }
+
+    server {
+        listen  9002;
+        server_name 127.0.0.1;
+
+        location /ws {
+            proxy_set_header  Host  $http_host;
+            proxy_set_header  X-Real-IP $remote_addr;
+            proxy_set_header  REMOTE-HOST $remote_addr;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass  http://127.0.0.1:9112;
+        }
+    }
+
+    server {
+        listen  9216;
+        server_name  localhost;
+
+        location / {
+          root  /usr/local/nginx/dnhyxc/dist;
+          index   index.html  index.htm;
+          try_files   $uri  $uri/ /index.html;
+        }
+
+        location /api/ {
+            proxy_set_header  Host  $http_host;
+            proxy_set_header  X-Real-IP $remote_addr;
+            proxy_set_header  REMOTE-HOST $remote_addr;
+            proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_pass  http://localhost:9112;
+        }
+
+        location /image/ {
+            root  /usr/local/server/src/upload/image;
+            rewrite  ^/usr/local/server/src/upload/(.*) /$1 break;
+            proxy_pass  http://localhost:9112;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+
+    # HTTPS server
+    #
+    #server {
+    #    listen       443 ssl;
+    #    server_name  localhost;
+
+    #    ssl_certificate      cert.pem;
+    #    ssl_certificate_key  cert.key;
+
+    #    ssl_session_cache    shared:SSL:1m;
+    #    ssl_session_timeout  5m;
+
+    #    ssl_ciphers  HIGH:!aNULL:!MD5;
+    #    ssl_prefer_server_ciphers  on;
+
+    #    location / {
+    #        root   html;
+    #        index  index.html index.htm;
+    #    }
+    #}
+
+}
 ```
