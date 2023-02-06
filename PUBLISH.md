@@ -352,14 +352,13 @@ http {
 
 解决 nginx: [error] open() ＂/usr/local/nginx/logs/nginx.pid＂ failed 错误，具体操作如下：
 
-```js
-cd / usr / local / nginx / usr / local / nginx / sbin / nginx -
-  c / usr / local / nginx / conf / nginx.conf;
+```json
+cd/usr/local/nginx/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf;
 ```
 
 解决 nginx: [error] open() ＂/usr/local/nginx/logs/nginx.pid＂ failed 错误，在 nginx 目录下（`[root@localhost nginx]#`）执行如下命令：
 
-```js
+```json
 /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
 ```
 
