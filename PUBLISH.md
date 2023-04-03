@@ -386,3 +386,115 @@ lsof -i tcp:port(如：9012)
 ```conf
 kill -9 PID #PID，如 56185
 ```
+
+#### nginx
+
+```
+server {
+    listen       80;
+    server_name  localhost;
+
+    #charset koi8-r;
+
+    #access_log  logs/host.access.log  main;
+
+    location / {
+        root  /usr/local/nginx/html/dist; #设置前端资源包的路径
+        index   index.html  index.htm;  #设置前端资源入口html文件
+        try_files   $uri  $uri/ /index.html;  #解决 browserRouter 页面刷新后出现404
+    }
+
+    location /api/ {
+        proxy_set_header  Host  $http_host;
+        proxy_set_header  X-Real-IP $remote_addr;
+        proxy_set_header  REMOTE-HOST $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass  http://localhost:9112;
+    }
+
+    location /image/ {
+        root  /usr/local/server/src/upload/image;
+        rewrite  ^/usr/local/server/src/upload/(.*) /$1 break;
+        proxy_pass  http://localhost:9112;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   html;
+    }
+}
+
+
+server {
+    listen  9216;
+    server_name  localhost;
+
+    location / {
+      root  /usr/local/nginx/dnhyxc/dist;
+      index   index.html  index.htm;
+      try_files   $uri  $uri/ /index.html;
+    }
+
+    location /api/ {
+      proxy_set_header  Host  $http_host;
+      proxy_set_header  X-Real-IP $remote_addr;
+      proxy_set_header  REMOTE-HOST $remote_addr;
+      proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass  http://localhost:9112;
+    }
+
+    location /admin/ {
+      proxy_set_header  Host  $http_host;
+      proxy_set_header  X-Real-IP $remote_addr;
+      proxy_set_header  REMOTE-HOST $remote_addr;
+      proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass  http://localhost:9112;
+    }
+
+    location /image/ {
+      root  /usr/local/server/src/upload/image;
+      rewrite  ^/usr/local/server/src/upload/(.*) /$1 break;
+      proxy_pass  http://localhost:9112;
+    }
+
+    error_page  500 502 503 504 /50x.html;
+    location = /50x.html {
+      root  html;
+    }
+}
+
+server {
+    listen  8090;
+    server_name  localhost;
+
+    location / {
+      root  /usr/local/nginx/html_admin/dist;
+      index   index.html  index.htm;
+      try_files   $uri  $uri/ /index.html;
+    }
+
+    location /admin/ {
+      proxy_set_header  Host  $http_host;
+      proxy_set_header  X-Real-IP $remote_addr;
+      proxy_set_header  REMOTE-HOST $remote_addr;
+      proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass  http://localhost:9112;
+    }
+}
+
+server {
+    listen  9002;
+    server_name 127.0.0.1;
+    location /ws {
+        proxy_set_header  Host  $http_host;
+        proxy_set_header  X-Real-IP $remote_addr;
+        proxy_set_header  REMOTE-HOST $remote_addr;
+        proxy_set_header  X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass  http://127.0.0.1:9112;
+    }
+}
+```
