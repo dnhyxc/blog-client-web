@@ -271,7 +271,7 @@ http {
 
   server {
     listen  80; 监听80端口
-    server_name   43.143.120.87; #服务器公网域名，或者设置为localhost
+    server_name   43.143.27.249; #服务器公网域名，或者设置为localhost
 
     location / {
       root  /usr/local/nginx/html/dist; #设置前端资源包的路径
