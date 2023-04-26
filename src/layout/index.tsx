@@ -5,12 +5,15 @@
  * @LastEditors: dnh
  * @FilePath: \src\layout\index.tsx
  */
+import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Layout } from 'antd';
 import classname from 'classname';
 import MenuList from '@/components/MenuList';
 import Footer from '@/components/Footer';
 import User from '@/components/User';
+import { EventBus } from '@/event';
+import ExitReminder from '@/components/ExitReminder';
 import Decorator from '@/components/Decorator';
 import { useGetTheme } from '@/hooks';
 import styles from './index.less';
@@ -18,10 +21,19 @@ import styles from './index.less';
 const { Content } = Layout;
 
 const AppLayout = () => {
+  const [status, setStatus] = useState(false);
   const { themeMode } = useGetTheme();
+
+  useEffect(() => {
+    EventBus.onToggleLoginStatus.listen(() => {
+      const { loginStatus } = EventBus;
+      setStatus(loginStatus);
+    });
+  }, []);
 
   return (
     <div className={styles.container}>
+      {status && <ExitReminder />}
       <MenuList themeMode={themeMode} />
       <div className={styles.user}>
         <User themeMode={themeMode} />

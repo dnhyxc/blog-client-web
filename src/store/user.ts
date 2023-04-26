@@ -32,6 +32,23 @@ class UserInfo {
     this.userInfo = userInfo;
     return this.userInfo;
   }
+
+  clearUserInfo() {
+    this.userInfo = {
+      userId: '',
+      username: '',
+      job: '',
+      motto: '',
+      introduce: '',
+      headUrl: '',
+      github: '',
+      juejin: '',
+      zhihu: '',
+      blog: '',
+      mainCover: '',
+      auth: 0,
+    };
+  }
 }
 
 export default new UserInfo();

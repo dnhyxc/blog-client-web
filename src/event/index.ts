@@ -10,19 +10,25 @@ class Event {
 
   onSetCommentCount: Dispatcher;
 
+  onToggleLoginStatus: Dispatcher;
+
   siderVisible: boolean;
 
   commentNum: number;
 
   theme: string;
 
+  loginStatus: boolean;
+
   constructor() {
     this.siderVisible = false;
     this.commentNum = 0;
     this.theme = (storage.ssnGetItem('theme') as string) || 'light';
+    this.loginStatus = false;
     this.onToggleSider = new Dispatcher();
     this.onSetCommentCount = new Dispatcher();
     this.onToggleTheme = new Dispatcher();
+    this.onToggleLoginStatus = new Dispatcher();
   }
 
   // 单例模式
@@ -58,6 +64,12 @@ class Event {
   changeTheme(theme: string) {
     this.theme = theme;
     this.onToggleTheme.emit(this);
+  }
+
+  // 切换主题
+  changeLoginStatus(status: boolean) {
+    this.loginStatus = status;
+    this.onToggleLoginStatus.emit(this);
   }
 }
 

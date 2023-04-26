@@ -110,6 +110,9 @@ export const MUSIC_LIST_INFO = [
   // },
 ];
 
+// 线上域名
+export const DOMAIN_URL = '43.143.27.249';
+
 // 全局样式
 export const GLOBAL_STYLES = {
   DARK_BGC: '#333',

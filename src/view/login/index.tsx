@@ -10,8 +10,18 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Form, Input, Checkbox } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
+import { createWebSocket } from '@/socket';
 import { register, login, verify, resetPassword } from '@/service';
-import { normalizeResult, useCookies, encrypt, decrypt, success, error, verifyUsername, verifyPassword } from '@/utils';
+import {
+  normalizeResult,
+  useCookies,
+  encrypt,
+  decrypt,
+  success,
+  error,
+  verifyUsername,
+  verifyPassword,
+} from '@/utils';
 import { close } from '@/components/Render';
 import { LoginData } from '@/typings/common';
 import styles from './index.less';
@@ -101,6 +111,9 @@ const Login = () => {
       navigate(`${commonStore.auth.redirectUrl}` || `${pathname}${query}` || '/home', {
         replace: true,
       });
+      setTimeout(() => {
+        createWebSocket();
+      }, 10);
     } else {
       res.message && error(res.message);
     }
@@ -180,18 +193,24 @@ const Login = () => {
             >
               <Form.Item
                 name="username"
-                rules={[{ required: true, message: '' }, {
-                  validator: (_, value) => verifyUsername(_, value)
-                }]}
+                rules={[
+                  { required: true, message: '' },
+                  {
+                    validator: (_, value) => verifyUsername(_, value),
+                  },
+                ]}
                 initialValue={getCoolie('uname')}
               >
                 <Input placeholder="请输入用户名" size="large" />
               </Form.Item>
               <Form.Item
                 name="password"
-                rules={[{ required: true, message: '' }, {
-                  validator: (_, value) => verifyPassword(_, value)
-                }]}
+                rules={[
+                  { required: true, message: '' },
+                  {
+                    validator: (_, value) => verifyPassword(_, value),
+                  },
+                ]}
                 initialValue={
                   getCoolie('100') ? decrypt(getCoolie('100') as string) : undefined
                 }
