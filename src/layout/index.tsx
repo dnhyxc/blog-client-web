@@ -16,7 +16,9 @@ import { EventBus } from '@/event';
 import ExitReminder from '@/components/ExitReminder';
 import Decorator from '@/components/Decorator';
 import { useGetTheme } from '@/hooks';
+import { createWebSocket } from '@/socket';
 import styles from './index.less';
+import { storage } from '@/utils';
 
 const { Content } = Layout;
 
@@ -30,6 +32,12 @@ const AppLayout = () => {
       setStatus(loginStatus);
     });
   }, []);
+
+  useEffect(() => {
+    if (storage?.locGetItem('token')) {
+      createWebSocket();
+    }
+  }, [storage?.locGetItem('token')]);
 
   return (
     <div className={styles.container}>

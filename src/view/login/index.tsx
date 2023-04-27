@@ -10,7 +10,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Form, Input, Checkbox } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
-import { createWebSocket } from '@/socket';
 import { register, login, verify, resetPassword } from '@/service';
 import {
   normalizeResult,
@@ -111,9 +110,6 @@ const Login = () => {
       navigate(`${commonStore.auth.redirectUrl}` || `${pathname}${query}` || '/home', {
         replace: true,
       });
-      setTimeout(() => {
-        createWebSocket();
-      }, 10);
     } else {
       res.message && error(res.message);
     }
