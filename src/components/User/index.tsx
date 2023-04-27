@@ -24,8 +24,8 @@ const User: React.FC<IProps> = ({ themeMode }) => {
   const onJump = (path: string) => {
     if (path === '/login') {
       commonStore.setAuth({ redirectUrl: `${pathname}${search}` });
-      storage.locRemoveItem('token');
-      storage.locRemoveItem('userInfo');
+      storage.ssnRemoveItem('token');
+      storage.ssnRemoveItem('userInfo');
       navigate(`${path}?verify=${pathname.slice(1)}`);
     } else {
       navigate(path);

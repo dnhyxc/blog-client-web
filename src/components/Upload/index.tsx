@@ -164,7 +164,7 @@ const UploadFile: React.FC<IProps> = ({
       )}
       <Upload
         name="file"
-        headers={{ Authorization: `Bearer ${localStorage.getItem('token')}` }}
+        headers={{ Authorization: `Bearer ${sessionStorage.getItem('token')}` }}
         listType={listType!}
         showUploadList={false}
         beforeUpload={beforeUpload}

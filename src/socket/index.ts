@@ -126,35 +126,6 @@ function onOpen() {
   heartCheck.start();
 }
 
-// // 收到服务端数据
-// function onMessage(event: any) {
-//   try {
-//     const parseData = JSON.parse(event.data);
-
-//     if (parseData.code === 200) {
-//       // 心跳数据不处理
-//       // 所需的正常操作
-//       if (parseData.action === 'heartBeat') {
-//       }
-//       // 收到后台推送的退出登录通知
-//       if (
-//         parseData.action === 'logout' &&
-//         (userInfoStore?.getUserInfo?.userId || storage.locGetItem('token'))
-//       ) {
-//         userInfoStore.clearUserInfo();
-//         storage.locRemoveItem('token');
-//         storage.locRemoveItem('userInfo');
-//       }
-//     } else {
-//       throw new Error('收到非格式化数据');
-//     }
-//   } catch (e) {
-//     throw new Error('数据解析失败');
-//   }
-//   // 拿到任何消息都说明当前连接是正常的，此时从新进行心跳检测
-//   heartCheck.start();
-// }
-
 // 收到服务端数据
 function onMessage(event: any) {
   try {
@@ -178,8 +149,8 @@ function onMessage(event: any) {
         if (parseData.action === 'logout' && userInfoStore.getUserInfo?.userId) {
           EventBus.changeLoginStatus(true);
           userInfoStore.clearUserInfo();
-          storage.locRemoveItem('token');
-          storage.locRemoveItem('userInfo');
+          storage.ssnRemoveItem('token');
+          storage.ssnRemoveItem('userInfo');
         }
       }
     } else {

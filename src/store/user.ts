@@ -22,12 +22,12 @@ class UserInfo {
   };
 
   setUserInfo(values: LoginData) {
-    localStorage.setItem('userInfo', JSON.stringify(values));
+    sessionStorage.setItem('userInfo', JSON.stringify(values));
     this.userInfo = { ...this.userInfo, ...values };
   }
 
   get getUserInfo() {
-    const storageInfo = localStorage.getItem('userInfo');
+    const storageInfo = sessionStorage.getItem('userInfo');
     const userInfo = storageInfo && JSON.parse(storageInfo);
     this.userInfo = userInfo;
     return this.userInfo;

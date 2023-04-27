@@ -34,10 +34,10 @@ const AppLayout = () => {
   }, []);
 
   useEffect(() => {
-    if (storage?.locGetItem('token')) {
+    if (storage?.ssnGetItem('token')) {
       createWebSocket();
     }
-  }, [storage?.locGetItem('token')]);
+  }, [storage?.ssnGetItem('token')]);
 
   return (
     <div className={styles.container}>

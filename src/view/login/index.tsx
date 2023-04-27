@@ -102,7 +102,7 @@ const Login = () => {
       userInfoStore.setUserInfo({
         ...userInfo,
       });
-      localStorage.setItem('token', res.data?.token!);
+      sessionStorage.setItem('token', res.data?.token!);
       values?.remember ? setCookie('100', password as string, 1) : removeCoolie('100');
       values?.remember
         ? username && setCookie('uname', username, 1)

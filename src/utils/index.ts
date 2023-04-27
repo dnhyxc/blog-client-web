@@ -174,8 +174,8 @@ const verifyResetPassword = (value: string) => {
 export const getStoreUserInfo = () => {
   // 获取存储在硬盘store中的登录信息
   const userInfo =
-    storage.locGetItem('userInfo') && JSON.parse(storage.locGetItem('userInfo') as string);
-  const token = storage.locGetItem('token');
+    storage.ssnGetItem('userInfo') && JSON.parse(storage.ssnGetItem('userInfo') as string);
+  const token = storage.ssnGetItem('token');
   return {
     userInfo,
     token,

@@ -70,8 +70,8 @@ const Profile: React.FC = () => {
           ...res.data,
         });
         if (values.username !== username) {
-          storage.locRemoveItem('token');
-          storage.locRemoveItem('userInfo');
+          storage.ssnRemoveItem('token');
+          storage.ssnRemoveItem('userInfo');
           success('用户名称已修改，请重新登录');
           navigate('/login', { replace: true });
         } else {
