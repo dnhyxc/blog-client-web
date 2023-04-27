@@ -13,8 +13,8 @@ import { show, close } from '@/components/Render';
 import MIcons from '@/components/Icons';
 import CollectionModal from '@/components/CollectionModel';
 import CreateCollectModel from '@/components/CreateCollectModel';
-import { ArticleDetailParams } from '@/typings/common';
 import { sendMessage } from '@/socket';
+import { ArticleDetailParams } from '@/typings/common';
 import styles from './index.less';
 
 interface IProps {

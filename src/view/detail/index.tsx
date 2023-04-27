@@ -26,8 +26,8 @@ import useStore from '@/store';
 import { formatDate, info } from '@/utils';
 import ActionBar from '@/components/ActionBar';
 import ActionIcon from '@/components/ActionIcon';
-import { ArticleDetailParams } from '@/typings/common';
 import { createWebSocket, closeSocket } from '@/socket';
+import { ArticleDetailParams } from '@/typings/common';
 import styles from './index.less';
 
 const ArticleDetail: React.FC = () => {

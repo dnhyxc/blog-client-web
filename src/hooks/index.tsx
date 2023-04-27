@@ -8,6 +8,7 @@ import { EventBus } from '@/event';
 import { error, storage } from '@/utils';
 import { PAGESIZE } from '@/constant';
 import { close } from '@/components/Render';
+import { sendMessage } from '@/socket';
 import {
   ArticleDetailParams,
   ScrollEvent,
@@ -21,7 +22,6 @@ import {
   ArticleListResult,
   UserInfoParams,
 } from '@/typings/common';
-import { sendMessage } from '@/socket';
 
 // 防抖函数
 export const useDebounce = (
