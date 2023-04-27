@@ -18,6 +18,7 @@ interface IProps {
   getAddVisible: Function;
   getCollectRes?: Function;
   getSelectCollectIds?: Function;
+  sendMsg?: Function;
   moveArticleId?: string;
   selectCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时设置选中当前收藏集
   createCollectId?: string; // 用于设置收藏集（collection页面）移动收藏集时设置选中当前收藏集
@@ -34,6 +35,7 @@ const CollectionModal: React.FC<IProps> = ({
   selectCollectId,
   createCollectId,
   themeMode,
+  sendMsg,
 }) => {
   const [checkedItem, setCheckedItem] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -131,9 +133,6 @@ const CollectionModal: React.FC<IProps> = ({
   const onSubmit = async () => {
     if (!checkedItem.length) info('请选择一个收藏集');
     if (!getUserInfo?.userId || !articleId || !checkedItem.length) return;
-
-    console.log(pathname, 'moadl>>>>>pathnamepathnamepathnamepathname');
-
     const res = normalizeResult<string>(
       await Service.collectArticles({
         ids: checkedItem,
@@ -150,6 +149,7 @@ const CollectionModal: React.FC<IProps> = ({
       } else {
         getCollectRes && getCollectRes(res.data);
       }
+      sendMsg && sendMsg('COLLECT');
     } else {
       error(res.message);
     }

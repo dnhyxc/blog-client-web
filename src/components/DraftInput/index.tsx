@@ -7,7 +7,8 @@ import * as Service from '@/service';
 import { normalizeResult, error } from '@/utils';
 import Image from '@/components/Image';
 import { HEAD_UEL } from '@/constant';
-import { CommentParams, ReplayCommentResult } from '@/typings/common';
+import { ArticleDetailParams, CommentParams, ReplayCommentResult } from '@/typings/common';
+import { sendMessage } from '@/socket';
 import styles from './index.less';
 
 const { TextArea } = Input;
@@ -27,6 +28,7 @@ interface IProps {
   htmlWidth?: number;
   textAreaWrapH5?: string;
   emojiWrapH5?: string;
+  detail?: ArticleDetailParams;
 }
 
 const DraftInput: React.FC<IProps> = ({
@@ -44,6 +46,7 @@ const DraftInput: React.FC<IProps> = ({
   htmlWidth = 0,
   textAreaWrapH5,
   emojiWrapH5,
+  detail,
 }) => {
   const [showIcon, setShowIcon] = useState<boolean>(false);
   const [keyword, setKeyword] = useState<string>('');
@@ -142,6 +145,31 @@ const DraftInput: React.FC<IProps> = ({
 
     if (res.success) {
       getCommentList && getCommentList();
+      if (
+        !isThreeTier &&
+        !selectComment?.commentId &&
+        detail &&
+        getUserInfo?.userId! !== detail?.authorId &&
+        getUserInfo?.userId !== detail?.authorId
+      ) {
+        const data = { ...detail };
+        // @ts-ignore
+        delete data.content;
+        sendMessage(
+          JSON.stringify({
+            action: 'push',
+            data: {
+              ...data,
+              toUserId: data?.authorId,
+              articleId: data?.id,
+              fromUsername: getUserInfo?.username,
+              fromUserId: getUserInfo?.userId,
+              action: 'COMMENT',
+            },
+            userId: getUserInfo?.userId,
+          })
+        );
+      }
     }
 
     if (!res.success && res.code === 409) {
@@ -173,7 +201,10 @@ const DraftInput: React.FC<IProps> = ({
           </div>
         )}
         <div className={styles.input} id="INPUT">
-          <div className={classname(styles.textAreaWrap, textAreaWrapH5)} id="TEXTAREA_WRAP">
+          <div
+            className={classname(styles.textAreaWrap, textAreaWrapH5)}
+            id="TEXTAREA_WRAP"
+          >
             <TextArea
               placeholder={
                 selectComment?.content
@@ -213,11 +244,11 @@ const DraftInput: React.FC<IProps> = ({
                 </span>
               </div>
               <div id="ACTION" className={themeMode === 'dark' ? styles.darkBtn : ''}>
-                {htmlWidth > 960 &&
+                {htmlWidth > 960 && (
                   <span id="ENTER" className={styles.enter}>
                     Ctrl + Enter
                   </span>
-                }
+                )}
                 <Button
                   id="BTN"
                   type="primary"

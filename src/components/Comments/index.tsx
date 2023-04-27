@@ -12,7 +12,12 @@ import MIcons from '@/components/Icons';
 import MAlert from '@/components/MAlert';
 import { useLoginStatus, useScroll } from '@/hooks';
 import { EventBus } from '@/event';
-import { CommentParams, GiveLikeResult, DeleteCommentResult } from '@/typings/common';
+import {
+  CommentParams,
+  GiveLikeResult,
+  DeleteCommentResult,
+  ArticleDetailParams,
+} from '@/typings/common';
 import DraftInput from '../DraftInput';
 import styles from './index.less';
 
@@ -21,6 +26,7 @@ interface IProps {
   getCommentLength?: Function;
   themeMode?: string;
   htmlWidth?: number;
+  detail?: ArticleDetailParams;
 }
 
 const Comments: React.FC<IProps> = ({
@@ -28,6 +34,7 @@ const Comments: React.FC<IProps> = ({
   getCommentLength,
   themeMode,
   htmlWidth = 0,
+  detail,
 }) => {
   const [viewMoreComments, setViewMoreComments] = useState<string[]>([]);
   const [selectComment, setSelectComment] = useState<CommentParams>();
@@ -113,14 +120,14 @@ const Comments: React.FC<IProps> = ({
     }
     const params = isThreeTier
       ? {
-        commentId: comment.commentId!,
-        fromCommentId: comment.commentId!,
-        userId: getUserInfo?.userId,
-      }
+          commentId: comment.commentId!,
+          fromCommentId: comment.commentId!,
+          userId: getUserInfo?.userId,
+        }
       : {
-        commentId: comment.commentId!,
-        userId: getUserInfo?.userId,
-      };
+          commentId: comment.commentId!,
+          userId: getUserInfo?.userId,
+        };
     setLoading(true);
     const res = normalizeResult<GiveLikeResult>(await Service.giveLike(params));
     setLoading(false);
@@ -139,14 +146,14 @@ const Comments: React.FC<IProps> = ({
   const onDeleteComment = (comment: CommentParams, isThreeTier?: boolean) => {
     const params = isThreeTier
       ? {
-        commentId: comment.commentId!,
-        fromCommentId: comment.commentId!,
-        articleId: id,
-      }
+          commentId: comment.commentId!,
+          fromCommentId: comment.commentId!,
+          articleId: id,
+        }
       : {
-        commentId: comment.commentId!,
-        articleId: id,
-      };
+          commentId: comment.commentId!,
+          articleId: id,
+        };
     Modal.confirm(modalConfig(params));
   };
 
@@ -160,9 +167,9 @@ const Comments: React.FC<IProps> = ({
       className:
         htmlWidth < 960
           ? classname(
-            styles.removeCommentConfirm,
-            themeMode === 'dark' && styles.darkRemoveCommentConfirm
-          )
+              styles.removeCommentConfirm,
+              themeMode === 'dark' && styles.darkRemoveCommentConfirm
+            )
           : '',
       centered: htmlWidth < 960,
       width: htmlWidth < 960 ? '80%' : '',
@@ -208,6 +215,7 @@ const Comments: React.FC<IProps> = ({
           onJump={() => toPersonal(authorId)}
           themeMode={themeMode}
           htmlWidth={htmlWidth}
+          detail={detail}
         />
       </div>
       {comments?.length > 0 && (
@@ -238,8 +246,9 @@ const Comments: React.FC<IProps> = ({
                     <div className={styles.actionContent}>
                       <div className={styles.likeAndReplay}>
                         <MIcons
-                          name={`${i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'
-                            }`}
+                          name={`${
+                            i.isLike ? 'icon-24gf-thumbsUp2' : 'icon-24gl-thumbsUp2'
+                          }`}
                           text={i.likeCount! > 0 ? i.likeCount : '点赞'}
                           iconWrapClass={styles.iconWrap}
                           className={i.isLike ? styles.isLike : null}
@@ -333,10 +342,11 @@ const Comments: React.FC<IProps> = ({
                               <div className={styles.actionContent}>
                                 <div className={styles.likeAndReplay}>
                                   <MIcons
-                                    name={`${j.isLike
-                                      ? 'icon-24gf-thumbsUp2'
-                                      : 'icon-24gl-thumbsUp2'
-                                      }`}
+                                    name={`${
+                                      j.isLike
+                                        ? 'icon-24gf-thumbsUp2'
+                                        : 'icon-24gl-thumbsUp2'
+                                    }`}
                                     text={j.likeCount! > 0 ? j.likeCount : '点赞'}
                                     iconWrapClass={styles.iconWrap}
                                     className={j.isLike ? styles.isLike : null}
@@ -400,20 +410,20 @@ const Comments: React.FC<IProps> = ({
                     })}
                     {checkReplyList(i.replyList, i.commentId!).length !==
                       i.replyList.length && (
-                        <div
-                          className={styles.viewMore}
+                      <div
+                        className={styles.viewMore}
+                        onClick={() => onViewMoreReply(i.commentId!)}
+                      >
+                        <span className={styles.viewText}>
+                          查看更多（{i.replyList && i.replyList.length - 2}条）回复
+                        </span>
+                        <MIcons
+                          name="icon-xiajiantou"
+                          iconWrapClass={styles.iconWrap}
                           onClick={() => onViewMoreReply(i.commentId!)}
-                        >
-                          <span className={styles.viewText}>
-                            查看更多（{i.replyList && i.replyList.length - 2}条）回复
-                          </span>
-                          <MIcons
-                            name="icon-xiajiantou"
-                            iconWrapClass={styles.iconWrap}
-                            onClick={() => onViewMoreReply(i.commentId!)}
-                          />
-                        </div>
-                      )}
+                        />
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

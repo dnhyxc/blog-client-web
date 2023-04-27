@@ -21,6 +21,7 @@ import {
   ArticleListResult,
   UserInfoParams,
 } from '@/typings/common';
+import { sendMessage } from '@/socket';
 
 // 防抖函数
 export const useDebounce = (
@@ -256,7 +257,7 @@ export const useLikeArticle = ({
   } = useStore();
 
   // 文章点赞
-  const likeArticle = async (id: string) => {
+  const likeArticle = async (id: string, data?: ArticleItem) => {
     if (!getUserInfo) {
       setAlertStatus(true);
       return;
@@ -317,6 +318,23 @@ export const useLikeArticle = ({
             list: listRef.current,
           });
         }
+      }
+      // 给别人点赞或取消点赞之后推送websocket消息
+      if (getUserInfo?.userId !== data?.authorId) {
+        sendMessage(
+          JSON.stringify({
+            action: 'push',
+            data: {
+              ...data,
+              articleId: id,
+              toUserId: data?.authorId,
+              fromUsername: getUserInfo?.username,
+              fromUserId: getUserInfo?.userId,
+              action: isLike ? 'LIKE_ARTICLE' : 'CANCEL_LIKE_ARTICLE',
+            },
+            userId: getUserInfo?.userId!,
+          })
+        );
       }
     }
     if (!res.success && res.code === 409) {

@@ -27,6 +27,7 @@ import { formatDate, info } from '@/utils';
 import ActionBar from '@/components/ActionBar';
 import ActionIcon from '@/components/ActionIcon';
 import { ArticleDetailParams } from '@/typings/common';
+import { createWebSocket, closeSocket } from '@/socket';
 import styles from './index.less';
 
 const ArticleDetail: React.FC = () => {
@@ -39,6 +40,13 @@ const ArticleDetail: React.FC = () => {
   const { htmlWidth } = useHtmlWidth();
   const { themeMode } = useGetTheme();
   const commentRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    closeSocket();
+    if (getUserInfo?.userId) {
+      createWebSocket();
+    }
+  }, [getUserInfo?.userId]);
 
   useEffect(() => {
     if (detail?.isDelete) {
@@ -180,6 +188,7 @@ const ArticleDetail: React.FC = () => {
                   authorId={detail.authorId}
                   themeMode={themeMode}
                   htmlWidth={htmlWidth}
+                  detail={detail}
                 />
               </div>
             </div>

@@ -14,6 +14,7 @@ import MIcons from '@/components/Icons';
 import CollectionModal from '@/components/CollectionModel';
 import CreateCollectModel from '@/components/CreateCollectModel';
 import { ArticleDetailParams } from '@/typings/common';
+import { sendMessage } from '@/socket';
 import styles from './index.less';
 
 interface IProps {
@@ -71,6 +72,29 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
     }, 5000);
   };
 
+  // 推送ws消息
+  const sendMeg = (type: string) => {
+    if (getUserInfo?.userId !== detail?.authorId) {
+      const data = { ...detail };
+      // @ts-ignore
+      delete data.content;
+      sendMessage(
+        JSON.stringify({
+          action: 'push',
+          data: {
+            ...data,
+            articleId: id,
+            toUserId: data?.authorId,
+            fromUsername: getUserInfo?.username,
+            fromUserId: getUserInfo?.userId,
+            action: type,
+          },
+          userId: getUserInfo?.userId!,
+        })
+      );
+    }
+  };
+
   // 文章点赞
   const onLikeArticle = async () => {
     if (!id) return;
@@ -94,7 +118,11 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
       setLikeCount(likeCount! - 1);
     } else {
       setLikeCount(likeCount! + 1);
+      setLikeStatus(false);
     }
+
+    // 给别人点赞或取消点赞之后推送websocket消息
+    sendMeg(isLike ? 'LIKE_ARTICLE' : 'CANCEL_LIKE_ARTICLE');
   };
 
   // 收藏
@@ -166,6 +194,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
     );
     if (res.success) {
       getCollectionStatus();
+      sendMeg('CANCEL_COLLECT');
     } else if (res.code === 409) {
       show({ pathname, search });
       closeAlert();
@@ -275,6 +304,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
         getAddVisible={getAddVisible}
         createCollectId={createCollectId}
         themeMode={themeMode}
+        sendMsg={sendMeg}
       />
       <CreateCollectModel
         key={Math.random()}

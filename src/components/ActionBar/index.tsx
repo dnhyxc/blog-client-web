@@ -14,6 +14,7 @@ import CreateCollectModel from '@/components/CreateCollectModel';
 import CollectionDrawer from '@/components/CollectionDrawer';
 import TocDrawer from '@/components/TocDrawer';
 import { ArticleDetailParams } from '@/typings/common';
+import { sendMessage } from '@/socket';
 import styles from './index.less';
 
 interface IProps {
@@ -144,6 +145,27 @@ const ActionBar: React.FC<IProps> = ({
       setLikeCount(likeCount! - 1);
     } else {
       setLikeCount(likeCount! + 1);
+    }
+
+    // 给别人点赞或取消点赞之后推送websocket消息
+    if (getUserInfo?.userId !== detail?.authorId) {
+      const data = { ...detail };
+      // @ts-ignore
+      delete data.content;
+      sendMessage(
+        JSON.stringify({
+          action: 'push',
+          data: {
+            ...data,
+            articleId: id,
+            toUserId: data?.authorId,
+            fromUsername: getUserInfo?.username,
+            fromUserId: getUserInfo?.userId,
+            action: isLike ? 'LIKE_ARTICLE' : 'CANCEL_LIKE_ARTICLE',
+          },
+          userId: getUserInfo?.userId!,
+        })
+      );
     }
   };
 

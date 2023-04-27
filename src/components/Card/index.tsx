@@ -288,7 +288,7 @@ const Card: React.FC<IProps> = ({
                         themeMode === 'dark' && styles.darkText
                       )}
                       textStyle={themeMode === 'dark' && styles.darkText}
-                      onClick={() => likeArticle && likeArticle(i.id)}
+                      onClick={() => likeArticle && likeArticle(i.id, i)}
                     />
                     <MIcons
                       name="icon-comment"
