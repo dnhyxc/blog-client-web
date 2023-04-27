@@ -17,8 +17,8 @@ import ExitReminder from '@/components/ExitReminder';
 import Decorator from '@/components/Decorator';
 import { useGetTheme } from '@/hooks';
 import { createWebSocket } from '@/socket';
-import styles from './index.less';
 import { storage } from '@/utils';
+import styles from './index.less';
 
 const { Content } = Layout;
 
