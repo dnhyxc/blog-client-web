@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { Checkbox, Modal, Button } from 'antd';
 import classname from 'classname';
 import Content from '@/components/Content';
@@ -44,6 +44,7 @@ const CollectionModal: React.FC<IProps> = ({
   });
 
   const { id: articleId } = useParams();
+  const { pathname } = useLocation();
   const listRef = useRef<AddCollectionRes[]>([]);
   const {
     userInfoStore: { getUserInfo },
@@ -130,17 +131,25 @@ const CollectionModal: React.FC<IProps> = ({
   const onSubmit = async () => {
     if (!checkedItem.length) info('请选择一个收藏集');
     if (!getUserInfo?.userId || !articleId || !checkedItem.length) return;
+
+    console.log(pathname, 'moadl>>>>>pathnamepathnamepathnamepathname');
+
     const res = normalizeResult<string>(
       await Service.collectArticles({
         ids: checkedItem,
         articleId: moveArticleId || articleId,
         userId: getUserInfo?.userId,
+        isMove: pathname.includes('/collect'), // 如果是true，说明是从我的收藏集中点的转移按钮进行文章的转移
       })
     );
     if (res.success) {
       onCancel();
       success(res.message);
-      getCollectRes && getCollectRes(res.data);
+      if (pathname.includes('/collect')) {
+        getCollectRes && getCollectRes(res.data, true);
+      } else {
+        getCollectRes && getCollectRes(res.data);
+      }
     } else {
       error(res.message);
     }

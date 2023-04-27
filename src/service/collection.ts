@@ -20,6 +20,7 @@ export async function collectArticles(params: {
   ids: string[];
   articleId: string;
   userId: string;
+  isMove?: boolean;
 }) {
   const res = await post(API.COLLECT_ARTICLES, params);
   return res;
@@ -69,6 +70,7 @@ export async function removeCollectArticle(params: {
   articleId: string;
   userId: string;
   id: string; // 收藏集id
+  isMove?: boolean; // s标识是否是转移，不需要增减收藏数
 }) {
   const res = await post(API.REMOVE_COLLECT_ARTICLE, params);
   return res;

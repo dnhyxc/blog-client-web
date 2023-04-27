@@ -135,13 +135,14 @@ const Collection: React.FC<IProps> = () => {
   });
 
   // 取消收藏
-  const cancelCollected = async (articleId: string) => {
+  const cancelCollected = async (articleId: string, isMove?: boolean) => {
     if (!id) return;
     const res = normalizeResult<number>(
       await Service.removeCollectArticle({
         id,
         articleId,
         userId: getUserInfo?.userId,
+        isMove,
       })
     );
     if (!res.success) {
@@ -150,7 +151,7 @@ const Collection: React.FC<IProps> = () => {
   };
 
   // 将收藏集中的文章移除，注意：并不是删除文章
-  const removeArticle = (id: string) => {
+  const removeArticle = (id: string, isMove?: boolean) => {
     // 如果需要移入的收藏集包含了当前收藏集，那么就不需要删除当前收藏集中这条文章
     if (isSelected) return;
     const filterList = articleList.list.filter((i) => i.id !== id);
@@ -160,7 +161,7 @@ const Collection: React.FC<IProps> = () => {
       list: listRef.current,
       total: articleList.total - 1,
     });
-    cancelCollected(id);
+    cancelCollected(id, isMove);
   };
 
   // 点击进入详情
@@ -191,9 +192,9 @@ const Collection: React.FC<IProps> = () => {
   };
 
   // 获取转移成功回调
-  const getCollectRes = (id: string) => {
+  const getCollectRes = (id: string, isMove?: boolean) => {
     if (id) {
-      removeArticle(id);
+      removeArticle(id, isMove);
     }
   };
 

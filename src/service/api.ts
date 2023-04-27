@@ -47,6 +47,8 @@ const COMMENTS = '/api/comments';
 const GET_COMMENT_LIST = '/api/getCommentList';
 // 点赞
 const GIVE_LIKE = '/api/giveLike';
+// 校验文章点赞状态
+const CHECK_ARTICLE_LIKE_STATUS = '/api/checkArticleLikeStatus';
 // 删除评论
 const DELETE_COMMENT = '/api/deleteComment';
 
@@ -124,6 +126,7 @@ export {
   COMMENTS,
   GET_COMMENT_LIST,
   GIVE_LIKE,
+  CHECK_ARTICLE_LIKE_STATUS,
   DELETE_COMMENT,
   DELETE_ARTICLE,
   SEARCH_ARTICLE,

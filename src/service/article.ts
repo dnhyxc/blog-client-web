@@ -160,3 +160,9 @@ export async function getNextArticle(params: AnotherParams) {
   const res = await post(API.GET_NEXT_ARTICLE, params);
   return res;
 }
+
+// 校验文章点赞点赞状态
+export const checkArticleLikeStatus = async (params: { id: string; userId: string }) => {
+  const res = await post(API.CHECK_ARTICLE_LIKE_STATUS, params);
+  return res;
+};

@@ -29,6 +29,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [addVisible, setAddVisible] = useState<boolean>(false);
   const [collected, setCollected] = useState<boolean>(false);
+  const [likeStatus, setLikeStatus] = useState<boolean>(false);
   const [createCollectId, setCreateCollectId] = useState<string>('');
   const [commentCount, setCommentCount] = useState<number>(0);
 
@@ -55,6 +56,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
   useEffect(() => {
     if (!visible) {
       getCollectionStatus();
+      checkArticleLikeStatus();
     }
   }, [visible, id, loginStatus]);
 
@@ -135,6 +137,20 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
     }
   };
 
+  // 校验文章点赞状态
+  const checkArticleLikeStatus = async () => {
+    // 检验是否有userId，如果没有禁止发送请求
+    const res = normalizeResult<{ id: string; isLike: boolean }>(
+      await Service.checkArticleLikeStatus({
+        id,
+        userId: getUserInfo?.userId,
+      })
+    );
+    if (res.success) {
+      setLikeStatus(res.data.isLike);
+    }
+  };
+
   // 取消收藏
   const cancelCollected = async () => {
     if (!getUserInfo?.userId || !loginStatus.success) {
@@ -205,7 +221,10 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
       <div className={styles.actionBtn}>
         <MIcons
           name="icon-24gf-thumbsUp2"
-          className={classname(styles.actionIcon, isLike && styles.likeActionIcon)}
+          className={classname(
+            styles.actionIcon,
+            (isLike || likeStatus) && styles.likeActionIcon
+          )}
           onClick={onLikeArticle}
           customStyle
         />

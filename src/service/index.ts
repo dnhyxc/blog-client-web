@@ -22,6 +22,7 @@ import {
   getPrevArticle,
   getNextArticle,
   advancedSearch,
+  checkArticleLikeStatus,
 } from './article';
 import { uploadFile } from './upload';
 import { getMyArticleList, getAuthorArticleList, getAuthorTimeline } from './userInfo';
@@ -96,4 +97,5 @@ export {
   getCollectArticles,
   removeCollectArticle,
   getCollectTotal,
+  checkArticleLikeStatus,
 };
