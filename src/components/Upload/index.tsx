@@ -19,6 +19,7 @@ interface IProps {
   form: any;
   // eslint-disable-next-line no-unused-vars
   setFilePath?: (url: string) => void;
+  getUploadFilePath?: Function;
   imgStyle?: string;
   markStyle?: string;
   uploadWrapStyle?: string;
@@ -46,6 +47,7 @@ const UploadFile: React.FC<IProps> = ({
   uploadStyle,
   uploadNode,
   listType = 'picture-card',
+  getUploadFilePath,
 }) => {
   const [previewVisible, setPreviewVisible] = useState<boolean>(false);
   const [showCropper, setShowCropper] = useState<boolean>(false);
@@ -100,6 +102,7 @@ const UploadFile: React.FC<IProps> = ({
               ? { mainCover: res?.data?.filePath }
               : { coverImage: res?.data?.filePath }
           );
+          getUploadFilePath && getUploadFilePath(res?.data?.filePath, needPreview);
           success(res.message);
         }
         if (!res.success && res.code === 409) {

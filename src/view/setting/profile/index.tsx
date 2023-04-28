@@ -43,6 +43,39 @@ const Profile: React.FC = () => {
     }
   }, [mainCover, headUrl]);
 
+  // 获取上传到的图片
+  const getUploadFilePath = async (url: string, needPreview: boolean) => {
+    await updateUserImage(needPreview ? { headUrl: url } : { mainCover: url });
+  };
+
+  // 更改用户头像、封面图
+  const updateUserImage = async (params: { headUrl?: string; mainCover?: string }) => {
+    const userInfo =
+      storage.ssnGetItem('userInfo') && JSON.parse(storage.ssnGetItem('userInfo')!);
+    const cloneUserInfo = JSON.parse(JSON.stringify(userInfo));
+    const res = normalizeResult<LoginData>(
+      await Service.updateInfo(
+        {
+          ...params,
+          userId,
+        },
+        UPDATE_INFO_API_PATH[1]
+      )
+    );
+    if (res.success) {
+      userInfoStore.setUserInfo({
+        ...res.data,
+      });
+      removeFile(params?.headUrl ? cloneUserInfo?.headUrl : cloneUserInfo?.mainCover);
+    }
+  };
+
+  // 删除文件
+  const removeFile = async (url: string) => {
+    // 检验是否有userId，如果没有禁止发送请求
+    normalizeResult<void>(await Service.removeFile({ url, userId }));
+  };
+
   // 修改用户信息
   const onUpdateUserInfo = async () => {
     const values = await form.validateFields();
@@ -130,6 +163,7 @@ const Profile: React.FC = () => {
               needPreview={false}
               uploadStyle={styles.uploadStyle}
               listType="text"
+              getUploadFilePath={getUploadFilePath}
               uploadNode={
                 <Button ghost className={styles.changeCover}>
                   编辑封面图片
@@ -146,6 +180,7 @@ const Profile: React.FC = () => {
               imgStyle={styles.uploadImg}
               markStyle={styles.markStyle}
               uploadWrapStyle={styles.uploadWrapStyle}
+              getUploadFilePath={getUploadFilePath}
               transitionImg={HEAD_UEL}
             />
             <div className={styles.username}>{username}</div>

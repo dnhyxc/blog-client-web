@@ -24,7 +24,7 @@ import {
   advancedSearch,
   checkArticleLikeStatus,
 } from './article';
-import { uploadFile } from './upload';
+import { uploadFile, removeFile } from './upload';
 import { getMyArticleList, getAuthorArticleList, getAuthorTimeline } from './userInfo';
 import {
   register,
@@ -76,6 +76,7 @@ export {
   getTimelineList,
   getMyArticleList,
   uploadFile,
+  removeFile,
   resetPassword,
   getArticleByRandom,
   getAuthorArticleList,

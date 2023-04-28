@@ -1,5 +1,7 @@
 // 上传文件
 const UPLOAD = '/api/upload';
+// 删除文件
+const REMOVE_FILE = '/api/removeFile';
 
 // 用户注册
 const REGISTER = '/api/register';
@@ -122,6 +124,7 @@ export {
   CREATE_ARTICLE,
   UPDATE_ARTICLE,
   UPLOAD,
+  REMOVE_FILE,
   ARTICLE_DETAIL,
   COMMENTS,
   GET_COMMENT_LIST,
