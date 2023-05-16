@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie';
 import moment from 'moment';
+import SparkMD5 from 'spark-md5';
 import { SET_ITEM_CONFIG } from '@/constant';
 import { encrypt, decrypt } from './crypto';
 import { normalizeResult } from './tools';
@@ -182,6 +183,26 @@ export const getStoreUserInfo = () => {
   };
 };
 
+const md5HashName = (file: File) => {
+  return new Promise((resolve, reject) => {
+    // 创建FileReader实例
+    const fileReader = new FileReader();
+    // 开始读文件
+    fileReader.readAsBinaryString(file);
+    // 文件读完之后，触发load事件
+    fileReader.onload = (e) => {
+      // result是fileReader读到的部分
+      const result = (e.target as FileReader).result as string;
+      // 如果读到的长度和文件长度一致，则读取成功
+      const isSuccess = file.size === result?.length;
+      // 读取成功，则生成MD5，扔出去。失败就报错
+      isSuccess ? resolve(SparkMD5.hashBinary(result)) : reject(new Error('读取出错了'));
+    };
+    // 读取过程中出错也直接报错
+    fileReader.onerror = () => reject(new Error('读取出错了'));
+  });
+};
+
 export {
   normalizeResult,
   useCookies,
@@ -202,4 +223,5 @@ export {
   verifyUsername,
   verifyPassword,
   verifyResetPassword,
+  md5HashName,
 };

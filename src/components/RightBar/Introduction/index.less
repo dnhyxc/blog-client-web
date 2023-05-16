@@ -72,7 +72,7 @@
     .socialList {
       display: flex;
       justify-content: center;
-      margin: 10px 0 20px 0;
+      margin: 10px 0 10px 0;
 
       span {
         display: inline-block;
@@ -94,6 +94,27 @@
         }
       }
     }
+  }
+
+  .pcActions {
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+    & span {
+      cursor: pointer;
+      color: @menu-active;
+    }
+
+    .download {
+      margin-left: 20px;
+    }
+  }
+
+  .dark {
+    background-color: @dark-bgc-deep;
+    color: @dark-fc;
   }
 }
 

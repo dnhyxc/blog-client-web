@@ -35,3 +35,5 @@ declare module 'react-syntax-highlighter/dist/esm/languages/prism';
 declare module 'prismjs';
 
 declare module 'classname';
+
+declare module 'spark-md5';
