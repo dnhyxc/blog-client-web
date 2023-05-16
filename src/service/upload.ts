@@ -6,8 +6,8 @@ export async function uploadFile(params?: any) {
   return res;
 }
 
-export async function uploadLargeFile(params?: any) {
-  const res = await post(API.UPLOAD_LARGE_FILE, params);
+export async function downloadFile(params?: any) {
+  const res = await post(API.DOWNLOAD_FILE, params);
   return res;
 }
 

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
-import { Button, Upload } from 'antd';
-import type { RcFile } from 'antd/es/upload';
+import { Button } from 'antd';
 import { HEAD_UEL } from '@/constant';
 import Image from '@/components/Image';
 import * as Service from '@/service';
-import { info, normalizeResult, error, success, md5HashName } from '@/utils';
+import { info, normalizeResult } from '@/utils';
 import { UserInfoParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -75,59 +74,18 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
     navigate('/author');
   };
 
-  const beforeUpload = async (file: RcFile) => {
-    const fileType = file.type;
-    const isLt500M = file.size / 1024 / 1024 < 500;
-    if (fileType !== 'application/x-zip-compressed') {
-      error('只能上传 zip 压缩文件');
-    }
-    if (!isLt500M) {
-      error('请上传小于500M的压缩包');
-    }
-    if (fileType === 'application/x-zip-compressed' && isLt500M) {
-      const fileName = (await md5HashName(file)) as string;
-      onUpload(file, 0, fileName);
-    }
-  };
-
-  // 上传pc包
-  const onUpload = async (file: RcFile, index?: number, fileName?: string) => {
-    const chunkSize = 1024 * 1024 * 10;
-    const findIndex = file?.name?.lastIndexOf('.');
-    const ext = file.name.slice(findIndex + 1);
-
-    // 获取当前片的起始字节
-    const start = index! * chunkSize;
-
-    console.log(start, 'start');
-
-    if (start > file.size) {
-      console.log(start, '上传完毕');
-      // 当超出文件大小，停止递归上传
-      success('上传完毕', start);
-      return;
-    }
-
-    const blob = file.slice(start, start + chunkSize);
-
-    // 为每片进行命名
-    const blobName = `${fileName}_${index}.${ext}`;
-    const blobFile = new File([blob], blobName, { type: file.type });
-    const formData = new FormData();
-    formData.append('file', blobFile);
-    formData.append('filename', blobName);
-    const res = normalizeResult<{ filePath: string }>(
-      await Service.uploadLargeFile(formData)
-    );
-
-    if (res.success) {
-      onUpload(file, ++index!);
-    }
-  };
-
   // 下载pc包
-  const onDownload = () => {
-    console.log('上传pc包');
+  const onDownload = async () => {
+    const res = normalizeResult<{ filePath: string }>(await Service.downloadFile());
+    if (res.success) {
+      const a = document.createElement('a');
+      a.style.display = 'none'; // 创建一个隐藏的a标签
+      a.download = 'dnhyxc.zip';
+      a.href = res.data.filePath;
+      document.body.appendChild(a);
+      a.click(); // 触发a标签的click事件
+      document.body.removeChild(a);
+    }
   };
 
   return authorInfo.userId ? (
@@ -172,16 +130,6 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
         </div>
       </div>
       <div className={styles.pcActions}>
-        <Upload
-          name="file"
-          headers={{ Authorization: `Bearer ${sessionStorage.getItem('token')}` }}
-          listType="text"
-          showUploadList={false}
-          beforeUpload={beforeUpload}
-          customRequest={() => {}} // 覆盖upload action默认的上传行为，改为自定义上传
-        >
-          上传 PC 客户端
-        </Upload>
         <span className={styles.download} onClick={onDownload}>
           下载 PC 客户端
         </span>

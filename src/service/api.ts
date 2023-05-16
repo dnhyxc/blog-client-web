@@ -1,7 +1,7 @@
 // 上传文件
 const UPLOAD = '/api/upload';
 // 上传文件
-const UPLOAD_LARGE_FILE = '/api/uploadLargeFile';
+const DOWNLOAD_FILE = '/api/downloadFile';
 // 删除文件
 const REMOVE_FILE = '/api/removeFile';
 
@@ -126,7 +126,7 @@ export {
   CREATE_ARTICLE,
   UPDATE_ARTICLE,
   UPLOAD,
-  UPLOAD_LARGE_FILE,
+  DOWNLOAD_FILE,
   REMOVE_FILE,
   ARTICLE_DETAIL,
   COMMENTS,
