@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { HEAD_UEL } from '@/constant';
 import Image from '@/components/Image';
 import * as Service from '@/service';
-import { info, normalizeResult } from '@/utils';
+import { info, normalizeResult, checkOs } from '@/utils';
 import { UserInfoParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -131,7 +131,7 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
       </div>
       <div className={styles.pcActions}>
         <span className={styles.download} onClick={onDownload}>
-          下载 PC 客户端
+          下载 {checkOs() === 'WIN' && 'Windows'} PC 客户端
         </span>
       </div>
     </div>

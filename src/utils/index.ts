@@ -203,6 +203,15 @@ const md5HashName = (file: File) => {
   });
 };
 
+// 检测系统类型
+const checkOs = () => {
+  const isMac = /macintosh|mac os x/i.test(navigator.userAgent);
+  if (isMac) {
+    return 'MAC';
+  }
+  return 'WIN';
+};
+
 export {
   normalizeResult,
   useCookies,
@@ -224,4 +233,5 @@ export {
   verifyPassword,
   verifyResetPassword,
   md5HashName,
+  checkOs,
 };
