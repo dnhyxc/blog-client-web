@@ -142,9 +142,6 @@ const CollectionDrawer: React.FC<IProps> = ({
   const onSubmit = async () => {
     if (!checkedItem.length) info('请选择一个收藏集');
     if (!getUserInfo?.userId || !articleId || !checkedItem.length) return;
-
-    console.log(pathname, 'pathnamepathnamepathnamepathname');
-
     const res = normalizeResult<string>(
       await Service.collectArticles({
         ids: checkedItem,
