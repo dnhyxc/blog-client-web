@@ -99,12 +99,23 @@
   .pcActions {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     border-radius: 5px;
     margin-bottom: 10px;
 
     & span {
       cursor: pointer;
       color: @menu-active;
+      text-align: center;
+      font-size: 16px;
+
+      &:first-child {
+        margin-bottom: 10px;
+      }
+
+      &:hover {
+        color: @head-menu-active;
+      }
     }
   }
 

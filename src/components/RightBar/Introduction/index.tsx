@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import { HEAD_UEL } from '@/constant';
 import Image from '@/components/Image';
 import * as Service from '@/service';
-import { info, normalizeResult, checkOs } from '@/utils';
+import { info, normalizeResult } from '@/utils';
 import { UserInfoParams } from '@/typings/common';
 import styles from './index.less';
 
@@ -75,15 +75,14 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
   };
 
   // 下载pc包
-  const onDownload = async () => {
-    const res = normalizeResult<{ filePath: string }>(await Service.downloadFile());
+  const onDownload = async (system: string) => {
+    const res = normalizeResult<{ filePath: string }>(await Service.downloadFile(system));
     if (res.success) {
       const a = document.createElement('a');
-      a.style.display = 'none'; // 创建一个隐藏的a标签
-      a.download = 'dnhyxc.zip';
+      a.style.display = 'none';
       a.href = res.data.filePath;
       document.body.appendChild(a);
-      a.click(); // 触发a标签的click事件
+      a.click();
       document.body.removeChild(a);
     }
   };
@@ -130,8 +129,11 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
         </div>
       </div>
       <div className={styles.pcActions}>
-        <span className={styles.download} onClick={onDownload}>
-          下载 {checkOs() === 'WIN' && 'Windows'} PC 客户端
+        <span className={styles.download} onClick={() => onDownload('windows')}>
+          下载 Windows PC 客户端
+        </span>
+        <span className={styles.download} onClick={() => onDownload('mac')}>
+          下载 MacOS PC 客户端
         </span>
       </div>
     </div>
