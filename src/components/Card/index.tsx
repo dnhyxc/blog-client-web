@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Skeleton, Popover, Modal } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
@@ -76,6 +76,7 @@ const Card: React.FC<IProps> = ({
   const navigate = useNavigate();
   const [search] = useSearchParams();
   const authorId = search.get('authorId');
+  const [delay, setDelay] = useState<boolean>(false);
 
   const renderAction = (id: string, isDelete: boolean | undefined) => {
     const onRemoveArticle = (id: string) => {
@@ -140,6 +141,13 @@ const Card: React.FC<IProps> = ({
         </div>
       </>
     );
+  };
+
+  const onLikeArticle = async (id: string, item: ArticleItem) => {
+    if (delay) return;
+    setDelay(true);
+    likeArticle && (await likeArticle(id, item));
+    setDelay(false);
   };
 
   const onEdit = (e: any, item: ArticleItem) => {
@@ -288,7 +296,7 @@ const Card: React.FC<IProps> = ({
                         themeMode === 'dark' && styles.darkText
                       )}
                       textStyle={themeMode === 'dark' && styles.darkText}
-                      onClick={() => likeArticle && likeArticle(i.id, i)}
+                      onClick={() => onLikeArticle(i.id, i)}
                     />
                     <MIcons
                       name="icon-comment"
