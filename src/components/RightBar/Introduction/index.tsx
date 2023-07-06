@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
 import { Button } from 'antd';
-import { HEAD_UEL } from '@/constant';
+import { HEAD_UEL, DOMAIN_URL } from '@/constant';
 import Image from '@/components/Image';
 import * as Service from '@/service';
 import { info, normalizeResult } from '@/utils';
@@ -119,6 +119,14 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
         </div>
       </div>
       <div className={styles.socialWrap}>
+        <a
+          href={`http://${DOMAIN_URL}:8090`}
+          target="_blank"
+          rel="noreferrer"
+          className={styles.link}
+        >
+          墨客管理后台
+        </a>
         <Button className={styles.github} type="primary" onClick={toGithub}>
           GitHub
         </Button>

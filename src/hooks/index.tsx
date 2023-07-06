@@ -384,9 +384,9 @@ export const useScrollLoad = ({
 
   const addClassName = (scrollTop: number) => {
     const currentTop = paddingTopStyle
-      ? document.body.clientHeight + 350
+      ? document.body.clientHeight + 450
       : scrollRef?.current?.offsetTop;
-    // 有首页有coverImage 时 document.body.clientHeight + 310 否则 scrollRef?.current?.offsetTop
+    // 有首页有coverImage 时 document.body.clientHeight + 450 否则 scrollRef?.current?.offsetTop
     if (scrollTop >= currentTop) {
       setSuckTop(true);
       scrollStyle && scrollRef?.current?.classList?.add(scrollStyle);
