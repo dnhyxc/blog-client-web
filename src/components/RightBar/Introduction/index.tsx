@@ -107,7 +107,12 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
       <div className={styles.nameInfo}>
         <div className={styles.name}>{authorInfo?.username}</div>
         {/* contentEditable="true"设置当前元素可编辑。suppressContentEditableWarning解决react报错 */}
-        <div suppressContentEditableWarning contentEditable="true" className={styles.desc}>
+        <div
+          suppressContentEditableWarning
+          contentEditable="true"
+          className={styles.desc}
+          title={authorInfo?.motto}
+        >
           {authorInfo?.motto}
         </div>
       </div>
