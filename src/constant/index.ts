@@ -22,6 +22,22 @@ import CYWL_URL from '@/assets/images/cywl.jpg';
 // import NEWBOY_COVER from '@/assets/images/newBoy.jpg';
 import SEA from '@/assets/images/sea.jpg';
 import SSM from '@/assets/images/ssm.jpg';
+import HOME_IMG from '@/assets/images/home.jpg';
+import CLASSIFY_IMG from '@/assets/images/classify.jpg';
+import TAG_IMG from '@/assets/images/tag.jpg';
+import INTERACT_IMG from '@/assets/images/interact.jpg';
+import LOGIN_IMG from '@/assets/images/login.jpg';
+import PRESONAL_IMG from '@/assets/images/presonal.jpg';
+import PROFILE_IMG from '@/assets/images/profile.jpg';
+import SEARCH_IMG from '@/assets/images/search.jpg';
+import SYSTEM_IMG from '@/assets/images/system.jpg';
+import THEME_IMG from '@/assets/images/theme.jpg';
+import TIMELINE_IMG from '@/assets/images/timeline.jpg';
+import TOOLS_IMG from '@/assets/images/tools.jpg';
+import CREATE_IMG from '@/assets/images/create.jpg';
+import COLLECT_IMG from '@/assets/images/collect.jpg';
+import AUTHOR_IMG from '@/assets/images/author.jpg';
+import ACCOUNT_IMG from '@/assets/images/account.jpg';
 
 export {
   SEA,
@@ -39,6 +55,106 @@ export {
   // IS_YOU_MP3,
   // BOAT_TO_CHINA_LRC,
 };
+
+// HOME_IMG,
+//   CLASSIFY_IMG,
+//   TAG_IMG,
+//   INTERACT_IMG,
+//   LOGIN_IMG,
+//   PRESONAL_IMG,
+//   PROFILE_IMG,
+//   SEARCH_IMG,
+//   SYSTEM_IMG,
+//   THEME_IMG,
+//   TIMELINE_IMG,
+//   TOOL_IMG,
+//   CREATE_IMG,
+//   COLLECT_IMG,
+//   AUTHOR_IMG,
+//   ACCOUNT_IMG,
+
+export const PREVIEW_IMGS = [
+  {
+    id: '1',
+    name: '首页',
+    url: HOME_IMG,
+  },
+  {
+    id: '2',
+    name: '文章分类',
+    url: CLASSIFY_IMG,
+  },
+  {
+    id: '3',
+    name: '文章标签',
+    url: TAG_IMG,
+  },
+  {
+    id: '4',
+    name: '关于博主',
+    url: AUTHOR_IMG,
+  },
+  {
+    id: '5',
+    name: '登录/注册',
+    url: LOGIN_IMG,
+  },
+  {
+    id: '6',
+    name: '时间轴',
+    url: TIMELINE_IMG,
+  },
+  {
+    id: '7',
+    name: '发布文章',
+    url: CREATE_IMG,
+  },
+  {
+    id: '8',
+    name: '留言一角',
+    url: INTERACT_IMG,
+  },
+  {
+    id: '9',
+    name: '实用工具',
+    url: TOOLS_IMG,
+  },
+  {
+    id: '10',
+    name: '个人主页',
+    url: PRESONAL_IMG,
+  },
+  {
+    id: '11',
+    name: '收藏集',
+    url: COLLECT_IMG,
+  },
+  {
+    id: '12',
+    name: '高级搜索',
+    url: SEARCH_IMG,
+  },
+  {
+    id: '13',
+    name: '个人信息',
+    url: PROFILE_IMG,
+  },
+  {
+    id: '14',
+    name: '账号设置',
+    url: ACCOUNT_IMG,
+  },
+  {
+    id: '15',
+    name: '系统设置',
+    url: SYSTEM_IMG,
+  },
+  {
+    id: '16',
+    name: '主题设置',
+    url: THEME_IMG,
+  },
+];
 
 // export const MUSIC_LRCS = {
 //   [BOAT_TO_CHINA_MP3]: BOAT_TO_CHINA_LRC,

@@ -5,15 +5,18 @@
  * @LastEditors: dnh
  * @FilePath: \src\components\Header\index.tsx
  */
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classname from 'classname';
 import { LeftOutlined } from '@ant-design/icons';
 import User from '@/components/User';
 import useStore from '@/store';
 import { useHtmlWidth, useGetSiderVisible } from '@/hooks';
+import { PrevImgPrams } from '@/typings/component';
+import ImagePreview from '../ImagePreview';
 import MIcons from '../Icons';
 import HeadMenu from '../HeadMenu';
+import DownloadModal from './DownLoadModal';
 import styles from './index.less';
 
 interface IProps {
@@ -45,6 +48,9 @@ const Header: React.FC<IProps> = ({
   activeMenuStyle,
   themeMode,
 }) => {
+  const [visible, setVisible] = useState<boolean>(false);
+  const [showPrev, setShowPrev] = useState<boolean>(false);
+  const [prevImgInfo, setPrevImgInfo] = useState<PrevImgPrams>({} as PrevImgPrams);
   const navigate = useNavigate();
   const { siderVisible } = useGetSiderVisible();
   const { htmlWidth } = useHtmlWidth();
@@ -61,47 +67,77 @@ const Header: React.FC<IProps> = ({
     navigate('/home');
   };
 
+  const onShowDownloadModal = () => {
+    setVisible(true);
+  };
+
+  const onCloseDownLoadModal = () => {
+    setVisible(false);
+  };
+
+  const onShowPrev = (item: PrevImgPrams) => {
+    setPrevImgInfo(item);
+    setShowPrev(true);
+    setVisible(false);
+  };
+
+  const onHidePrev = () => {
+    setShowPrev(false);
+    setVisible(true);
+  };
+
   return (
-    <div
-      className={classname(
-        className,
-        styles.herderWrap,
-        themeMode === 'dark' && styles.dark
-      )}
-      ref={headerRef}
-    >
-      <div className={styles.left}>
-        {needLeft &&
-          (left || (
-            <div className={styles.back} onClick={(e: any) => goBack(e)}>
-              <LeftOutlined className={styles.leftIcon} />
-              <MIcons
-                name="icon-haidao_"
-                className={classname(styles.iconWrap, iconStyles)}
-                onClick={goHome}
-              />
-            </div>
-          ))}
-        <div className={styles.child}>{children}</div>
-        {(excludesWidth || siderVisible) && htmlWidth > 960 && (
-          <HeadMenu
-            itemStyles={itemStyles}
-            activeMenuStyle={activeMenuStyle}
-            htmlWidth={htmlWidth}
-          />
-        )}
-      </div>
+    <>
+      <DownloadModal
+        visible={visible}
+        onCancel={onCloseDownLoadModal}
+        onShowPrev={onShowPrev}
+      />
+      <ImagePreview visible={showPrev} onCancel={onHidePrev} prevImgInfo={prevImgInfo} />
       <div
         className={classname(
-          styles.right,
-          needUser && styles.clearPadding,
-          !getUserInfo?.userId && styles.noLogin
+          className,
+          styles.herderWrap,
+          themeMode === 'dark' && styles.dark
         )}
+        ref={headerRef}
       >
-        {right && <span>{right}</span>}
-        {needUser && <User themeMode={themeMode} />}
+        <div className={styles.left}>
+          {needLeft &&
+            (left || (
+              <div className={styles.back} onClick={(e: any) => goBack(e)}>
+                <LeftOutlined className={styles.leftIcon} />
+                <MIcons
+                  name="icon-haidao_"
+                  className={classname(styles.iconWrap, iconStyles)}
+                  onClick={goHome}
+                />
+              </div>
+            ))}
+          <div className={styles.child}>{children}</div>
+          {(excludesWidth || siderVisible) && htmlWidth > 960 && (
+            <HeadMenu
+              itemStyles={itemStyles}
+              activeMenuStyle={activeMenuStyle}
+              htmlWidth={htmlWidth}
+            />
+          )}
+        </div>
+        <div
+          className={classname(
+            styles.right,
+            needUser && styles.clearPadding,
+            !getUserInfo?.userId && styles.noLogin
+          )}
+        >
+          {right && <span>{right}</span>}
+          <span className={styles.download} onClick={onShowDownloadModal}>
+            下载客户端
+          </span>
+          {needUser && <User themeMode={themeMode} />}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

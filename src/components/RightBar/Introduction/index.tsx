@@ -74,18 +74,26 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
     navigate('/author');
   };
 
-  // 下载pc包
-  const onDownload = async (system: string) => {
-    const res = normalizeResult<{ filePath: string }>(await Service.downloadFile(system));
-    if (res.success) {
-      const a = document.createElement('a');
-      a.style.display = 'none';
-      a.href = res.data.filePath;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-  };
+  // const onShowDownloadModal = () => {
+  //   setVisible(true);
+  // };
+
+  // const onCloseDownLoadModal = () => {
+  //   setVisible(false);
+  // };
+
+  // // 下载pc包
+  // const onDownload = async (system: string) => {
+  //   const res = normalizeResult<{ filePath: string }>(await Service.downloadFile(system));
+  //   if (res.success) {
+  //     const a = document.createElement('a');
+  //     a.style.display = 'none';
+  //     a.href = res.data.filePath;
+  //     document.body.appendChild(a);
+  //     a.click();
+  //     document.body.removeChild(a);
+  //   }
+  // };
 
   return authorInfo.userId ? (
     <div
@@ -141,14 +149,16 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
           {authorInfo?.blog && <span onClick={toBlog}>博客</span>}
         </div>
       </div>
-      <div className={styles.pcActions}>
+      {/* <div className={styles.pcActions} onClick={onShowDownloadModal}>
+        下载客户端
         <span className={styles.download} onClick={() => onDownload('windows')}>
           下载 Windows PC 客户端
         </span>
         <span className={styles.download} onClick={() => onDownload('mac')}>
           下载 MacOS PC 客户端
         </span>
-      </div>
+      </div> */}
+      {/* <DownloadModal visible={visible} onCancel={onCloseDownLoadModal} /> */}
     </div>
   ) : null;
 };

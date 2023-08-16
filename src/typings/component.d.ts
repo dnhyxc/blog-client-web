@@ -13,3 +13,9 @@ export interface AudioInfo {
   position: number;
   duration: number;
 }
+
+export interface PrevImgPrams {
+  id: string;
+  name: string;
+  url: string;
+}

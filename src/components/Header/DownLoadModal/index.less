@@ -1,0 +1,78 @@
+@import '~@styles/common.less';
+
+.webkitScrollbarStyle(@fff, @font-5);
+
+.downloadModalContent {
+  height: calc(100vh - 140px);
+
+  .downloadActions {
+    display: flex;
+    justify-content: center;
+
+    .downLodaBtn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: 700;
+      cursor: pointer;
+
+      &:first-child {
+        margin-right: 100px;
+      }
+    }
+
+    .icon {
+      font-size: 50px;
+      color: @menu-active;
+    }
+  }
+
+  .downloadInfo {
+    text-align: center;
+    margin: 20px 0 5px;
+  }
+
+  .previewHeader {
+    font-size: 18px;
+    font-weight: 700;
+    padding-left: 5px;
+    margin: 15px 0 10px;
+  }
+
+  .preview {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5px;
+
+    .prevItem {
+      width: calc(50% - 6px);
+      margin-right: 10px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      &:nth-child(even) {
+        margin-right: 0;
+      }
+      &:nth-last-of-type(-n + 2) {
+        margin-bottom: 0;
+      }
+
+      .title {
+        font-size: 16px;
+        margin: 10px 0;
+        font-weight: 700;
+      }
+
+      .imageWrap {
+        box-shadow: 0 0 5px #ddd;
+        border-radius: 5px;
+      }
+    }
+
+    .image {
+      width: 100%;
+      height: auto;
+      transform: scale(1.008);
+      border-radius: 5px;
+    }
+  }
+}
