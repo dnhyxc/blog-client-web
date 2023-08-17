@@ -88,12 +88,16 @@ const Header: React.FC<IProps> = ({
 
   return (
     <>
-      <DownloadModal
-        visible={visible}
-        onCancel={onCloseDownLoadModal}
-        onShowPrev={onShowPrev}
-      />
-      <ImagePreview visible={showPrev} onCancel={onHidePrev} prevImgInfo={prevImgInfo} />
+      {visible && (
+        <DownloadModal
+          visible={visible}
+          onCancel={onCloseDownLoadModal}
+          onShowPrev={onShowPrev}
+        />
+      )}
+      {showPrev && (
+        <ImagePreview visible={showPrev} onCancel={onHidePrev} prevImgInfo={prevImgInfo} />
+      )}
       <div
         className={classname(
           className,
