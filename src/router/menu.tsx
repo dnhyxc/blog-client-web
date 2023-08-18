@@ -60,6 +60,13 @@ const menuList = [
     name: '关于博主',
     path: '/author',
   },
+  {
+    key: 'download',
+    icon: <IdcardOutlined className={styles.menu_icon} />,
+    label: '客户端下载',
+    name: '客户端下载',
+    path: '/download',
+  },
 ];
 
 const settingList = [

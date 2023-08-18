@@ -26,6 +26,7 @@ const Account = lazy(() => import('@/view/setting/account'));
 const Author = lazy(() => import('@/view/author'));
 const Search = lazy(() => import('@/view/search'));
 const Collection = lazy(() => import('@/view/collection'));
+const DownloadClient = lazy(() => import('@/view/download'));
 
 const lazyLoad = (children: ReactNode, needSpin = true): ReactNode => {
   return (
@@ -79,6 +80,10 @@ const routes: RouteObject[] = [
   {
     path: 'detail/:id',
     element: lazyLoad(<Detail />),
+  },
+  {
+    path: 'download',
+    element: lazyLoad(<DownloadClient />),
   },
   {
     path: 'setting',

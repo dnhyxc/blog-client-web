@@ -1,0 +1,149 @@
+@import '~@styles/common.less';
+
+.webkitScrollbarStyle(@fff, @font-5);
+
+.DownloadClient {
+  position: relative;
+  display: flex;
+  justify-content: center;
+
+  &::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: @fff;
+  }
+
+  .changeIconWrap {
+    .changeIconWrap();
+  }
+
+  .headerWrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    background-color: @fff;
+    align-items: center;
+    z-index: 99;
+  }
+
+  .downloadModalContent {
+    padding: 60px 0 20px;
+    width: calc(100% - 260px);
+    overflow: hidden;
+
+    .downloadActions {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+
+      .downLodaBtn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-weight: 700;
+        cursor: pointer;
+
+        &:first-child {
+          margin-right: 100px;
+        }
+      }
+
+      .icon {
+        font-size: 50px;
+        color: @menu-active;
+      }
+    }
+
+    .downloadInfo {
+      text-align: center;
+      margin: 20px 0 5px;
+    }
+
+    .previewHeader {
+      font-size: 18px;
+      font-weight: 700;
+      padding-left: 5px;
+      margin: 15px 0 10px;
+    }
+
+    .preview {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 5px;
+
+      .prevItem {
+        width: calc(50% - 6px);
+        margin-right: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        &:nth-child(even) {
+          margin-right: 0;
+        }
+        &:nth-last-of-type(-n + 2) {
+          margin-bottom: 0;
+        }
+
+        .title {
+          font-size: 16px;
+          margin: 10px 0;
+          font-weight: 700;
+        }
+
+        .imageWrap {
+          box-shadow: 0 0 5px #ddd;
+          border-radius: 5px;
+        }
+      }
+
+      .image {
+        width: 100%;
+        height: auto;
+        transform: scale(1.008);
+        border-radius: 5px;
+      }
+    }
+  }
+
+  .backTopWrap {
+    right: 15px;
+    bottom: 20px;
+
+    .backTop {
+      height: 40px;
+      width: 40px;
+      line-height: 40px;
+      border-radius: 5px;
+      background-color: @menu-active;
+      color: @fff;
+      text-align: center;
+      font-size: 14px;
+
+      .topIcon {
+        font-size: 18px;
+      }
+    }
+  }
+}
+
+.dark {
+  background-color: @dark-bgc-deep;
+  color: #fff;
+
+  &::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background-color: @dark-bgc-deep;
+  }
+}

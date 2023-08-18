@@ -39,11 +39,19 @@ const HeadMenu: React.FC<IProps> = ({
 
   const filterMenus = useMemo(() => {
     if (getUserInfo?.userId) {
-      return menuList;
+      return htmlWidth > 960 ? menuList : menuList.filter((i) => i.key !== 'download');
     }
-    return menuList.filter(
-      (i) => i.key !== 'personal' && i.key !== 'create' && i.key !== 'timeline'
-    );
+    return htmlWidth > 960
+      ? menuList.filter(
+          (i) => i.key !== 'personal' && i.key !== 'create' && i.key !== 'timeline'
+        )
+      : menuList.filter(
+          (i) =>
+            i.key !== 'personal' &&
+            i.key !== 'create' &&
+            i.key !== 'timeline' &&
+            i.key !== 'download'
+        );
   }, [getUserInfo?.userId]);
 
   const menu = (

@@ -10,6 +10,7 @@ interface IProps {
   prevImgInfo: PrevImgPrams;
   padding?: string;
   width?: string;
+  themeMode?: string;
 }
 
 const ImagePreview: React.FC<IProps> = ({
@@ -18,6 +19,7 @@ const ImagePreview: React.FC<IProps> = ({
   prevImgInfo,
   padding,
   width,
+  themeMode,
 }) => {
   const [currentImgInfo, setCurrentImgInfo] = useState<PrevImgPrams>({
     id: '',
@@ -68,6 +70,7 @@ const ImagePreview: React.FC<IProps> = ({
       footer={null}
       bodyStyle={{ padding: padding || '0 0 10px' }}
       centered
+      wrapClassName={themeMode === 'dark' && styles.darkWrapClassName}
     >
       <div className={styles.ImagePreview}>
         <span className={styles.prev} onClick={onPrev}>
