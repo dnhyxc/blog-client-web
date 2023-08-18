@@ -101,7 +101,7 @@ const DownloadClient: React.FC<IProps> = () => {
         <div className={styles.downloadInfo}>
           为了提供更好的用户体验和更多的功能，诚挚地邀请您下载客户端。下载后，您将享受到更快速、更稳定的服务。
         </div>
-        <div className={styles.previewHeader}>PC 端页面预览</div>
+        <div className={styles.previewHeader}>客户端页面预览</div>
         <div className={styles.preview}>
           {PREVIEW_IMGS.map((i, index) => {
             return (
