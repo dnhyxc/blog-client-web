@@ -39,6 +39,7 @@ import COLLECT_IMG from '@/assets/images/collect.jpg';
 import AUTHOR_IMG from '@/assets/images/author.jpg';
 import ACCOUNT_IMG from '@/assets/images/account.jpg';
 import PICTURE_IMG from '@/assets/images/picture.jpg';
+import DETAIL_IMG from '@/assets/images/detail.jpg';
 
 export {
   SEA,
@@ -95,52 +96,57 @@ export const PREVIEW_IMGS = [
   },
   {
     id: '8',
+    name: '文章详情',
+    url: DETAIL_IMG,
+  },
+  {
+    id: '9',
     name: '留言一角',
     url: INTERACT_IMG,
   },
   {
-    id: '9',
+    id: '10',
     name: '实用工具',
     url: TOOLS_IMG,
   },
   {
-    id: '10',
+    id: '11',
     name: '个人主页',
     url: PRESONAL_IMG,
   },
   {
-    id: '11',
+    id: '12',
     name: '收藏集',
     url: COLLECT_IMG,
   },
   {
-    id: '12',
+    id: '13',
     name: '高级搜索',
     url: SEARCH_IMG,
   },
   {
-    id: '13',
+    id: '14',
     name: '个人信息',
     url: PROFILE_IMG,
   },
   {
-    id: '14',
+    id: '15',
     name: '账号设置',
     url: ACCOUNT_IMG,
   },
   {
-    id: '15',
+    id: '16',
     name: '系统设置',
     url: SYSTEM_IMG,
   },
   {
-    id: '16',
+    id: '17',
     name: '主题设置',
     url: THEME_IMG,
   },
   {
-    id: '17',
-    name: '实用工具',
+    id: '18',
+    name: '图片合集',
     url: PICTURE_IMG,
   },
 ];
