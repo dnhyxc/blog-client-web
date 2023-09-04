@@ -38,6 +38,7 @@ import CREATE_IMG from '@/assets/images/create.jpg';
 import COLLECT_IMG from '@/assets/images/collect.jpg';
 import AUTHOR_IMG from '@/assets/images/author.jpg';
 import ACCOUNT_IMG from '@/assets/images/account.jpg';
+import PICTURE_IMG from '@/assets/images/picture.jpg';
 
 export {
   SEA,
@@ -55,23 +56,6 @@ export {
   // IS_YOU_MP3,
   // BOAT_TO_CHINA_LRC,
 };
-
-// HOME_IMG,
-//   CLASSIFY_IMG,
-//   TAG_IMG,
-//   INTERACT_IMG,
-//   LOGIN_IMG,
-//   PRESONAL_IMG,
-//   PROFILE_IMG,
-//   SEARCH_IMG,
-//   SYSTEM_IMG,
-//   THEME_IMG,
-//   TIMELINE_IMG,
-//   TOOL_IMG,
-//   CREATE_IMG,
-//   COLLECT_IMG,
-//   AUTHOR_IMG,
-//   ACCOUNT_IMG,
 
 export const PREVIEW_IMGS = [
   {
@@ -153,6 +137,11 @@ export const PREVIEW_IMGS = [
     id: '16',
     name: '主题设置',
     url: THEME_IMG,
+  },
+  {
+    id: '17',
+    name: '实用工具',
+    url: PICTURE_IMG,
   },
 ];
 
