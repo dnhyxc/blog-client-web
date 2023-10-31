@@ -1,0 +1,27 @@
+@import '~@styles/common.less';
+
+.webkitScrollbarStyle(@fff, @font-5);
+
+.Chat {
+  display: flex;
+  flex-direction: column;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    height: calc(100vh - 60px);
+    width: 65%;
+    padding-top: 20px;
+
+    .actions {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+
+      .btn {
+        margin-right: 20px;
+      }
+    }
+  }
+}

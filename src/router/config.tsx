@@ -17,6 +17,7 @@ const Home = lazy(() => import('@/view/home'));
 const Personal = lazy(() => import('@/view/personal'));
 const Detail = lazy(() => import('@/view/detail'));
 const Mackdown = lazy(() => import('@/view/create'));
+const Chat = lazy(() => import('@/view/chat'));
 const Classify = lazy(() => import('@/view/classify'));
 const TagList = lazy(() => import('@/view/tag/List'));
 const Timeline = lazy(() => import('@/view/timeline'));
@@ -68,6 +69,10 @@ const children = [
   {
     path: 'create',
     element: lazyLoad(<Mackdown />),
+  },
+  {
+    path: 'chat',
+    element: lazyLoad(<Chat />),
   },
 ];
 
