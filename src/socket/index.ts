@@ -135,7 +135,7 @@ function onMessage(event: any) {
       // 心跳数据不处理
       // 所需的正常操作
       if (parseData.action === 'heartBeat') {
-        console.log(event.data);
+        // console.log(event.data);
       } else {
         // 解析处理数据
         if (parseData.action === 'push') {
@@ -157,7 +157,7 @@ function onMessage(event: any) {
       throw new Error('收到非格式化数据');
     }
   } catch (e) {
-    console.log(e);
+    // console.log(e);
   }
   // 拿到任何消息都说明当前连接是正常的，此时从新进行心跳检测
   heartCheck.start();

@@ -40,6 +40,8 @@ import AUTHOR_IMG from '@/assets/images/author.jpg';
 import ACCOUNT_IMG from '@/assets/images/account.jpg';
 import PICTURE_IMG from '@/assets/images/picture.jpg';
 import DETAIL_IMG from '@/assets/images/detail.jpg';
+import CHAT_IMG from '@/assets/images/chat.jpg';
+import ARTICLE_IMG from '@/assets/images/article.jpg';
 
 export {
   SEA,
@@ -76,78 +78,88 @@ export const PREVIEW_IMGS = [
   },
   {
     id: '4',
-    name: '关于博主',
-    url: AUTHOR_IMG,
-  },
-  {
-    id: '5',
     name: '登录/注册',
     url: LOGIN_IMG,
   },
   {
-    id: '6',
+    id: '5',
     name: '时间轴',
     url: TIMELINE_IMG,
   },
   {
-    id: '7',
+    id: '6',
     name: '发布文章',
     url: CREATE_IMG,
   },
   {
-    id: '8',
+    id: '7',
     name: '文章详情',
     url: DETAIL_IMG,
   },
   {
+    id: '8',
+    name: '新窗口打开文章详情',
+    url: ARTICLE_IMG,
+  },
+  {
     id: '9',
+    name: '关于博主',
+    url: AUTHOR_IMG,
+  },
+  {
+    id: '10',
     name: '留言一角',
     url: INTERACT_IMG,
   },
   {
-    id: '10',
+    id: '11',
     name: '实用工具',
     url: TOOLS_IMG,
   },
   {
-    id: '11',
+    id: '12',
     name: '个人主页',
     url: PRESONAL_IMG,
   },
   {
-    id: '12',
+    id: '13',
     name: '收藏集',
     url: COLLECT_IMG,
   },
   {
-    id: '13',
+    id: '14',
     name: '高级搜索',
     url: SEARCH_IMG,
   },
   {
-    id: '14',
+    id: '15',
     name: '个人信息',
     url: PROFILE_IMG,
   },
   {
-    id: '15',
+    id: '16',
     name: '账号设置',
     url: ACCOUNT_IMG,
   },
   {
-    id: '16',
+    id: '17',
     name: '系统设置',
     url: SYSTEM_IMG,
   },
   {
-    id: '17',
+    id: '18',
     name: '主题设置',
     url: THEME_IMG,
   },
   {
-    id: '18',
+    id: '19',
     name: '图片合集',
     url: PICTURE_IMG,
+  },
+  {
+    id: '20',
+    name: '私聊',
+    url: CHAT_IMG,
   },
 ];
 
