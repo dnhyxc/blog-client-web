@@ -34,7 +34,10 @@ import SYSTEM_IMG from '@/assets/images/system.jpg';
 import THEME_IMG from '@/assets/images/theme.jpg';
 import TIMELINE_IMG from '@/assets/images/timeline.jpg';
 import TOOLS_IMG from '@/assets/images/tools.jpg';
-import CREATE_IMG from '@/assets/images/create.jpg';
+import CREATE_DRAFT_IMG from '@/assets/images/create-draft.jpg';
+import CREATE_VSCODE_IMG from '@/assets/images/create-vscode.jpg';
+import CREATE_DRAFT_EDITER_IMG from '@/assets/images/create-draft-editer.jpg';
+import CREATE_VSCODE_EDITER_IMG from '@/assets/images/create-vscode-editer.jpg';
 import COLLECT_IMG from '@/assets/images/collect.jpg';
 import AUTHOR_IMG from '@/assets/images/author.jpg';
 import ACCOUNT_IMG from '@/assets/images/account.jpg';
@@ -42,6 +45,7 @@ import PICTURE_IMG from '@/assets/images/picture.jpg';
 import DETAIL_IMG from '@/assets/images/detail.jpg';
 import CHAT_IMG from '@/assets/images/chat.jpg';
 import ARTICLE_IMG from '@/assets/images/article.jpg';
+import TAG_LIST_IMG from '@/assets/images/tag-list.jpg';
 
 export {
   SEA,
@@ -62,102 +66,98 @@ export {
 
 export const PREVIEW_IMGS = [
   {
-    id: '1',
     name: '首页',
     url: HOME_IMG,
   },
   {
-    id: '2',
     name: '文章分类',
     url: CLASSIFY_IMG,
   },
   {
-    id: '3',
     name: '文章标签',
     url: TAG_IMG,
   },
   {
-    id: '4',
-    name: '登录/注册',
-    url: LOGIN_IMG,
+    name: '标签-文章列表',
+    url: TAG_LIST_IMG,
   },
   {
-    id: '5',
+    name: '发布文章-富文本',
+    url: CREATE_DRAFT_IMG,
+  },
+  {
+    name: '发布文章-VSCode',
+    url: CREATE_VSCODE_IMG,
+  },
+  {
+    name: '发布文章-富文本编辑',
+    url: CREATE_DRAFT_EDITER_IMG,
+  },
+  {
+    name: '发布文章-VSCode编辑',
+    url: CREATE_VSCODE_EDITER_IMG,
+  },
+  {
+    name: '文章详情-当前窗口打开',
+    url: DETAIL_IMG,
+  },
+  {
+    name: '文章详情-子窗口打开',
+    url: ARTICLE_IMG,
+  },
+  {
     name: '时间轴',
     url: TIMELINE_IMG,
   },
   {
-    id: '6',
-    name: '发布文章',
-    url: CREATE_IMG,
-  },
-  {
-    id: '7',
-    name: '文章详情',
-    url: DETAIL_IMG,
-  },
-  {
-    id: '8',
-    name: '新窗口打开文章详情',
-    url: ARTICLE_IMG,
-  },
-  {
-    id: '9',
     name: '关于博主',
     url: AUTHOR_IMG,
   },
   {
-    id: '10',
-    name: '留言一角',
-    url: INTERACT_IMG,
-  },
-  {
-    id: '11',
-    name: '实用工具',
-    url: TOOLS_IMG,
-  },
-  {
-    id: '12',
-    name: '个人主页',
-    url: PRESONAL_IMG,
-  },
-  {
-    id: '13',
-    name: '收藏集',
-    url: COLLECT_IMG,
-  },
-  {
-    id: '14',
     name: '高级搜索',
     url: SEARCH_IMG,
   },
   {
-    id: '15',
-    name: '个人信息',
-    url: PROFILE_IMG,
+    name: '登录/注册',
+    url: LOGIN_IMG,
   },
   {
-    id: '16',
-    name: '账号设置',
-    url: ACCOUNT_IMG,
+    name: '留言一角',
+    url: INTERACT_IMG,
   },
   {
-    id: '17',
-    name: '系统设置',
-    url: SYSTEM_IMG,
+    name: '实用工具',
+    url: TOOLS_IMG,
   },
   {
-    id: '18',
-    name: '主题设置',
-    url: THEME_IMG,
-  },
-  {
-    id: '19',
     name: '图片合集',
     url: PICTURE_IMG,
   },
   {
-    id: '20',
+    name: '我的主页',
+    url: PRESONAL_IMG,
+  },
+  {
+    name: '个人资料',
+    url: PROFILE_IMG,
+  },
+  {
+    name: '账号设置',
+    url: ACCOUNT_IMG,
+  },
+  {
+    name: '系统设置',
+    url: SYSTEM_IMG,
+  },
+  {
+    name: '主题设置',
+    url: THEME_IMG,
+  },
+  {
+    name: '收藏集',
+    url: COLLECT_IMG,
+  },
+  {
     name: '私聊',
     url: CHAT_IMG,
   },

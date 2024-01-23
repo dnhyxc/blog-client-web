@@ -133,10 +133,10 @@ module.exports = {
     },
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json', '.less', '.scss'],
   },
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  },
+  // externals: {
+  //   react: 'React',
+  //   'react-dom': 'ReactDOM',
+  // },
   // 缓存配置
   optimization: {
     splitChunks: {
