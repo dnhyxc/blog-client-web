@@ -30,7 +30,6 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
   const [visible, setVisible] = useState<boolean>(false);
   const [addVisible, setAddVisible] = useState<boolean>(false);
   const [collected, setCollected] = useState<boolean>(false);
-  const [likeStatus, setLikeStatus] = useState<boolean>(false);
   const [createCollectId, setCreateCollectId] = useState<string>('');
   const [commentCount, setCommentCount] = useState<number>(0);
 
@@ -114,15 +113,15 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
       return;
     }
     setIsLike(res.data.isLike);
-    if (isLike) {
+
+    if (!res.data.isLike) {
       setLikeCount(likeCount! - 1);
     } else {
       setLikeCount(likeCount! + 1);
-      setLikeStatus(false);
     }
 
     // 给别人点赞或取消点赞之后推送websocket消息
-    sendMeg(isLike ? 'LIKE_ARTICLE' : 'CANCEL_LIKE_ARTICLE');
+    sendMeg(res.data.isLike ? 'LIKE_ARTICLE' : 'CANCEL_LIKE_ARTICLE');
   };
 
   // 收藏
@@ -175,7 +174,10 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
       })
     );
     if (res.success) {
-      setLikeStatus(res.data.isLike);
+      console.log(res.data.isLike, 'setLikeStatus');
+
+      // setLikeStatus(res.data.isLike);
+      setIsLike(res.data.isLike);
     }
   };
 
@@ -250,10 +252,7 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
       <div className={styles.actionBtn}>
         <MIcons
           name="icon-24gf-thumbsUp2"
-          className={classname(
-            styles.actionIcon,
-            (isLike || likeStatus) && styles.likeActionIcon
-          )}
+          className={classname(styles.actionIcon, isLike && styles.likeActionIcon)}
           onClick={onLikeArticle}
           customStyle
         />
