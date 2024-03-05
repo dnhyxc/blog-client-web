@@ -34,6 +34,7 @@ import {
   resetPassword,
   verify,
   logout,
+  verifyCode,
 } from './user';
 import {
   createCollection,
@@ -86,6 +87,7 @@ export {
   getNextArticle,
   verify,
   logout,
+  verifyCode,
   advancedSearch,
   createCollection,
   getCollectionList,

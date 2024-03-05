@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import moment from 'moment';
 import SparkMD5 from 'spark-md5';
-import { SET_ITEM_CONFIG } from '@/constant';
+import { SET_ITEM_CONFIG, CODE_LENGTH } from '@/constant';
 import { encrypt, decrypt } from './crypto';
 import { normalizeResult } from './tools';
 import { storage } from './storage';
@@ -171,6 +171,17 @@ const verifyResetPassword = (value: string) => {
   return false;
 };
 
+// 验证码校验
+export const verifyInputCode = (_: any, value: string, charater: string) => {
+  if (!value) {
+    return Promise.reject('请输入验证码');
+  }
+  if (value.toLowerCase() === charater.toLowerCase()) {
+    return Promise.resolve();
+  }
+  return Promise.reject('验证码输入错误');
+};
+
 // 获取存储在electron-store中的登录信息
 export const getStoreUserInfo = () => {
   // 获取存储在硬盘store中的登录信息
@@ -212,6 +223,66 @@ const checkOs = () => {
   return 'WIN';
 };
 
+// 随机生成颜色
+const randomColor = (min: number, max: number) => {
+  const r = randomNum(min, max);
+  const g = randomNum(min, max);
+  const b = randomNum(min, max);
+  return `rgb(${r},${g},${b})`;
+};
+
+// 随机生成数字
+const randomNum = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min) + min);
+};
+
+// canvas 绘制验证码
+const drawCharater = ({
+  canvasElement,
+  width,
+  height,
+  code,
+}: {
+  canvasElement: HTMLCanvasElement;
+  width: number;
+  height: number;
+  code: string;
+}) => {
+  // let txt = '';
+  // for (let i = 0; i < CODE_LENGTH; i++) {
+  //   txt += CHARACTERS[randomNum(0, CHARACTERS.length)];
+  // }
+  const ctx = canvasElement?.getContext('2d') as CanvasRenderingContext2D;
+  ctx.fillStyle = randomColor(180, 255);
+  ctx.fillRect(0, 0, width, height);
+  // 字体对齐位置
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'center'; // 设置文本对齐方式为居中
+  ctx.fillRect(0, 0, width, height); // 填充背景色
+  ctx.font = '32px sans-serif'; // 设置字体样式
+  // 随机生成字体大小(0.5 - 0.75)高的范围
+  // ctx.font = randomNum((height * 2) / 4, (height * 3) / 4) + 'px sans-serif';
+  ctx.fillStyle = randomColor(0, 255);
+  ctx.fillText(code, width / 2, height / 2 + 3); // 绘制文本
+  // 绘制干扰线
+  for (let j = 0; j < CODE_LENGTH; j++) {
+    ctx.strokeStyle = randomColor(30, 180);
+    ctx.beginPath();
+    ctx.moveTo(randomNum(0, width), randomNum(0, height));
+    ctx.lineTo(randomNum(0, width), randomNum(0, height));
+    ctx.stroke();
+  }
+  // 绘制干扰点
+  for (let k = 0; k < 30; k++) {
+    ctx.fillStyle = randomColor(0, 255);
+    ctx.beginPath();
+    ctx.arc(randomNum(0, width), randomNum(0, height), 1, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+
+  return code;
+};
+
 export {
   normalizeResult,
   useCookies,
@@ -234,4 +305,5 @@ export {
   verifyResetPassword,
   md5HashName,
   checkOs,
+  drawCharater,
 };

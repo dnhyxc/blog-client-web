@@ -17,7 +17,15 @@ export interface LoginData {
   mainCover?: string;
 }
 
+export interface VerifyCodeParams {
+  id: string;
+  createTime: string;
+  code: string;
+}
+
 export interface LoginParams {
+  codeId: string;
+  code: string;
   username?: string;
   password?: string;
 }
@@ -131,10 +139,11 @@ export interface ArticleDetailParams {
 }
 
 export interface UseGetArticleDetailParams {
-  id: string | undefined | null;
+  id?: string | undefined | null;
   draftArticleId?: string | null;
   draftId?: string | null | undefined;
   visible?: boolean;
+  draft?: any;
 }
 
 /**

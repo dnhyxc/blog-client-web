@@ -5,12 +5,12 @@
  * @LastEditors: dnh
  * @FilePath: \src\view\login\index.tsx
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Button, Form, Input, Checkbox } from 'antd';
 import classname from 'classname';
 import useStore from '@/store';
-import { register, login, verify, resetPassword } from '@/service';
+import { register, login, verify, resetPassword, verifyCode } from '@/service';
 import {
   normalizeResult,
   useCookies,
@@ -20,9 +20,11 @@ import {
   error,
   verifyUsername,
   verifyPassword,
+  verifyInputCode,
+  drawCharater,
 } from '@/utils';
 import { close } from '@/components/Render';
-import { LoginData } from '@/typings/common';
+import { LoginData, VerifyCodeParams } from '@/typings/common';
 import styles from './index.less';
 
 const { getCoolie, setCookie, removeCoolie } = useCookies;
@@ -33,6 +35,8 @@ const Login = () => {
   const [resetPwd, setResetPwd] = useState<string>('');
   const [verifyPwd, setVerifyPwd] = useState<string>('');
   const [showInfo, setShowInfo] = useState<boolean>(false);
+  const [verifyCodeInfo, setVerifyCodeInfo] = useState<Partial<VerifyCodeParams>>({});
+
   const { userInfoStore, commonStore } = useStore();
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -40,6 +44,8 @@ const Login = () => {
   const verifyPath = search.get('verify');
   const query = search.get('search');
   const pathname = search.get('pathname');
+
+  const canvasCtxRef = useRef(null);
 
   useEffect(() => {
     let timer: any = null;
@@ -63,6 +69,33 @@ const Login = () => {
       setShowInfo(false);
     }
   }, [resetPwd, verifyPwd]);
+
+  useEffect(() => {
+    getVerifyCode();
+  }, []);
+
+  useEffect(() => {
+    canvasCtxRef.current && getCharaterValue(canvasCtxRef.current);
+  }, [verifyCodeInfo]);
+
+  const getVerifyCode = async () => {
+    const res = normalizeResult<VerifyCodeParams>(
+      await verifyCode({ id: verifyCodeInfo.id! })
+    );
+    if (res.success) {
+      setVerifyCodeInfo(res.data);
+    }
+  };
+
+  // 生成验证码
+  const getCharaterValue = (element: HTMLCanvasElement) => {
+    drawCharater({
+      canvasElement: element,
+      width: 120,
+      height: 40,
+      code: verifyCodeInfo.code!,
+    });
+  };
 
   // 校验token是否过期
   const verifyToken = async () => {
@@ -94,7 +127,14 @@ const Login = () => {
     const values = newValues || (await form.validateFields());
     const password = values?.password && encrypt(values.password);
     const username = values?.username;
-    const res = normalizeResult<LoginData>(await login({ username, password }));
+    const res = normalizeResult<LoginData>(
+      await login({
+        username,
+        password,
+        codeId: verifyCodeInfo.id!,
+        code: verifyCodeInfo.code!,
+      })
+    );
     if (res.success) {
       const userInfo = { ...res.data };
       delete userInfo.token;
@@ -213,6 +253,27 @@ const Login = () => {
               >
                 <Input.Password placeholder="请输入密码" size="large" />
               </Form.Item>
+              <div className={styles.codeItem}>
+                <Form.Item
+                  name="code"
+                  rules={[
+                    { required: true, message: '' },
+                    {
+                      validator: (_, value) =>
+                        verifyInputCode(_, value, verifyCodeInfo.code!),
+                    },
+                  ]}
+                >
+                  <Input placeholder="请输入验证码" size="large" />
+                </Form.Item>
+                <canvas
+                  ref={canvasCtxRef}
+                  className={styles.codeCanvas}
+                  width={120}
+                  height={40}
+                  onClick={getVerifyCode}
+                />
+              </div>
               <Form.Item
                 name="remember"
                 valuePropName="checked"

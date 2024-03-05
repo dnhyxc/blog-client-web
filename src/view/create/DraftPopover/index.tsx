@@ -102,6 +102,11 @@ const DraftPopover: React.FC<IProps> = ({
     });
   };
 
+  // 预览
+  const onPreview = (item: ArticleItem) => {
+    navigate(`/detail/${item.id}?draft=1`);
+  };
+
   // 编辑
   const onEditDraft = (item: ArticleItem) => {
     navigate(`/create?draftId=${item.id}`);
@@ -143,6 +148,13 @@ const DraftPopover: React.FC<IProps> = ({
                 </span>
                 <span className={styles.actions}>
                   <span className={styles.createTime}>{formatGapTime(i.createTime)}</span>
+                  <Button
+                    className={styles.preBtn}
+                    type="link"
+                    onClick={() => onPreview(i)}
+                  >
+                    预览
+                  </Button>
                   <Button
                     className={styles.editBtn}
                     type="link"

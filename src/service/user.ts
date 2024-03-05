@@ -17,6 +17,11 @@ export async function login(params: LoginParams) {
   return res;
 }
 
+export async function verifyCode(params: { id: string }) {
+  const res = await post(API.VERIFY_CODE, params);
+  return res;
+}
+
 export async function updateInfo(params: UserInfoParams, path: string) {
   const res = await put(path, params);
   return res;

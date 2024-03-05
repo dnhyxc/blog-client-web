@@ -6,7 +6,7 @@
  * @FilePath: \src\view\detail\index.tsx
  */
 import React, { useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { Affix, BackTop, Spin, Button } from 'antd';
 import classname from 'classname';
 import { ArrowUpOutlined } from '@ant-design/icons';
@@ -33,7 +33,9 @@ import styles from './index.less';
 const ArticleDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { detail, loading } = useGetArticleDetail({ id });
+  const [search] = useSearchParams();
+  const draft = search.get('draft');
+  const { detail, loading } = useGetArticleDetail(draft ? { draftId: id } : { id });
   const {
     userInfoStore: { getUserInfo },
   } = useStore();
@@ -159,38 +161,46 @@ const ArticleDetail: React.FC = () => {
                 coverImg={renderCoverImg(detail)}
               >
                 <div className={styles.tagWrap}>
-                  <div className={styles.tagList}>
-                    <span className={styles.label}>分类：</span>
-                    <div className={styles.tagItemWrap}>
-                      <span
-                        className={styles.tag}
-                        onClick={(e) => toClassify(e, detail.classify)}
-                      >
-                        {detail.classify}
-                      </span>
+                  {detail.classify && (
+                    <div className={styles.tagList}>
+                      <span className={styles.label}>分类：</span>
+                      <div className={styles.tagItemWrap}>
+                        <span
+                          className={styles.tag}
+                          onClick={(e) => toClassify(e, detail.classify)}
+                        >
+                          {detail.classify}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <div className={styles.tagList}>
-                    <span className={styles.label}>标签：</span>
-                    <div className={styles.tagItemWrap}>
-                      <span className={styles.tag} onClick={(e) => toTag(e, detail.tag)}>
-                        {detail.tag}
-                      </span>
+                  )}
+                  {detail.tag && (
+                    <div className={styles.tagList}>
+                      <span className={styles.label}>标签：</span>
+                      <div className={styles.tagItemWrap}>
+                        <span className={styles.tag} onClick={(e) => toTag(e, detail.tag)}>
+                          {detail.tag}
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </Preview>
-              <div className={styles.anotherArticle}>
-                <AnotherArticle id={id} themeMode={themeMode} />
-              </div>
-              <div ref={commentRef}>
-                <Comments
-                  authorId={detail.authorId}
-                  themeMode={themeMode}
-                  htmlWidth={htmlWidth}
-                  detail={detail}
-                />
-              </div>
+              {!draft && (
+                <div className={styles.anotherArticle}>
+                  <AnotherArticle id={id} themeMode={themeMode} />
+                </div>
+              )}
+              {!draft && (
+                <div ref={commentRef}>
+                  <Comments
+                    authorId={detail.authorId}
+                    themeMode={themeMode}
+                    htmlWidth={htmlWidth}
+                    detail={detail}
+                  />
+                </div>
+              )}
             </div>
             {htmlWidth > 960 && (
               <div className={styles.rightBar}>
@@ -202,7 +212,7 @@ const ArticleDetail: React.FC = () => {
             )}
           </div>
         )}
-        {htmlWidth <= 960 && detail && (
+        {htmlWidth <= 960 && detail && !draft && (
           <ActionBar
             id={id as string}
             detail={detail}

@@ -7,6 +7,8 @@ const REMOVE_FILE = '/api/removeFile';
 
 // 用户注册
 const REGISTER = '/api/register';
+// 获取验证码
+const VERIFY_CODE = '/api/verifyCode';
 // 用户登录
 const LOGIN = '/api/login';
 // 更新用户信息
@@ -119,6 +121,7 @@ const LOGOUT = '/api/logout';
 
 export {
   REGISTER,
+  VERIFY_CODE,
   LOGIN,
   UPDATE_INFO,
   ARTICLE_LIST,
