@@ -174,8 +174,6 @@ const Multibar: React.FC<IProps> = ({ id, detail, commentRef, themeMode }) => {
       })
     );
     if (res.success) {
-      console.log(res.data.isLike, 'setLikeStatus');
-
       // setLikeStatus(res.data.isLike);
       setIsLike(res.data.isLike);
     }
