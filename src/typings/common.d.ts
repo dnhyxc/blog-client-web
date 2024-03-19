@@ -24,8 +24,8 @@ export interface VerifyCodeParams {
 }
 
 export interface LoginParams {
-  codeId: string;
-  code: string;
+  codeId?: string;
+  code?: string;
   username?: string;
   password?: string;
 }

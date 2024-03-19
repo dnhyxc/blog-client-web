@@ -20,7 +20,6 @@ import {
   error,
   verifyUsername,
   verifyPassword,
-  verifyInputCode,
   drawCharater,
 } from '@/utils';
 import { close } from '@/components/Render';
@@ -83,7 +82,11 @@ const Login = () => {
       await verifyCode({ id: verifyCodeInfo.id! })
     );
     if (res.success) {
-      setVerifyCodeInfo(res.data);
+      const code = decrypt(res.data.code);
+      setVerifyCodeInfo({
+        ...res.data,
+        code,
+      });
     }
   };
 
@@ -127,12 +130,13 @@ const Login = () => {
     const values = newValues || (await form.validateFields());
     const password = values?.password && encrypt(values.password);
     const username = values?.username;
+    const code = values?.code && encrypt(values.code);
     const res = normalizeResult<LoginData>(
       await login({
         username,
         password,
         codeId: verifyCodeInfo.id!,
-        code: verifyCodeInfo.code!,
+        code,
       })
     );
     if (res.success) {
@@ -152,6 +156,7 @@ const Login = () => {
       });
     } else {
       res.message && error(res.message);
+      getVerifyCode();
     }
   };
 
@@ -256,13 +261,7 @@ const Login = () => {
               <div className={styles.codeItem}>
                 <Form.Item
                   name="code"
-                  rules={[
-                    { required: true, message: '' },
-                    {
-                      validator: (_, value) =>
-                        verifyInputCode(_, value, verifyCodeInfo.code!),
-                    },
-                  ]}
+                  rules={[{ required: true, message: '请输入验证码' }]}
                 >
                   <Input placeholder="请输入验证码" size="large" />
                 </Form.Item>
