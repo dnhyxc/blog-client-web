@@ -3220,10 +3220,10 @@ dir-glob@^3.0.1:
   dependencies:
     path-type "^4.0.0"
 
-dnhyxc-ci@0.0.23:
-  version "0.0.23"
-  resolved "https://registry.npmmirror.com/dnhyxc-ci/-/dnhyxc-ci-0.0.23.tgz#6006a98235576ec53d8b0edad5ede65146216eca"
-  integrity sha512-K8Tt+ecRufKXjS67y47idhNPdwnXNsVob7onx0b20zYgf+1KGNH2XQ6/dDx2nS12fuvWpe3nrEuRmwjpbK2mBA==
+dnhyxc-ci@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmmirror.com/dnhyxc-ci/-/dnhyxc-ci-1.0.1.tgz#b7384585611a21b0baeac4f0d783ca23ec7262d2"
+  integrity sha512-pvryDi9UMkhVXmBkjr2LR+LGTDeUHlETYb7wm2RlwIeWR3UOGhOBuuc5fXQlMBBX1GS723G/S8uHXijf7vCO1A==
   dependencies:
     archiver "^7.0.1"
     chalk "^4.1.2"
