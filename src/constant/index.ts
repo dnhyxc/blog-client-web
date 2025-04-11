@@ -1038,4 +1038,4 @@ export const CODE_LENGTH = 4;
 export const CHARACTERS = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789abcdefghijklmnpqrstuvwxyz';
 
 // md-editor 唯一id
-export const MDEDIT_ID = 'MDEDIT_ID'
+export const MDEDIT_ID = 'MDEDIT_ID';
