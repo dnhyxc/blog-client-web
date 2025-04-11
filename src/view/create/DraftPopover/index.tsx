@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Popover, Button, Drawer, Empty } from 'antd';
 import classname from 'classname';
 import { CloseOutlined } from '@ant-design/icons';

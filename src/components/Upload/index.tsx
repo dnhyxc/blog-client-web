@@ -1,5 +1,5 @@
 import 'cropperjs/dist/cropper.css';
-import React, { ReactNode, useRef, useState } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 import { Upload, Modal } from 'antd';
 import { UploadListType } from 'antd/lib/upload/interface';
 import Cropper from 'react-cropper';

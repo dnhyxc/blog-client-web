@@ -7,6 +7,7 @@ import useStore from '@/store';
 import Header from '@/components/Header';
 import ActionIcon from '@/components/ActionIcon';
 import TuiEditor from '@/components/TuiEditor';
+import MDEditor from '@/components/MDEditor';
 import {
   useGetArticleDetail,
   useDebounce,
@@ -29,8 +30,7 @@ import DraftPopover from './DraftPopover';
 
 import styles from './index.less';
 
-interface IProps {
-}
+interface IProps {}
 
 const CreateArticle: React.FC<IProps> = () => {
   const [visible, setVisible] = useState<boolean>(false);
@@ -200,10 +200,19 @@ const CreateArticle: React.FC<IProps> = () => {
           themeMode === 'dark' && styles.dark
         )}
       >
-        <TuiEditor
+        {/* <TuiEditor
           key={detail?.content}
           onGetMackdown={onGetMackdown}
           initialValue={detail?.content}
+          siderVisible={siderVisible}
+          onSaveDraft={onSaveDraft}
+          themeMode={themeMode}
+          htmlWidth={htmlWidth}
+        /> */}
+        <MDEditor
+          key={detail?.content}
+          onGetMackdown={onGetMackdown}
+          initialValue={content || detail?.content}
           siderVisible={siderVisible}
           onSaveDraft={onSaveDraft}
           themeMode={themeMode}

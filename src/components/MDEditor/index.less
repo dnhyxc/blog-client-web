@@ -1,0 +1,52 @@
+@import '~@styles/common.less';
+
+.editContainer {
+  padding: 6px;
+  background-color: @menu-hover;
+  height: 100%;
+
+  :global {
+    .md-editor {
+      height: 100%;
+
+      svg.md-editor-icon {
+        width: 25px;
+        height: 25px;
+        padding: 3px;
+      }
+    }
+  }
+}
+
+.hidePadding {
+  padding: 0;
+  background-color: transparent;
+}
+
+// .dark {
+//   :global {
+
+//   }
+// }
+
+@media screen and (max-width: 960px) {
+  .editContainer {
+    padding: 0;
+
+    :global {
+      .md-editor {
+        height: 100%;
+
+        svg.md-editor-icon {
+          width: 25px;
+          height: 25px;
+          padding: 3px;
+        }
+      }
+    }
+  }
+
+  .dark {
+    background-color: @dark-gray;
+  }
+}

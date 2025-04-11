@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import MarkNav from 'markdown-navbar'; // markdown 目录
 import { Scrollbars } from 'react-custom-scrollbars';
 import classname from 'classname';
