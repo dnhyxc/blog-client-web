@@ -13,7 +13,7 @@
   },
   "blogClientWeb": {
     "name": "html",
-    "localFilePath": "E:\\code\\blog-client-web",
+    "localFilePath": "/Users/dnhyxc/Documents/code/blog-client-web",
     "remoteFilePath": "/usr/local/nginx/html",
     "isServer": false
   }
