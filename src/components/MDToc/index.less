@@ -7,6 +7,80 @@
   background-color: @fff;
   border-radius: 5px;
 
+  :global {
+    .active-toc {
+      margin-top: 7px;
+
+      .md-editor-catalog-active {
+        position: relative;
+
+        &::before {
+          position: absolute;
+          left: 0;
+          top: 5px;
+          content: '';
+          width: 4px;
+          height: 18px;
+          border-radius: 0 5px 5px 0;
+          background-color: #73d13d;
+        }
+      }
+    }
+
+    .md-editor-catalog-indicator {
+      display: none;
+    }
+
+    .md-editor-catalog-container {
+      .active-toc;
+      margin-top: 0;
+
+      .md-editor-catalog-wrapper {
+        & > .md-editor-catalog-link:first-of-type {
+          padding-top: 5px;
+        }
+
+        .active-toc;
+
+        .md-editor-catalog-active {
+          &::before {
+            left: -14px;
+          }
+        }
+
+        .md-editor-catalog-wrapper {
+          .active-toc;
+
+          .md-editor-catalog-active {
+            &::before {
+              left: -28px;
+            }
+          }
+
+          .md-editor-catalog-wrapper {
+            .active-toc;
+
+            .md-editor-catalog-active {
+              &::before {
+                left: -42px;
+              }
+            }
+
+            .md-editor-catalog-wrapper {
+              .active-toc;
+
+              .md-editor-catalog-active {
+                &::before {
+                  left: -56px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   .mackNav {
     border-radius: 5px;
 
