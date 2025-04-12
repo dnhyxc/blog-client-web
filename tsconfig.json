@@ -11,10 +11,10 @@
     "isolatedModules": true,
     "noEmit": false,
     "noImplicitAny": true, // 不允许隐式any类型
-    "suppressImplicitAnyIndexErrors": true,
+    // "suppressImplicitAnyIndexErrors": true,
     "ignoreDeprecations": "5.0",
     "module": "esnext", // 模块引入方式
-    "target": "es5", // 打包后编译成什么形式
+    "target": "ES2017", // 打包后编译成什么形式
     "jsx": "react-jsx", // 引入react
     // "allowJs": true, // 在ts文件中允许引入js文件
     "moduleResolution": "node",

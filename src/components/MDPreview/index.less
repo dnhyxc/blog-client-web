@@ -1,0 +1,24 @@
+@import '~@styles/common.less';
+
+.container {
+  width: 100%;
+  height: 100%;
+
+  .coverImg {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  :global {
+    .md-editor-dark,
+    .md-editor-modal-container[data-theme='dark'] {
+      --md-bk-color: @dark-bgc-deep;
+    }
+  }
+}

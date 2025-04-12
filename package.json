@@ -97,6 +97,7 @@
     "js-md5": "^0.7.3",
     "jspdf": "^2.5.1",
     "markdown-navbar": "^1.4.3",
+    "md-editor-rt": "^5.4.5",
     "mobx": "^6.6.0",
     "mobx-react": "^7.5.0",
     "moment": "^2.29.3",

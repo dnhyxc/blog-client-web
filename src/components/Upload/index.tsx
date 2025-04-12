@@ -1,4 +1,3 @@
-import 'cropperjs/dist/cropper.css';
 import React, { ReactNode, useRef, useState } from 'react';
 import { Upload, Modal } from 'antd';
 import { UploadListType } from 'antd/lib/upload/interface';
@@ -12,6 +11,7 @@ import * as Service from '@/service';
 import useStore from '@/store';
 import { normalizeResult, success, error, compressImage, md5HashName } from '@/utils';
 import { FILETYPE, FILE_UPLOAD_MSG } from '@/constant';
+import 'cropperjs/dist/cropper.css';
 import styles from './index.less';
 
 interface IProps {

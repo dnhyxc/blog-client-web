@@ -1036,3 +1036,6 @@ export const BIRD_BASE64 =
 export const CODE_LENGTH = 4;
 // 随机生成的字符集
 export const CHARACTERS = 'ABCDEFGHIJKLMNPQRSTUVWXYZ123456789abcdefghijklmnpqrstuvwxyz';
+
+// md-editor 唯一id
+export const MDEDIT_ID = 'MDEDIT_ID';

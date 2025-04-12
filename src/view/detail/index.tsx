@@ -11,6 +11,7 @@ import { Affix, BackTop, Spin, Button } from 'antd';
 import classname from 'classname';
 import { ArrowUpOutlined } from '@ant-design/icons';
 import Preview from '@/components/Preview';
+import MDPreview from '@/components/MDPreview';
 import Header from '@/components/Header';
 import Image from '@/components/Image';
 import Multibar from '@/components/Multibar';
@@ -19,6 +20,7 @@ import MIcons from '@/components/Icons';
 import { HEAD_UEL, CARD_URL } from '@/constant';
 import RightBar from '@/components/RightBar';
 import Toc from '@/components/ArticleToc';
+import MDToc from '@/components/MDToc';
 import Comments from '@/components/Comments';
 import AnotherArticle from '@/components/AnotherArticle';
 import { useGetArticleDetail, useGetTheme, useHtmlWidth } from '@/hooks';
@@ -155,7 +157,39 @@ const ArticleDetail: React.FC = () => {
                   themeMode={themeMode}
                 />
               )}
-              <Preview
+              <MDPreview
+                className={styles.previewContent}
+                markdown={detail.content}
+                coverImg={renderCoverImg(detail)}
+                themeMode={themeMode}
+              >
+                <div className={styles.tagWrap}>
+                  {detail.classify && (
+                    <div className={styles.tagList}>
+                      <span className={styles.label}>分类：</span>
+                      <div className={styles.tagItemWrap}>
+                        <span
+                          className={styles.tag}
+                          onClick={(e) => toClassify(e, detail.classify)}
+                        >
+                          {detail.classify}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                  {detail.tag && (
+                    <div className={styles.tagList}>
+                      <span className={styles.label}>标签：</span>
+                      <div className={styles.tagItemWrap}>
+                        <span className={styles.tag} onClick={(e) => toTag(e, detail.tag)}>
+                          {detail.tag}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </MDPreview>
+              {/* <Preview
                 className={styles.previewContent}
                 mackdown={detail.content}
                 coverImg={renderCoverImg(detail)}
@@ -185,7 +219,7 @@ const ArticleDetail: React.FC = () => {
                     </div>
                   )}
                 </div>
-              </Preview>
+              </Preview> */}
               {!draft && (
                 <div className={styles.anotherArticle}>
                   <AnotherArticle id={id} themeMode={themeMode} />
@@ -206,7 +240,8 @@ const ArticleDetail: React.FC = () => {
               <div className={styles.rightBar}>
                 <RightBar themeMode={themeMode} htmlWidth={htmlWidth} />
                 <Affix offsetTop={50}>
-                  <Toc mackdown={detail.content} themeMode={themeMode} />
+                  <MDToc offsetTop={10} themeMode={themeMode} />
+                  {/* <Toc mackdown={detail.content} themeMode={themeMode} /> */}
                 </Affix>
               </div>
             )}

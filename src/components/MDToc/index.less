@@ -1,0 +1,62 @@
+@import '~@styles/common.less';
+
+.tocWrap {
+  width: 260px;
+  margin-top: 10px;
+  margin-left: 10px;
+  background-color: @fff;
+  border-radius: 5px;
+
+  .mackNav {
+    border-radius: 5px;
+
+    .scrollbar {
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+
+      & > :first-child {
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        // 如何禁止子元素滚动触发父元素滚动
+        overscroll-behavior: contain;
+      }
+    }
+  }
+
+  .tocText {
+    font-weight: 500;
+    font-size: 16px;
+    color: #1d2129;
+    border-bottom: 1px solid @background;
+    padding: 10px;
+  }
+
+  .tocList {
+    text-align: left;
+    background-color: @fff;
+  }
+}
+
+.dark {
+  background-color: @dark-bgc-deep;
+
+  .mackNav {
+    background-color: @dark-bgc-deep;
+  }
+
+  .tocText {
+    border-bottom: 1px solid @dark-gray;
+    color: @dark-fc;
+  }
+
+  .tocList {
+    background-color: @dark-bgc-deep;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .tocWrap {
+    display: none;
+  }
+}
