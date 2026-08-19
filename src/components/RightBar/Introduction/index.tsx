@@ -46,6 +46,14 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
     }
   };
 
+  const toDnhyxc = () => {
+    if (authorInfo?.dnhyxc) {
+      window.open(authorInfo?.dnhyxc);
+    } else {
+      info('还没设置墨客地址');
+    }
+  };
+
   const toJuejin = () => {
     if (authorInfo?.juejin) {
       window.open(authorInfo?.juejin);
@@ -144,6 +152,7 @@ const Introduction: React.FC<IProps> = ({ className, showRecommendArticle, theme
           GitHub
         </Button>
         <div className={styles.socialList}>
+          {authorInfo?.dnhyxc && <span onClick={toDnhyxc}>墨客</span>}
           {authorInfo?.juejin && <span onClick={toJuejin}>掘金</span>}
           {authorInfo?.zhihu && <span onClick={toZhihu}>知乎</span>}
           {authorInfo?.blog && <span onClick={toBlog}>博客</span>}

@@ -565,6 +565,11 @@ export const UPLOADURL = '/api/upload';
 // 账号设置配置
 export const SET_ITEM_CONFIG = [
   {
+    name: '墨客',
+    label: 'dnhyxc',
+    action: '设置',
+  },
+  {
     name: '个人掘金',
     label: 'juejin',
     action: '设置',
@@ -698,6 +703,12 @@ export const ARTICLE_DRAFT = {
 };
 
 export const ICONLINKS = [
+  {
+    name: 'icon-dnhyxc',
+    className: 'dnhyxc',
+    label: 'dnhyxc',
+    title: '墨客',
+  },
   {
     name: 'icon-juejin',
     className: 'juejin',

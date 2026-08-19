@@ -35,7 +35,7 @@ const Toc: React.FC<IProps> = ({ mackdown, className, themeMode }) => {
     // renderThumb 改变样式时被调用的函数，必须是函数
     const thumbStyle = {
       // 设置滚动条样式
-      backgroundColor: 'rgba(225, 225, 225, 0)',
+      backgroundColor: 'red',
     };
     return <div style={{ ...thumbStyle }} />;
   };

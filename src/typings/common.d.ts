@@ -33,12 +33,14 @@ export interface LoginParams {
 
 export interface UserInfoParams {
   userId?: string;
+  phone?: string;
   token?: string;
   username?: string;
   job?: string;
   motto?: string;
   introduce?: string;
   headUrl?: string;
+  dnhyxc?: string;
   github?: string;
   juejin?: string;
   zhihu?: string;

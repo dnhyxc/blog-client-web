@@ -25,9 +25,10 @@ const Account: React.FC = () => {
   const { htmlWidth } = useHtmlWidth();
   const { themeMode } = useGetTheme();
   const { userInfoStore } = useStore();
-  const { userId, username, zhihu, juejin, github, blog, auth } = userInfoStore.getUserInfo;
+  const { userId, username, phone, dnhyxc, zhihu, juejin, github, blog, auth } = userInfoStore.getUserInfo;
 
   const INPUT_INIT_VALUE = {
+    dnhyxc,
     juejin,
     zhihu,
     github,
@@ -45,9 +46,11 @@ const Account: React.FC = () => {
   // 修改用户信息
   const onUpdateUserInfo = async (value: string | number, selectKey?: string) => {
     if (!value) return;
-    const message = verifyResetPassword(value as string);
 
-    if (!message) return;
+    if(selectItem === 'password') {
+      const message = verifyResetPassword(value as string);
+      if (!message) return;
+    }
 
     const res = normalizeResult<LoginData>(
       await Service.updateInfo(
@@ -55,6 +58,8 @@ const Account: React.FC = () => {
           [selectKey || selectItem]:
             selectItem === 'password' ? encrypt(value as string) : value,
           username,
+          userId,
+          phone,
         },
         UPDATE_INFO_API_PATH[selectItem === 'password' ? 2 : 1]
       )
