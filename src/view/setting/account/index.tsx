@@ -47,7 +47,7 @@ const Account: React.FC = () => {
   const onUpdateUserInfo = async (value: string | number, selectKey?: string) => {
     if (!value) return;
 
-    if(selectItem === 'password') {
+    if (selectItem === 'password') {
       const message = verifyResetPassword(value as string);
       if (!message) return;
     }
